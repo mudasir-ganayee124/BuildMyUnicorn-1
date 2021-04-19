@@ -1,0 +1,256 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.Business
+@{ int Questions = 12; int Answered = 0; }
+
+<div class="row" id="validation">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOverview", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Businessoverview }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+                    <input type="hidden" id="BusinessID" name="BusinessID" value="@Model.BusinessID" />
+
+                    <!-- Step 1 -->
+                    <h6>About the Founder</h6>
+                    <section>
+                        @if (!string.IsNullOrEmpty(Model.Founder.IdeaComeup))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">  @ViewBag.DisplayFounder["IdeaComeup"]  </label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.IdeaComeup</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Founder.BusinessRun))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1"> @ViewBag.DisplayFounder["BusinessRun"] </label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.BusinessRun</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Founder.PreviousWorkExperience))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayFounder["PreviousWorkExperience"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.PreviousWorkExperience</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Founder.Qualification))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayFounder["Qualification"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.Qualification</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Founder.HobbiesInterest))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayFounder["HobbiesInterest"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.HobbiesInterest</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Founder.WhyYou))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayFounder["WhyYou"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.WhyYou</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>Company Detail(s)</h6>
+                    <section>
+                        @*@if (Model.CompanyDetails.CompanyLegalStructureID != Guid.Empty)
+                            {
+                                Answered += 1;
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyLegalStructureID"]</label>
+                                            @{ var CompanyLegalStructure = Model.CompanyDetails.CompanyLegalStructureID != null ? "progress-percent" : ""; }
+                                            @Html.DropDownListFor(n => n.CompanyDetails.CompanyLegalStructureID, new SelectList(ViewBag.CompanyLegalStructure, "ID", "Value", @Model.CompanyDetails.CompanyLegalStructureID), "- Please select -", new { @class = "custom-select col-12 " + @CompanyLegalStructure + " progress-required" })
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                             }*@
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.CompanyRegisterdName))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyRegisterdName"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.CompanyRegisterdName</textarea>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.Founded))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["Founded"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.Founded</textarea>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.BusinessAddress))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["BusinessAddress"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.BusinessAddress</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.CompanyNumber))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyNumber"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.CompanyNumber</textarea>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.VatNumber))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["VatNumber"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.VatNumber</textarea>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @*@if (Model.CompanyDetails.NumberofFounder != null)
+                            {
+                                Answered += 1;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@ViewBag.DisplayCompanyDetails["NumberofFounder"]</label>
+                                            <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.NumberofFounder</textarea>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }*@
+
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="round" title="Total Questions">@Questions</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-success" title="Answered"> @Answered</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(Questions - Answered) </span></li>
+        </ol>
+
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    About the Founder
+                    <div class="pull-right" style="text-align:right">@Model.Founder.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.Founder.Completed%; height: 6px;"> <span class="sr-only">@Model.Founder.Completed % Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    Company Detail(s)
+
+                    <div class="pull-left" style="text-align:right">@Model.CompanyDetails.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.CompanyDetails.Completed%; height: 6px;"> <span class="sr-only">@Model.CompanyDetails.Completed% Complete</span></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

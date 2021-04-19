@@ -1,0 +1,191 @@
+﻿@using Business_Model.Model;
+@section PageStyle
+{
+    <link href="~/assets/node_modules/kendoui/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/kendoui/styles/kendo.flat.mobile.min.css" rel="stylesheet" />
+
+
+}
+<input type="hidden" id="ModuleID" name="ModuleID" value="@((int)OptionType.FeedBack)" />
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Manage FeedBack</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Masters</a></li>
+                <li class="breadcrumb-item active">Manage FeedBack </li>
+            </ol>
+
+            <button type="button" data-toggle="modal" data-target="#NewModel" class="btn btn-info d-none d-lg-block m-l-15 JsUpdateIdea"> Add New </button>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="ss" value="6e083f05-fd69-44ad-9bec-bd2162fc9e6b" />
+<div id="Grid"></div>
+
+<div id="NewModel" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form id="NewForm" method="post">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add  Module Course</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Module:</label>
+                                @{
+                                    List<Business_Model.Model.Modules> ModulesList = ViewBag.Modules as List<Business_Model.Model.Modules>;
+                                }
+                                <select class="form-control custom-select" id="ModuleID" name="ModuleID">
+                                    <option>--Select Module--</option>
+
+                                    @foreach (var item in ModulesList.Select(y => new { y.ID, y.ModuleID, y.DisplayAs }).Distinct().OrderBy(o=>o.ModuleID).ToList())
+                                    {
+                                        <option value="@item.ModuleID">  @item.DisplayAs </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Duration:</label>
+                                <input type="text" class="form-control" name="Duration">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Video url:</label>
+                                <input type="text" class="form-control" name="VideoUrl" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Module Section:</label>
+
+                                <select class="form-control custom-select" id="ModuleSectionID" name="ModuleSectionID">
+                                   
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Title:</label>
+                                <input type="text" class="form-control" name="Title" />
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Description:</label>
+                                <textarea class="form-control" rows="2" name="Description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group jsCourselearnContainer" style="max-height:300px; overflow-y:auto">
+                        <label>Course Learn:</label>
+                        <div class="input-group mb-3 jsCourselearnValue">
+                            <input type="hidden" class="form-control" name="MCOptionID">
+                            <input type="text" class="form-control" name="Value" placeholder="Learn" aria-label="Username">
+                            <div class="input-group-append">
+                                <span class="input-group-text jsCourselearnAdd" style="cursor:pointer"><i class="ti-plus"></i></span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger waves-effect waves-light">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="UpdateModel" class="modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="UpdateForm" method="post">
+                <input type="hidden" id="ModuleCourseID" name="ModuleCourseID" />
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add  Module Course</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Module:</label>
+                                
+                                <select class="form-control custom-select" id="EditModuleID" name="ModuleID">
+                                    <option>--Select Module--</option>
+
+                                    @foreach (var item in ModulesList.Select(y => new { y.ID, y.ModuleID, y.DisplayAs }).Distinct().OrderBy(o => o.ModuleID).ToList())
+                                    {
+                                        <option value="@item.ModuleID">  @item.DisplayAs </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Duration:</label>
+                                <input type="text" class="form-control" id="Duration" name="Duration">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Video url:</label>
+                                <input type="text" class="form-control" id="VideoUrl" name="VideoUrl" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Module Section:</label>
+
+                                <select class="form-control custom-select" id="EditModuleSectionID" name="ModuleSectionID"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Title:</label>
+                                <input type="text" class="form-control" id="Title" name="Title" />
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Description:</label>
+                                <textarea class="form-control" rows="2" id="Description" name="Description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group jsCourselearnContainer jsCourselearnContainerEdit" style="max-height:300px; overflow-y:auto">
+                        <label>Course Learn:</label>
+                        <div class="input-group mb-3 jsCourselearnValue">
+                            <input type="hidden" class="form-control" name="MCOptionID" id="EditMCOptionID">
+                            <input type="text" class="form-control" name="Value" id="EditValue" placeholder="Learn">
+                            <div class="input-group-append">
+                                <span class="input-group-text jsCourselearnAdd" style="cursor:pointer"><i class="ti-plus"></i></span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger waves-effect waves-light">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section PageScript
+{
+    <script src="~/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
+    <script src="~/assets/node_modules/kendoui/js/jszip.min.js"></script>
+    <script src="~/Content/page_script/module-course.js?version=@DateTime.Now"></script>
+}

@@ -1,0 +1,23 @@
+﻿@model Business_Model.Model.ToDoTask
+
+@{
+    ViewBag.Title = "Edit Todo";
+}
+<input type="hidden" id="selectedAssigedTo" value="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.AssignedMappings?.Select(x => x.AssignedToId))" />
+@Html.Partial("_EditToDoPartial", Model)
+
+@section PageScript
+{
+    <link href="~/Content/app_css/toastr.min.css" rel="stylesheet" />
+    <script src="~/Content/app_script/toastr.min.js"></script>
+    <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
+    <script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>
+    <script>
+        var selectedOptions = $("#selectedAssigedTo").val();
+        var selectedOptionsArray = JSON.parse(selectedOptions);
+        $('#AssignedTo').multiselect('select', selectedOptionsArray);
+
+    </script>
+}
+

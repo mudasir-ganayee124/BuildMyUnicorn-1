@@ -1,0 +1,24 @@
+﻿@section PageStyle
+{
+    <link href="/assets/node_modules/kendoui/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="/assets/node_modules/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
+    <link href="/assets/node_modules/kendoui/styles/kendo.flat.mobile.min.css" rel="stylesheet" />
+
+
+}
+<div id="partialView">
+</div>
+
+@section PageScript
+{
+    <script src="/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
+    <script src="/assets/node_modules/kendoui/js/jszip.min.js"></script>
+  
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        $("#partialView").load('@Url.Content("/ManageLanguage/Languages")');
+    });
+    </script>
+
+}

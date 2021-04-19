@@ -1,0 +1,61 @@
+﻿@model List<Business_Model.ToDoDTO>
+
+<div class="table-responsive">
+    <h2>My Assigned To Do List</h2>
+    <table class="table table-hover no-wrap">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>AssignedOn</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="txt-oflo">@item.Subject</td>
+                        <td class="txt-oflo">@item.Description</td>
+                        <td><span class="badge badge-success badge-pill">@item.Status</span> </td>
+                        <td class="txt-oflo">@(item.AssignedOn == null ? string.Empty : item.AssignedOn.GetValueOrDefault().ToString("dd-MM-yyyy"))</td>
+                        <td><button class="pull-right btn btn-circle btn-success" data-toggle="modal" id="btnChangeStatus" data-toDoId="@item.ToDoTaskID"><i class="ti-pencil"></i></button></td>
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="changeStatusModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+                <form action="/dashboard/UpdateToDoStatus" id="changeStatusForm">
+                    <input type="hidden" name="ToDoTaskID" id="ToDoTaskID" value="" />
+                    <div class="form-group">
+                        <label>Status</label>
+                        @Html.DropDownList("Status",  EnumHelper.GetSelectList(typeof(Business_Model.Helper.ToDoStatus)),  "Select Status", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Submit"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+

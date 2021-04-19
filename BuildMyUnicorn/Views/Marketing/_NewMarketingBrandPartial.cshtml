@@ -1,0 +1,212 @@
+﻿
+@using Business_Model.Model;
+@model Business_Model.Model.MarketingBrand
+@{ 
+    var arrayBrandTouchPoint = String.IsNullOrEmpty(Model.BrandTouchPoints.BrandTouchPointID) == false ? Model.BrandTouchPoints.BrandTouchPointID.Split(',').ToArray() : new string[0];
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body wizard-content">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Marketing", ActionName = "Brand", ModuleName = Module.Marketing, SectionName = ModuleSection.Marketing_Brand }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form id="frmMarketingBrand" class="tab-wizard wizard-circle">
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="MarketingBrandID" name="MarketingBrandID" value="@Model.MarketingBrandID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="ActionType" value="@ViewBag.ActionType" />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <!-- Step 1 -->
+                    <h6>
+                        Branding Strategy
+                    </h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatAreWe"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="WhatAreWe" name="WhatAreWe">@Model.BrandingStrategy.WhatAreWe</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["WhyWeHere"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="WhyWeHere" name="WhyWeHere">@Model.BrandingStrategy.WhyWeHere</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatDoHowDo"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="WhatDoHowDo" name="WhatDoHowDo">@Model.BrandingStrategy.WhatDoHowDo</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatMakesDifferent"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="WhatMakesDifferent" name="WhatMakesDifferent">@Model.BrandingStrategy.WhatMakesDifferent</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["WhoWeHereFor"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="WhoWeHereFor" name="WhoWeHereFor">@Model.BrandingStrategy.WhoWeHereFor</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatValueMost"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="WhatValueMost" name="WhatValueMost">@Model.BrandingStrategy.WhatValueMost</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["OurPersonality"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="OurPersonality" name="OurPersonality">@Model.BrandingStrategy.OurPersonality</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["OurAmbition"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="OurAmbition" name="OurAmbition">@Model.BrandingStrategy.OurAmbition</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleBrandingStrategy["EmotionalSellingPoint"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="EmotionalSellingPoint" name="EmotionalSellingPoint">@Model.BrandingStrategy.EmotionalSellingPoint</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>
+                        Brand  Guideline(s)
+                    </h6>
+                    <section>
+                        <div class="row">
+                   
+                            <input type="hidden" id="PowerPresentationID" name="PowerPresentationID" value="@Model.BrandGuidelines.PowerPresentationID" />
+                            <input type="hidden" id="TemplateDownloaded" name="TemplateDownloaded" value="@(Model.BrandGuidelines.TemplateDownloaded.ToString())" />
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">Powerpoint Presentation</label>
+                                    <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://platform.buildmyunicorn.com/Content/B39E91B2-DA11-41D0-A20A-F4A097C495B0.pptx' width='100%' height='600px' frameborder='0'></iframe>
+                                       
+                                        @*<div id="slide-resolte-contaniner"></div>*@
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section>
+                    <!-- Step 3 -->
+                    <h6>
+                        Brand Touchpoint(s)
+                    </h6>
+                    <section>
+                        <div class="row">
+                            <input type="hidden" id="BrandTouchPointID" name="BrandTouchPointID" value="@Model.BrandTouchPoints.BrandTouchPointID" />
+
+
+                            <div class="col-md-4">
+                                @{ int Count = Enumerable.Count(ViewBag.BrandTouchPointList);
+                                    int thirdCount = Count / 3;
+                                    int x = 0;
+
+                                }
+                                @foreach (var item in ViewBag.BrandTouchPointList)
+                                {
+                                    if (x < thirdCount)
+                                    {
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BrandPouchpoint" value="@item.ID" @( Array.Exists(arrayBrandTouchPoint, z => z == Convert.ToString(item.ID)) ? "Checked" : "")>
+                                            <label class="custom-control-label" for="@item.ID">@item.Value</label>
+                                        </div>
+
+                                    }
+                                    x = x + 1;
+                                }
+
+                            </div>
+                            <div class="col-md-4">
+                                @{
+                                    int halfCount = 2 * thirdCount;
+                                    x = 0;
+
+                                }
+                                @foreach (var item in ViewBag.BrandTouchPointList)
+                                {
+                                    if (x < halfCount && x > thirdCount)
+                                    {
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BrandPouchpoint" value="@item.ID" @( Array.Exists(arrayBrandTouchPoint, z => z == Convert.ToString(item.ID)) ? "Checked" : "")>
+                                            <label class="custom-control-label" for="@item.ID">@item.Value</label>
+                                        </div>
+
+                                    }
+                                    x = x + 1;
+
+                                }
+
+                            </div>
+                            <div class="col-md-4">
+                                @{
+
+
+                                    x = 0;
+
+                                }
+                                @foreach (var item in ViewBag.BrandTouchPointList)
+                                {
+                                    if (x <= Count && x > halfCount)
+                                    {
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BrandPouchpoint" value="@item.ID" @( Array.Exists(arrayBrandTouchPoint, z => z == Convert.ToString(item.ID)) ? "Checked" : "")>
+                                            <label class="custom-control-label" for="@item.ID">@item.Value</label>
+                                        </div>
+
+                                    }
+                                    x = x + 1;
+                                }
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

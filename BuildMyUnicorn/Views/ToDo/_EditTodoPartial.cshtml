@@ -1,0 +1,97 @@
+﻿@model Business_Model.Model.ToDoTask
+
+@{
+    bool isEdit = Model != null && Model.EntityState == Business_Model.Helper.EntityState.Old;
+    string cardTitle = isEdit ? "Edit Todo" : "Add Todo";
+    string action = isEdit ? "Edit" : "Add";
+
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">   @Html.ActionLink("Back to Todos", "")</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">To do </li>
+                <li class="breadcrumb-item active">Create  </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+<div class="card-body">
+    <form method="post" id="todoform" action="@Url.Action(action)" class="todoform">
+        @if (isEdit)
+        {
+            @Html.HiddenFor(model => model.ToDoTaskID)
+            @Html.HiddenFor(model => model.AssignedBy)
+            @Html.HiddenFor(model => model.AssignedOn)
+            @Html.HiddenFor(model => model.IsActive)
+            @Html.HiddenFor(model => model.IsDeleted)
+            @Html.HiddenFor(model => model.EntityState)
+        }
+
+        <div class="form-body">
+            <h3 class="card-title">@cardTitle</h3>
+            <hr>
+            <div class="row p-t-20">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Subject</label>
+                        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = "Title" } })
+                        @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label d-block">Assigned To</label>
+                        @Html.DropDownList("AssignedTo", null, new { @class = "form-control", @multiple = "multiple" })
+
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+            <div class="row">
+
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Start Date</label>
+                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", placeholder = "dd/mm/yyyy" } })
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">End Date</label>
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "dd/mm/yyyy" } })
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        <!--/row-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-danger">
+                    <label class="control-label">Description</label>
+                    @Html.TextAreaFor(model => model.Description, 4, 50, new { @class = "form-control", placeholder = "Description" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--/span-->
+        </div>
+</div>
+<div class="form-actions">
+    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+    <button type="button" class="btn btn-inverse">Cancel</button>
+</div>
+    </form>
+</div>

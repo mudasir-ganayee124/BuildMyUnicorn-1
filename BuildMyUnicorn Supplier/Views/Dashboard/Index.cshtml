@@ -1,0 +1,635 @@
+﻿@using Business_Model.Model;
+@using System.Configuration;
+@model Business_Model.Model.Supplier
+@section PageStyle
+{
+    <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="/dist/css/pages/pricing-page.css" rel="stylesheet">
+}
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.AccountStatus == AccountStatus.NotFilled)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-success"><i class="fa fa-info-circle"></i> Not Filled</h3> Your account is not live,  please update your <a href="/Profile"><i class="ti-user"></i> Profile</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.AccountStatus == AccountStatus.Approved)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-success"><i class="fa fa-check-circle"></i>Approved</h3> Your account is approved.
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.AccountStatus == AccountStatus.Pending)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-success"><i class="fa fa-check-circle"></i> Pending </h3> Your account is pending for approval, Check the  <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">status </a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.AccountStatus == AccountStatus.Disapproved)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                        <h3 class="text-success"><i class="fa fa-check-circle"></i> Disapproved</h3> your account is Disapproved, Check the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">status </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">@Model.CompanyName</h4>
+
+                </center>
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">Email address </small>
+                <h6>@Model.Email</h6> <small class="text-muted p-t-30 db">Phone</small>
+                <h6>+91 654 784 547</h6> <small class="text-muted p-t-30 db">Address</small>
+                <h6> @Model.Address</h6>
+                <div class="map-box">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508" width="100%" height="150" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div> <small class="text-muted p-t-30 db">Social Profile</small>
+                <br />
+                <button class="btn btn-circle btn-secondary"><i class="fab fa-facebook-f"></i></button>
+                <button class="btn btn-circle btn-secondary"><i class="fab fa-twitter"></i></button>
+                <button class="btn btn-circle btn-secondary"><i class="fab fa-youtube"></i></button>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profile</a> </li>
+                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#home" role="tab">Package(s)</a> </li>
+
+
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane " id="home" role="tabpanel">
+                    <div class="card-body">
+
+                        <div class="card card-body">
+                            <div class="row">
+
+                                @if (ViewBag.PackageModel != null)
+                                {
+                                    foreach (var item in ViewBag.PackageModel)
+                                    {
+                                        <div class="col-md-6 col-xs-6 col-sm-6 no-padding">
+                                            <div class="row pricing-plan">
+
+                                                <div class="pricing-box">
+                                                    <div class="pricing-body b-l">
+                                                        <div class="pricing-header">
+                                                            <h4 class="text-center">@item.PackageTitle</h4>
+                                                            <h2 class="text-center"><span class="price-sign">@item.Symbol</span>@item.PackageAmount</h2>
+                                                            <p class="uppercase">per month</p>
+                                                        </div>
+                                                        <div class="price-table-content">
+                                                            @{
+                                                                string PackageAttribute = item.PackageAttribute;
+                                                                var arrayAtribute = String.IsNullOrEmpty(item.PackageAttribute) == false ? PackageAttribute.Split(',').ToArray() : new string[0]; }
+
+                                                            @foreach (var attribute in arrayAtribute)
+                                                            {
+
+
+                                                                <div class="price-row"> @attribute</div>
+
+
+                                                            }
+
+                                                            <div class="price-row">
+                                                                <a href="#" class="btn btn-success waves-effect waves-light m-t-20 jspaymentsignup" data-supplierid="@item.SupplierPackageID">Sign up</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    }
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+                <!--second tab-->
+                <div class="tab-pane active" id="profile" role="tabpanel">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-6 b-r">
+                                <strong>Full Name</strong>
+                                <br>
+                                <p class="text-muted">@Model.FirstName @Model.LastName</p>
+                            </div>
+                            <div class="col-md-3 col-xs-6 b-r">
+                                <strong>Mobile</strong>
+                                <br>
+                                <p class="text-muted">(123) 456 7890</p>
+                            </div>
+                            <div class="col-md-3 col-xs-6 b-r">
+                                <strong>Email</strong>
+                                <br>
+                                <p class="text-muted">@Model.Email</p>
+                            </div>
+                            <div class="col-md-3 col-xs-6">
+                                <strong>Location</strong>
+                                <br>
+                                <p class="text-muted">@Model.CountryName</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 b-r">
+                                <strong>About Company</strong>
+                                <br>
+                                <p class="text-muted">@Model.CompnayInfo</p>
+                            </div>
+                            <div class="col-md-4 col-xs-4 b-r">
+                                <strong>Website</strong>
+                                <br>
+                                <p class="text-muted">@Model.Website</p>
+                            </div>
+                            <div class="col-md-4 col-xs-4 b-r">
+                                <strong>Linkedin</strong>
+                                <br>
+                                <p class="text-muted">@Model.LinkedProfile</p>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 b-r">
+                                    <strong>Business Placement</strong>
+                                    <br>
+                                    @{ var arrayBusinessPlacement = String.IsNullOrEmpty(@Model.BusinessPlacement) == false ? @Model.BusinessPlacement.Split(',').ToArray() : new string[0]; }
+                                    <p class="text-muted">
+                                        @foreach (var item in ViewBag.BusinessPlacement)
+                                        {
+
+
+                                            if (Array.Exists(arrayBusinessPlacement, o => o == Convert.ToString(@item.ID)) == true)
+                                            {
+                                                <div class="custom-control">
+                                                    <a href="javascript:void(0)" class="list-group-item"><span class="fa fa-circle text-info m-r-10"></span>@item.Value</a>
+
+                                                </div>
+                                            }
+
+
+
+                                        }
+
+                                    </p>
+                                </div>
+                                <div class="col-md-12 col-xs-12 b-r">
+                                    <strong>Work Location</strong>
+                                    <br>
+                                    @{ var arrayWorkLocation = String.IsNullOrEmpty(@Model.WorkLocation) == false ? @Model.WorkLocation.Split(',').ToArray() : new string[0]; }
+                                    <p class="text-muted">
+                                        @foreach (var item in ViewBag.WorkLocation)
+                                        {
+
+
+                                            if (Array.Exists(arrayWorkLocation, o => o == Convert.ToString(@item.ID)) == true)
+                                            {
+                                                <div class="custom-control">
+                                                    <a href="javascript:void(0)" class="list-group-item"><span class="fa fa-circle text-info m-r-10"></span>@item.Value</a>
+
+                                                </div>
+                                            }
+
+
+
+                                        }
+
+                                    </p>
+                                </div>
+                                <div class="col-md-12 col-xs-12 b-r">
+                                    <strong>Company Type</strong>
+                                    <br>
+                                    @{ var arrayCompanyType = String.IsNullOrEmpty(@Model.CompanyType) == false ? @Model.CompanyType.Split(',').ToArray() : new string[0]; }
+                                    <p class="text-muted">
+                                        @foreach (var item in ViewBag.CompanyType)
+                                        {
+
+
+                                            if (Array.Exists(arrayCompanyType, o => o == Convert.ToString(@item.ID)) == true)
+                                            {
+                                                <div class="custom-control">
+                                                    <a href="javascript:void(0)" class="list-group-item"><span class="fa fa-circle text-info m-r-10"></span>@item.Value</a>
+
+                                                </div>
+                                            }
+
+
+
+                                        }
+
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr>
+
+                    </div>
+                </div>
+                <div class="tab-pane" id="settings" role="tabpanel">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Company Name</label>
+                                    <input type="text" id="CompanyName" name="CompanyName" class="form-control form-control-line" value="@Model.CompanyName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="text" id="Email" name="Email" class="form-control form-control-line" value="@Model.Email">
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-line" value="@Model.FirstName">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-line" value="@Model.LastName">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    @Html.DropDownList("CountryID", new SelectList(ViewBag.CountryList, "CountryID", "CountryName"), "- Please select -", new { @class = "custom-select col-12" })
+                                    @*<input type="text" class="form-control" value="" autocomplete="off">*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Business Placement  </label>
+                                        <div class="row">
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Work Location </label> <br />
+                                        <div class="row">
+
+
+
+
+                                        </div>
+
+
+
+
+
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Company Type  </label> <br />
+                                        <div class="row">
+
+
+
+
+
+
+                                        </div>
+
+
+
+
+
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label for="wint1">Photograph</label>
+                                        <div class="fileupload">
+
+                                            @*<div class="btn btn-default btn-file" style="position: relative; text-align:right">
+                                                    <input type="button" class="btn btn-primary pull-right" style="display:inline !important" value="Choose File" />
+                                                    <input type="file" id="ImageUpload" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;margin: 0;opacity: 0;">
+
+                                                </div>*@
+
+                                            <div class="dropzone" id="imagepreview" style="padding:5px;">
+                                                <img id="profileImage" src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)" class="img-responsive img-thumbnail" />
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>About Company</label>
+                                    <textarea class="form-control form-control-line" id="CompnayInfo" name="CompnayInfo" oninput="auto_grow_idea_textarea(this)">@Model.CompnayInfo</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Website</label>
+                                    <input type="text" id="Website" name="Website" class="form-control form-control-line" value="@Model.Website">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Linkedin</label>
+                                    <input type="text" id="LinkedProfile" name="LinkedProfile" class="form-control form-control-line" value="@Model.LinkedProfile">
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Twitter</label>
+                                    <input type="text" id="Twitter" name="Twitter" class="form-control form-control-line" value="@Model.Twitter">
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea class="form-control form-control-line" id="Address" name="Address" oninput="auto_grow_idea_textarea(this)">@Model.Address</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @*<form class="form-horizontal form-material">
+                                <div class="form-group">
+                                    <label class="col-md-12">Full Name</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Email</label>
+                                    <div class="col-md-12">
+                                        <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" value="password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Phone No</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Message</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">Select Country</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line">
+                                            <option>London</option>
+                                            <option>India</option>
+                                            <option>Usa</option>
+                                            <option>Canada</option>
+                                            <option>Thailand</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success">Update Profile</button>
+                                    </div>
+                                </div>
+                            </form>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+@Html.Partial("~/Views/Dialog/_SupplierProfile.cshtml")
+
+<div class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Account</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+
+                @{
+                   
+                    var List = ViewBag.AccountManager as IEnumerable<Business_Model.Model.AccountManager>;
+                    var Accounts = List.Where(x=>x.AccountApprovalMasterID == Guid.Empty).Select(s => s.AccountApprovalID).Distinct();
+                }
+                @foreach (var data in Accounts)
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body wizard-content">
+                                    <table class="tablesaw table-striped table-hover table-bordered table no-wrap tablesaw-columntoggle" data-tablesaw-mode="columntoggle" id="tablesaw-1548">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border">
+                                                    Title
+                                                </th>
+                                                <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3" class="border tablesaw-priority-3">Value</th>
+                                                <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="2" class="border tablesaw-priority-2">
+                                                    Comment
+                                                </th>
+                                                <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="1" class="border tablesaw-priority-1">
+                                                    <abbr title="Rotten Tomato Rating">  Status</abbr>
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in List.Where(x => x.AccountApprovalID == data))
+                                            {
+                                                <tr>
+
+                                                    <td class="title">@item.FieldName  <input type="hidden" id="@item.ID" name="@item.ID" /></td>
+                                                    @if (item.FieldName == "Work Location" || item.FieldName == "Business Placement")
+                                                    {
+                                                    <td class="tablesaw-priority-3">
+                                                    
+                                                        @if (!string.IsNullOrEmpty(item.Value))
+                                                        {
+                                                            foreach (var word in item.Value.Split(','))
+                                                            {
+                                                                <p>@word </p>
+                                                            }
+                                                        }
+
+                                                    </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="tablesaw-priority-3">@item.Value</td>
+                                                    }
+                                                    <td class="tablesaw-priority-2"><textarea class="form-control" rows="2" name="Description" disabled>@item.Comment</textarea></td>
+                                                    <td>
+                                                        <span class='badge badge-info badge-pill'>
+                                                            @if (@item.ManagedBy != Guid.Empty)
+                                                            {
+                                                                @( @item.IsApproved == true ? "Approved" : "Disapproved")
+                                                            }
+                                                            else
+                                                            { @( "Pending")}
+                                                        </span>
+
+
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+@section PageScript
+{
+
+    <script src="~/assets/node_modules/Chart.js/Chart.min.js"></script>
+    <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
+    <script src="~/Content/app_script/page_script/dashboard.js?version=@DateTime.Now"></script>
+
+
+    @if (!@ViewBag.Supplier.IsProfileUpdated)
+    {
+
+        <script>
+            $('#dialogClientUpdate').modal('show');
+        </script>
+    }
+}

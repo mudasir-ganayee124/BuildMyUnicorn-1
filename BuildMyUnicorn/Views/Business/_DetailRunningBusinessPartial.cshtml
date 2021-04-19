@@ -1,0 +1,213 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.RunningBusiness
+
+<div class="row" id="validation">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "RunningBusiness", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_RunningtheBusiness }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="RunningBusinessID" name="RunningBusinessID" value="@Model.RunningBusinessID" />
+                    @*<input type="hidden" id="ProgressValue" name="ProgressValue" value="@Model.ProgressValue" />*@
+                    <!-- Step 1 -->
+                    <h6>Operations</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBProducedID"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@ViewBag.ProductServiceProduced</textarea>
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBDeliveryMethodID"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@ViewBag.DeliveryMethod</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBThirdPartyInvovedID"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@ViewBag.ThirdPartiesInvloved</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBPaymentMethodID"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@ViewBag.PaymentMethod</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.OperationTitle["RBQualityControlMethod"] </label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@Model.RBQualityControlMethod</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBStaffWorkID"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@ViewBag.StaffWork</textarea>
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBHaveEquipmentSoftware"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@((ViewBag.Choice as IEnumerable<Choice>).Where(x=> x.ID == Model.RBHaveEquipmentSoftware).Select(x=>x.Value).FirstOrDefault())</textarea>
+
+
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware @(Model.RBHaveEquipmentSoftware == 1 ? "" : "hide")'>
+                                    <label for="wint1">@ViewBag.OperationTitle["RBEquipmentSoftware"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@Model.RBEquipmentSoftware</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBStaffNumber"]</label>
+                                    <input type="text" class='form-control  progress-required' readonly value="@Model.RBStaffNumber">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBStaffNumberNextYear"]</label>
+                                    <input type="text" class='form-control  progress-required' readonly value="@Model.RBStaffNumberNextYear">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBThirdPartyInvovedID"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@ViewBag.ThirdPartiesInvloved</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBHaveInsurance"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@((ViewBag.Choice as IEnumerable<Choice>).Where(x=> x.ID == Model.RBHaveInsurance).Select(x=>x.Value).FirstOrDefault())</textarea>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBNeedSpecificLicense"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@((ViewBag.Choice as IEnumerable<Choice>).Where(x=> x.ID == Model.RBNeedSpecificLicense).Select(x => x.Value).FirstOrDefault())</textarea>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.OperationTitle["RBNeedSpecificeQualification"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@((ViewBag.Choice as IEnumerable<Choice>).Where(x=>x.ID == Model.RBNeedSpecificeQualification).Select(x => x.Value).FirstOrDefault())</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    Operations
+                    <div class="pull-right" style="text-align:right">@Model.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.Completed%; height: 6px;"> <span class="sr-only">@Model.Completed % Complete</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

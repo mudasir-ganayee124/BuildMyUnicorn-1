@@ -1,0 +1,180 @@
+﻿
+@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.PricingProductService
+
+
+<div class="row" id="validation">
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Selling", ActionName = "ProductServicePricing", ModuleName = Module.Selling, SectionName = ModuleSection.Selling_Pricing }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="ProductServicePricingID" name="ProductServicePricingID" value="@Model.ProductServicePricingID" />
+                    <!-- Step 1 -->
+                    <h6>Who Does what</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategy"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.PricingStrategy</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductValue"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductValue</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["UsersBringValue"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.UsersBringValue</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductUnique"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductUnique</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["CustomersValue"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.CustomersValue</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["CustomersWillingToPay"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.CustomersWillingToPay</textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferCustomers"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.OfferCustomers</textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferLevels"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.OfferLevels</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferOpportunity"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.OfferOpportunity</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategy"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.PricingStrategy</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategyChosen"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.PricingStrategyChosen</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductUnique"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductUnique</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductValue"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductValue</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </section>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+

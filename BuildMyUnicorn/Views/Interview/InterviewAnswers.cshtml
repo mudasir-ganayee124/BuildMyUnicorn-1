@@ -1,0 +1,146 @@
+﻿@using Business_Model.Model;
+@model IEnumerable<InterviewData>
+
+@section PageStyle
+{
+
+}
+@{
+    List<int> InterviewUnitIDList = Model.Select(o => o.InterviewUnitID).Distinct().ToList();
+    List<string> InterviewKeyFieldList = Model.Select(o => o.KeyField).Distinct().ToList();
+}
+
+<div class="row page-titles" style="margin: 0 -25px 8px;">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor"><a href="~/Interview"><i class="mdi mdi-arrow-left"></i>Back to Interview</a></h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Interview</li>
+                <li class="breadcrumb-item active">Answer(s)</li>
+            </ol>
+
+        </div>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-md-12">
+        <form action="#" class="form-horizontal">
+            <div class="form-group row" style="margin-bottom: 3px;">
+                <label class="control-label text-right col-md-9" style="padding-top:8px">Group By:</label>
+                <div class="col-md-3">
+                    <select class="form-control custom-select JsGroupBy">
+                        <option value="Interview">Interview</option>
+                        <option value="Question">Question</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    @foreach (var unit in InterviewKeyFieldList)
+    {
+        int index = 1;
+        var DataModel = Model.Where(o => o.KeyField == unit).ToList();
+
+        <div class="col-lg-12 jsQuestionview hide">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><code> @DataModel[0].KeyField </code> </h4>
+
+                    <div class="table-responsive">
+                        <div class="table table-bordered">
+                            <table class="table">
+
+                                <tbody>
+
+                                    @foreach (var item in DataModel)
+                                    {
+                                        <tr>
+                                            <td style="width:30px">@index   @{ index++; }</td>
+
+                                            <td>@item.KeyValue</td>
+
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    @foreach (var unit in InterviewUnitIDList)
+    {
+        int index = 1;
+        var DataModel = Model.Where(o => o.InterviewUnitID == unit).ToList();
+
+        <div class="col-lg-12 jsInterviewview">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Date :- <code> @DataModel[0].CreatedDateTime.ToString("d") </code> </h4>
+
+                    <div class="table-responsive">
+                        <div class="table table-bordered">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in DataModel)
+                                    {
+                                        <tr>
+                                            <td>@index   @{ index++; }</td>
+                                            <td>@item.KeyField</td>
+                                            <td>@item.KeyValue</td>
+
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+</div>
+@section PageScript
+{
+    <script>
+         $("li a, li").removeClass("active");
+         $("li ul").removeClass("in");
+         $("#ulMarketResearch").addClass("in");
+         $("#liInterview").addClass("active");
+        $(document).on("change", ".JsGroupBy", function() {
+          if($(this).val() == "Interview"){
+              $(".jsQuestionview").addClass("hide");
+              $(".jsInterviewview").removeClass("hide");
+          } else if($(this).val() == "Question") {
+              $(".jsInterviewview").addClass("hide");
+              $(".jsQuestionview").removeClass("hide");
+          }
+
+        });
+
+    </script>
+
+}

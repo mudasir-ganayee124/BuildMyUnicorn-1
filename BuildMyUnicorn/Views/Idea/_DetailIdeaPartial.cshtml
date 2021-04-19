@@ -1,0 +1,446 @@
+﻿@using Business_Model.Model;
+@model Business_Model.Model.Idea
+@{
+
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+}
+<div class="row">
+
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1">Your Idea</h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Idea", ActionName = "Index", ModuleName = Module.MyIdea, SectionName = ModuleSection.MyIdea_Ideaoutofhead, flag = true }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <form class="form-material m-t-40">
+
+                    <div class="form-group">
+                        <h5>@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaExplain").FirstOrDefault().QuestionText : "" )</h5>
+                        <textarea class="form-control form-control-line detailtextarea" id="IdeaExplain" name="IdeaExplain" readonly>@Model.IdeaExplain</textarea>
+                        <input type="hidden" id="IdeaID" value="@Model.IdeaID" />
+
+
+                    </div>
+                </form>
+                <h4 class="card-title m-t-40" id="22">Lets break down the idea</h4>
+
+
+                <form class="form-material m-t-40">
+
+                    <div class="form-group">
+                        @{ var arrayStartupType = String.IsNullOrEmpty(@Model.IdeaBreakDown.StartupType) == false ? @Model.IdeaBreakDown.StartupType.Split(',').ToArray() : new string[0]; }
+                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupType").FirstOrDefault().QuestionText : "" )
+                        @foreach (var item in ViewBag.MasterStartup)
+                        {
+                            if (Array.Exists(arrayStartupType, x => x == Convert.ToString(@item.ID)) == true)
+                            {<div class="custom-checkbox">
+                                    <div class="iradio_square-blue checked disabled" style="position: relative;"><input type="radio" class="check" id="square-radio-disabled" disabled="" data-radio="iradio_square-red" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <label for="square-radio-disabled">@item.Value</label>
+                                </div>
+                            }
+
+
+
+
+
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.StartupTechnology))
+                    {
+                        <div class="form-group">
+                            @{ var arrayStartupTechnology = String.IsNullOrEmpty(@Model.IdeaBreakDown.StartupTechnology) == false ? @Model.IdeaBreakDown.StartupTechnology.Split(',').ToArray() : new string[0]; }
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "" )  </label>
+                            @foreach (var item in ViewBag.MasterTechnology)
+                            {
+                                if (Array.Exists(arrayStartupTechnology, x => x == Convert.ToString(@item.ID)) == true)
+                                {<div class=" custom-checkbox">
+                                        <div class="iradio_square-blue checked disabled" style="position: relative;"><input type="radio" class="check" id="square-radio-disabled" disabled="" data-radio="iradio_square-red" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                        <label for="square-radio-disabled">@item.Value</label>
+                                    </div>
+                                }
+
+
+
+
+                            }
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.ProblemSolve))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolve").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.ProblemSolve</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.ProblemSolver))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.ProblemSolver</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.FeedBackReceived))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedBackReceived").FirstOrDefault().QuestionText : "")  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.FeedBackReceived</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.FeedBackFrom))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedBackFrom").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.FeedBackFrom</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.FeedBackFrom))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductDemand").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.FeedBackFrom</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.Niche))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Niche").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.Niche</textarea>
+
+                        </div>
+                    }
+                    @if (Model.IdeaBreakDown.InMarketAlready != null)
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InMarketAlready").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.InMarketAlready</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaBreakDown.SpaceExist))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SpaceExist").FirstOrDefault().QuestionText : "")  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.SpaceExist</textarea>
+
+                        </div>
+                    }
+
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Scalable").FirstOrDefault().QuestionText : "")  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaBreakDown.Scalable</textarea>
+
+                        </div>
+
+                </form>
+
+
+
+
+
+                <h4 class="card-title m-t-40" id="3">  About You</h4>
+                <form class="form-material m-t-40">
+                    @if (!string.IsNullOrEmpty(Model.AboutYou.Entrepreneur))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Entrepreneur").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.AboutYou.Entrepreneur</textarea>
+
+                    </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.AboutYou.YearsDoing))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().QuestionText : "")  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.AboutYou.YearsDoing</textarea>
+
+                    </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.AboutYou.Experience))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.AboutYou.Experience</textarea>
+
+                    </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.AboutYou.Priorities))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "")  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.AboutYou.Priorities</textarea>
+
+                    </div>
+                    }
+
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EndGoal").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.EndGoalList)
+                            {
+                                if (@item.ID == @Model.AboutYou.EndGoal)
+                                { @item.Value}
+                            }</textarea>
+
+                    </div>
+
+
+                </form>
+                <h4 class="card-title m-t-40" id="4">The Company</h4>
+                <form class="form-material m-t-40">
+
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanySetup").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.CompanySetupList) { if (@item.ID == @Model.Company.CompanySetup) { @item.Value} }</textarea>
+
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Company.CompanyName))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.CompanyName</textarea>
+
+                    </div>
+                    }
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HaveGotDomain").FirstOrDefault().QuestionText : "")  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.CompanySetupList) { if (@item.ID == @Model.Company.HaveGotDomain) { @item.Value} }</textarea>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Company.DomainName))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.DomainName</textarea>
+
+                    </div>
+                    }
+
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Cofounder").FirstOrDefault().QuestionText : "")  </label> 
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.CofounderList) { if (@item.ID == @Model.Company.Cofounder) { @item.Value} }</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SupportTechnically").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.SupportTechnicallyList) { if (@item.ID == @Model.Company.SupportTechnically) { @item.Value} }</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BuildFrom").FirstOrDefault().QuestionText : "")  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.BuildFromList) { if (@item.ID == @Model.Company.BuildFrom) { @item.Value} }</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.BrandThought</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.CompanyMission</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.CompanyLookFeel</textarea>
+
+                    </div>
+                </form>
+                <h4 class="card-title m-t-40" id="5">Selling the Idea</h4>
+                <form class="form-material m-t-40">
+
+
+                    <div class="form-group">
+                        @{ var arraySellType = String.IsNullOrEmpty(@Model.IdeaSelling.SellType) == false ? @Model.IdeaSelling.SellType.Split(',').ToArray() : new string[0]; }
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellType").FirstOrDefault().QuestionText : "" )  </label>
+                        @foreach (var item in ViewBag.MasterSelling)
+                        {
+                            if (Array.Exists(arraySellType, x => x == Convert.ToString(@item.ID)) == true)
+                            {<div class="custom-checkbox">
+                                    <div class="iradio_square-blue checked disabled" style="position: relative;"><input type="radio" class="check" id="square-radio-disabled" disabled="" data-radio="iradio_square-red" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <label for="square-radio-disabled">@item.Value</label>
+                                </div>
+                            }
+                        }
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaSelling.ProductBuy</textarea>
+
+                    </div>
+
+                    <div class="form-group">
+                        @{ var arrayProductCharge = String.IsNullOrEmpty(@Model.IdeaSelling.ProductCharge) == false ? @Model.IdeaSelling.ProductCharge.Split(',').ToArray() : new string[0]; }
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductCharge").FirstOrDefault().QuestionText : "" )  </label>
+                        @foreach (var item in ViewBag.MasterCharge)
+                        {
+                            if (Array.Exists(arrayProductCharge, x => x == Convert.ToString(@item.ID)) == true)
+                            {<div class=" custom-checkbox">
+                                    <div class="iradio_square-blue checked disabled" style="position: relative;"><input type="radio" class="check" id="square-radio-disabled" disabled="" data-radio="iradio_square-red" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <label for="square-radio-disabled">@item.Value</label>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ChargeGoing").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaSelling.ChargeGoing</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellTo").FirstOrDefault().QuestionText : "")  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.SellToList) { if (@item.ID == Convert.ToInt32(@Model.IdeaSelling.SellTo)) { @item.Value} }</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaSelling.CustomerFindPlan</textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SaleStaffPlan").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.SaleStaffPlanList) { if (@item.ID == @Model.IdeaSelling.SaleStaffPlan) { @item.Value} }</textarea>
+
+                    </div>
+                </form>
+                <h4 class="card-title m-t-40" id="6">The Money</h4>
+                <form class="form-material m-t-40">
+
+                    <div class="form-group">
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessCost").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea class="form-control form-control-line detailtextarea" readonly>@foreach (var item in @ViewBag.BusinessCostLList) { if (@item.ID == @Model.Money.BusinessCost) { @item.Value} }</textarea>
+
+                    </div>
+
+                    @if (string.IsNullOrEmpty(Model.Money.Affort))
+                    {
+                    <div class="form-group">
+                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().QuestionText : "" )  </label>
+                        <textarea id="Affort" name="Affort" class="form-control detailtextarea" oninput="auto_grow_idea_textarea(this)"> @Model.Money.Affort</textarea>
+
+                    </div>
+                    }
+                    @if (string.IsNullOrEmpty(Model.Money.MoneyRaisePlan))
+                    {
+                    <div class="form-group">
+                        @{ var arrayMoneyRaisePlan = String.IsNullOrEmpty(Model.Money.MoneyRaisePlan) == false ? Model.Money.MoneyRaisePlan.Split(',').ToArray() : new string[0]; }
+                        <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MoneyRaisePlan").FirstOrDefault().QuestionText : "" )  </label>
+                        @foreach (var item in ViewBag.MasterMoneyRasie)
+                        {
+                            if (Array.Exists(arrayMoneyRaisePlan, x => x == Convert.ToString(@item.ID)) == true)
+                            {<div class="custom-checkbox">
+                                    <div class="iradio_square-blue checked disabled" style="position: relative;"><input type="radio" class="check" id="square-radio-disabled" disabled="" data-radio="iradio_square-red" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <label for="square-radio-disabled">@item.Value</label>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Money.ProfitableMake))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().QuestionText : "")  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly> @Model.Money.ProfitableMake</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.IdeaSelling.CustomerFindPlan))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.IdeaSelling.CustomerFindPlan</textarea>
+
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Money.ProfitableThinkTime))
+                    {
+                        <div class="form-group">
+                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().QuestionText : "" )  </label>
+                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Money.ProfitableThinkTime</textarea>
+
+                        </div>
+                    }
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
+            </ol>
+        </div>
+
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    Your Idea
+                    <div class="pull-right" style="text-align:right">@ViewBag.ProgressData.YourIdeaProgressData% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProgressData.YourIdeaProgressData%; height: 6px;"> <span class="sr-only">@ViewBag.ProgressData.YourIdeaProgressData % Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    Lets break down the idea
+
+                    <div class="pull-left" style="text-align:right">@ViewBag.ProgressData.IdeaBreakDownProgressData% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProgressData.IdeaBreakDownProgressData%; height: 6px;"> <span class="sr-only">@ViewBag.ProgressData.IdeaBreakDownProgressData% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#3" class="list-group-item">
+                    About You
+                    <div class="pull-left" style="text-align:right">@ViewBag.ProgressData.AboutYouProgressData% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProgressData.AboutYouProgressData%; height: 6px;"> <span class="sr-only">@ViewBag.ProgressData.AboutYouProgressData% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#4" class="list-group-item">
+                    The Company
+                    <div class="pull-left" style="text-align:right">@ViewBag.ProgressData.CompanyProgressData% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProgressData.CompanyProgressData%; height: 6px;"> <span class="sr-only">@ViewBag.ProgressData.CompanyProgressData% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#5" class="list-group-item">
+                    Selling the Idea
+
+                    <div class="pull-left" style="text-align:right">@ViewBag.ProgressData.IdeaSellingProgressData% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProgressData.IdeaSellingProgressData%; height: 6px;"> <span class="sr-only">@ViewBag.ProgressData.IdeaSellingProgressData% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#6" class="list-group-item">
+                    The Money
+                    <div class="pull-left" style="text-align:right">@ViewBag.ProgressData.MoneyProgressData% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProgressData.MoneyProgressData%; height: 6px;"> <span class="sr-only">@ViewBag.ProgressData.MoneyProgressData% Complete</span></div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+</div>

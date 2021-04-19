@@ -1,0 +1,171 @@
+﻿
+@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.KeyFinding1
+
+
+<div class="row" id="validation">
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "KeyFinding", ModuleName = Module.MarketResearch, SectionName = ModuleSection.MarketResearch_KeyFindings }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form id="frmKeyFinding" method="post" class="validation-wizard wizard-circle">
+
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="KeyFindingID" name="KeyFindingID" value="@Model.KeyFindingID" />
+                    <!-- Step 1 -->
+                    <h6>Market Research Results </h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["InterviewKeyFinding"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="InterviewKeyFinding" name="InterviewKeyFinding">@Model.MarketResearchResults.InterviewKeyFinding</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["InterviewKeyFindingConfident"]</label>
+
+                                    <select class="custom-select col-12  progress-required"  id="InterviewKeyFindingConfident" name="InterviewKeyFindingConfident">
+                                        <option value=""> -- Please select -- </option>
+                                        <option value="1" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
+                                        <option value="2" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
+                                        <option value="3" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
+                                        <option value="4" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
+                                        <option value="5" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+
+                                    </select>
+
+                                </div>
+                                @*<input type="hidden" id="InterviewKeyFindingConfident" name="InterviewKeyFindingConfident" value="@Model.MarketResearchResults.InterviewKeyFindingConfident"/>
+                                    <div id="JsInterviewKeyFindingConfident"></div>*@
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["ObservationKeyFinding"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="ObservationKeyFinding" name="ObservationKeyFinding">@Model.MarketResearchResults.ObservationKeyFinding</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["ObservationKeyFindingConfident"]</label>
+
+                                    <select class="custom-select col-12  progress-required" id="ObservationKeyFindingConfident" name="ObservationKeyFindingConfident">
+                                        <option value=""> -- Please select -- </option>
+                                        <option value="1" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
+                                        <option value="2" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
+                                        <option value="3" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
+                                        <option value="4" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
+                                        <option value="5" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+
+                                    </select>
+                                </div>
+                                @*<input type="hidden" id="ObservationKeyFindingConfident" name="ObservationKeyFindingConfident" value="@Model.MarketResearchResults.ObservationKeyFindingConfident" />
+                                    <div id="jsObservationKeyFindingConfident"></div>*@
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["SurveyKeyFinding"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="SurveyKeyFinding" name="SurveyKeyFinding">@Model.MarketResearchResults.SurveyKeyFinding</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["SurveyKeyFindingConfident"]</label>
+
+                                    <select class="custom-select col-12  progress-required" id="SurveyKeyFindingConfident" name="SurveyKeyFindingConfident">
+                                        <option value=""> -- Please select -- </option>
+                                        <option value="1" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
+                                        <option value="2" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
+                                        <option value="3" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
+                                        <option value="4" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
+                                        <option value="5" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+
+                                    </select>
+                                    @*<input type="hidden" id="SurveyKeyFindingConfident" name="SurveyKeyFindingConfident" value="@Model.MarketResearchResults.SurveyKeyFindingConfident" />
+        <div id="jsSurveyKeyFindingConfident"></div>*@<input type="hidden" id="SurveyKeyFindingConfident" name="SurveyKeyFindingConfident" value="@Model.MarketResearchResults.SurveyKeyFindingConfident" />
+                                    @*<div id="jsSurveyKeyFindingConfident"></div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["OnlineResearchKeyFinding"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="OnlineResearchKeyFinding" name="OnlineResearchKeyFinding">@Model.MarketResearchResults.OnlineResearchKeyFinding</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["OnlineResearchKeyFindingConfident"]</label>
+
+                                    <select class="custom-select col-12  progress-required" id="OnlineResearchKeyFindingConfident" name="OnlineResearchKeyFindingConfident">
+                                        <option value=""> -- Please select -- </option>
+                                        <option value="1" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
+                                        <option value="2" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
+                                        <option value="3" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
+                                        <option value="4" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
+                                        <option value="5" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+
+                                    </select>
+                                    @*<input type="hidden" id="OnlineResearchKeyFindingConfident" name="OnlineResearchKeyFindingConfident" value="@Model.MarketResearchResults.OnlineResearchKeyFindingConfident" />
+        <div id="jsOnlineResearchKeyFindingConfident"></div>*@<input type="hidden" id="OnlineResearchKeyFindingConfident" name="OnlineResearchKeyFindingConfident" value="@Model.MarketResearchResults.OnlineResearchKeyFindingConfident" />
+                                    @*<div id="jsOnlineResearchKeyFindingConfident"></div>*@
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+

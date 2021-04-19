@@ -1,0 +1,46 @@
+﻿
+
+<link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+@section PageStyle
+{
+    <style>
+        .inActiveSurvey {
+            border-left: 2px solid red !important;
+        }
+    </style>
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor" style="color:#fff">To do</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item" style="color:#fff">To do </li>
+            </ol>
+
+            <a href="~/Todo/Add" class="btn btn-info d-none d-lg-block m-l-15">Create New</a>
+            @*<a href="~/Questionnaire/Create" class="btn btn-info d-none d-lg-block m-l-15 JsDownloadIdea">Add Survey</a>
+                <a href="~/SurveyProfessional" class="btn btn-success d-none d-lg-block m-l-15">Bring Professional</a>*@
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <section id="jsMainList" data-controller="ToDo" data-action="TodoList"> </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScript
+{
+    <link href="~/Content/app_css/toastr.min.css" rel="stylesheet" />
+    <script src="~/Content/app_script/toastr.min.js"></script>
+    <script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>
+}
+

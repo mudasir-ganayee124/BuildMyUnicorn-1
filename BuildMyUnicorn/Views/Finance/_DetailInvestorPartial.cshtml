@@ -1,0 +1,488 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.Investor
+<div class="row" id="validation">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Finance", ActionName = "Investors", ModuleName = Module.Finance, SectionName = ModuleSection.Finance_FinancialProjections }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="InvestorID" name="InvestorID" value="@Model.InvestorID" />
+
+                    <h4 class="text-center bold">Friends and Family</h4>
+                    <section>
+
+                        <div class="row">
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.FriendsFamily.GrownExcitedCompany) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GrownExcitedCompany"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GrownExcitedCompany" name="GrownExcitedCompany" readonly>@Model.FriendsFamily.GrownExcitedCompany</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.FriendsFamily.InvolvementLevelRequired) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["InvolvementLevelRequired"]  </label>
+                                    <textarea class='form-control ideatextarea' id="InvolvementLevelRequired" name="InvolvementLevelRequired" readonly>@Model.FriendsFamily.InvolvementLevelRequired</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.Timeframe) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Timeframe"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Timeframe" name="Timeframe" readonly>@Model.FriendsFamily.Timeframe</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.GetBack) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GetBack"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GetBack" name="GetBack" readonly>@Model.FriendsFamily.GetBack</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.RealRisks) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["RealRisks"]  </label>
+                                    <textarea class='form-control ideatextarea' id="RealRisks" name="RealRisks" readonly>@Model.FriendsFamily.RealRisks</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.LoanOrInvestment) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["LoanOrInvestment"]  </label>
+                                    <textarea class='form-control ideatextarea' id="LoanOrInvestment" name="LoanOrInvestment" readonly>@Model.FriendsFamily.LoanOrInvestment</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12   @( string.IsNullOrEmpty(Model.FriendsFamily.Investing) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Investing"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Investing" name="Investing" readonly>@Model.FriendsFamily.Investing</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.BusinessMoneyPut) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["BusinessMoneyPut"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessMoneyPut" name="BusinessMoneyPut" readonly>@Model.FriendsFamily.BusinessMoneyPut</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.PayingCustomer) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["PayingCustomer"]  </label>
+                                    <textarea class='form-control ideatextarea' id="PayingCustomer" name="PayingCustomer" readonly>@Model.FriendsFamily.PayingCustomer</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.FullTimeDoing) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["FullTimeDoing"]  </label>
+                                    <textarea class='form-control ideatextarea' id="FullTimeDoing" name="FullTimeDoing" readonly>@Model.FriendsFamily.FullTimeDoing</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.DecisionMakingAbility) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["DecisionMakingAbility"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DecisionMakingAbility" name="DecisionMakingAbility" readonly>@Model.FriendsFamily.DecisionMakingAbility</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section>
+
+
+                    <h4 class="text-center bold">Angel investor</h4>
+                    <section>
+
+                        <div class="row">
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ProblemWantSolving) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemWantSolving"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ProblemWantSolving" name="ProblemWantSolving" readonly>@Model.AngelInvestor.ProblemWantSolving</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ProblemKindGroup) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemKindGroup"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ProblemKindGroup" name="ProblemKindGroup" readonly>@Model.AngelInvestor.ProblemKindGroup</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.HowMany) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowMany"]  </label>
+                                    <textarea class='form-control ideatextarea' id="HowMany" name="HowMany" readonly>@Model.AngelInvestor.HowMany</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.HowDifferentYou) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowDifferentYou"]  </label>
+                                    <textarea class='form-control ideatextarea' id="HowDifferentYou" name="HowDifferentYou" readonly>@Model.AngelInvestor.HowDifferentYou</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12   @( string.IsNullOrEmpty(Model.AngelInvestor.CompeteWith) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompeteWith"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CompeteWith" name="CompeteWith" readonly>@Model.AngelInvestor.CompeteWith</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.MakeMoney) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoney"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MakeMoney" name="MakeMoney" readonly>@Model.AngelInvestor.MakeMoney</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.MakeMoneyInvestors) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoneyInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MakeMoneyInvestors" name="MakeMoneyInvestors" readonly>@Model.AngelInvestor.MakeMoneyInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.BusinessGrowFast) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessGrowFast"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessGrowFast" name="BusinessGrowFast" readonly>@Model.AngelInvestor.BusinessGrowFast</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.Proprietary) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Proprietary"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Proprietary" name="Proprietary" readonly>@Model.AngelInvestor.Proprietary</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.TractionMade) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["TractionMade"]  </label>
+                                    <textarea class='form-control ideatextarea' id="TractionMade" name="TractionMade" readonly>@Model.AngelInvestor.TractionMade</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.MileStonesMet) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MileStonesMet"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MileStonesMet" name="MileStonesMet" readonly>@Model.AngelInvestor.MileStonesMet</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.WordoutGet) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WordoutGet"]  </label>
+                                    <textarea class='form-control ideatextarea' id="WordoutGet" name="WordoutGet" readonly>@Model.AngelInvestor.WordoutGet</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.SalesClose) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesClose"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesClose" name="SalesClose" readonly>@Model.AngelInvestor.SalesClose</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.GetStarted) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GetStarted"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GetStarted" name="GetStarted" readonly>@Model.AngelInvestor.GetStarted</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.SpendInvestorsMoney) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SpendInvestorsMoney"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SpendInvestorsMoney" name="SpendInvestorsMoney" readonly>@Model.AngelInvestor.SpendInvestorsMoney</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.BusinessTeamSuited) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessTeamSuited"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessTeamSuited" name="BusinessTeamSuited" readonly>@Model.AngelInvestor.BusinessTeamSuited</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.IdeaComeup) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["IdeaComeup"]  </label>
+                                    <textarea class='form-control ideatextarea' id="IdeaComeup" name="IdeaComeup" readonly>@Model.AngelInvestor.IdeaComeup</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.DecideTo) ? "hide" : "")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["DecideTo"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DecideTo" name="DecideTo" readonly>@Model.AngelInvestor.DecideTo</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ObjectionAbout) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ObjectionAbout"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ObjectionAbout" name="ObjectionAbout" readonly>@Model.AngelInvestor.ObjectionAbout</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.YourInvestors) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["YourInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="YourInvestors" name="YourInvestors" readonly>@Model.AngelInvestor.YourInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.PatentStrong) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["PatentStrong"]  </label>
+                                    <textarea class='form-control ideatextarea' id="PatentStrong" name="PatentStrong" readonly>@Model.AngelInvestor.PatentStrong</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.GrowFaster) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GrowFaster"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GrowFaster" name="GrowFaster" readonly>@Model.AngelInvestor.GrowFaster</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.MarketingExpenseRealize) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MarketingExpenseRealize"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MarketingExpenseRealize" name="MarketingExpenseRealize" readonly>@Model.AngelInvestor.MarketingExpenseRealize</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.BusinessComparable) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessComparable"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessComparable" name="BusinessComparable" readonly>@Model.AngelInvestor.BusinessComparable</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.WhyNeedInvestors) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WhyNeedInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="WhyNeedInvestors" name="WhyNeedInvestors" readonly>@Model.AngelInvestor.WhyNeedInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 s @( string.IsNullOrEmpty(Model.AngelInvestor.SalesMade) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesMade"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesMade" name="SalesMade" readonly>@Model.AngelInvestor.SalesMade</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.CompaniesTalked) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompaniesTalked"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CompaniesTalked" name="CompaniesTalked" readonly>@Model.AngelInvestor.CompaniesTalked</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.Interested) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Interested"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Interested" name="Interested" readonly>@Model.AngelInvestor.Interested</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ShownTo) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ShownTo"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ShownTo" name="ShownTo" readonly>@Model.AngelInvestor.ShownTo</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.EvaluationComeup) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["EvaluationComeup"]  </label>
+                                    <textarea class='form-control ideatextarea' id="EvaluationComeup" name="EvaluationComeup" readonly>@Model.AngelInvestor.EvaluationComeup</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section>
+
+                    <h4 class="text-center bold">VC</h4>
+                    <section>
+
+                        <div class="row">
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.GreatManagementTeam) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["GreatManagementTeam"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GreatManagementTeam" name="GreatManagementTeam" readonly>@Model.VC.GreatManagementTeam</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.BigMarketOportunity) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["BigMarketOportunity"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BigMarketOportunity" name="BigMarketOportunity" readonly>@Model.VC.BigMarketOportunity</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.TractionPositiveAchieved) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["TractionPositiveAchieved"]  </label>
+                                    <textarea class='form-control ideatextarea' id="TractionPositiveAchieved" name="TractionPositiveAchieved" readonly>@Model.VC.TractionPositiveAchieved</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.FoundersUnderstand) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["FoundersUnderstand"]  </label>
+                                    <textarea class='form-control ideatextarea' id="FoundersUnderstand" name="FoundersUnderstand" readonly>@Model.VC.FoundersUnderstand</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.InitialInvestorPitchDesk) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["InitialInvestorPitchDesk"]  </label>
+                                    <textarea class='form-control ideatextarea' id="InitialInvestorPitchDesk" name="InitialInvestorPitchDesk" readonly>@Model.VC.InitialInvestorPitchDesk</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.BusinessPotentialRisk) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["BusinessPotentialRisk"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessPotentialRisk" name="BusinessPotentialRisk" readonly>@Model.VC.BusinessPotentialRisk</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ProductMilestone) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ProductMilestone"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ProductMilestone" name="ProductMilestone" readonly>@Model.VC.ProductMilestone</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.KeyFeatures) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["KeyFeatures"]  </label>
+                                    <textarea class='form-control ideatextarea' id="KeyFeatures" name="KeyFeatures" readonly>@Model.VC.KeyFeatures</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.InvestmentCapital) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["InvestmentCapital"]  </label>
+                                    <textarea class='form-control ideatextarea' id="InvestmentCapital" name="InvestmentCapital" readonly>@Model.VC.InvestmentCapital</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ExpectedEvaluation) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ExpectedEvaluation"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ExpectedEvaluation" name="ExpectedEvaluation" readonly>@Model.VC.ExpectedEvaluation</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.DifferentiatedTechnology) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["DifferentiatedTechnology"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DifferentiatedTechnology" name="DifferentiatedTechnology" readonly>@Model.VC.DifferentiatedTechnology</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ReplicateTechnology) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ReplicateTechnology"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ReplicateTechnology" name="ReplicateTechnology" readonly>@Model.VC.ReplicateTechnology</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.KeyIntellectualProperty) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["KeyIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="KeyIntellectualProperty" name="KeyIntellectualProperty" readonly>@Model.VC.KeyIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ClaimIntellectualProperty) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ClaimIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ClaimIntellectualProperty" name="ClaimIntellectualProperty" readonly>@Model.VC.ClaimIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ViolateIntellectualProperty) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ViolateIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ViolateIntellectualProperty" name="ViolateIntellectualProperty" readonly>@Model.VC.ViolateIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.OwnedIntellectualProperty) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["OwnedIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="OwnedIntellectualProperty" name="OwnedIntellectualProperty" readonly>@Model.VC.OwnedIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.DevelopedIntellectualProperty) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["DevelopedIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DevelopedIntellectualProperty" name="DevelopedIntellectualProperty" readonly>@Model.VC.DevelopedIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.CompanyFinancialProjection) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["CompanyFinancialProjection"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CompanyFinancialProjection" name="CompanyFinancialProjection" readonly>@Model.VC.CompanyFinancialProjection</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.Margins) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["Margins"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Margins" name="Margins" readonly>@Model.VC.Margins</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.SalesMarketingModel) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["SalesMarketingModel"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesMarketingModel" name="SalesMarketingModel" readonly>@Model.VC.SalesMarketingModel</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ForecastingGrowth) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ForecastingGrowth"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ForecastingGrowth" name="ForecastingGrowth" readonly>@Model.VC.ForecastingGrowth</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ExistingInvestors) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ExistingInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ExistingInvestors" name="ExistingInvestors" readonly>@Model.VC.ExistingInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.AchieveMilestone) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["AchieveMilestone"]  </label>
+                                    <textarea class='form-control ideatextarea' id="AchieveMilestone" name="AchieveMilestone" readonly>@Model.VC.AchieveMilestone</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.CurrentCash) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["CurrentCash"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CurrentCash" name="CurrentCash" readonly>@Model.VC.CurrentCash</textarea>
+                                </div>
+                            </div>
+                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.StructurePlan) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["StructurePlan"]  </label>
+                                    <textarea class='form-control ideatextarea' id="StructurePlan" name="StructurePlan" readonly>@Model.VC.StructurePlan</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="round" title="Total Questions">65</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">@Model.Answered </span></li>
+            <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(65 - Model.Answered)</span></li>
+        </ol>
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#22" class="list-group-item">
+                    FriendsFamily
+
+                    <div class="pull-left" style="text-align:right">@Model.FriendsFamily.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.FriendsFamily.Completed%; height: 6px;"> <span class="sr-only">@Model.FriendsFamily.Completed% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#1" class="list-group-item">
+                    Angel Investor
+                    <div class="pull-right" style="text-align:right">@Model.AngelInvestor.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.AngelInvestor.Completed%; height: 6px;"> <span class="sr-only">@Model.AngelInvestor.Completed % Complete</span></div>
+                    </div>
+                </a>
+
+                <a href="#22" class="list-group-item">
+                    VC
+
+                    <div class="pull-left" style="text-align:right">@Model.VC.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.VC.Completed%; height: 6px;"> <span class="sr-only">@Model.VC.Completed% Complete</span></div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

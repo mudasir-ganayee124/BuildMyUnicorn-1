@@ -1,0 +1,267 @@
+﻿
+@using Business_Model.Model;
+@using System.Configuration;
+@model Business_Model.Model.BuyerPersona
+@section PageStyle
+{
+    <link href="~/assets/node_modules/wizard/steps.css" rel="stylesheet">
+    <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="~/assets/node_modules/image-picker/image-picker.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/jquery-confirm/jquery-confirm.css" rel="stylesheet" />
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor"><a href="~/Business/Customer?CustomerID=@Model.CustomerID"><i class="mdi mdi-arrow-left"></i>Back to Customer</a></h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">The Business</li>
+                <li class="breadcrumb-item active">Buyer Persona</li>
+            </ol>
+
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <img src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/assets/images/avtar/Avatar Users2_@(Model.AvtarID).png" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">@Model.Name </h4>
+
+
+                </center>
+            </div>
+            @*<div class="form-group text-center">
+
+                <button type="button" class="btn btn-danger" id="jsDeleteBuyerpersona">Delete</button>
+
+
+            </div>*@
+
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <div class="tab-pane active" id="settings" role="tabpanel">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <form id="frmEditBuyerPersona" class="form-material m-t-40" method="post">
+                                    <input type="hidden" id="EntityState" name="EntityState" value="2" />
+                                    <input type="hidden" id="CustomerID" name="CustomerID" value="@Model.CustomerID" />
+                                    <input type="hidden" id="BuyerPersonaID" name="BuyerPersonaID" value="@Model.BuyerPersonaID" />
+                                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                                    <input type="hidden" id="AvtarID" name="AvtarID" value="@Model.AvtarID" />
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="wint1">  @ViewBag.TitleBuyerPersona["Name"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="Name" name="Name" value="@Model.Name">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="wint1">  @ViewBag.TitleBuyerPersona["JobTitle"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="JobTitle" name="JobTitle" value="@Model.JobTitle">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Responsibility"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="Responsibility" name="Responsibility" value="@Model.Responsibility">
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["GenderID"]  </label>
+                                                    @Html.DropDownList("GenderID", new SelectList(ViewBag.GenderList, "ID", "Value", Model.GenderID), "- Please select -", new { @class = "custom-select col-12" })
+
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["AgeID"]  </label>
+                                                    @Html.DropDownList("AgeID", new SelectList(ViewBag.AgeList, "ID", "Value", Model.AgeID), "- Please select -", new { @class = "custom-select col-12" })
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["IncomeID"]  </label>
+                                                    @Html.DropDownList("IncomeID", new SelectList(ViewBag.IncomeList, "ID", "Value", Model.IncomeID), "- Please select -", new { @class = "custom-select col-12" })
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Location"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="Location" name="Location" value="@Model.Location">
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["PainPoints"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="PainPoints" name="PainPoints" value="@Model.PainPoints">
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Goals"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="Goals" name="Goals" value="@Model.Goals">
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["WantsKnow"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="WantsKnow" name="WantsKnow" value="@Model.WantsKnow">
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["NotWantsKnow"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="NotWantsKnow" name="NotWantsKnow" value="@Model.NotWantsKnow">
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["DriveBuy"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="DriveBuy" name="DriveBuy" value="@Model.DriveBuy">
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["BuyFrom"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="BuyFrom" name="BuyFrom" value="@Model.BuyFrom">
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Findus"]  </label>
+                                                    <input type="text" class="form-control  progress-required " id="Findus" name="Findus" value="@Model.Findus">
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+
+                                    <div class="form-group text-right">
+
+                                        <button type="submit" class="btn btn-info">Update</button>
+
+
+                                    </div>
+                                </form>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+@section PageScript
+{
+    <script src="~/assets/node_modules/wizard/jquery.steps.min.js"></script>
+    <script src="~/assets/node_modules/wizard/jquery.validate.min.js"></script>
+    <script src="~/assets/node_modules/jquery-confirm/jquery-confirm.js"></script>
+    <script src="~/assets/node_modules/image-picker/image-picker.js"></script>
+    <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
+    <script src="~/Content/app_script/page_script/customer.js?version=@DateTime.Now"></script>
+}
+

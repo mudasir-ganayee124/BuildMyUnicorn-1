@@ -1,0 +1,454 @@
+﻿@model IEnumerable<Business_Model.Model.FinancialProjection>
+<div class="col-12">
+
+    @if (Model.Count() > 0)
+    {
+        List<int> YearList = Model.Select(o => o.Year).Distinct().ToList();
+
+        foreach (var year in YearList)
+        {
+            List<Business_Model.Model.FinancialProjection> ModelList = Model.Where(x => x.Year == year).ToList();
+            List<int> ActivityList = Model.Where(y => y.Year == year).Select(o => o.ActivityID).Distinct().ToList();
+            <div class="card">
+                <div class="card-body">
+
+
+                    @*<label><span class="badge badge-pill badge-info"> <b> Year - 202@(year) </b></span></label>*@
+
+                    @*<div class="row">
+
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-11">
+                                <table id="example23"
+                                       class="display nowrap table table-hover table-striped table-bordered"
+                                       cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                </table>
+                            </div>
+                        </div>*@
+
+                    <div class="col-md-12">
+
+                        <label><b> Customers </b></label>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%" style="margin-bottom:0px">
+                                <tr class="header">
+                                    <td colspan="3">   <label><span class="badge badge-pill badge-info"> <b> Year - 202@(year) </b></span></label></td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                    <td>6</td>
+                                    <td>7</td>
+                                    <td>8</td>
+                                    <td>9</td>
+                                    <td>10</td>
+                                    <td>11</td>
+                                    <td>12</td>
+                                    <td>Total</td>
+                                </tr>
+                                <tr class="separator data"> <td colspan="16" style="height:60px; padding-bottom:1px  !important; vertical-align:bottom; text-align:right" valign="baseline">  <label style="margin-bottom:0px !important"><span class="badge zmdi-badge-check badge-primary"><b> Customers </b></span></label></td> </tr>
+                                @foreach (var activity in ActivityList)
+                                {
+                                    List<Business_Model.Model.FinancialProjection> MonthList = Model.Where(x => x.Year == year && x.ActivityID == activity).ToList();
+
+                                    <tr class="data">
+                                        <td colspan="3">
+                                            @if (activity == 1)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    General License
+                                                </label>
+                                            }
+                                            @if (activity == 2)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    Student Licence
+                                                </label>
+                                            }
+                                            @if (activity == 3)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    Affiliate
+                                                </label>
+                                            }
+                                            @if (activity == 4)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    Consultancy Services  (hours)
+                                                </label>
+                                            }
+                                        </td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 1).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 2).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 3).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 4).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 5).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 6).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 7).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 8).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 9).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 10).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 11).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 12).Select(o => o.Units).FirstOrDefault().ToString("n0"))</td>
+                                        <td>@( MonthList.Where(x => x.Year == year && x.ActivityID == activity).Sum(o => o.Units).ToString("n0"))</td>
+                                    </tr>
+                                }
+                                <tr class="separator revenue"> <td colspan="16" style="height:60px; padding-bottom:1px  !important; vertical-align:bottom; text-align:right" valign="baseline">  <label style="margin-bottom:0px !important"><span class="badge zmdi-badge-check badge-primary"><b> Revenue </b></span></label></td> </tr>
+                                @foreach (var activity in ActivityList)
+                                {
+                                    List<Business_Model.Model.FinancialProjection> MonthList = Model.Where(x => x.Year == year && x.ActivityID == activity).ToList();
+
+                                    <tr class="revenue">
+                                        <td colspan="3">
+                                            @if (activity == 1)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    General License
+                                                </label>
+                                            }
+                                            @if (activity == 2)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    Student Licence
+                                                </label>
+                                            }
+                                            @if (activity == 3)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    Affiliate
+                                                </label>
+                                            }
+                                            @if (activity == 4)
+                                            {
+
+
+                                                <label style="padding-top:12px">
+
+                                                    Consultancy Services  (hours)
+                                                </label>
+                                            }
+                                        </td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 1).Select(o => o.Charged).FirstOrDefault().ToString("n0"))"> @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 1).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 2).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 2).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 3).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 3).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 4).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 4).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 5).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 5).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 6).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 6).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 7).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 7).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 8).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 8).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 9).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 9).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 10).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 10).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 11).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 11).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 12).Select(o => o.Charged).FirstOrDefault().ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity && x.Month == 12).Select(o => o.Revenue).FirstOrDefault().ToString("n0"))</td>
+                                        <td title="Total Charged: @( MonthList.Where(x => x.Year == year && x.ActivityID == activity).Sum(o => o.Charged).ToString("n0"))">@( MonthList.Where(x => x.Year == year && x.ActivityID == activity).Sum(o => o.Revenue).ToString("n0"))</td>
+                                    </tr>
+
+
+
+                                }
+                                @foreach (var activity in ActivityList)
+                                {
+                                    List<Business_Model.Model.FinancialProjection> MonthList = Model.Where(x => x.Year == year).ToList();
+
+                                    <tr class="revenue">
+                                        <td colspan="3">
+
+
+                                            <label style="padding-top:12px">
+                                                <b>Total Revenue  </b>
+                                            </label>
+
+                                        </td>
+                                        <td> @( MonthList.Where(x => x.Year == year && x.Month == 1).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 2).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 3).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 4).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 5).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 6).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 7).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 8).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 9).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 10).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year && x.Month == 11).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 12).Sum(o => o.Revenue).ToString("n0"))</td>
+                                        <td> @( MonthList.Where(x => x.Year == year  && x.Month == 1).Sum(o => o.Revenue).ToString("n0"))</td>
+                                    </tr>
+
+                                    break;
+
+                                }
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-12">
+
+                        <label><b><a href="" class="jsRevenue">  Revenue <i class="mdi mdi-arrow-down"></i></a> </b></label>
+
+                    </div>
+
+                    <div class="hide jsRevenueContainer">
+
+                        <div class="row">
+
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-2">
+
+                                <label style="padding-top:12px">General License</label>
+
+                            </div>
+                            <div class="col-md-9">
+                                <table id="example23"
+                                       class="display nowrap table table-hover table-striped"
+                                       cellspacing="0" width="100%" style="margin-bottom:0px">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>124</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-2">
+
+                                <label style="padding-top:12px">Student License</label>
+
+                            </div>
+                            <div class="col-md-9">
+                                <table id="example23"
+                                       class="display nowrap table table-hover table-striped"
+                                       cellspacing="0" width="100%" style="margin-bottom:0px">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>124</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-2">
+
+                                <label style="padding-top:12px">General License - E</label>
+
+                            </div>
+                            <div class="col-md-9">
+                                <table id="example23"
+                                       class="display nowrap table table-hover table-striped"
+                                       cellspacing="0" width="100%" style="margin-bottom:0px">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>124</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-2">
+
+                                <label style="padding-top:12px">Student License - E</label>
+
+                            </div>
+                            <div class="col-md-9">
+                                <table id="example23"
+                                       class="display nowrap table table-hover table-striped"
+                                       cellspacing="0" width="100%" style="margin-bottom:0px">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>124</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-2">
+                                <div class="form-group" style="padding-top:12px">
+                                    <label style="padding-top:12px">Student License - E</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <table id="example23"
+                                       class="display nowrap table table-hover table-striped"
+                                       cellspacing="0" width="100%" style="margin-bottom:0px">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>124</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card text-center">
+                            <div class="card-header">
+
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">No Financial Projection Found</h4>
+                                <p class="card-text">Your Financial Projection will be added here.</p>
+
+                            </div>
+                            <div class="card-footer text-muted">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+
+</div>
+

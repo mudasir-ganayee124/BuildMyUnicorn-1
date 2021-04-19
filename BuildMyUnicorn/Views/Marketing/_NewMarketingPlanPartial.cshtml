@@ -1,0 +1,675 @@
+﻿@model Business_Model.Model.Marketing
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card">
+
+
+
+            <div class="card-body">
+                <center class="m-t-30">
+
+
+                    <h4 class="card-title m-t-10">Marketing Plans</h4>
+
+
+                </center>
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <form id="frmMarketings" method="post">
+
+                                <section>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["PlanName"] </label>
+                                                <textarea class='form-control form-control-line ideatextarea' id="PlanName" name="PlanName"></textarea>
+                                               
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["GoalID"] </label>
+                                           
+                                                @Html.DropDownList("GoalID", new SelectList(ViewBag.GoalList, "ID", "Value", @Model.MarketingPlan.GoalID), "- Please select -", new { @class = "custom-select col-12" })
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["KPIS"] </label>
+                                                <textarea class='form-control form-control-line ideatextarea' id="KPIS" name="KPIS"></textarea>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["BuyerPersonaID"] </label>
+                                                @Html.DropDownList("BuyerPersonaID", new SelectList(ViewBag.BuyerPersonaList, "BuyerPersonaID", "Name", @Model.MarketingPlan.BuyerPersonaID), "- Please select -", new { @class = "custom-select col-12" })
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["FindBuyers"]</label>
+                                                <textarea class='form-control form-control-line ideatextarea' id="FindBuyers" name="FindBuyers"></textarea>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["SellingProposition"]</label>
+                                                <textarea class='form-control form-control-line ideatextarea' id="SellingProposition" name="SellingProposition"></textarea>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["AudianceReachID"]</label>
+                                                @Html.DropDownList("AudianceReachID", new SelectList(ViewBag.AudianceReachList, "ID", "Value", @Model.MarketingPlan.AudianceReachID), "- Please select -", new { @class = "custom-select col-12" })
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="wint1">@ViewBag.TitleMarketPlan["TrackKPIS"]</label>
+                                                <textarea class='form-control form-control-line ideatextarea' id="TrackKPIS" name="TrackKPIS"></textarea>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </section>
+
+
+
+
+                            </form>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+
+            <center class="m-t-30">
+                <h4 class="card-title m-t-10">Marketing budget </h4>
+
+
+            </center>
+            <div class="card-body">
+
+              
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["Impressions"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="Impressions" name="Impressions">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["CTR"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="CTR" name="CTR">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["ConversionRate"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="ConversionRate" name="ConversionRate">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["QualifiedLeadsPercentage"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="QualifiedLeadsPercentage" name="QualifiedLeadsPercentage">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["GoodsCostPercentage"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="GoodsCostPercentage" name="GoodsCostPercentage">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["QualifiedLeadConversionPercentage"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="QualifiedLeadConversionPercentage" name="QualifiedLeadConversionPercentage">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["AvgCostPerClick"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="AvgCostPerClick" name="AvgCostPerClick">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["AvgSale"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="AvgSale" name="AvgSale">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleMarketBudget["Revenue"]</label>
+                                        <div class="input-group">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="ti-email"></i></span></div>*@
+                                            <input type="text" class="form-control jsBudgetChange" id="Revenue" name="Revenue">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+             
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <center class="m-t-30">
+                <h4 class="card-title m-t-10">Marketing budget </h4>
+
+
+            </center>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <br /> <br />
+                    <table class="table text-right display nowrap table table-hover table-striped  dataTable">
+
+                        <tbody>
+                            <tr class="odd">
+
+                                <th> @ViewBag.TitleMarketBudget["Clicks"]</th>
+
+                                <td><input type="hidden" id="Clicks" name="Clicks" value="" /><span id="jsClicks">0.00</span>  </td>
+                            </tr>
+                            <tr class="even">
+                                <th>
+                                    @ViewBag.TitleMarketBudget["Leads"]
+
+                                </th>
+                                <td><input type="hidden" id="Leads" name="Leads" value="" /><span id="jsLeads">0.00</span>  </td>
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["QualifiedLeads"]</th>
+                                <td><input type="hidden" id="QualifiedLeads" name="QualifiedLeads" value="" /><span id="jsQualifiedLeads">0.00 </span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["SalesNumber"]</th>
+                                <td><input type="hidden" id="SalesNumber" name="SalesNumber" value="" /><span id="jsSalesNumber">0.00 </span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["Revenue"]</th>
+                                <td><input type="hidden" id="Revenue" name="Revenue" value="" /><span id="jsRevenue">0.00</span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["GoodsCostSold"]</th>
+                                <td><input type="hidden" id="GoodsCostSold" name="GoodsCostSold" value="" /><span id="jsGoodsCostSold">0.00</span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["AdvertisingBudget"]</th>
+                                <td><input type="hidden" id="AdvertisingBudget" name="AdvertisingBudget" value="" /><span id="jsAdvertisingBudget">0.00</span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["QualifiedLeads"]</th>
+                                <td><input type="hidden" id="ProfitAfterAdvertising" name="ProfitAfterAdvertising" value="" /><span id="jsProfitAfterAdvertising">0.00 </span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["ProfitPercentage"]</th>
+                                <td><input type="hidden" id="ProfitPercentage" name="ProfitPercentage" value="" /><span id="jsProfitPercentage">0.00 </span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["ProfitPerClick"]</th>
+                                <td><input type="hidden" id="ProfitPerClick" name="ProfitPerClick" value="" /><span id="jsProfitPerClick">0.00 </span>  </td>
+
+                            </tr>
+                            <tr class="odd">
+                                <th> @ViewBag.TitleMarketBudget["TargetCostPerLead"]</th>
+                                <td><input type="hidden" id="TargetCostPerLead" name="TargetCostPerLead" value="" /><span id="jsTargetCostPerLead">0.00 </span>  </td>
+
+                            </tr>
+                         
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+
+
+
+
+</div>
+<div class="row">
+    <div class="col-md-12 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+
+            <button type="button" id="jsSubmitMarketPlan" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Save</button>
+
+        </div>
+        <br />
+    </div>
+    <br />
+</div>
+<div id="buyerPersonaModal" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Buyer Persona</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form id="frmBuyerPersona" class="form-horizontal mt-4" method="post">
+
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="wint1">  @ViewBag.TitleBuyerPersona["Name"]  </label>
+                                <input type="text" class="form-control  progress-required " id="Name" name="Name">
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="wint1">  @ViewBag.TitleBuyerPersona["JobTitle"]  </label>
+                                <input type="text" class="form-control  progress-required " id="JobTitle" name="JobTitle">
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @*<label for="wint1">  @ViewBag.TitleBuyerPersona["ImageID"]  </label>*@
+                                <input type="hidden" id="AvtarID" name="AvtarID" value="1" />
+
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right">
+                                        <a href="javascript:void(0)" class="btn btn-info" data-toggle="modal" data-target="#avtarModal" title="Avtar">
+                                            <div class="thumbnail"><img id="avtarSelected" class="image_picker_image" src="/assets/images/avtar/Avatar Users2_1.png" alt="Page 2" style="width:45px;height:45px"></div>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["IncomeID"]  </label>
+                                @Html.DropDownList("IncomeID", new SelectList(ViewBag.IncomeList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["GenderID"]  </label>
+                                @Html.DropDownList("GenderID", new SelectList(ViewBag.GenderList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["AgeID"]  </label>
+                                @Html.DropDownList("AgeID", new SelectList(ViewBag.AgeList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Responsibility"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="Responsibility" name="Responsibility" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Location"]  </label>
+                                <textarea class='form-control ideatextarea progress-required ' id="Location" name="Location" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["PainPoints"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="PainPoints" name="PainPoints" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Goals"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="Goals" name="Goals" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["WantsKnow"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="WantsKnow" name="WantsKnow" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["NotWantsKnow"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="NotWantsKnow" name="NotWantsKnow" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["DriveBuy"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="DriveBuy" name="DriveBuy" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["BuyFrom"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="BuyFrom" name="BuyFrom" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Findus"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="Findus" name="Findus" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info waves-effect text-left"> submit</button>
+                    <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="avtarModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-modal="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="picker">
+                            <select id="JsimagePicker" class="image-picker show-html form-control">
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_1.png' data-img-alt="Page 1" value='1'> Avatar Users2_1</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_2.png' data-img-alt="Page 2" value='2'> Avatar Users2_2  </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_3.png' data-img-class="first" data-img-alt="Page 3" value='3'>  Avatar Users2_3  </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_4.png' data-img-alt="Page 4" value='4'> Avatar Users2_4 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_5.png' data-img-alt="Page 5" value='5'>  Avatar Users2_5  </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_6.png' data-img-alt="Page 6" value='6'> Avatar Users2_6 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_7.png' data-img-alt="Page 7" value='7'>  Avatar Users2_7 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_8.png' data-img-alt="Page 8" value='8'>  Avatar Users2_8  </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_9.png' data-img-alt="Page 9" value='9'>  Avatar Users2_9 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_10.png' data-img-alt="Page 10" value='10'> Avatar Users2_10 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_11.png' data-img-alt="Page 11" value='11'> Avatar Users2_11 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_12.png' data-img-alt="Page 12" data-img-class="last" value='12'>Avatar Users2_12</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_13.png' data-img-alt="Page 13" value='13'> Avatar Users2_13 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_14.png' data-img-alt="Page 11" value='14'> Avatar Users2_14 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_15.png' data-img-alt="Page 11" value='15'> Avatar Users2_15</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_16.png' data-img-alt="Page 11" value='16'> Avatar Users2_16 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_17.png' data-img-alt="Page 11" value='17'> Avatar Users2_17 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_18.png' data-img-alt="Page 11" value='18'> Avatar Users2_18</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_19.png' data-img-alt="Page 11" value='19'> Avatar Users2_19 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_20.png' data-img-alt="Page 11" value='20'> Avatar Users2_20 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_22.png' data-img-alt="Page 11" value='22'> Avatar Users2_22</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_23.png' data-img-alt="Page 11" value='23'> Avatar Users2_23</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_24.png' data-img-alt="Page 11" value='24'> Avatar Users2_24 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_25.png' data-img-alt="Page 11" value='25'>Avatar Users2_25 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_26.png' data-img-alt="Page 11" value='26'> Avatar Users2_26</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_27.png' data-img-alt="Page 11" value='27'>Avatar Users2_27 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_28.png' data-img-alt="Page 11" value='28'> Avatar Users2_28</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_29.png' data-img-alt="Page 11" value='29'> Avatar Users2_29 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_30.png' data-img-alt="Page 11" value='30'> Avatar Users2_30 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_31.png' data-img-alt="Page 11" value='31'>  Avatar Users2_31 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_32.png' data-img-alt="Page 11" value='32'>  Avatar Users2_32 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_33.png' data-img-alt="Page 11" value='33'>  Avatar Users2_33 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_34.png' data-img-alt="Page 11" value='34'>  Avatar Users2_34 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_35.png' data-img-alt="Page 11" value='35'>  Avatar Users2_35 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_36.png' data-img-alt="Page 11" value='36'>  Avatar Users2_36</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_37.png' data-img-alt="Page 11" value='37'>  Avatar Users2_37 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_38.png' data-img-alt="Page 11" value='38'>  Avatar Users2_38</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_39.png' data-img-alt="Page 11" value='39'>  Avatar Users2_39</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_40.png' data-img-alt="Page 11" value='40'>  Avatar Users2_40 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_41.png' data-img-alt="Page 11" value='41'> Avatar Users2_41 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_42.png' data-img-alt="Page 11" value='42'> Avatar Users2_42</option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_43.png' data-img-alt="Page 11" value='43'> Avatar Users2_43 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_44.png' data-img-alt="Page 11" value='44'> Avatar Users2_44 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_45.png' data-img-alt="Page 11" value='45'> Avatar Users2_45 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_46.png' data-img-alt="Page 11" value='46'> Avatar Users2_46 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_47.png' data-img-alt="Page 11" value='47'> Avatar Users2_47 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_48.png' data-img-alt="Page 11" value='48'> Avatar Users2_48 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_49.png' data-img-alt="Page 11" value='49'> Avatar Users2_49 </option>
+                                <option data-img-src='/assets/images/avtar/Avatar Users2_50.png' data-img-alt="Page 11" value='50'> Avatar Users2_50 </option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info waves-effect text-left jsAddAvtar">Add</button>
+                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

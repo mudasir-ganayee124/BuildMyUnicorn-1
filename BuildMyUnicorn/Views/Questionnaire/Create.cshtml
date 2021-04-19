@@ -1,0 +1,306 @@
+﻿
+@section PageStyle
+{
+    <link href="~/assets/node_modules/draggable-resizable-modal/css/modalbox.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/formiojs@3.9.0/dist/formio.full.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-okaidia.min.css" />
+    <style>
+        body {
+            color: #000;
+        }
+
+        .container {
+            padding-right: 1px;
+            padding-left: 1px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        .topbar .top-navbar {
+            min-height: 50px !important;
+            padding: 0;
+        }
+
+        .navbar {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: -18px;
+            border: 0px solid transparent;
+        }
+
+        .drag-container {
+            padding: 10px;
+            border: dotted 2px #e8e8e8;
+            background: #fff;
+        }
+
+        .btn {
+            color: #000;
+        }
+
+        .formio-form {
+            position: relative;
+            min-height: 80px;
+            background: #fff;
+            padding: 5px;
+        }
+
+        .card-body {
+            background: #fff;
+        }
+
+        .btn-secondary {
+            border-color: #4F5467 !important;
+            color: #fff !important;
+        }
+
+        .btn-circle {
+            border-radius: 100% !important;
+            width: 40px !important;
+            height: 40px !important;
+            padding: 10px !important;
+        }
+
+        .jq-toast-single {
+            background-color: #dc6b6b;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .glyphicon-new-window {
+            // display:none;
+        }
+        /*.navbar-brand {
+            float: left;
+            height: 80px;
+            padding: 15px 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            font-size: 18px;
+            line-height: 20px;
+        }*/
+
+        .navbar-brand {
+            display: inline-block;
+            padding-top: .33594rem;
+            padding-bottom: .33594rem;
+            margin-right: 1rem;
+            font-size: 1.09375rem;
+            height: 80px;
+            line-height: inherit;
+        }
+
+        .app-search {
+            margin-top: 16px;
+        }
+
+        ul.nav-tabs li {
+            display: none;
+        }
+
+        .formio-component-prefix {
+            display: none;
+        }
+
+        .formio-component-suffix {
+            display: none;
+        }
+
+        .formio-component-tabindex {
+            display: none;
+        }
+
+        .formio-component-tooltip {
+            display: none;
+        }
+
+        .formio-component-errorLabel {
+            display: none;
+        }
+
+        .formio-component-inputMask {
+            display: none;
+        }
+
+        .formio-component-customClass {
+            display: none;
+        }
+
+        .formio-component-persistent {
+            display: none;
+        }
+
+        .form-check {
+            display: none !important;
+            padding-left: 1.25rem;
+        }
+
+        .formio-component-className {
+            display: none;
+        }
+    </style>
+
+    <style>
+        .progress {
+            // display: flex;
+            // height: auto !important;
+            width: 100%;
+            // font-size: .65625rem;
+            background-color: #303641;
+            border-radius: .25rem;
+            background: red;
+            z-index: 0;
+            //width: 500px;
+            // height: 10px !important;
+        }
+
+        div.progress {
+            height: 10px;
+        }
+
+        /*div.steps li a {
+            color: #fff !important;
+        }*/
+
+
+        .modal-dialog {
+            position: relative;
+            display: table;
+            overflow: auto;
+            width: auto;
+            min-width: 300px;
+        }
+
+        .modal-body { /* Restrict Modal width to 90% */
+            overflow-x: auto !important;
+            max-width: 90vw !important;
+        }
+
+        .youtube-icon {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+            font-size: 30px;
+        }
+
+        .youtube-icon {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+            font-size: 30px;
+        }
+
+            .youtube-icon:hover {
+                font-size: 40px;
+                color: red;
+            }
+
+        .titlebar_title {
+            color: #333;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="formio1">
+
+
+                </div>
+
+                <div id="formio">
+
+
+                </div>
+                @*<form id="MyForm" action="@Url.Action("AddSurvey", "Questionnaire")" method="post">
+                        <div id="formio"></div>
+                        <input type="submit" value="MySubmit" id="MySubmit"/>
+                    </form>*@
+                <div class="container mt-3">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="SurveyTitle" name="SurveyTitle" placeholder="Title" />
+                            <input type="hidden" id="SurveyForm" name="SurveyForm" />
+                        </div>
+                        <div class="col-md-3"> <button type="button" class="btn btn-info d-none d-lg-block m-l-15" id="btnAddSurvey">Add Survey</button></div>
+
+                    </div>
+
+
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="nav-item">
+                            <a href="#builder" class="active" role="tab" data-toggle="tab" aria-selected="true">Builder</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a href="#form" role="tab" data-toggle="tab" aria-selected="true">Form</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a href="#result" role="tab" data-toggle="tab" aria-selected="true">Result</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content container">
+                        <div class="tab-pane active" id="builder" role="tabpanel">
+                            <div id="formio-builder"></div>
+                        </div>
+                        <div class="tab-pane" id="form" role="tabpanel">
+                            <pre><code class="language-javascript"></code></pre>
+                        </div>
+                        <div class="tab-pane" id="result" role="tabpanel">
+                            <div id="formio-form">
+                                Form not initialized
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myDialog3">
+    <iframe id="cartoonVideo" width="100%" height="100%" src="@(ViewBag.Video != null ?  ViewBag.Video.VideoUrl : "")" auto frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+@section PageScript
+{
+    @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>*@
+    @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>*@
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+    <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
+    <script src="https://unpkg.com/formiojs@3.9.0/dist/formio.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
+    <script src="~/assets/node_modules/draggable-resizable-modal/js/modalbox.js"></script>
+    <script src="~/Content/app_script/page_script/questionnaire.js?version=@DateTime.Now"></script>
+    <script>
+        var showMessage = "Temporayfor someytime";
+        $("#myDialog3").myOwnDialog(
+            {
+                autoClose: false,
+                width: "400",
+                pos_y: "50",
+                height: "300",
+                bg_color: 'white',
+                title: '@(ViewBag.Video != null ?  ViewBag.Video.Title : "")',
+                body_margin:  '@(ViewBag.Video != null ?  ViewBag.Video.Duration : "")', 
+                body_overflow_x: "hidden",
+                body_overflow_y: "scroll",
+                movable: true,
+                resizable: true,
+                touchOutsideForClose: false
+            });
+
+    </script>
+
+    <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script>
+}
+

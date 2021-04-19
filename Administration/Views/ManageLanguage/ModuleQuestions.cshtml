@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "ModuleQuestions";
+}
+
+
+
+<input type="hidden" id="LanguageID" name="LanguageID" value="@ViewBag.LanguageID" />
+<input type="hidden" id="ModuleID" name="ModuleID" value="@ViewBag.ModuleID" />
+<input type="hidden" id="ModuleSectionID" name="ModuleSectionID" value="@ViewBag.ModuleSectionID" />
+
+<div id="partialView"> </div>
+
+
+
+@section PageScript
+{
+
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        $.ajax({
+        url:  "/ManageLanguage/GetModuleQuestion",
+        method: "POST",
+        data: { LanguageID: $("#LanguageID").val(),  ModuleID: $("#ModuleID").val(),  ModuleSectionID: $("#ModuleSectionID").val() },
+        dataType: 'html',
+        success: function (response) {
+           $("#partialView").html(response);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+    });
+    </script>
+
+}

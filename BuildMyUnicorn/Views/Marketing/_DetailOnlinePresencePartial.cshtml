@@ -1,0 +1,276 @@
+﻿
+@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.OnlinePresance
+
+
+<div class="row" id="validation">
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Marketing", ActionName = "OnlinePresence", ModuleName = Module.Marketing, SectionName = ModuleSection.Marketing_OnlinePresence }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="OnlinePresanceID" name="OnlinePresanceID" value="@Model.OnlinePresanceID" />
+                    <!-- Step 1 -->
+                    <h6>Your Website</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["HaveRegisteredDomain"]</label>
+                                    <select class="custom-select col-12 jsOptionChange" id="HaveRegisteredDomain" name="HaveRegisteredDomain" data-optionchange="DomainName" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1" @( string.IsNullOrEmpty(@Model.YourWebsite.DomainName) ? "" : "Selected")>Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+
+                                </div>
+                                <div class='form-group DomainName  @(string.IsNullOrEmpty(@Model.YourWebsite.DomainName) ? "hide" :"")'>
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["DomainName"]</label>
+                                    <textarea class='form-control ideatextarea' id="DomainName" name="DomainName">@Model.YourWebsite.DomainName</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["WebPageStageID"]</label>
+                                    @Html.DropDownList("WebPageStageID", new SelectList(ViewBag.StageList, "ID", "Value", @Model.YourWebsite.WebPageStageID), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["WantWebsiteAchieveID"]</label>
+                                    @Html.DropDownList("WantWebsiteAchieveID", new SelectList(ViewBag.AchieveList, "ID", "Value", @Model.YourWebsite.WantWebsiteAchieveID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+
+                                    @*<textarea class='form-control form-control-line ideatextarea' id="WantWebsiteAchieveID" name="WantWebsiteAchieveID">@Model.YourWebsite.WantWebsiteAchieveID</textarea>*@
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["ContentWebsiteCreatorID"]</label>
+                                    @Html.DropDownList("ContentWebsiteCreatorID", new SelectList(ViewBag.ContentList, "ID", "Value", @Model.YourWebsite.ContentWebsiteCreatorID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["VisitorsAccomplish"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="VisitorsAccomplish" name="VisitorsAccomplish">@Model.YourWebsite.VisitorsAccomplish</textarea>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["CTA"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="CTA" name="CTA">@Model.YourWebsite.CTA</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["TrafficAnticipatePerMonthID"]</label>
+                                    @Html.DropDownList("TrafficAnticipatePerMonthID", new SelectList(ViewBag.TrafficList, "ID", "Value", @Model.YourWebsite.TrafficAnticipatePerMonthID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">Which functions or features are necessary to have versus nice to have</label>
+                                </div>
+                            </div>
+                            @{
+                                var Featurelist = ViewBag.FeatureStatusList as IEnumerable<MultipleMaster>;
+                            }
+                            @foreach (var Item in @ViewBag.FunctionNecessary)
+                            {
+
+
+                                if (Featurelist != null && Featurelist.Any(x => x.Value2 == Convert.ToString(Item.ID)))
+                                {
+                                    <div class="col-md-4" style="margin-bottom:25px">
+                                        <div class="custom-control custom-checkbox jsCustomswitchery jsFeatureStatusContainer">
+                                            <input type="checkbox" class="custom-control-input jsFeatureID" id="@Item.ID" name="_FeatureStatus" value="@Item.ID" checked readonly disabled>
+                                            <label class="custom-control-label" for="@Item.ID"> @Item.Value</label>
+                                            <input type="checkbox" class="js-switch jsFeatureStatus" data-color="#03a9f3" data-size="small" readonly @(Featurelist.Where(x => x.Value2 == Convert.ToString(Item.ID)).Select(y => y.Value3).FirstOrDefault() == "Checked" ? "checked" : "" ) />
+                                        </div>
+                                        <div>
+                                            <div class="switchery-demo">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+
+
+                            }
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["UseDomainEmail"]</label>
+                                    <select class="custom-select col-12" id="UseDomainEmail" name="UseDomainEmail" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1">Yes </option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["WebsitePlanMakeMoney"]</label>
+                                    <select class="custom-select col-12" id="WebsitePlanMakeMoney" name="WebsitePlanMakeMoney" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1">Yes </option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["SuccessMeasure"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="SuccessMeasure" name="SuccessMeasure">@Model.YourWebsite.SuccessMeasure</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["PutWebpageAdds"]</label>
+                                    <select class="custom-select col-12" id="PutWebpageAdds" name="PutWebpageAdds" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1">Yes </option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleYourWebsite["CompetitorSitelike"]</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <textarea class='form-control form-control-line ideatextarea' id="CompetitorSitelike" name="CompetitorSitelike" placeholder="Like">@Model.YourWebsite.CompetitorSitelike</textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <textarea class='form-control form-control-line ideatextarea ' id="CompetitorSitedislike" name="CompetitorSitedislike" placeholder="Dislike">@Model.YourWebsite.CompetitorSitedislike</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </section>
+                    <h6>Operations</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSocialHandles["Facebook"]</label>
+                                    <textarea class='form-control ideatextarea' id="Facebook" name="Facebook" readonly>@Model.SocialHandles.Facebook</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSocialHandles["Twitter"]</label>
+                                    <textarea class='form-control ideatextarea' id="Twitter" name="Twitter" readonly>@Model.SocialHandles.Twitter</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSocialHandles["Youtube"]</label>
+                                    <textarea class='form-control ideatextarea' id="Youtube" name="Youtube" readonly>@Model.SocialHandles.Youtube</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSocialHandles["Instagram"]</label>
+                                    <textarea class='form-control ideatextarea' id="Instagram" name="Instagram" readonly>@Model.SocialHandles.Instagram</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSocialHandles["TicTok"]</label>
+                                    <textarea class='form-control ideatextarea' id="TicTok" name="TicTok" readonly>@Model.SocialHandles.TicTok</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSocialHandles["Linkedin"]</label>
+                                    <textarea class='form-control ideatextarea' id="Linkedin" name="Linkedin" readonly>@Model.SocialHandles.Linkedin</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+

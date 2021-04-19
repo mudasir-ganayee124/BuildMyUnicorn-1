@@ -1,0 +1,213 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.Competitor
+
+<div class="row" id="validation">
+    <div class="col-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "Competitors", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Competitors}, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form id="frm_CompetitorAnalysis" method="post" class="validation-wizard wizard-circle">
+
+                    <input type="hidden" id="jsonRoleInCompany" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="SWOTID" name="SWOTID" value="@Model.SWOT.SWOTID" />
+
+                    @*<input type="hidden" id="ProgressValue" name="ProgressValue" value="@Model.ProgressValue" />*@
+                    <!-- Step 1 -->
+                    <h6>Competitor analysis</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="tablesaw table-bordered table-hover table no-wrap tablesaw-sortable tablesaw-swipe" data-tablesaw-mode="swipe" data-tablesaw-sortable="" data-tablesaw-sortable-switch="" data-tablesaw-minimap="" data-tablesaw-mode-switch="">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist" data-tablesaw-sortable-numeric="false">
+                                                Name
+                                            </th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist" data-tablesaw-sortable-numeric="false">
+                                                Location
+                                            </th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist" data-tablesaw-sortable-numeric="false">
+                                                Website
+                                            </th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist" data-tablesaw-sortable-numeric="false">
+                                                Offering
+                                            </th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist" data-tablesaw-sortable-numeric="false">
+                                                Pricing
+                                            </th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist" data-tablesaw-sortable-numeric="false">
+                                                Your Differentiator
+
+                                            </th>
+                                            <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border tablesaw-sortable-head tablesaw-swipe-cellpersist jsAddCompetitorAnalysis" data-tablesaw-sortable-numeric="false" style="cursor:pointer">
+                                                +
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="jsContainerCompetitorAnalysis">
+
+                                        @if (Model.CompetitorAnalysis != null)
+                                        {
+                                            foreach (var item in Model.CompetitorAnalysis)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsName' name="Name" value="@item.Name" />
+                                                        <input type="hidden" class="jsCompetitorAnalysisID" name="CompetitorAnalysisID" value="@item.CompetitorAnalysisID" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsLocation' name="Location" value="@item.Location" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsWebsite' name="Website" value="@item.Website" />
+                                                    </td>
+                                                    <td style="width:100px">
+
+                                                        <input type="text" class='form-control  progress-required jsOffering' name="Offering" value="@item.Offering" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsPricing' name="Pricing" value="@item.Pricing" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsDifferentiator' name="Differentiator" value="@item.Differentiator" />
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class='form-control  progress-required jsName' name="Name" />
+                                                    <input type="hidden" class="jsCompetitorAnalysisID" name="CompetitorAnalysisID" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class='form-control  progress-required jsLocation' name="Location" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class='form-control  progress-required jsWebsite' name="Website" />
+                                                </td>
+                                                <td>
+
+                                                    <input type="text" class='form-control  progress-required jsOffering' name="Offering" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class='form-control  progress-required jsPricing' name="Pricing" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class='form-control  progress-required jsDifferentiator' name="Differentiator" />
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>SWOT</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSWOT["Strengths"] </label> <br />
+                                    <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Strengths" name="Strengths">
+                                        @if (Model.SWOT.Strengths != null)
+                                        {
+                                            foreach (var item in Model.SWOT.Strengths.Split(','))
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSWOT["Weaknesses"]</label> <br />
+                                    <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Weaknesses" name="Weaknesses">
+                                        @if (Model.SWOT.Weaknesses != null)
+                                        {
+                                            foreach (var item in Model.SWOT.Weaknesses.Split(','))
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSWOT["Opportunities"]</label> <br />
+                                    <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Opportunities" name="Opportunities">
+                                        @if (Model.SWOT.Opportunities != null)
+                                        {
+                                            foreach (var item in Model.SWOT.Opportunities.Split(','))
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleSWOT["Threats"]</label> <br />
+                                    <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Threats" name="Threats">
+                                        @if (Model.SWOT.Threats != null)
+                                        {
+                                            foreach (var item in Model.SWOT.Threats.Split(','))
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+

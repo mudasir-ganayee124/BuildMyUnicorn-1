@@ -1,0 +1,100 @@
+﻿
+@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.OurObservation
+
+
+<div class="row" id="validation">
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "Observation", ModuleName = Module.MarketResearch, SectionName = ModuleSection.MarketResearch_Observation }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="ObervationID" name="ObervationID" value="@Model.ObervationID" />
+                    <!-- Step 1 -->
+                    <h6>Who Does what</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleObservation["Observation"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.Observation</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleObservation["AnyPatterns"]</label>
+                                    <select class="custom-select col-12 jsOptionChange"data-optionchange="Patterns" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1" @( string.IsNullOrEmpty(@Model.Patterns) ? "" : "Selected")>Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+
+                                </div>
+                                <div class='form-group jsPattern Patterns @(string.IsNullOrEmpty(@Model.Patterns) ? "hide" :"")'>
+                                    <label for="wint1">@ViewBag.TitleObservation["Patterns"]</label>
+                                    <textarea class='form-control ideatextarea' readonly>@Model.Patterns</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleObservation["KeyMoments"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.KeyMoments</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleObservation["Collection"]</label>
+                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.Collection</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+

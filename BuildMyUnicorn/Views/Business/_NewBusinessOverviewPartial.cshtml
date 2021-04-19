@@ -1,0 +1,211 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.Business
+
+<div class="row" id="validation">
+    <div class="col-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOverview", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Businessoverview }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form id="frm_business" method="post" class="validation-wizard wizard-circle">
+
+                    <input type="hidden" id="jsonRoleInCompany" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.RoleInCompany))' />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="BusinessID" name="BusinessID" value="@Model.BusinessID" />
+                    @*<input type="hidden" id="ProgressValue" name="ProgressValue" value="@Model.ProgressValue" />*@
+                    <!-- Step 1 -->
+                    <h6>About the Founder</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">  @ViewBag.DisplayFounder["IdeaComeup"]   </label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.Founder.IdeaComeup != null ? "progress-percent" : "")' id="IdeaComeup" name="IdeaComeup" oninput="auto_grow_idea_textarea(this)">@Model.Founder.IdeaComeup</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.DisplayFounder["BusinessRun"] </label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.Founder.BusinessRun != null ? "progress-percent" : "")' id="BusinessRun" name="BusinessRun" oninput="auto_grow_idea_textarea(this)">@Model.Founder.BusinessRun</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayFounder["PreviousWorkExperience"] </label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.Founder.PreviousWorkExperience != null ? "progress-percent" : "")' id="PreviousWorkExperience" name="PreviousWorkExperience" oninput="auto_grow_idea_textarea(this)">@Model.Founder.PreviousWorkExperience</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayFounder["Qualification"] </label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.Founder.Qualification != null ? "progress-percent" : "")' id="Qualification" name="Qualification" oninput="auto_grow_idea_textarea(this)">@Model.Founder.Qualification</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayFounder["HobbiesInterest"] </label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.Founder.HobbiesInterest != null ? "progress-percent" : "")' id="HobbiesInterest" name="HobbiesInterest" oninput="auto_grow_idea_textarea(this)">@Model.Founder.HobbiesInterest</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayFounder["WhyYou"] </label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.Founder.WhyYou != null ? "progress-percent" : "")' id="WhyYou" name="WhyYou" oninput="auto_grow_idea_textarea(this)">@Model.Founder.WhyYou</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>Company Detail(s)</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyLegalStructureID"]</label>
+                                    @{ var CompanyLegalStructure = Model.CompanyDetails.CompanyLegalStructureID != null ? "progress-percent" : ""; }
+                                    @Html.DropDownListFor(n => n.CompanyDetails.CompanyLegalStructureID, new SelectList(ViewBag.CompanyLegalStructure, "ID", "Value", @Model.CompanyDetails.CompanyLegalStructureID), "- Please select -", new { @class = "custom-select col-12 " + @CompanyLegalStructure + " progress-required" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyRegisterdName"]</label>
+                                    <input type="text" class='form-control  progress-required @( Model.CompanyDetails.CompanyRegisterdName != null ? "progress-percent" : "")' id="CompanyRegisterdName" name="CompanyRegisterdName" value="@Model.CompanyDetails.CompanyRegisterdName" />
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["Founded"]</label>
+                                    <input type="text" class='form-control  progress-required @( Model.CompanyDetails.Founded != null ? "progress-percent" : "")' id="Founded" name="Founded" value="@Model.CompanyDetails.Founded" />
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["BusinessAddress"]</label>
+                                    <textarea class='form-control ideatextarea progress-required @( Model.CompanyDetails.BusinessAddress != null ? "progress-percent" : "")' id="BusinessAddress" name="BusinessAddress" oninput="auto_grow_idea_textarea(this)">@Model.CompanyDetails.BusinessAddress</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyNumber"]</label>
+                                    <input type="text" class='form-control  progress-required @( Model.CompanyDetails.CompanyNumber != null ? "progress-percent" : "")' id="CompanyNumber" name="CompanyNumber" value="@Model.CompanyDetails.CompanyNumber" />
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["VatNumber"]</label>
+                                    <input type="text" class='form-control  progress-required @( Model.CompanyDetails.NumberofFounder > 0 ? "progress-percent" : "")' id="VatNumber" name="VatNumber" value="@Model.CompanyDetails.VatNumber" />
+
+                                </div>
+                            </div>
+
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.DisplayCompanyDetails["NumberofFounder"]</label>
+                                    <input type="text" class='form-control  progress-required @( Model.CompanyDetails.NumberofFounder > 0 ? "progress-percent" : "")' id="NumberofFounder" name="NumberofFounder" value="@Model.CompanyDetails.NumberofFounder" />
+
+                                </div>
+                            </div>
+
+                        </div>*@
+                        @*<div class="row jsCompanyFounderContainer">
+
+                            <div class="col-md-12">
+                                <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyFounderID"]</label>
+                                <div class="row jsCompanyFounder">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control jsFirstName progress-required" placeholder="FirstName" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control jsLastName progress-required" placeholder="LastName" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control jsEmail progress-required" placeholder="Email" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group-append jsRole">
+
+                                            <input type="hidden" name="RoleInCompany" value="" />
+                                            <select class="selectpicker form-control jsRoleinCompany" multiple data-style="form-control btn-info">
+                                                @foreach (var item in ViewBag.RoleInCompany)
+                                                {
+                                                    <option value="@item.ID">@item.Value</option>
+
+                                                }
+
+                                            </select>
+
+                                            <button class="btn btn-secondary btn-outline bootstrap-touchspin-up jsAddCompanyFounder" type="button">+</button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>*@
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+

@@ -1,0 +1,126 @@
+﻿@using Business_Model.Model;
+@model IEnumerable<Interview>
+
+
+<section class="employee-list bqe-timesheet admintable">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Received</th>
+                    <th>Status</th>
+                    <th>CreatedBy</th>
+                    <th>Created Date</th>
+                    <th class="text-nowrap">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{ /**/
+                                /**/
+                                int index = 1;
+                                String strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, VirtualPathUtility.ToAbsolute("~/"));
+                }
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="@(item.IsActive == true ? "" : "inActive");">
+
+                            <td class="text-left">
+
+                                <input type="hidden" id="@item.InterviewID" value="@strUrl/Interview?InterviewID=@item.InterviewID" />
+                                @index
+                                @{ index++; }
+                            </td>
+                            <td class="text-left link-display">
+                                @item.Title
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </td>
+                            <td class="text-left fixed-width-95">
+                                @item.InterviewReceived
+                            </td>
+                            <td>
+                                @if (item.IsActive == true)
+                                {<span class='label label-success'>Active</span> }
+                                else
+                                { <span class='label label-danger'>In-Active</span>}
+                            </td>
+                            <td class="text-left">
+                                @item.CreatedName
+                            </td>
+                            <td class="text-left fixed-width-95">
+                                @item.CreatedDateTime.ToString("d")
+
+                            </td>
+                            <td class="text-left">
+                                @*@if (item.IsActive == true)
+                                {
+
+                                    <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Active" class="jsInActive" data-survey-id="@item.InterviewID"> <i class="mdi mdi-calendar" title="Interview in-active"></i> </a>
+
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Active" class="jsActive" data-survey-id="@item.InterviewID"> <i class="mdi mdi-calendar-check" title="Interview active"></i> </a>
+
+
+
+                                }*@
+                                @*<a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Edit"> <i class="fas fa-pencil-alt" title="Edit"></i> </a>*@
+                                <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Delete" class="jsDeleteInterview" data-interview-id="@item.InterviewID"> <i class="fas fa-trash-alt" title="Delete"></i> </a>
+
+                                <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Close" onclick="copyToClipboard('@item.InterviewID')">
+                                    <i class="mdi mdi-content-copy" title="Copy link"></i>
+                                </a>
+                                <a href="~/Interview?InterviewID=@item.InterviewID" data-toggle="tooltip" data-original-title="Close">
+                                    <i class="fas fa-external-link-square-alt" title="Interview form"></i>
+                                </a>
+                                <a href="~/Interview/GetData?InterviewID=@item.InterviewID" data-toggle="tooltip" data-original-title="Close">
+                                    <i class="fas fa-sort-amount-up" title="Interview data"></i>
+                                </a>
+                            </td>
+                           
+                        </tr>
+
+                    }
+                }
+                else
+                {
+
+                    <tr> 
+                        <td colspan="7" style="height:100px; text-align:center; padding-top:50px">
+
+                            <div class="col-md-12">
+                                <!-- Card -->
+                                <div class="card text-center">
+                                    <div class="card-header">
+
+                                    </div>
+                                    <div class="card-body">
+                                        <h4 class="card-title">No Interview Found</h4>
+                                        <p class="card-text">Your Interview will be added here.</p>
+
+                                        <a href="~/Interview/New" class="btn btn-info">Add </a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td> 
+                   </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+</section>
+
+
+

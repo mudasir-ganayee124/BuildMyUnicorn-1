@@ -1,0 +1,45 @@
+﻿@section PageStyle
+{
+    <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Idea Percentage</h4>
+                <div>
+                    <canvas id="chart-idea-progress" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/Team/_DialogAddTeamPartial.cshtml")
+<div class="row">
+    <div class="col-md-4">
+        <section id="toDoList" data-controller="Dashboard" data-action="TodoList"> </section>
+    </div>
+    <div class="col-md-8">
+        <section id="assignedToDo" data-controller="Dashboard" data-action="AssignedTodoList"> </section>
+    </div>
+</div>
+
+@section PageScript
+{
+
+    <script src="~/assets/node_modules/Chart/Chart.js"></script>
+    <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
+    <script src="~/Content/app_script/page_script/dashboard.js?version=@DateTime.Now"></script>
+    <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
+    <script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>
+   
+    @if (!@ViewBag.Client.IsProfileUpdated)
+    {
+
+        <script>
+            $('#dialogClientUpdate').modal('show');
+        </script>
+    }
+}

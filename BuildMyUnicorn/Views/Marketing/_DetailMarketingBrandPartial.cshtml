@@ -1,0 +1,246 @@
+﻿
+@using Business_Model.Model;
+@model Business_Model.Model.MarketingBrand
+@{
+     int Questions = 11; int Answered = 0; 
+    var arrayBrandTouchPoint = String.IsNullOrEmpty(Model.BrandTouchPoints.BrandTouchPointID) == false ? Model.BrandTouchPoints.BrandTouchPointID.Split(',').ToArray() : new string[0];
+}
+
+<div class="row">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card">
+            <div class="card-body wizard-content">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <div id="markupContainer"> </div>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i> @Html.ActionLink("Back to Overview", "Return", "ModuleCourse", new { ControllerName = "KeyFinding", ActionName = "Index", ModuleName = ModuleName.KeyFinding }, new { @class = "n" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="MarketingBrandID" name="MarketingBrandID" value="@Model.MarketingBrandID" />
+                    <input type="hidden" id="ActionType" value="@ViewBag.ActionType" />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <!-- Step 1 -->
+                    <h3 class="text-center">
+                        Branding Strategy
+                    </h3>
+                    <section>
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.WhatAreWe))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatAreWe"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="WhatAreWe" name="WhatAreWe" readonly>@Model.BrandingStrategy.WhatAreWe</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.WhyWeHere))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["WhyWeHere"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="WhyWeHere" name="WhyWeHere" readonly>@Model.BrandingStrategy.WhyWeHere</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.WhatDoHowDo))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatDoHowDo"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="WhatDoHowDo" name="WhatDoHowDo" readonly>@Model.BrandingStrategy.WhatDoHowDo</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.WhatMakesDifferent))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatMakesDifferent"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="WhatMakesDifferent" name="WhatMakesDifferent" readonly>@Model.BrandingStrategy.WhatMakesDifferent</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.WhoWeHereFor))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["WhoWeHereFor"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="WhoWeHereFor" name="WhoWeHereFor" readonly>@Model.BrandingStrategy.WhoWeHereFor</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.WhatValueMost))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["WhatValueMost"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="WhatValueMost" name="WhatValueMost" readonly>@Model.BrandingStrategy.WhatValueMost</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.OurPersonality))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["OurPersonality"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="OurPersonality" name="OurPersonality" readonly>@Model.BrandingStrategy.OurPersonality</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.OurAmbition))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["OurAmbition"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="OurAmbition" name="OurAmbition" readonly>@Model.BrandingStrategy.OurAmbition</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BrandingStrategy.EmotionalSellingPoint))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.TitleBrandingStrategy["EmotionalSellingPoint"]</label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="EmotionalSellingPoint" name="EmotionalSellingPoint" readonly>@Model.BrandingStrategy.EmotionalSellingPoint</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        </section>
+                    <!-- Step 2 -->
+                    <h3 class="text-center">
+                        Brand  Guidelines
+                    </h3>
+                    <section>
+                        <div class="row">
+                            <input type="hidden" id="PowerPresentationID" name="PowerPresentationID" value="@Model.BrandGuidelines.PowerPresentationID" />
+                            <input type="hidden" id="TemplateDownloaded" name="TemplateDownloaded" value="@Model.BrandGuidelines.TemplateDownloaded" @( Answered += Model.BrandGuidelines.TemplateDownloaded == true ? 1: 0)/>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">Powerpoint Presentation</label>
+                                    <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://platform.buildmyunicorn.com/Content/B39E91B2-DA11-41D0-A20A-F4A097C495B0.pptx' width='100%' height='600px' frameborder='0'></iframe>
+                                    @*<div id="slide-resolte-contaniner"></div>*@
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section>
+                    <!-- Step 3 -->
+                    <h3 class="text-center">
+                        Brand Touchpoints
+                    </h3>
+                    <section>
+                        <div class="row">
+                            <input type="hidden" id="BrandTouchPointID" name="BrandTouchPointID" value="@Model.BrandTouchPoints.BrandTouchPointID"  @( Answered += Model.BrandTouchPoints.BrandTouchPointID == null ?  0: 1)/>
+
+
+                            @{ int Count = Enumerable.Count(ViewBag.BrandTouchPointList);
+                                int x = 0;
+
+                            }
+                            @foreach (var item in ViewBag.BrandTouchPointList)
+                            {
+                                if (x <= Count)
+                                {
+                                    if (Array.Exists(arrayBrandTouchPoint, z => z == Convert.ToString(item.ID)))
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @*<label for="wint1"><i class="mdi mdi-check-circle-outline"></i> @ViewBag.TitleBrandingStrategy["EmotionalSellingPoint"]</label>*@
+                                                <i class="mdi mdi-check-circle-outline"></i> <div class='form-control form-control-line ideatextarea' id="EmotionalSellingPoint" name="EmotionalSellingPoint" readonly>@item.Value</div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                }
+                                x = x + 1;
+                            }
+
+                        </div>
+
+
+
+
+
+
+
+
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="round" title="Total Questions">@Questions</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-success" title="Answered"> @Answered</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(Questions - Answered) </span></li>
+        </ol>
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    Branding Strategy
+                    <div class="pull-right" style="text-align:right">@Model.BrandingStrategy.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.BrandingStrategy.Completed%; height: 6px;"> <span class="sr-only">@Model.BrandingStrategy.Completed % Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    Brand Touchpoints
+
+                    <div class="pull-left" style="text-align:right">@Model.BrandTouchPoints.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.BrandTouchPoints.Completed%; height: 6px;"> <span class="sr-only">@Model.BrandTouchPoints.Completed% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    Brand Guidelines
+
+                    <div class="pull-left" style="text-align:right">@Model.BrandGuidelines.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.BrandGuidelines.Completed%; height: 6px;"> <span class="sr-only">@Model.BrandGuidelines.Completed% Complete</span></div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+</div>

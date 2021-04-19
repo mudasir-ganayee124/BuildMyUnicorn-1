@@ -1,0 +1,13 @@
+﻿@model Business_Model.Model.ToDoTask
+@{
+    ViewBag.Title = "Add Todo";
+}
+@Html.Partial("_EditToDoPartial", Model)
+
+@section PageScript
+{
+    <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
+    <script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>
+
+}

@@ -1,0 +1,307 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.ProductService
+@{ int Questions = 12; int Answered = 0; }
+<div class="row" id="validation">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "ProductService", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_ProductorService }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+                    <input type="hidden" id="ProductServiceID" name="ProductServiceID" value="@Model.ProductServiceID" />
+
+                    <!-- Step 1 -->
+                    <h4 class="text-center bold">About Product</h4>
+                    <section>
+                        @if (!string.IsNullOrEmpty(Model.AboutProduct.PSSelling))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        @{ var arrayPSSelling = String.IsNullOrEmpty(@Model.AboutProduct.PSSelling) == false ? @Model.AboutProduct.PSSelling.Split(',').ToArray() : new string[0]; }
+                                        <label for="wint1">  @ViewBag.DisplayAboutProduct["PSSelling"]  </label>
+                                        @foreach (var item in ViewBag.ProductServiceSelling)
+                                        {
+                                            if (Array.Exists(arrayPSSelling, x => x == Convert.ToString(@item.ID)) == true)
+                                            {<div class="custom-checkbox">
+
+                                                    <label for="square-radio-disabled">@item.Value</label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.AboutProduct.PSDescription))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSDescription"]</label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.AboutProduct.PSDescription</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.AboutProduct.PSProduce))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        @{ var arrayPSProduce = String.IsNullOrEmpty(@Model.AboutProduct.PSProduce) == false ? @Model.AboutProduct.PSProduce.Split(',').ToArray() : new string[0]; }
+                                        <label>What are you selling </label>
+                                        @foreach (var item in ViewBag.ProductServiceProduce)
+                                        {
+                                            if (Array.Exists(arrayPSProduce, x => x == Convert.ToString(@item.ID)) == true)
+                                            {<div class="custom-checkbox">
+                                                    <label for="square-radio-disabled">@item.Value</label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.AboutProduct.PSDevelopStart))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSDevelopStart"] </label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.AboutProduct.PSDevelopStart</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.AboutProduct.PSReadylaunch))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSReadylaunch"] </label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.AboutProduct.PSReadylaunch</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.AboutProduct.PSHaveTechnologyRoadMap == 1 || Model.AboutProduct.PSHaveTechnologyRoadMap == 2)
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSHaveTechnologyRoadMap"] </label>
+                                        @if (@Model.AboutProduct.PSHaveTechnologyRoadMap == 2)
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly>No</textarea>
+                                        }
+                                        else
+                                        {
+
+                                            <textarea class='form-control form-control-line detailtextarea' readonly> Yes -  versions [ @string.Format(string.Join(", ", ViewBag.VersionList)) ]</textarea>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.AboutProduct.PSVariations))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSVariations"] </label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.AboutProduct.PSVariations</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.AboutProduct.PSHaveIPAddress == 1 || Model.AboutProduct.PSHaveIPAddress == 2)
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSIPAddress"] </label>
+                                        @if (Model.AboutProduct.PSHaveIPAddress == 2)
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly> No</textarea>
+                                        }
+                                        else
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly>Yes - IP Address [ @Model.AboutProduct.PSIPAddress ]</textarea>
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.AboutProduct.PSHaveTradeMark == 1 || Model.AboutProduct.PSHaveTradeMark == 2)
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSTradeMark"] </label>
+                                        @if (Model.AboutProduct.PSHaveTradeMark == 2)
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly>No</textarea>
+                                        }
+                                        else
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly> Yes - TradeMark [ @Model.AboutProduct.PSTradeMark ]</textarea>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        }
+                        @if (Model.AboutProduct.PSHaveTechnologyRoadMap == 1 || Model.AboutProduct.PSHaveTechnologyRoadMap == 2)
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayAboutProduct["PSHaveTechnologyRoadMap"] </label>
+                                        @if (Model.AboutProduct.PSHaveTechnologyRoadMap == 1)
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly>No</textarea>
+                                        }
+                                        else
+                                        {
+                                            <textarea class='form-control form-control-line detailtextarea' readonly>Yes - Technology Road Map [ @Model.AboutProduct.PSHaveTechnologyRoadMap ]</textarea>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                    </section>
+                    <!-- Step 2 -->
+                    <h4 class="text-center bold">MVP</h4>
+                    <section>
+
+                        @if (Model.MVP.MVPDevelopmentFarID != null)
+                        {
+                            Answered += 1;
+
+
+                            <div class="form-group">
+                                <label for="wint1">@ViewBag.DisplayMVP["MVPDevelopmentFarID"]</label>
+                                @{ var arrayFinanceOperationalResponsible = String.IsNullOrEmpty(@Model.MVP.MVPDevelopmentFarID) == false ? @Model.MVP.MVPDevelopmentFarID.Split(',').ToArray() : new string[0];
+                                }
+                                <select id="MVPDevelopmentFarID" name="MVPDevelopmentFarID" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
+                                    @foreach (var item in ViewBag.DevelopmentFarList)
+                                    {
+                                        <option value = "@item.ID" @(Array.Exists(arrayFinanceOperationalResponsible, x => x == Convert.ToString(item.ID)) == true ? "selected" : "") > @item.Value </option >
+                                    }
+
+                                </select>
+
+
+                            </div>
+
+
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.MVP.MVPCreate))
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayMVP["MVPCreate"] </label>
+                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.MVP.MVPCreate</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.MVP.MVPReasonID != Guid.Empty)
+                        {
+                            Answered += 1;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@ViewBag.DisplayMVP["MVPReasonID"] </label>
+
+                                        @foreach (var item in ViewBag.MVPReason)
+                                        {
+                                            if (item.ID == Model.MVP.MVPReasonID)
+                                            {
+                                                <div class="form-group">
+                                                    <label for="wint1">@item.Value </label>
+                                                </div>
+
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="round" title="Total Questions">@Questions</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-success" title="Answered"> @Answered</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(Questions - Answered) </span></li>
+        </ol>
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    About the Product
+                    <div class="pull-right" style="text-align:right">@Model.AboutProduct.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.AboutProduct.Completed%; height: 6px;"> <span class="sr-only">@Model.AboutProduct.Completed % Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    MVP
+
+                    <div class="pull-left" style="text-align:right">@Model.MVP.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.MVP.Completed%; height: 6px;"> <span class="sr-only">@Model.MVP.Completed% Complete</span></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,253 @@
+﻿@using Business_Model.Model;
+@model Business_Model.Model.KeyFinding
+
+<div class="row">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+
+        <div class="card">
+            <div class="card-body wizard-content">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <div id="markupContainer"> </div>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i> @Html.ActionLink("Back to Overview", "Return", "ModuleCourse", new { ControllerName = "KeyFinding", ActionName = "Index", ModuleName = ModuleName.KeyFinding }, new { @class = "n" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+                    <input type="hidden" id="jsIdea" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="KeyFindingID" name="KeyFindingID" value="@Model.KeyFindingID" />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <!-- Step 1 -->
+                    <h4 class="text-center">Big Picture Reserach</h4>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> What 3 bits of research have been carried out? </label>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="firstName1">Bit-1 :</label>
+                                    <div class="form-group">
+                                        <h5>What is the name of the company? </h5>
+                                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.ResearchCarriedOutBit1</textarea>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="lastName1">Bit-2 :</label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.ResearchCarriedOutBit2</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="lastName1">Bit-3 :</label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.ResearchCarriedOutBit3</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> Are there any trends in the industry? </label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.IndustryTrends</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">What is the market you will initially try to capture?</label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.CaptureInitially</textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="wint1">What is the size/value of the market?</label>
+                                    <textarea class="form-control form-control-line detailtextarea jsCurrency" readonly>@Model.BigPictureResearch.MarketSize</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="wint1"> What market share will you try to capture?</label>
+                                    <textarea class="form-control form-control-line detailtextarea jsPercentage" readonly>@Model.BigPictureResearch.CaptureShare</textarea>
+
+                                </div>
+                            </div>
+                         
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="wint1">   Your Market Share? </label>
+                                    <textarea class="form-control form-control-line detailtextarea jsPercentage" readonly>@Model.BigPictureResearch.MarketShare</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="wint1"> Roughly how long before you reach your market share? </label>
+                                    <input id="tch1" type="text" value="55" name="tch1" class="form-control  progress-required jsYear">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 jsKeyPlayerContainer">
+
+                                <label for="wint1">Who are the Key players in the market? </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="wint1">Company </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="wint1">Website</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                @foreach (var item in ViewBag.MarketKeyPlayer)
+                                {
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <textarea class="form-control form-control-line detailtextarea" readonly>@item.Company</textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <textarea class="form-control form-control-line detailtextarea" readonly>@item.Website</textarea>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                }
+
+
+
+
+
+                            </div>
+                   
+                        </div>
+                    </section>
+                    <!-- Step 2 -->
+                    <h4 class="text-center">Focused Research</h4><br />
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @{ var arrayIdeaProgressed = String.IsNullOrEmpty(@Model.FocussedResearch.IdeaProgressed) == false ? @Model.FocussedResearch.IdeaProgressed.Split(',').ToArray() : new string[0]; }
+                                    <label> At what stage is your idea?</label>
+                                    <input type="hidden" id="_StartupTechnology" name="_StartupTechnology" class='progress-required @( arrayIdeaProgressed.Length > 0 ? "progress-percent" : "")' value="" />
+                                    @foreach (var item in ViewBag.IdeaProgressed)
+                                    {
+                                     if (Array.Exists(arrayIdeaProgressed, x => x == Convert.ToString(item.ID)) == true)
+                                     {
+                                        <br />
+                                       <label class="custom-control-label"><i class="far fa-dot-circle"></i>  @item.Value</label>
+                                     }
+                                   
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @{ var arrayFeedbackReceived = String.IsNullOrEmpty(@Model.FocussedResearch.FeedbackReceived) == false ? @Model.FocussedResearch.FeedbackReceived.Split(',').ToArray() : new string[0]; }
+                                    <label> How did you receive the feedback?</label>
+                                    <input type="hidden" id="_StartupTechnology" name="_StartupTechnology" class='progress-required @( arrayFeedbackReceived.Length > 0 ? "progress-percent" : "")' value="" />
+                                    @foreach (var item in ViewBag.FeedbackReceived)
+                                    {
+                                        if (Array.Exists(arrayFeedbackReceived, x => x == Convert.ToString(item.ID)) == true)
+                                        {
+                                        <br />
+                                        <label class="custom-control-label"><i class="far fa-dot-circle"></i>  @item.Value</label>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="wint1">
+                                        Have you talked to potential customers for feedback?
+                                    </label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly>@(Model.FocussedResearch.CustomerFeedback == 1 ? "Yes" : "No")</textarea>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="wint1">Rate the over all feedback?</label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly> @(Model.FocussedResearch.FeedbackRate)</textarea>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">Key findings from Feedback? </label>
+                                    <textarea class="form-control form-control-line detailtextarea" readonly> @(Model.FocussedResearch.FeedbackKeyfinding)</textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                   Big Picture Research
+                    <div class="pull-right" style="text-align:right">@Model.BigPictureResearch.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.BigPictureResearch.Completed%; height: 6px;"> <span class="sr-only">@Model.BigPictureResearch.Completed % Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    Focused Research
+
+                    <div class="pull-left" style="text-align:right">@Model.FocussedResearch.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.FocussedResearch.Completed%; height: 6px;"> <span class="sr-only">@Model.FocussedResearch.Completed% Complete</span></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

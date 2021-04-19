@@ -1,0 +1,421 @@
+﻿
+@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.BusinessOperation
+
+@{
+    var JsonObject = string.Empty;
+    List<string> objList = new List<string>();
+    var ModelList = ViewBag.OperationPartyList as IEnumerable<MultipleMaster>;
+    if (ModelList != null && ModelList.Count() > 0)
+    {
+        objList = ModelList.Where(x => x.Value1 != null && x.Value2 != null).Select(x => x.Value1).Distinct().ToList();
+        JsonObject = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ModelList.Where(x => x.Value1 != null && x.Value2 != null).Select(i => new { i.Value1, i.Value2, i.Value3, i.Value4 }))).ToString();
+    }
+
+}
+
+<div class="row" id="validation">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOperation", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_BusinessOperation }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="JsonpartyType" />
+                    <input type="hidden" id="BusinessOperationID" name="BusinessOperationID" value="@Model.BusinessOperationID" />
+                    <!-- Step 1 -->
+                    <h6>Who Does what</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["FinanceOperationalResponsible"]</label>
+                                    @{ var arrayFinanceOperationalResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.FinanceOperationalResponsible) == false ? @Model.WhoDoesWhat.FinanceOperationalResponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="FinanceOperationalResponsible" name="FinanceOperationalResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arrayFinanceOperationalResponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["FinanceManagementResponsible"]</label>
+                                    @{ var arrayFinanceManagementResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.FinanceManagementResponsible) == false ? @Model.WhoDoesWhat.FinanceManagementResponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="FinanceManagementResponsible" name="FinanceManagementResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arrayFinanceManagementResponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["LegalMatterResponsible"]</label>
+                                    @{ var arrayLegalMatterResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.LegalMatterResponsible) == false ? @Model.WhoDoesWhat.LegalMatterResponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="LegalMatterResponsible" name="LegalMatterResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arrayLegalMatterResponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleWhoDoesWhat["HRresponsible"] </label>
+                                    @{ var arrayHRresponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.HRresponsible) == false ? @Model.WhoDoesWhat.HRresponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="HRresponsible" name="HRresponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arrayHRresponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["FacilitiesResponsible"]</label>
+                                    @{ var arrayFacilitiesResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.FacilitiesResponsible) == false ? @Model.WhoDoesWhat.FacilitiesResponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="FacilitiesResponsible" name="FacilitiesResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arrayFacilitiesResponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["SalesResponsible"]</label>
+                                    @{ var arraySalesResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.SalesResponsible) == false ? @Model.WhoDoesWhat.SalesResponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="SalesResponsible" name="SalesResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arraySalesResponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["MarektingResponsible"]</label>
+                                    @{ var arrayMarektingResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.MarektingResponsible) == false ? @Model.WhoDoesWhat.MarektingResponsible.Split(',').ToArray() : new string[0]; }
+                                    <select id="MarektingResponsible" name="MarektingResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false" disabled>
+                                        @foreach (var item in ViewBag.TeamMemberList)
+                                        {
+                                            <option value="@item.ClientID" @(Array.Exists(arrayMarektingResponsible, x => x == Convert.ToString(item.ClientID)) == true ? "selected" : "")>@item.FirstName</option>
+                                        }
+
+                                    </select>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>Operations</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["ProductProduced"]</label>
+                                    <textarea class='form-control ideatextarea' id="ProductProduced" name="ProductProduced">@Model.Operations.ProductProduced</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["DeliveryMethodID"]</label>
+                                    @Html.DropDownList("DeliveryMethodID", new SelectList(ViewBag.DeliveryMethod, "ID", "Value", @Model.Operations.DeliveryMethodID), "- Please select -", new { @class = "custom-select col-12" , @disabled= "disabled"})
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["ThirdPartyInvovedID"]</label>
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="row jsCloneContainer">
+                            @if (ModelList==null || ModelList.Count() > 0)
+                            {
+
+                                foreach (var item in objList)
+                                {
+                                    var itemList = ModelList.Where(x => x.Value1 == item);
+
+                                    <div class="row jsOperationInvolvedParty" style="margin-right:0px;margin-left:0px; width:100%">
+                                        <input type="hidden" class="jsCounter" value="@itemList.FirstOrDefault().Value4" />
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+
+                                                @Html.DropDownList("ThirdPartyInvolvedID", new SelectList(ViewBag.ThirdPartiesInvloved, "ID", "Value", item), "- Please select -", new { @class = "custom-select col-12 jsThirdPartyType", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 JSfancyme-tags" style="padding-bottom:4px">
+                                            <div class="form-group">
+
+                                                <div class="black fancyme-tags">
+                                                    <input type="hidden" name="ThirdPartyInvolvedID" class="jslistThirdPartyInvolvedID" />
+                                                    <div class="shownlist">
+                                                        @foreach (var obj in itemList)
+                                                        {
+                                                            <span> <input type="hidden" class="jsRandomNumber" value="@obj.Value3">@obj.Value2</span>
+                                                        }
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["PaymentMethodID"]</label>
+                                    @Html.DropDownList("PaymentMethod", new SelectList(ViewBag.PaymentMethod, "ID", "Value", @Model.Operations.PaymentMethodID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["QualityControlMethod"]</label>
+                                    <textarea class='form-control form-control-line detailtextarea' id="QualityControlMethod" name="QualityControlMethod" readonly>@Model.Operations.QualityControlMethod</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["Needsoftware"]</label>
+                                    <select class="custom-select col-12 jsOptionChange" id="Needsoftware" name="Needsoftware" data-optionchange="SoftwareType" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.SoftwareType) ? "" : "Selected")>Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware SoftwareType @(string.IsNullOrEmpty(@Model.Operations.SoftwareType) ? "hide" :"")'>
+                                    <label for="wint1">@ViewBag.TitleOperations["SoftwareType"]</label>
+                                    <textarea class='form-control ideatextarea' id="SoftwareType" name="SoftwareType" readonly>@Model.Operations.SoftwareType</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["StaffCount"]</label>
+                                    <textarea class='form-control ideatextarea' readonly>@Model.Operations.StaffCount</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["StaffCountNextYear"]</label>
+                                    <textarea class='form-control ideatextarea' readonly>@Model.Operations.StaffCountNextYear</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["HaveInsurance"]</label>
+                                    <select class="custom-select col-12 jsOptionChange" id="HaveInsurance" name="HaveInsurance" data-optionchange="InsuranceType" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.InsuranceType) ? "" : "Selected")>Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware InsuranceType @(string.IsNullOrEmpty(@Model.Operations.InsuranceType) ? "hide" :"")'>
+                                    <label for="wint1">@ViewBag.TitleOperations["InsuranceType"]</label>
+                                    <textarea class='form-control ideatextarea' id="InsuranceType" name="InsuranceType" readonly>@Model.Operations.InsuranceType</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["NeedLicense"]</label>
+                                    <select class="custom-select col-12 jsOptionChange" id="NeedLicense" name="NeedLicense" data-optionchange="LicenseType" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.LicenseType) ? "" : "Selected")>Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware LicenseType @(string.IsNullOrEmpty(@Model.Operations.LicenseType) ? "hide" :"")'>
+                                    <label for="wint1">@ViewBag.TitleOperations["LicenseType"]</label>
+                                    <textarea class='form-control ideatextarea' id="LicenseType" name="LicenseType" readonly>@Model.Operations.LicenseType</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@ViewBag.TitleOperations["NeedQualification"]</label>
+                                    <select class="custom-select col-12 jsOptionChange" id="NeedQualification" name="NeedQualification" data-optionchange="QualificationType" disabled>
+                                        <option value="">- Please select -</option>
+                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.QualificationType) ? "" : "Selected")>Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware QualificationType  @( string.IsNullOrEmpty(@Model.Operations.QualificationType) ? "hide" :"")'>
+                                    <label for="wint1">@ViewBag.TitleOperations["QualificationType"]</label>
+                                    <textarea class='form-control ideatextarea' id="QualificationType" name="QualificationType" readonly>@Model.Operations.QualificationType</textarea>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    Who Does what
+                    <div class="pull-right" style="text-align:right">@Model.WhoDoesWhat.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.WhoDoesWhat.Completed%; height: 6px;"> <span class="sr-only">@Model.WhoDoesWhat.Completed % Complete</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <a href="#1" class="list-group-item">
+                    Operations
+                    <div class="pull-right" style="text-align:right">@Model.Operations.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.Operations.Completed%; height: 6px;"> <span class="sr-only">@Model.Operations.Completed % Complete</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+
+
+
+
+

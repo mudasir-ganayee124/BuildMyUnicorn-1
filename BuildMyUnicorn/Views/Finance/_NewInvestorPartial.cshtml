@@ -1,0 +1,452 @@
+﻿@using Business_Model.Model;
+@using System.ComponentModel;
+@model Business_Model.Model.Investor
+<div class="row" id="validation">
+    <div class="col-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="card-title" id="1"></h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Finance", ActionName = "Investors", ModuleName = Module.Finance, SectionName = ModuleSection.Finance_FinancialProjections }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form id="frmFinancialInvestor" method="post" class="validation-wizard wizard-circle">
+                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="InvestorID" name="InvestorID" value="@Model.InvestorID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <h6>Friends and Family</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GrownExcitedCompany"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GrownExcitedCompany" name="GrownExcitedCompany">@Model.FriendsFamily.GrownExcitedCompany</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["InvolvementLevelRequired"]  </label>
+                                    <textarea class='form-control ideatextarea' id="InvolvementLevelRequired" name="InvolvementLevelRequired">@Model.FriendsFamily.InvolvementLevelRequired</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Timeframe"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Timeframe" name="Timeframe">@Model.FriendsFamily.Timeframe</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GetBack"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GetBack" name="GetBack">@Model.FriendsFamily.GetBack</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["RealRisks"]  </label>
+                                    <textarea class='form-control ideatextarea' id="RealRisks" name="RealRisks">@Model.FriendsFamily.RealRisks</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["LoanOrInvestment"]  </label>
+                                    <textarea class='form-control ideatextarea' id="LoanOrInvestment" name="LoanOrInvestment">@Model.FriendsFamily.LoanOrInvestment</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Investing"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Investing" name="Investing">@Model.FriendsFamily.Investing</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["BusinessMoneyPut"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessMoneyPut" name="BusinessMoneyPut">@Model.FriendsFamily.BusinessMoneyPut</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["PayingCustomer"]  </label>
+                                    <textarea class='form-control ideatextarea' id="PayingCustomer" name="PayingCustomer">@Model.FriendsFamily.PayingCustomer</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["FullTimeDoing"]  </label>
+                                    <textarea class='form-control ideatextarea' id="FullTimeDoing" name="FullTimeDoing">@Model.FriendsFamily.FullTimeDoing</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["DecisionMakingAbility"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DecisionMakingAbility" name="DecisionMakingAbility">@Model.FriendsFamily.DecisionMakingAbility</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section>
+
+                    <!-- Step 2 -->
+                    <h6>Angel investor</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemWantSolving"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ProblemWantSolving" name="ProblemWantSolving">@Model.AngelInvestor.ProblemWantSolving</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemKindGroup"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ProblemKindGroup" name="ProblemKindGroup">@Model.AngelInvestor.ProblemKindGroup</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowMany"]  </label>
+                                    <textarea class='form-control ideatextarea' id="HowMany" name="HowMany">@Model.AngelInvestor.HowMany</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowDifferentYou"]  </label>
+                                    <textarea class='form-control ideatextarea' id="HowDifferentYou" name="HowDifferentYou">@Model.AngelInvestor.HowDifferentYou</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompeteWith"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CompeteWith" name="CompeteWith">@Model.AngelInvestor.CompeteWith</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoney"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MakeMoney" name="MakeMoney">@Model.AngelInvestor.MakeMoney</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoneyInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MakeMoneyInvestors" name="MakeMoneyInvestors">@Model.AngelInvestor.MakeMoneyInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessGrowFast"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessGrowFast" name="BusinessGrowFast">@Model.AngelInvestor.BusinessGrowFast</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Proprietary"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Proprietary" name="Proprietary">@Model.AngelInvestor.Proprietary</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["TractionMade"]  </label>
+                                    <textarea class='form-control ideatextarea' id="TractionMade" name="TractionMade">@Model.AngelInvestor.TractionMade</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MileStonesMet"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MileStonesMet" name="MileStonesMet">@Model.AngelInvestor.MileStonesMet</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WordoutGet"]  </label>
+                                    <textarea class='form-control ideatextarea' id="WordoutGet" name="WordoutGet">@Model.AngelInvestor.WordoutGet</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesClose"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesClose" name="SalesClose">@Model.AngelInvestor.SalesClose</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GetStarted"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GetStarted" name="GetStarted">@Model.AngelInvestor.GetStarted</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SpendInvestorsMoney"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SpendInvestorsMoney" name="SpendInvestorsMoney">@Model.AngelInvestor.SpendInvestorsMoney</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessTeamSuited"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessTeamSuited" name="BusinessTeamSuited">@Model.AngelInvestor.BusinessTeamSuited</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["IdeaComeup"]  </label>
+                                    <textarea class='form-control ideatextarea' id="IdeaComeup" name="IdeaComeup">@Model.AngelInvestor.IdeaComeup</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["DecideTo"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DecideTo" name="DecideTo">@Model.AngelInvestor.DecideTo</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ObjectionAbout"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ObjectionAbout" name="ObjectionAbout">@Model.AngelInvestor.ObjectionAbout</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["YourInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="YourInvestors" name="YourInvestors">@Model.AngelInvestor.YourInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["PatentStrong"]  </label>
+                                    <textarea class='form-control ideatextarea' id="PatentStrong" name="PatentStrong">@Model.AngelInvestor.PatentStrong</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GrowFaster"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GrowFaster" name="GrowFaster">@Model.AngelInvestor.GrowFaster</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MarketingExpenseRealize"]  </label>
+                                    <textarea class='form-control ideatextarea' id="MarketingExpenseRealize" name="MarketingExpenseRealize">@Model.AngelInvestor.MarketingExpenseRealize</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessComparable"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessComparable" name="BusinessComparable">@Model.AngelInvestor.BusinessComparable</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WhyNeedInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="WhyNeedInvestors" name="WhyNeedInvestors">@Model.AngelInvestor.WhyNeedInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesMade"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesMade" name="SalesMade">@Model.AngelInvestor.SalesMade</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompaniesTalked"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CompaniesTalked" name="CompaniesTalked">@Model.AngelInvestor.CompaniesTalked</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Interested"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Interested" name="Interested">@Model.AngelInvestor.Interested</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ShownTo"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ShownTo" name="ShownTo">@Model.AngelInvestor.ShownTo</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["EvaluationComeup"]  </label>
+                                    <textarea class='form-control ideatextarea' id="EvaluationComeup" name="EvaluationComeup">@Model.AngelInvestor.EvaluationComeup</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </section>
+         
+                    <h6>VC</h6>
+                    <section>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["GreatManagementTeam"]  </label>
+                                    <textarea class='form-control ideatextarea' id="GreatManagementTeam" name="GreatManagementTeam">@Model.VC.GreatManagementTeam</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["BigMarketOportunity"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BigMarketOportunity" name="BigMarketOportunity">@Model.VC.BigMarketOportunity</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["TractionPositiveAchieved"]  </label>
+                                    <textarea class='form-control ideatextarea' id="TractionPositiveAchieved" name="TractionPositiveAchieved">@Model.VC.TractionPositiveAchieved</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["FoundersUnderstand"]  </label>
+                                    <textarea class='form-control ideatextarea' id="FoundersUnderstand" name="FoundersUnderstand">@Model.VC.FoundersUnderstand</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["InitialInvestorPitchDesk"]  </label>
+                                    <textarea class='form-control ideatextarea' id="InitialInvestorPitchDesk" name="InitialInvestorPitchDesk">@Model.VC.InitialInvestorPitchDesk</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["BusinessPotentialRisk"]  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessPotentialRisk" name="BusinessPotentialRisk">@Model.VC.BusinessPotentialRisk</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ProductMilestone"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ProductMilestone" name="ProductMilestone">@Model.VC.ProductMilestone</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["KeyFeatures"]  </label>
+                                    <textarea class='form-control ideatextarea' id="KeyFeatures" name="KeyFeatures">@Model.VC.KeyFeatures</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["InvestmentCapital"]  </label>
+                                    <textarea class='form-control ideatextarea' id="InvestmentCapital" name="InvestmentCapital">@Model.VC.InvestmentCapital</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ExpectedEvaluation"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ExpectedEvaluation" name="ExpectedEvaluation">@Model.VC.ExpectedEvaluation</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["DifferentiatedTechnology"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DifferentiatedTechnology" name="DifferentiatedTechnology">@Model.VC.DifferentiatedTechnology</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ReplicateTechnology"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ReplicateTechnology" name="ReplicateTechnology">@Model.VC.ReplicateTechnology</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["KeyIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="KeyIntellectualProperty" name="KeyIntellectualProperty">@Model.VC.KeyIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ClaimIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ClaimIntellectualProperty" name="ClaimIntellectualProperty">@Model.VC.ClaimIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ViolateIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ViolateIntellectualProperty" name="ViolateIntellectualProperty">@Model.VC.ViolateIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["OwnedIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="OwnedIntellectualProperty" name="OwnedIntellectualProperty">@Model.VC.OwnedIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["DevelopedIntellectualProperty"]  </label>
+                                    <textarea class='form-control ideatextarea' id="DevelopedIntellectualProperty" name="DevelopedIntellectualProperty">@Model.VC.DevelopedIntellectualProperty</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["CompanyFinancialProjection"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CompanyFinancialProjection" name="CompanyFinancialProjection">@Model.VC.CompanyFinancialProjection</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["Margins"]  </label>
+                                    <textarea class='form-control ideatextarea' id="Margins" name="Margins">@Model.VC.Margins</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["SalesMarketingModel"]  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesMarketingModel" name="SalesMarketingModel">@Model.VC.SalesMarketingModel</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ForecastingGrowth"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ForecastingGrowth" name="ForecastingGrowth">@Model.VC.ForecastingGrowth</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["ExistingInvestors"]  </label>
+                                    <textarea class='form-control ideatextarea' id="ExistingInvestors" name="ExistingInvestors">@Model.VC.ExistingInvestors</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["AchieveMilestone"]  </label>
+                                    <textarea class='form-control ideatextarea' id="AchieveMilestone" name="AchieveMilestone">@Model.VC.AchieveMilestone</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["CurrentCash"]  </label>
+                                    <textarea class='form-control ideatextarea' id="CurrentCash" name="CurrentCash">@Model.VC.CurrentCash</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> @ViewBag.TitleVC["StructurePlan"]  </label>
+                                    <textarea class='form-control ideatextarea' id="StructurePlan" name="StructurePlan">@Model.VC.StructurePlan</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
