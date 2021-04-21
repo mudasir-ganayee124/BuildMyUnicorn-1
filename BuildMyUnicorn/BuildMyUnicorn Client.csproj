@@ -48,15 +48,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ALMS DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\AppPackages\ALMS DAL.dll</HintPath>
+    <Reference Include="ALMS DAL">
+      <HintPath>..\packages\Data Access Layer\ALMS DAL.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
-      <HintPath>..\AppPackages\Dapper.dll</HintPath>
+      <HintPath>..\packages\Data Access Layer\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
-      <HintPath>..\AppPackages\itextsharp.dll</HintPath>
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -4267,13 +4266,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4286,6 +4278,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="assets\node_modules\kendoui\typescript\" />
     <Folder Include="assets\node_modules\toastr\" />
     <Folder Include="Content\file_upload\" />
     <Folder Include="Views\Appendix\" />
@@ -6348,6 +6341,13 @@
     <Content Include="Views\Finance\_PitchDeckPage_4.cshtml" />
     <Content Include="Views\Finance\_PitchDeckPage_5.cshtml" />
     <Content Include="Views\Finance\_PitchDeckPage_6.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -6360,9 +6360,6 @@
       <Project>{e84f655a-673e-47c6-8894-2f350891e687}</Project>
       <Name>Business Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="assets\node_modules\kendoui\typescript\kendo.all.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
