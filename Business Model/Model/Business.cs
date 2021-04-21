@@ -51,6 +51,9 @@ namespace Business_Model.Model
         public string Founded { get; set; }
         [Description("What is the registered business address of the company?")]
         public string BusinessAddress { get; set; }
+        [Description("Does your business require premises?")]
+        public bool PremisesRequire { get; set; }
+        public string Landlord { get; set; }
         [Description("Business phone number")]
         public string BusinessPhone { get; set; }
         [Description("Have you registered for VAT, if so what is you VAT number?")]
