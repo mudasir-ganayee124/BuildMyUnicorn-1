@@ -15,19 +15,21 @@ namespace Administration.Business_Layer
 {
     public static class SharedManager
     {
-        public static T GetItem<T>(string sqlQuery) where T : class, new()
+        public static T GetSingle<T>(string sqlQuery) where T : class, new()
         {
             T obj = new T();
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString))
             {
                 connection.Open();
 
-                obj = connection.QuerySingle<T>(sqlQuery);
+                obj = connection.QuerySingleOrDefault<T>(sqlQuery);
             }
-
-            var property = obj.GetType().GetProperty(nameof(BaseObject.EntityState));
-            if (property != null && property.PropertyType.IsEnum)
-                property.SetValue(obj, EntityState.Old);
+            if (obj != null)
+            {
+                var property = obj.GetType().GetProperty(nameof(BaseObject.EntityState));
+                if (property != null && property.PropertyType.IsEnum)
+                    property.SetValue(obj, EntityState.Old);
+            }
 
             return obj;
         }

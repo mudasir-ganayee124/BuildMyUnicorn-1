@@ -150,11 +150,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business Layer\AdministrationManager.cs" />
     <Compile Include="Business Layer\AdminManager.cs" />
     <Compile Include="Business Layer\ClientManager.cs" />
     <Compile Include="Business Layer\DashboardManager.cs" />
     <Compile Include="Business Layer\LanguageManager.cs" />
     <Compile Include="Business Layer\Master.cs" />
+    <Compile Include="Business Layer\OrderManager.cs" />
+    <Compile Include="Business Layer\PlanManager.cs" />
     <Compile Include="Business Layer\SharedManager.cs" />
     <Compile Include="Business Layer\SupplierManager.cs" />
     <Compile Include="Controllers\AppnedixController.cs" />
@@ -163,6 +166,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CompanyTypeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\GatewayController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageClientController.cs" />
     <Compile Include="Controllers\ManageGoalsController.cs" />
@@ -176,6 +180,9 @@
     <Compile Include="Controllers\ManageModuleCourseController.cs" />
     <Compile Include="Controllers\ManageThirdPartyInvolvedController.cs" />
     <Compile Include="Controllers\MoneyRaiseController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\SellingController.cs" />
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
@@ -4041,6 +4048,11 @@
     <Content Include="assets\node_modules\x-editable\dist\jqueryui-editable\img\loading.gif" />
     <Content Include="assets\node_modules\x-editable\dist\jqueryui-editable\js\jqueryui-editable.js" />
     <Content Include="assets\node_modules\x-editable\dist\jqueryui-editable\js\jqueryui-editable.min.js" />
+    <Content Include="Content\images\buil-my-unicorn-logo.png" />
+    <Content Include="Content\images\logo-black.png" />
+    <Content Include="Content\images\logo-lite.png" />
+    <Content Include="Content\images\logo-white.png" />
+    <Content Include="Content\images\profile-dummy.png" />
     <Content Include="Content\page_script\account-manager.js" />
     <Content Include="Content\page_script\appendix.js" />
     <Content Include="Content\page_script\business-placement.js" />
@@ -4048,6 +4060,7 @@
     <Content Include="Content\page_script\company-legal-structure.js" />
     <Content Include="Content\page_script\company-type.js" />
     <Content Include="Content\page_script\feedback.js" />
+    <Content Include="Content\page_script\gateway.js" />
     <Content Include="Content\page_script\global.js" />
     <Content Include="Content\page_script\grant.js" />
     <Content Include="Content\page_script\idea-progress.js" />
@@ -4056,6 +4069,7 @@
     <Content Include="Content\page_script\manage-development.js" />
     <Content Include="Content\page_script\manage-language.js" />
     <Content Include="Content\page_script\manage-marketingplan-goal.js" />
+    <Content Include="Content\page_script\manage-master.js" />
     <Content Include="Content\page_script\manage-module-video.js" />
     <Content Include="Content\page_script\manage-paymentmethod.js" />
     <Content Include="Content\page_script\manage-supplier.js" />
@@ -4064,6 +4078,8 @@
     <Content Include="Content\page_script\module-course.js" />
     <Content Include="Content\page_script\money-raise.js" />
     <Content Include="Content\page_script\mvp-reason.js" />
+    <Content Include="Content\page_script\order.js" />
+    <Content Include="Content\page_script\plans.js" />
     <Content Include="Content\page_script\product-service-produce.js" />
     <Content Include="Content\page_script\selling.js" />
     <Content Include="Content\page_script\startup.js" />
@@ -6092,6 +6108,7 @@
     <Content Include="dist\scss\_custom.scss" />
     <Content Include="dist\scss\_responsive.scss" />
     <Content Include="dist\scss\_variable.scss" />
+    <Content Include="Content\images\profile-dummy.webp" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6154,11 +6171,31 @@
     <Content Include="Views\ManageLanguage\_LanguagesModulesPartial.cshtml" />
     <Content Include="Views\ManageLanguage\ModuleQuestions.cshtml" />
     <Content Include="Views\ManageLanguage\_MyIdea_IdeaoutofheadPartial.cshtml" />
+    <Content Include="Views\ManageLanguage\_Business_BusinessOverview.cshtml" />
+    <Content Include="Views\ManageLanguage\_Business_TheTeam.cshtml" />
+    <Content Include="Views\ManageLanguage\_Business_ProductService.cshtml" />
+    <Content Include="Views\ManageLanguage\_Business_BusinessOperation.cshtml" />
+    <Content Include="Views\ManageLanguage\_Business_Competitors.cshtml" />
+    <Content Include="Views\ManageLanguage\_Selling_ProductServicePricing.cshtml" />
+    <Content Include="Views\ManageLanguage\_Marketing_OnlinePresence.cshtml" />
+    <Content Include="Views\ManageLanguage\_Marketing_Marketing.cshtml" />
+    <Content Include="Views\ManageLanguage\_Marketing_Brand.cshtml" />
+    <Content Include="Views\ManageLanguage\_Finance_Investors.cshtml" />
+    <Content Include="Views\ManageLanguage\demo.cshtml" />
+    <Content Include="Views\ManageLanguage\_Selling_YourCustomers.cshtml" />
+    <Content Include="Views\ManageLanguage\_MarketResearch_Keyfinding.cshtml" />
+    <Content Include="Views\ManageLanguage\_MarketResearch_OnlineResearch.cshtml" />
+    <Content Include="Views\ManageLanguage\_MarketResearch_Observation.cshtml" />
+    <Content Include="Views\ManageMaster\Manage.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Gateway\Index.cshtml" />
+    <Content Include="Views\Plan\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Appendix\" />
     <Folder Include="Views\ModuleCourse\" />
+    <Folder Include="Views\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

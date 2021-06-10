@@ -27,10 +27,13 @@ namespace Administration.Business_Layer
         public IEnumerable<Appendix> GetAppendexList()
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-         
+
             return obj.GetList<Appendix>(CommandType.StoredProcedure, "sp_get_all_appendex", null);
 
         }
+
+
+
         public IEnumerable<_AppendixSearchLog> GetAppendexLogList()
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
@@ -44,6 +47,12 @@ namespace Administration.Business_Layer
 
             return obj.GetList<Grants>(CommandType.StoredProcedure, "sp_get_all_grants", null);
 
+        }
+
+        public IEnumerable<GrantLog> GetGrantLog()
+        {
+            var query = $@"SELECT tbl_grants.Name, tbl_grant_survival_budget.ModifiedDateTime, tbl_countries.CountryName,tbl_client.FirstName, tbl_client.LastName, tbl_client.StartupName,tbl_loan_calculator.AmountToBorrow, tbl_loan_calculator.YearsToRepay,tbl_loan_calculator.InterestRate  from tbl_grant_survival_budget INNER JOIN tbl_grants ON tbl_grants.GrantID = tbl_grant_survival_budget.GrantID INNER JOIN tbl_client ON tbl_client.ClientID = tbl_grant_survival_budget.ClientID LEFT JOIN tbl_countries ON tbl_grants.CountryID = tbl_countries.CountryID INNER JOIN tbl_loan_calculator ON tbl_loan_calculator.GrantID = tbl_grant_survival_budget.GrantID WHERE tbl_grant_survival_budget.GrantStatus = 2";
+            return SharedManager.GetList<GrantLog>(query);
         }
 
         public IEnumerable<ModuleCourse> GetModuleCourseList()
@@ -113,7 +122,7 @@ namespace Administration.Business_Layer
             new ParametersCollection { ParamterName = "@ModuleCourseID", ParamterValue = objGuid, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
             new ParametersCollection { ParamterName = "@ModuleID", ParamterValue = null, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
             new ParametersCollection { ParamterName = "@ModuleSectionID", ParamterValue = null, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input }};
-            IEnumerable<_ModuleCourse> list =  obj.GetList<_ModuleCourse>(CommandType.StoredProcedure, "sp_get_single_module_course", parameters);
+            IEnumerable<_ModuleCourse> list = obj.GetList<_ModuleCourse>(CommandType.StoredProcedure, "sp_get_single_module_course", parameters);
             ModuleCourse Model = new ModuleCourse();
             if (list.Count() > 0 && list != null)
             {
@@ -164,6 +173,9 @@ namespace Administration.Business_Layer
              new ParametersCollection { ParamterName = "@Type", ParamterValue = Model.Type, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Description", ParamterValue = Model.Description, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Website", ParamterValue = Model.Website, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@ProvidedBy", ParamterValue = Model.ProvidedBy, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@DueDate", ParamterValue = Model.DueDate, ParamterType = DbType.Date, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@SupplierID", ParamterValue = Model.SupplierID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@VideoUrl", ParamterValue = Model.VideoUrl, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@CountryID", ParamterValue = Model.CountryID, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@CreatedBy", ParamterValue = Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
@@ -193,7 +205,7 @@ namespace Administration.Business_Layer
         }
         public string AddModuleCourse(ModuleCourse Model)
         {
-           
+
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
              new ParametersCollection { ParamterName = "@ModuleCourseID", ParamterValue = Model.ModuleCourseID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
@@ -209,28 +221,36 @@ namespace Administration.Business_Layer
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_module_course", parameters);
             if (result > 0)
             {
+
                 List<ModuleCourseOption> CourseOptionList = new List<ModuleCourseOption>();
-                foreach (var item in Model.ModuleCourseOption)
+                if (Model.ModuleCourseOption != null)
                 {
-                    ModuleCourseOption objCourseOption = new ModuleCourseOption();
-                    objCourseOption.MCOptionID = Guid.NewGuid();
-                    objCourseOption.ModuleCourseID = Model.ModuleCourseID;
-                    objCourseOption.Value = item.Value;
-                    objCourseOption.DisplayOrder = item.DisplayOrder;
-                    CourseOptionList.Add(objCourseOption);
-                
-                }
-                DataTable dtCourseOption = Business_Model.Helper.Extensions.ListToDataTable(CourseOptionList);
-                obj.ExecuteBulkInsert("sp_add_module_course_option", dtCourseOption, "UT_ModuleCourse_Data", "@DataTable");
-               
+                    foreach (var item in Model.ModuleCourseOption)
+                    {
+                        ModuleCourseOption objCourseOption = new ModuleCourseOption();
+                        objCourseOption.MCOptionID = Guid.NewGuid();
+                        objCourseOption.ModuleCourseID = Model.ModuleCourseID;
+                        objCourseOption.Value = item.Value;
+                        objCourseOption.DisplayOrder = item.DisplayOrder;
+                        CourseOptionList.Add(objCourseOption);
 
+                    }
+                    DataTable dtCourseOption = Business_Model.Helper.Extensions.ListToDataTable(CourseOptionList);
+                    obj.ExecuteBulkInsert("sp_add_module_course_option", dtCourseOption, "UT_ModuleCourse_Data", "@DataTable");
                 }
-             return result > 0 ? "OK" : Model.ModuleName + " already exists";
+                else
+                {
+                    var query = $@"Delete from tbl_module_course_option where ModuleCourseID = '{Model.ModuleCourseID}'";
+                    SharedManager.ExecuteScalar<int>(query);
+                }
+
+            }
+            return result > 0 ? "OK" : Model.ModuleName + " already exists";
         }
-           
 
 
-       
+
+
 
 
         public string UpdateOptionMaster(Option Model)
@@ -257,6 +277,9 @@ namespace Administration.Business_Layer
              new ParametersCollection { ParamterName = "@Type", ParamterValue = Model.Type, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Description", ParamterValue = Model.Description, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Website", ParamterValue = Model.Website, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@ProvidedBy", ParamterValue = Model.ProvidedBy, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@DueDate", ParamterValue = Model.DueDate, ParamterType = DbType.Date, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@SupplierID", ParamterValue = Model.SupplierID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@VideoUrl", ParamterValue = Model.VideoUrl, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@CountryID", ParamterValue = Model.CountryID, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@ModifiedBy", ParamterValue = Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
@@ -352,9 +375,9 @@ namespace Administration.Business_Layer
                         string Definition = row["Definition"].ToString().Trim();
                         AppendixList.Add(new _Appendix { AppendixID = Guid.NewGuid(), Keyword = Keyword, Category = Category, Definition = Definition });
 
-                       }
+                    }
                     DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-    
+
                     AppendixList.ForEach(x => x.CreatedBy = Guid.Parse(HttpContext.Current.User.Identity.Name));
                     DataTable dtMarketKeyPlayer = Business_Model.Helper.Extensions.ListToDataTable(AppendixList);
                     obj.ExecuteBulkInsert("sp_add_appendex_data", dtMarketKeyPlayer, "UT_Appendex_Data", "@DataTable");
@@ -365,7 +388,7 @@ namespace Administration.Business_Layer
             }
             catch (Exception e)
             {
-              //  Logger.WriteLog("Inventory Item Manager", "Error in Excel Import of Items" + e.Message.ToString(), "Information", Convert.ToInt16(HttpContext.Current.User.Identity.Name));
+                //  Logger.WriteLog("Inventory Item Manager", "Error in Excel Import of Items" + e.Message.ToString(), "Information", Convert.ToInt16(HttpContext.Current.User.Identity.Name));
                 return e.Message.ToString();
             }
 
@@ -412,7 +435,7 @@ namespace Administration.Business_Layer
             }
             catch (Exception ex)
             {
-               // Logger.WriteLog("Error in Proceesing Excel File", "Error Reason : " + ex.ToString(), "Critical", Convert.ToInt16(HttpContext.Current.User.Identity.Name));
+                // Logger.WriteLog("Error in Proceesing Excel File", "Error Reason : " + ex.ToString(), "Critical", Convert.ToInt16(HttpContext.Current.User.Identity.Name));
                 Console.Write(ex.Message);
                 DataTable DataTableExcel = new DataTable();
                 return DataTableExcel;
