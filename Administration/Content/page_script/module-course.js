@@ -108,7 +108,7 @@ $("#UpdateForm").submit(function (e) {
         method: "POST",
         data: JSON.stringify({ Model: Model }),
         contentType: "application/json",
-        success: function (response) {
+        success: function (response) { 
             if (response === "OK") 
              {
                 $('#UpdateForm')[0].reset();
@@ -203,6 +203,7 @@ function Edit(ModuleCourseID) {
         data: { ID : ModuleCourseID },
         dataType: 'json',
         success: function (data) {
+
             $("#EditMCOptionID").val("");
             $("#EditValue").val("");
             $('.jsCourselearnContainerEdit .jsCourselearnValue').not(':first').remove();

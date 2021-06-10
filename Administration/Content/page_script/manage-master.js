@@ -4,16 +4,19 @@ $('#UpdateForm, #NewForm').parsley();
 $(document).ready(() => {
 
     $("li a, li, li ul").removeClass("active");
-    $("#liManage").addClass("active");
-    $("#ulManage").addClass("active");
+    $("#liManageMaster").addClass("active");
+    $("#ulManageMasters").addClass("active");
+    $("#ulManageMasters").addClass("in");
+
+    //$("#liManage_Startup").addClass("active");
 
     $("#Grid").kendoGrid({
         dataSource: {
             type: "json",
             transport: {
                 read: {
-                    url: "/Selling/GetAll"
-
+                    url: "/ManageMaster/GetAll",
+                    data: { Type : $("#ModuleID").val()}
                 },
             },
             serverPaging: true,
@@ -31,7 +34,7 @@ $(document).ready(() => {
                         ModifiedDateTime: { type: "date" },
                         CreatedName: { type: "string" },
                         ModifiedName: { type: "string" }
-
+                       
                     }
                 }
             },
@@ -41,17 +44,17 @@ $(document).ready(() => {
         sortable: false, groupable: false, filterable: true, reorderable: false, resizable: true, noRecords: true,
         selectable: "row",
         messages: {
-            noRecords: "No Selling Found."
+            noRecords: "No Record Found."
         },
         pageable: { refresh: true, pageSizes: ['All', 20, 35, 50, 100], buttonCount: 5 },
         // dataBound: function () { for (var i = 0; i < $("#StartupGrid").columns.length; i++) { if (i !== 0) { $("#StartupGrid").autoFitColumn(i); } } },
 
         columns: [{
-            template: '<button class="btn btn-info" title="Edit Selling" onclick=Edit("#: ID #")><i class="icon-pencil"></i></button>\
-                      <button class= "btn btn-danger" title="Delete Selling" onclick=Delete("#: ID #") > <i class="fa fa-trash"></i></button> ',
+            template: '<button class="btn btn-info" title="Edit Feedback" onclick=Edit("#: ID #")><i class="icon-pencil"></i></button>\
+                      <button class= "btn btn-danger" title="Delete Feedback" onclick=Delete("#: ID #") > <i class="fa fa-trash"></i></button> ',
             width: 100
         },
-            { field: "Value", title: "Selling", width: 140, filterable: false },
+        { field: "Value", title: "Name", width: 140, filterable: false },
 
 
         {
@@ -70,20 +73,20 @@ $(document).ready(() => {
 $("#UpdateForm").submit(function (e) {
     e.preventDefault();
     $.ajax({
-        url: GetBaseURL() + "Selling/Update",
+        url: GetBaseURL() + "ManageMaster/Update",
         method: "POST",
         data: $('#UpdateForm').serialize(),
         success: function (response) {
             if (response === "OK") {
                 $('#UpdateForm')[0].reset();
                 $('#UpdateModel').modal('toggle');
-                swal("Success!", "Selling Updated Successfully", "success");
+                swal("Success!", "Record Updated Successfully", "success");
                 $('#Grid').data('kendoGrid').dataSource.read()
-
-
+             
+               
             }
             else {
-                swal("Error!", response, "error");
+                swal("Error!", response , "error");
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -96,14 +99,14 @@ $("#UpdateForm").submit(function (e) {
 $("#NewForm").submit(function (e) {
     e.preventDefault();
     $.ajax({
-        url: GetBaseURL() + "Selling/Add",
+        url: GetBaseURL() + "ManageMaster/Add",
         method: "POST",
         data: $('#NewForm').serialize(),
         success: function (response) {
             if (response === "OK") {
                 $('#NewForm')[0].reset();
                 $('#NewModel').modal('toggle');
-                swal("Success!", "Startup Added Successfully", "success");
+                swal("Success!", "Record Added Successfully", "success");
                 $('#Grid').data('kendoGrid').dataSource.read();
 
 
@@ -120,15 +123,15 @@ $("#NewForm").submit(function (e) {
 });
 
 function Edit(Value) {
-
-
+  
+    
     $.ajax({
-        url: GetBaseURL() + "Selling/Get/",
+        url: GetBaseURL() + "ManageMaster/Get",
         method: "GET",
-        data: { ID: Value },
+        data: { ID: Value, Type : $("#ModuleID").val()},
         dataType: 'json',
         success: function (data) {
-
+           
             $("#ID").val(data.ID);
             $("#Value").val(data.Value);
             $("#DisplayOrder").val(data.DisplayOrder);
@@ -159,14 +162,14 @@ function Delete(Value) {
                 action: function () {
                     var option = {
                         action: "Delete",
-                        controller: "Selling",
+                        controller: "ManageMaster",
                         dataType: "text",
                         data: { ID: Value }
                     };
                     $.fn.ajaxCall(option).done(function (response) {
-
+                      
                         if (response === "OK") {
-                            $.fn.successMsg("Startup deleted successfully");
+                            $.fn.successMsg("Record deleted successfully");
                             $('#Grid').data('kendoGrid').dataSource.read();
                         }
                         else

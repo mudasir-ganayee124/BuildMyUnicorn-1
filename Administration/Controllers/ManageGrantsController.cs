@@ -13,7 +13,8 @@ namespace Administration.Controllers
 
         public ActionResult Index()
         {
-
+            SupplierManager obj = new SupplierManager();
+            ViewBag.SupplierList = obj.GetAllSupplier();
             return View();
         }
 
@@ -21,6 +22,13 @@ namespace Administration.Controllers
         {
             Master obj = new Master();
             IEnumerable<Grants> list = obj.GetGrantsList();
+            return Json(new { msg = list, total = list.Count() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetGrantLog()
+        {
+            Master obj = new Master();
+            IEnumerable<GrantLog> list = obj.GetGrantLog();
             return Json(new { msg = list, total = list.Count() }, JsonRequestBehavior.AllowGet);
         }
 
