@@ -96,11 +96,12 @@ namespace BuildMyUnicorn.Controllers
                     appCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(appCookie);
                 }
-                ModuleCourse objCourse = new Master().GetSingleModuleCourse((int)Module.MarketResearch, SectionValue);
+                return ResponseType.NotRedirect.ToString();
+                //  ModuleCourse objCourse = new Master().GetSingleModuleCourse((int)Module.MarketResearch, SectionValue);
 
-                if (getValue == "0" && objCourse.ModuleCourseID != Guid.Empty)
-                    return ResponseType.Redirect.ToString();
-                else return ResponseType.NotRedirect.ToString();
+                //if (getValue == "0" && objCourse.ModuleCourseID != Guid.Empty)
+                //    return ResponseType.Redirect.ToString();
+                //else return ResponseType.NotRedirect.ToString();
 
             }
             else

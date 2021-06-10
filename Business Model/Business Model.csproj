@@ -40,6 +40,13 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StringTypeEnumConverter, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StringTypeEnumConverter.Newtonsoft.1.1.4\lib\net461\StringTypeEnumConverter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -96,6 +103,7 @@
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Common.cs" />
+    <Compile Include="Model\ContentFile.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Dashboard.cs" />
@@ -103,7 +111,7 @@
     <Compile Include="Model\Enum.cs" />
     <Compile Include="Model\Finance.cs" />
     <Compile Include="Model\ForgotPassword.cs" />
-    <Compile Include="Model\Grants.cs" />
+    <Compile Include="Model\Gateway.cs" />
     <Compile Include="Model\IBaseObject.cs" />
     <Compile Include="Model\Idea.cs" />
     <Compile Include="Model\IdeaList.cs" />
@@ -114,7 +122,14 @@
     <Compile Include="Model\Modules.cs" />
     <Compile Include="Model\ModuleCourse.cs" />
     <Compile Include="Model\ModuleVideo.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Payment.cs" />
+    <Compile Include="Model\Plan.cs" />
+    <Compile Include="Model\ProgressAnalytic.cs" />
+    <Compile Include="Model\RateInfo.cs" />
+    <Compile Include="Model\Revolut.cs" />
     <Compile Include="Model\Selling.cs" />
+    <Compile Include="Model\StartupAccelerator.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\Survey.cs" />
     <Compile Include="Model\ToDoTask.cs" />

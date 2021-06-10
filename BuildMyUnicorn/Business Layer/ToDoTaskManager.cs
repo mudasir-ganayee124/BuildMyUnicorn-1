@@ -35,7 +35,7 @@ namespace BuildMyUnicorn.Business_Layer
 
         public ToDoTask GetTodoItem(Guid id)
         {
-            var todo = SharedManager.GetItem<ToDoTask>(ItemQuery + $" WHERE ToDOTaskID = '{id}'");
+            var todo = SharedManager.GetSingle<ToDoTask>(ItemQuery + $" WHERE ToDOTaskID = '{id}'");
             todo.AssignedMappings = assignedMappingManager.GetAssignedMapping(id);
             return todo;
         }

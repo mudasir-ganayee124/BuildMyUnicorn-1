@@ -1,12 +1,12 @@
-﻿
-@using Business_Model.Model;
+﻿@*@using Business_Model.Model;*@
 @using System.ComponentModel;
 @model Business_Model.Model.BusinessOperation
 
 @{
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
     var JsonObject = string.Empty;
     List<string> objList = new List<string>();
-    var ModelList = ViewBag.OperationPartyList as IEnumerable<MultipleMaster>;
+    var ModelList = ViewBag.OperationPartyList as IEnumerable<Business_Model.Model.MultipleMaster>;
     if (ModelList != null && ModelList.Count() > 0)
     {
         objList = ModelList.Where(x => x.Value1 != null && x.Value2 != null).Select(x => x.Value1).Distinct().ToList();
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOperation", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_BusinessOperation }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOperation", ModuleID = (int)Business_Model.Model.Module.TheBusiness, SectionID = (int)Business_Model.Model.ModuleSection.TheBusiness_BusinessOperation }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -35,6 +35,7 @@
                     <input type="hidden" id="JsonpartyType" value='@JsonObject' />
                     <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="IsRedirect" value='@(Model.BusinessOperationID == Guid.Empty ? "true" : "false")' />
                     <input type="hidden" id="BusinessOperationID" name="BusinessOperationID" value="@Model.BusinessOperationID" />
                     <!-- Step 1 -->
                     <h6>Who Does what</h6>
@@ -43,7 +44,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["FinanceOperationalResponsible"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FinanceOperationalResponsible").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var arrayFinanceOperationalResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.FinanceOperationalResponsible) == false ? @Model.WhoDoesWhat.FinanceOperationalResponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="FinanceOperationalResponsible" name="FinanceOperationalResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -65,7 +67,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["FinanceManagementResponsible"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FinanceManagementResponsible").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var arrayFinanceManagementResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.FinanceManagementResponsible) == false ? @Model.WhoDoesWhat.FinanceManagementResponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="FinanceManagementResponsible" name="FinanceManagementResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -74,7 +77,7 @@
                                         }
 
                                     </select>
-                                  
+
 
 
 
@@ -85,7 +88,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["LegalMatterResponsible"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LegalMatterResponsible").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var arrayLegalMatterResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.LegalMatterResponsible) == false ? @Model.WhoDoesWhat.LegalMatterResponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="LegalMatterResponsible" name="LegalMatterResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -103,7 +107,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleWhoDoesWhat["HRresponsible"] </label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HRresponsible").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var arrayHRresponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.HRresponsible) == false ? @Model.WhoDoesWhat.HRresponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="HRresponsible" name="HRresponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -120,7 +125,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["FacilitiesResponsible"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FacilitiesResponsible").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var arrayFacilitiesResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.FacilitiesResponsible) == false ? @Model.WhoDoesWhat.FacilitiesResponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="FacilitiesResponsible" name="FacilitiesResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -139,7 +145,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["SalesResponsible"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesResponsible").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var arraySalesResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.SalesResponsible) == false ? @Model.WhoDoesWhat.SalesResponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="SalesResponsible" name="SalesResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -160,7 +167,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleWhoDoesWhat["MarektingResponsible"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarektingResponsible").FirstOrDefault().QuestionText : "" )  </label>
+
                                     @{ var arrayMarektingResponsible = String.IsNullOrEmpty(@Model.WhoDoesWhat.MarektingResponsible) == false ? @Model.WhoDoesWhat.MarektingResponsible.Split(',').ToArray() : new string[0]; }
                                     <select id="MarektingResponsible" name="MarektingResponsible" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.TeamMemberList)
@@ -185,8 +193,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["ProductProduced"]</label>
-                                    <textarea class='form-control ideatextarea' id="ProductProduced" name="ProductProduced">@Model.Operations.ProductProduced</textarea>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductProduced").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ProductProduced" name="ProductProduced" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductProduced").FirstOrDefault().PlaceHolderText : "" ) ">@Model.Operations.ProductProduced</textarea>
 
                                 </div>
                             </div>
@@ -195,7 +204,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["DeliveryMethodID"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DeliveryMethodID").FirstOrDefault().QuestionText : "" )  </label>
                                     @Html.DropDownList("DeliveryMethodID", new SelectList(ViewBag.DeliveryMethod, "ID", "Value", @Model.Operations.DeliveryMethodID), "- Please select -", new { @class = "custom-select col-12" })
 
                                 </div>
@@ -204,9 +214,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                              
+
                                 <div class="form-group">
-                                    <label for="wint1 pull-left" style="float:left">@ViewBag.TitleOperations["ThirdPartyInvovedID"]</label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ThirdPartyInvovedID").FirstOrDefault().QuestionText : "" )  </label>
                                     <button class="btn btn-primary pull-right text-right" style="float:right">Add</button>
                                     <br />
                                 </div>
@@ -324,80 +335,38 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["PaymentMethodID"]</label>
-                                    @Html.DropDownList("PaymentMethod", new SelectList(ViewBag.PaymentMethod, "ID", "Value", @Model.Operations.PaymentMethodID), "- Please select -", new { @class = "custom-select col-12" })
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PaymentMethodID").FirstOrDefault().QuestionText : "" )  </label>
+                                    @Html.DropDownList("PaymentMethodID", new SelectList(ViewBag.PaymentMethod, "ID", "Value", @Model.Operations.PaymentMethodID), "- Please select -", new { @class = "custom-select col-12" })
 
                                 </div>
                             </div>
 
                         </div>
+                        @*<div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="wint1">@ViewBag.TitleOperations["QualityControlMethod"]</label>
+                        <textarea class='form-control form-control-line detailtextarea' id="QualityControlMethod" name="QualityControlMethod">@Model.Operations.QualityControlMethod</textarea>
+
+                    </div>
+                </div>
+
+            </div>*@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["QualityControlMethod"]</label>
-                                    <textarea class='form-control form-control-line detailtextarea' id="QualityControlMethod" name="QualityControlMethod">@Model.Operations.QualityControlMethod</textarea>
 
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["Needsoftware"]</label>
-                                    <select class="custom-select col-12 jsOptionChange" id="Needsoftware" name="Needsoftware" data-optionchange="SoftwareType">
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.SoftwareType) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-
-
-                                </div>
-                                <div class='form-group jsEquipmentSoftware SoftwareType @(string.IsNullOrEmpty(@Model.Operations.SoftwareType) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleOperations["SoftwareType"]</label>
-                                    <textarea class='form-control ideatextarea' id="SoftwareType" name="SoftwareType">@Model.Operations.SoftwareType</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Needsoftware").FirstOrDefault().QuestionText : "" )  </label>
+                                    @Html.DropDownList("Needsoftware", new SelectList(ViewBag.Choice, "ID", "Value", @Model.Operations.Needsoftware), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "SoftwareType" })
 
 
 
                                 </div>
-                            </div>
+                                <div class='form-group SoftwareType @(Model.Operations.Needsoftware.ToString() == "7f5d70c1-5e5b-4411-a05c-224976e6feff" ? "" : "hide")'>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["StaffCount"]</label>
-                                    <textarea class='form-control ideatextarea'>@Model.Operations.StaffCount</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["StaffCountNextYear"]</label>
-                                    <textarea class='form-control ideatextarea'>@Model.Operations.StaffCountNextYear</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["HaveInsurance"]</label>
-                                    <select class="custom-select col-12 jsOptionChange" id="HaveInsurance" name="HaveInsurance" data-optionchange="InsuranceType">
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.InsuranceType) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-
-
-                                </div>
-                                <div class='form-group jsEquipmentSoftware InsuranceType @(string.IsNullOrEmpty(@Model.Operations.InsuranceType) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleOperations["InsuranceType"]</label>
-                                    <textarea class='form-control ideatextarea' id="InsuranceType" name="InsuranceType">@Model.Operations.InsuranceType</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SoftwareType").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="SoftwareType" name="SoftwareType" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SoftwareType").FirstOrDefault().PlaceHolderText : "" )">@Model.Operations.SoftwareType</textarea>
 
 
 
@@ -408,18 +377,36 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["NeedLicense"]</label>
-                                    <select class="custom-select col-12 jsOptionChange" id="NeedLicense" name="NeedLicense" data-optionchange="LicenseType">
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.LicenseType) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
 
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StaffCount").FirstOrDefault().QuestionText : "" )  </label>
+                                    <input type="text" class='form-control' id="StaffCount" name="StaffCount" value="@Model.Operations.StaffCount" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StaffCount").FirstOrDefault().PlaceHolderText : "" )" />
 
                                 </div>
-                                <div class='form-group jsEquipmentSoftware LicenseType @(string.IsNullOrEmpty(@Model.Operations.LicenseType) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleOperations["LicenseType"]</label>
-                                    <textarea class='form-control ideatextarea' id="LicenseType" name="LicenseType">@Model.Operations.LicenseType</textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StaffCountNextYear").FirstOrDefault().QuestionText : "" )  </label>
+                                    <input type="text" class='form-control' id="StaffCountNextYear" name="StaffCountNextYear" value="@Model.Operations.StaffCountNextYear" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StaffCountNextYear").FirstOrDefault().PlaceHolderText : "" ) " />
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HaveInsurance").FirstOrDefault().QuestionText : "" )  </label>
+                                    @Html.DropDownList("HaveInsurance", new SelectList(ViewBag.Choice, "ID", "Value", @Model.Operations.HaveInsurance), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "InsuranceType" })
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware InsuranceType @(Model.Operations.HaveInsurance.ToString() == "7f5d70c1-5e5b-4411-a05c-224976e6feff" ? "" : "hide") '>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InsuranceType").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="InsuranceType" name="InsuranceType" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InsuranceType").FirstOrDefault().PlaceHolderText : "" )">@Model.Operations.InsuranceType</textarea>
 
 
 
@@ -430,18 +417,30 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleOperations["NeedQualification"]</label>
-                                    <select class="custom-select col-12 jsOptionChange" id="NeedQualification" name="NeedQualification" data-optionchange="QualificationType">
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.Operations.QualificationType) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "NeedLicense").FirstOrDefault().QuestionText : "" )  </label>
+                                    @Html.DropDownList("NeedLicense", new SelectList(ViewBag.Choice, "ID", "Value", @Model.Operations.NeedLicense), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "LicenseType" })
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware LicenseType @(Model.Operations.NeedLicense.ToString() == "7f5d70c1-5e5b-4411-a05c-224976e6feff" ? "" : "hide") '>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LicenseType").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="LicenseType" name="LicenseType" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LicenseType").FirstOrDefault().PlaceHolderText : "" )">@Model.Operations.LicenseType</textarea>
+
 
 
                                 </div>
-                                <div class='form-group jsEquipmentSoftware QualificationType  @( string.IsNullOrEmpty(@Model.Operations.QualificationType) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleOperations["QualificationType"]</label>
-                                    <textarea class='form-control ideatextarea' id="QualificationType" name="QualificationType">@Model.Operations.QualificationType</textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "NeedQualification").FirstOrDefault().QuestionText : "" )  </label>
+                                    @Html.DropDownList("NeedQualification", new SelectList(ViewBag.Choice, "ID", "Value", @Model.Operations.NeedQualification), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "QualificationType" })
+
+                                </div>
+                                <div class='form-group jsEquipmentSoftware QualificationType  @(Model.Operations.NeedQualification.ToString() == "7f5d70c1-5e5b-4411-a05c-224976e6feff" ? "" : "hide")'>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "QualificationType").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="QualificationType" name="QualificationType" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "QualificationType").FirstOrDefault().QuestionText : "" )">@Model.Operations.QualificationType</textarea>
 
 
 
@@ -455,7 +454,7 @@
             </div>
         </div>
     </div>
-   
+
 </div>
 
 

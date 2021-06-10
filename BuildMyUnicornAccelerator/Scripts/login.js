@@ -1,9 +1,8 @@
 ﻿$('#loginform').parsley();
-$('#frm_Password').parsley();
-$('#frm_PasswordEmail').parsley();
+
 $('#frm_ResetPassword').parsley();
 $("#loginform").submit(function (e) {
-alert();
+
     e.preventDefault();
     $(".erorLabel").addClass("invisible");
 
@@ -57,16 +56,15 @@ $("#frm_Password").submit(function (e) {
 });
 
 $("#frm_ResetPassword").submit(function (e) {
+
     e.preventDefault();
     $.ajax({
-        url: GetBaseURL() + "/Signup/UpdateForgotPassword",
+        url: GetBaseURL() + "Account/UpdateForgotPassword",
         method: "POST",
-        data: $('#frm_ResetPassword').serialize(),
+        data: $(this).serialize(),
         success: function (response) {
             if (response == "OK") {
-                $(".successMessagelabel").removeClass("invisible");
-                $(".successMessage").text("Password Changed Successfully");
-                setTimeout(function () { window.location.replace(GetBaseURL() + "/Login") }, 2000);
+                window.location.replace(GetBaseURL() + "Dashboard");
            
                 
               
@@ -86,20 +84,20 @@ $("#frm_ResetPassword").submit(function (e) {
 
 });
 
-$("#frm_PasswordEmail").submit(function (e) {
-    alert();
+$(".frmForgotPassword").submit(function (e) {
+    $(".jsResetPasswordMsg").addClass("hide");
     e.preventDefault();
     $.ajax({
-        url: GetBaseURL() + "/Signup/SendPasswordResetLink",
+        url: GetBaseURL() + "Register/SendPasswordResetLink",
         method: "POST",
-        data: $('#frm_PasswordEmail').serialize(),
+        data: $(this).serialize(),
         success: function (response) {
             if (response == "OK") {
-                window.location.replace(GetBaseURL() + "/Signup/ResetPasswordEmailSuccess");
+                 window.location.replace(GetBaseURL() + "Register/ResetPasswordSuccess");
             }
             else {
-                $(".erorLabel").removeClass("invisible");
-                $(".errorMessage").text(response);
+                $(".jsResetPasswordMsg").removeClass("hide");
+                $("#responseMessage").text(response);
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

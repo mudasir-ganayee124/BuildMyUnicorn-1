@@ -19,5 +19,7 @@ namespace Business_Model.Model
         public string Password { get; set; }
         public string Username { get; set; }
         public int ClientNumber { get; set; }
+        public string ImageID { get; set; }
+        public Guid ConfirmationID { get; set; }
     }
 }

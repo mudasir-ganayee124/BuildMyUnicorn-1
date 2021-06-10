@@ -1,7 +1,8 @@
-﻿@using Business_Model.Model;
-@using System.ComponentModel;
+﻿@using System.ComponentModel;
 @model Business_Model.Model.ProductService
-
+@{
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+}
 <div class="row" id="validation">
     <div class="col-12">
         <div class="card wizard-content">
@@ -12,7 +13,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "ProductService", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_ProductorService }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "ProductService", ModuleID = (int)Business_Model.Model.Module.TheBusiness, SectionID = (int)Business_Model.Model.ModuleSection.TheBusiness_ProductorService }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -21,7 +22,8 @@
                     <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
                     <input type="hidden" id="ProductServiceID" name="ProductServiceID" value="@Model.ProductServiceID" />
-                    @*<input type="hidden" id="ProgressValue" name="ProgressValue" value="@Model.ProgressValue" />*@
+                    <input type="hidden" id="IsRedirect" value='@(Model.ProductServiceID == Guid.Empty ? "true" : "false")' />
+
                     <!-- Step 1 -->
                     <h6>About Product</h6>
                     <section>
@@ -34,7 +36,7 @@
 
                                 <div class="form-group">
                                     @{ var arrayPSSelling = String.IsNullOrEmpty(@Model.AboutProduct.PSSelling) == false ? @Model.AboutProduct.PSSelling.Split(',').ToArray() : new string[0]; }
-                                    <label for="wint1">  @ViewBag.DisplayAboutProduct["PSSelling"]  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSSelling").FirstOrDefault().QuestionText : "" )  </label>
                                     <input type="hidden" id="PSSelling" name="PSSelling" />
                                     @foreach (var item in ViewBag.ProductServiceSelling)
                                     {
@@ -52,8 +54,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.DisplayAboutProduct["PSDescription"] </label>
-                                    <textarea class='form-control ideatextarea progress-required @( Model.AboutProduct.PSDescription != null ? "progress-percent" : "")' id="PSDescription" name="PSDescription" oninput="auto_grow_idea_textarea(this)">@Model.AboutProduct.PSDescription</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSDescription").FirstOrDefault().QuestionText : "" )  </label>
+
+                                    <textarea class='form-control ideatextarea' id="PSDescription" name="PSDescription" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSDescription").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutProduct.PSDescription</textarea>
                                 </div>
                             </div>
 
@@ -64,7 +67,8 @@
 
                                 <div class="form-group">
                                     @{ var arrayPSProduce = String.IsNullOrEmpty(@Model.AboutProduct.PSProduce) == false ? @Model.AboutProduct.PSProduce.Split(',').ToArray() : new string[0]; }
-                                    <label for="wint1">  @ViewBag.DisplayAboutProduct["PSProduce"]  </label>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSProduce").FirstOrDefault().QuestionText : "" )  </label>
                                     <input type="hidden" id="PSProduce" name="PSProduce" />
                                     @foreach (var item in ViewBag.ProductServiceProduce)
                                     {
@@ -83,8 +87,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSDevelopStart"]</label>
-                                    <textarea class='form-control ideatextarea progress-required @( Model.AboutProduct.PSDevelopStart != null ? "progress-percent" : "")' id="PSDevelopStart" name="PSDevelopStart" oninput="auto_grow_idea_textarea(this)">@Model.AboutProduct.PSDevelopStart</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSDevelopStart").FirstOrDefault().QuestionText : "" )  </label>
+
+                                    <textarea class='form-control ideatextarea' id="PSDevelopStart" name="PSDevelopStart" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSDevelopStart").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutProduct.PSDevelopStart</textarea>
                                 </div>
                             </div>
 
@@ -92,8 +97,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSReadylaunch"]</label>
-                                    <textarea class='form-control ideatextarea progress-required @( Model.AboutProduct.PSReadylaunch != null ? "progress-percent" : "")' id="PSReadylaunch" name="PSReadylaunch" oninput="auto_grow_idea_textarea(this)">@Model.AboutProduct.PSReadylaunch</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSReadylaunch").FirstOrDefault().QuestionText : "" )  </label>
+
+                                    <textarea class='form-control ideatextarea' id="PSReadylaunch" name="PSReadylaunch" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSReadylaunch").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutProduct.PSReadylaunch</textarea>
                                 </div>
                             </div>
 
@@ -101,8 +107,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSVariations"]</label>
-                                    <textarea class='form-control ideatextarea progress-required @( Model.AboutProduct.PSVariations != null ? "progress-percent" : "")' id="PSVariations" name="PSVariations" oninput="auto_grow_idea_textarea(this)">@Model.AboutProduct.PSVariations</textarea>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSVariations").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="PSVariations" name="PSVariations" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSVariations").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutProduct.PSVariations</textarea>
                                 </div>
                             </div>
 
@@ -110,31 +117,16 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSHaveIPAddress"]</label>
-                                    @Html.DropDownList("PSHaveIPAddress", new SelectList(ViewBag.Choice, "ID", "Value", @Model.AboutProduct.PSHaveIPAddress), "- Please select -", new { @class = "custom-select col-12" })
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSHaveIPAddress").FirstOrDefault().QuestionText : "" )  </label>
+
+                                    @Html.DropDownList("PSHaveIPAddress", new SelectList(ViewBag.Choice, "ID", "Value", @Model.AboutProduct.PSHaveIPAddress), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "PSIPAddress" })
 
 
                                 </div>
-                                <div class='form-group jsPSIPAddress @(Model.AboutProduct.PSHaveIPAddress == 1 ? "" : "hide")'>
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSIPAddress"]</label>
-                                    <input type="text" class='form-control  progress-required' id="PSIPAddress" name="PSIPAddress" value="@Model.AboutProduct.PSIPAddress">
+                                <div class='form-group PSIPAddress  @(string.IsNullOrEmpty(@Model.AboutProduct.PSIPAddress) ? "hide" :"") '>
 
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSHaveTradeMark"]</label>
-                                    @Html.DropDownList("PSHaveTradeMark", new SelectList(ViewBag.Choice, "ID", "Value", @Model.AboutProduct.PSHaveTradeMark), "- Please select -", new { @class = "custom-select col-12" })
-
-
-                                </div>
-                                <div class='form-group jsPSTradeMark  @(Model.AboutProduct.PSHaveTradeMark == 1 ? "" : "hide")'>
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSTradeMark"]</label>
-                                    <input type="text" class='form-control  progress-required' id="PSTradeMark" name="PSTradeMark" value="@Model.AboutProduct.PSTradeMark">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSIPAddress").FirstOrDefault().QuestionText : "" )  </label>
+                                    <input type="text" class='form-control' id="PSIPAddress" name="PSIPAddress" value="@Model.AboutProduct.PSIPAddress" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSIPAddress").FirstOrDefault().PlaceHolderText : "" )">
 
 
                                 </div>
@@ -144,8 +136,28 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayAboutProduct["PSHaveTechnologyRoadMap"]</label>
-                                    @Html.DropDownList("PSHaveTechnologyRoadMap", new SelectList(ViewBag.Choice, "ID", "Value", @Model.AboutProduct.PSHaveTechnologyRoadMap), "- Please select -", new { @class = "custom-select col-12" })
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSHaveTradeMark").FirstOrDefault().QuestionText : "" )  </label>
+                                    @Html.DropDownList("PSHaveTradeMark", new SelectList(ViewBag.Choice, "ID", "Value", @Model.AboutProduct.PSHaveTradeMark), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "PSTradeMark" })
+
+
+                                </div>
+                                <div class='form-group PSTradeMark @(string.IsNullOrEmpty(@Model.AboutProduct.PSTradeMark) ? "hide" :"")'>
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSTradeMark").FirstOrDefault().QuestionText : "" )  </label>
+                                    <input type="text" class='form-control' id="PSTradeMark" name="PSTradeMark" value="@Model.AboutProduct.PSTradeMark" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSTradeMark").FirstOrDefault().PlaceHolderText : "" )">
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PSHaveTechnologyRoadMap").FirstOrDefault().QuestionText : "" )  </label>
+
+                                    @Html.DropDownList("PSHaveTechnologyRoadMap", new SelectList(ViewBag.Choice, "ID", "Value", @Model.AboutProduct.PSHaveTechnologyRoadMap), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "versionlist" })
 
 
                                 </div>
@@ -153,7 +165,7 @@
 
                         </div>
 
-                        <div class='jsTechnologyRoadMapContainer  @(Model.AboutProduct.PSHaveTechnologyRoadMap == 1 ? "" : "hide" )'>
+                        <div class='jsTechnologyRoadMapContainer versionlist'>
                             <div class="row jsTechnologyRoadMap">
                                 <div class="col-md-11">
                                     <div class="form-group"> <input type="text" class="form-control jsVersion progress-required" placeholder="Version" value='@(ViewBag.VersionList.Count > 0 ? ViewBag.VersionList[0] : "" )'> </div>
@@ -187,7 +199,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayMVP["MVPDevelopmentFarID"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MVPDevelopmentFarID").FirstOrDefault().QuestionText : "" )  </label>
+
                                     @{ var arrayFinanceOperationalResponsible = String.IsNullOrEmpty(@Model.MVP.MVPDevelopmentFarID) == false ? @Model.MVP.MVPDevelopmentFarID.Split(',').ToArray() : new string[0]; }
                                     <select id="MVPDevelopmentFarID" name="MVPDevelopmentFarID" class="selectpicker" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
                                         @foreach (var item in ViewBag.DevelopmentFarList)
@@ -201,25 +214,26 @@
                                 </div>
 
                                 @*<div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayMVP["MVPDevelopmentFarID"]</label>
-                                        @Html.DropDownList("MVPDevelopmentFarID", new SelectList(ViewBag.DevelopmentFarList, "ID", "Value", @Model.MVP.MVPDevelopmentFarID), "- Please select -", new { @class = "custom-select col-12" })
+                        <label for="wint1">@ViewBag.DisplayMVP["MVPDevelopmentFarID"]</label>
+                        @Html.DropDownList("MVPDevelopmentFarID", new SelectList(ViewBag.DevelopmentFarList, "ID", "Value", @Model.MVP.MVPDevelopmentFarID), "- Please select -", new { @class = "custom-select col-12" })
 
 
-                                    </div>*@
+                    </div>*@
                                 @*<div class='form-group jsMVPHavePrototype @(Model.MVP.MVPHavePrototype == 1 ? "" : "hide")'>
-                                        <label for="wint1">@ViewBag.DisplayMVP["MVPPrototype"]</label>
-                                        <input type="text" class='form-control  progress-required' id="MVPPrototype" name="MVPPrototype" value="@Model.MVP.MVPPrototype">
+                        <label for="wint1">@ViewBag.DisplayMVP["MVPPrototype"]</label>
+                        <input type="text" class='form-control  progress-required' id="MVPPrototype" name="MVPPrototype" value="@Model.MVP.MVPPrototype">
 
 
-                                    </div>*@
+                    </div>*@
                             </div>
 
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayMVP["MVPCreate"]</label>
-                                    <textarea class='form-control ideatextarea progress-required @( Model.MVP.MVPCreate != null ? "progress-percent" : "")' id="MVPCreate" name="MVPCreate" oninput="auto_grow_idea_textarea(this)">@Model.MVP.MVPCreate</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MVPCreate").FirstOrDefault().QuestionText : "" )  </label>
+
+                                    <textarea class='form-control ideatextarea' id="MVPCreate" name="MVPCreate" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MVPCreate").FirstOrDefault().PlaceHolderText : "" )">@Model.MVP.MVPCreate</textarea>
                                 </div>
                             </div>
 
@@ -228,7 +242,8 @@
                             <div class="col-md-12">
 
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.DisplayMVP["MVPReasonID"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MVPReasonID").FirstOrDefault().QuestionText : "" )  </label>
+
                                     @Html.DropDownList("MVPReasonID", new SelectList(ViewBag.MVPReason, "ID", "Value", @Model.MVP.MVPReasonID), "- Please select -", new { @class = "custom-select col-12" })
 
 

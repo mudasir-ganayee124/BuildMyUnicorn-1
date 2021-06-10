@@ -1,43 +1,549 @@
-﻿@section PageStyle
+﻿@using Business_Model.Model;
+@section PageStyle
 {
     <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+
+
+    <style>
+        .css-bar-lg {
+            width: 100px;
+            height: 100px;
+            font-size: 11px;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .css-bar {
+            margin-bottom: 0px;
+        }
+    </style>
 }
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Idea Percentage</h4>
-                <div>
-                    <canvas id="chart-idea-progress" height="150"></canvas>
+<input type="hidden" id="JsonProgressAnalytic" name="JsonProgressAnalytic" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProgressAnalytic))' />
+
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Dashboard</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        @*<div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+
+            </div>*@
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Info box -->
+<!-- ============================================================== -->
+<div class="card-group">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex no-block align-items-center">
+                        <div>
+                            <h3><i class="icon-screen-desktop"></i></h3>
+                            <p class="text-muted">TEAM MEMBERS&nbsp;</p>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="counter text-primary">@(ViewBag.TeamCount + 1) </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: @(ViewBag.TeamCount + 1)%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@Html.Partial("~/Views/Team/_DialogAddTeamPartial.cshtml")
-<div class="row">
-    <div class="col-md-4">
-        <section id="toDoList" data-controller="Dashboard" data-action="TodoList"> </section>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex no-block align-items-center">
+                        <div>
+                            <h3><i class="icon-note"></i></h3>
+                            <p class="text-muted">MARKETING PLAN</p>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="counter text-cyan">@ViewBag.MarketingPlanCount</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="progress">
+                        <div class="progress-bar bg-cyan" role="progressbar" style="width: @ViewBag.MarketingPlanCount%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-8">
-        <section id="assignedToDo" data-controller="Dashboard" data-action="AssignedTodoList"> </section>
+    <!-- Column -->
+    <!-- Column -->
+    @*<div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex no-block align-items-center">
+                            <div>
+                                <h3><i class="icon-doc"></i></h3>
+                                <p class="text-muted">NEW QUOTES</p>
+                            </div>
+                            <div class="ml-auto">
+                                <h2 class="counter text-purple">1</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="progress">
+                            <div class="progress-bar bg-purple" role="progressbar" style="width: 85%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <!-- Column -->
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex no-block align-items-center">
+                        <div>
+                            <h3><i class="icon-bag"></i></h3>
+                            <p class="text-muted">ELIGIBLE GRANTS&nbsp;</p>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="counter text-success">@ViewBag.EligibleGrantCount</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: @ViewBag.EligibleGrantCount%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex no-block align-items-center">
+                        <div>
+                            <h3><i class="icon-bag"></i></h3>
+                            <p class="text-muted">USER PROFILE&nbsp;</p>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="counter text-success">@ViewBag.ClientProfileProgress%</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <a href="~/Profile">
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: @(ViewBag.ClientProfileProgress)%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Info box -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Over Visitor, Our income , slaes different and  sales prediction -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Progress Report</h4>
+                <div>
+                    <canvas id="chart1" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Column -->
+
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Progress </h4>
+
+                <h5 class="m-t-30">Get the idea out of your head <span class="pull-right">@ViewBag.ProgressIdea%</span></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-success wow animated progress-animated" style="width: @ViewBag.ProgressIdea%; height:6px;" role="progressbar"> <span class="sr-only">@ViewBag.ProgressIdea% Complete</span> </div>
+                </div>
+                <h5 class="m-t-30">Market Research <span class="pull-right">@ViewBag.ProgressMarketResearch%</span></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-success wow animated progress-animated" style="width: @ViewBag.ProgressMarketResearch%; height:6px;" role="progressbar"> <span class="sr-only">@ViewBag.ProgressMarketResearch% Complete</span> </div>
+                </div>
+                <h5 class="m-t-30">The Business <span class="pull-right">@ViewBag.ProgressBusiness%</span></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-info wow animated progress-animated" style="width: @ViewBag.ProgressBusiness%; height:6px;" role="progressbar"> <span class="sr-only">@ViewBag.ProgressBusiness% Complete</span> </div>
+                </div>
+                <h5 class="m-t-30">Selling <span class="pull-right">@ViewBag.ProgressSelling%</span></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-danger wow animated progress-animated" style="width: @ViewBag.ProgressSelling%; height:6px;" role="progressbar"> <span class="sr-only">@ViewBag.ProgressSelling% Complete</span> </div>
+                </div>
+                <h5 class="m-t-30">Marketing <span class="pull-right">@ViewBag.ProgressMarketing%</span></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-success wow animated progress-animated" style="width: @ViewBag.ProgressMarketing%; height:6px;" role="progressbar"> <span class="sr-only">@ViewBag.ProgressMarketing% Complete</span> </div>
+                </div>
+                <h5 class="m-t-30">Finances&nbsp; <span class="pull-right">@ViewBag.ProgressFinance%</span></h5>
+                <div class="progress">
+                    <div class="progress-bar bg-danger wow animated progress-animated" style="width: @ViewBag.ProgressFinance%; height:6px;" role="progressbar"> <span class="sr-only">@ViewBag.ProgressFinance% Complete</span> </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="col-lg-4 col-md-12">
+        <div class="row">
+            <!-- Column -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body" style="height:420px">
+
+
+
+                        @*<h5 class="card-title">ACTIVITY</h5>
+                        <div class="steamline m-t-40">
+                            <div class="sl-item">
+                                <div class="sl-left bg-success"> <i class="ti-user"></i></div>
+                                <div class="sl-right">
+                                    <div class="font-medium">UPDATE:&nbsp; Products and services&nbsp;&nbsp; <span class="sl-date"> 5pm</span></div>
+                                    <div class="desc">Thomas Walsh </div>
+                                </div>
+                            </div>
+
+                            <div class="sl-item">
+                                <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/users/2.jpg"> </div>
+                                <div class="sl-right">
+                                    <div class="font-medium">NEW MARKETING PLAN: Facebook ales&nbsp; <span class="sl-date">5 minutes ago</span></div>
+                                    <div class="desc">Dean Fay</div>
+                                </div>
+                            </div>
+                            <div class="sl-item mb-0">
+                                <div class="sl-left"> <img class="img-circle" alt="user" src="../assets/images/users/3.jpg"> </div>
+                                <div class="sl-right">
+                                    <div><a href="javascript:void(0)">NEW QUOTE</a> <span class="sl-date">1 minutes ago</span></div>
+                                    <div class="desc">
+                                        Business plan writing <br> Robot mascot <br> €500
+
+                                        <br><a href="javascript:void(0)" class="btn m-t-10 m-r-5 btn-rounded btn-outline-success">Check</a> <a href="javascript:void(0)" class="btn m-t-10 btn-rounded btn-outline-danger">Refuse</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+        </div>
     </div>
 </div>
 
+<!-- ============================================================== -->
+<!-- Comment - table -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- ============================================================== -->
+    <!-- Comment widgets -->
+    <!-- ============================================================== -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex no-block align-items-center">
+                    @*<div>
+                        <h5 class="card-title m-b-0">TO DO LIST</h5>
+                    </div>
+                    <div class="ml-auto">
+                        <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
+                    </div>*@
+                </div>
+                <!-- ============================================================== -->
+                <!-- To do list widgets -->
+                <!-- ============================================================== -->
+                <div class="to-do-widget m-t-20" id="todo" style="height: 350px;position: relative;">
+                    <!-- .modal for add task -->
+                    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Task</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Task name</label>
+                                            <input type="text" class="form-control" placeholder="Enter Task Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Assign to</label>
+                                            <select class="custom-select form-control pull-right">
+                                                <option selected="">Sachin</option>
+                                                <option value="1">Sehwag</option>
+                                                <option value="2">Pritam</option>
+                                                <option value="3">Alia</option>
+                                                <option value="4">Varun</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                    <ul class="list-task todo-list list-group m-b-0" data-role="tasklist">
+                        <li class="list-group-item" data-role="task">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                <label class="custom-control-label" for="customCheck">
+                                    <span>Create new marketing plan for Facebook</span> <span class="badge badge-pill badge-danger float-right">Today</span>
+                                </label>
+                            </div>
+                            <ul class="assignedto">
+                                <li><img src="../assets/images/users/1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Steave"></li>
+                                <li><img src="../assets/images/users/2.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Jessica"></li>
+                                <li><img src="../assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
+                                <li><img src="../assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item" data-role="task">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">
+                                    <span>Register for LEO Training on marketing</span><span class="badge badge-pill badge-primary float-right">1 week </span>
+                                </label>
+                            </div>
+                            <div class="item-date"> 26 jun 2017</div>
+                        </li>
+                        <li class="list-group-item" data-role="task">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                <label class="custom-control-label" for="customCheck2">
+                                    <span>Work on Pitch Deck</span> <span class="badge badge-pill badge-info float-right">Yesterday</span>
+                                </label>
+                            </div>
+                            <ul class="assignedto">
+                                <li><img src="../assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
+                                <li><img src="../assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item" data-role="task">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                <label class="custom-control-label" for="customCheck3">
+                                    <span>Work on 1 year forcast</span> <span class="badge badge-pill badge-warning float-right">2 weeks</span>
+                                </label>
+                            </div>
+                            <div class="item-date"> 26 jun 2017</div>
+                        </li>
+
+                    </ul>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Table -->
+    <!-- ============================================================== -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <h5 class="card-title">UPCOMING PROGRAMS /  GRANTS </h5>
+                        <h6 class="card-subtitle">&nbsp; </h6>
+                    </div>
+                    <div class="ml-auto">
+                        <select class="form-control b-0 jsGrantCountry">
+                            <option value="0" selected>All</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">Jun</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-light" id="_RenderCountryGrant">
+
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Comment - chats -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Over Visitor, Our income , slaes different and  sales prediction -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Todo, chat, notification -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <div class="right-sidebar">
+        <div class="slimscrollright">
+            <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+            <div class="r-panel-body">
+                <ul id="themecolors" class="m-t-20">
+                    <li><b>With Light sidebar</b></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-default" class="default-theme">1</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-green" class="green-theme">2</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-red" class="red-theme">3</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-blue" class="blue-theme">4</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-purple" class="purple-theme">5</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-megna" class="megna-theme">6</a></li>
+                    <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-default-dark" class="default-dark-theme working">7</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-green-dark" class="green-dark-theme">8</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-red-dark" class="red-dark-theme">9</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-blue-dark" class="blue-dark-theme">10</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-purple-dark" class="purple-dark-theme">11</a></li>
+                    <li><a href="javascript:void(0)" data-skin="skin-megna-dark" class="megna-dark-theme ">12</a></li>
+                </ul>
+                <ul class="m-t-20 chatonline">
+                    <li><b>Chat option</b></li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+@Html.Partial("~/Views/Dialog/_ProfileUpdate.cshtml")
 @section PageScript
 {
 
     <script src="~/assets/node_modules/Chart/Chart.js"></script>
     <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
-    <script src="~/Content/app_script/page_script/dashboard.js?version=@DateTime.Now"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/dashboard.js")"></script>
     <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
     <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
-    <script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>
-   
+    @*<script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>*@
+    <script>
+
+        var _progressData = [];
+        var _progressDate = [];
+        var objProgressAnalytic = jQuery.parseJSON($("#JsonProgressAnalytic").val());
+        $.each(objProgressAnalytic, function (key, value) {   
+            _progressData.push(value.ProgressData);
+            _progressDate.push(moment(value.ProgressDate).format('DD MMMM'));
+        });
+         var arr = [0,59,80];
+        new Chart(document.getElementById("chart1"),
+            {
+                "type": "line",
+
+                "data": {
+                    "labels": _progressDate, // ["1May", "2Jun", "3Apr"],
+                    "datasets": [{
+                        "label":"Overall Progress",
+                        //   "axis": 'y',
+                        "fill": false,
+                        "data": _progressData,
+                        "fill": false,
+                        "borderColor": "rgb(75, 192, 192)",
+                        "lineTension": 0.1
+                    }]
+                }, "options": {
+                    "indexAxis": 'y'
+                }
+            });
+    </script>
     @if (!@ViewBag.Client.IsProfileUpdated)
     {
-
         <script>
             $('#dialogClientUpdate').modal('show');
         </script>

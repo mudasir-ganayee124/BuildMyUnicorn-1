@@ -105,7 +105,7 @@ namespace Business_Model.Helper
                    "</html>";
 
 
-        public static Dictionary<string, string> Template =
+        public static Dictionary<string, string> Templates =
             new Dictionary<string, string>()
                 {
                                   {"FP", FPTemplate.ToString()},

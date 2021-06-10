@@ -1,7 +1,11 @@
-﻿@using Business_Model.Model;
-@using System.ComponentModel;
+﻿@using System.ComponentModel;
 @model Business_Model.Model.Business
-@{ int Questions = 12; int Answered = 0; }
+
+@{
+    decimal _ProgressFounder = 0.0m; decimal _ProgressCompanyDetail = 0.0m;
+    decimal _ProgressFounderUnit = 16.66m; decimal _ProgressCompanyDetailUnit = 14.28m;
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+}
 
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
@@ -13,23 +17,23 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOverview", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Businessoverview }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "BusinessOverview", ModuleID = (int)Business_Model.Model.Module.TheBusiness, SectionID = (int)Business_Model.Model.ModuleSection.TheBusiness_Businessoverview }, new { @class = "" })
                         </div>
                     </div>
                 </div>
                 <form class="form-material m-t-40">
-                    <input type="hidden" id="BusinessID" name="BusinessID" value="@Model.BusinessID" />
+                    <input type="hidden" id="BusinessOverID" name="BusinessOverID" value="@Model.BusinessOverID" />
 
                     <!-- Step 1 -->
-                    <h6>About the Founder</h6>
+                    <h4 class="text-center">About the Founder</h4>
                     <section>
                         @if (!string.IsNullOrEmpty(Model.Founder.IdeaComeup))
                         {
-                            Answered += 1;
+                            _ProgressFounder = _ProgressFounder + _ProgressFounderUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">  @ViewBag.DisplayFounder["IdeaComeup"]  </label>
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaComeup").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.IdeaComeup</textarea>
                                     </div>
                                 </div>
@@ -38,11 +42,12 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.Founder.BusinessRun))
                         {
-                            Answered += 1;
+                            _ProgressFounder = _ProgressFounder + _ProgressFounderUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1"> @ViewBag.DisplayFounder["BusinessRun"] </label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessRun").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.BusinessRun</textarea>
                                     </div>
                                 </div>
@@ -51,11 +56,12 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.Founder.PreviousWorkExperience))
                         {
-                            Answered += 1;
+                            _ProgressFounder = _ProgressFounder + _ProgressFounderUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayFounder["PreviousWorkExperience"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PreviousWorkExperience").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.PreviousWorkExperience</textarea>
                                     </div>
                                 </div>
@@ -64,11 +70,12 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.Founder.Qualification))
                         {
-                            Answered += 1;
+                            _ProgressFounder = _ProgressFounder + _ProgressFounderUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayFounder["Qualification"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Qualification").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.Qualification</textarea>
                                     </div>
                                 </div>
@@ -77,11 +84,12 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.Founder.HobbiesInterest))
                         {
-                            Answered += 1;
+                            _ProgressFounder = _ProgressFounder + _ProgressFounderUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayFounder["HobbiesInterest"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HobbiesInterest").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.HobbiesInterest</textarea>
                                     </div>
                                 </div>
@@ -90,11 +98,12 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.Founder.WhyYou))
                         {
-                            Answered += 1;
+                            _ProgressFounder = _ProgressFounder + _ProgressFounderUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayFounder["WhyYou"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WhyYou").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.Founder.WhyYou</textarea>
                                     </div>
                                 </div>
@@ -103,31 +112,34 @@
                         }
                     </section>
                     <!-- Step 2 -->
-                    <h6>Company Detail(s)</h6>
+                    <h4 class="text-center">Company Detail(s)</h4>
                     <section>
-                        @*@if (Model.CompanyDetails.CompanyLegalStructureID != Guid.Empty)
-                            {
-                                Answered += 1;
-                                <div class="row">
-                                    <div class="col-md-12">
 
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyLegalStructureID"]</label>
-                                            @{ var CompanyLegalStructure = Model.CompanyDetails.CompanyLegalStructureID != null ? "progress-percent" : ""; }
-                                            @Html.DropDownListFor(n => n.CompanyDetails.CompanyLegalStructureID, new SelectList(ViewBag.CompanyLegalStructure, "ID", "Value", @Model.CompanyDetails.CompanyLegalStructureID), "- Please select -", new { @class = "custom-select col-12 " + @CompanyLegalStructure + " progress-required" })
+                        @if (Model.CompanyDetails.CompanyLegalStructureID != Guid.Empty)
+                        {
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
+                            <div class="row">
+                                <div class="col-md-12">
 
-                                        </div>
+                                    <div class="form-group">
+                                    
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLegalStructureID").FirstOrDefault().QuestionText : "" )  </label>
+
+                                        @Html.DropDownListFor(n => n.CompanyDetails.CompanyLegalStructureID, new SelectList(ViewBag.CompanyLegalStructure, "ID", "Value", @Model.CompanyDetails.CompanyLegalStructureID), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
 
                                     </div>
+
                                 </div>
-                             }*@
+                            </div>
+                        }
                         @if (!string.IsNullOrEmpty(Model.CompanyDetails.CompanyRegisterdName))
                         {
-                            Answered += 1;
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyRegisterdName"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyRegisterdName").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.CompanyRegisterdName</textarea>
 
 
@@ -138,11 +150,12 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.CompanyDetails.Founded))
                         {
-                            Answered += 1;
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["Founded"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Founded").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.Founded</textarea>
 
 
@@ -154,25 +167,61 @@
 
                         @if (!string.IsNullOrEmpty(Model.CompanyDetails.BusinessAddress))
                         {
-                            Answered += 1;
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["BusinessAddress"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessAddress").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.BusinessAddress</textarea>
                                     </div>
                                 </div>
 
                             </div>
                         }
-
-                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.CompanyNumber))
+                        @if (Model.CompanyDetails.BusinessRequirePremises != Guid.Empty)
                         {
-                            Answered += 1;
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["CompanyNumber"]</label>
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessRequirePremises").FirstOrDefault().QuestionText : "" )  </label>
+                                        @Html.DropDownListFor(n => n.CompanyDetails.BusinessRequirePremises, new SelectList(ViewBag.Choice, "ID", "Value", @Model.CompanyDetails.BusinessRequirePremises), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.LandlordCostStatus) && Model.CompanyDetails.BusinessRequirePremises != Guid.Empty )
+                        {
+                          
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class='form-group jsLandlordType LandlordType @(string.IsNullOrEmpty(@Model.CompanyDetails.LandlordCostStatus) ? "hide" : "")'>
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LandlordCostStatus").FirstOrDefault().QuestionText : "" )  </label>
+                                            <textarea class='form-control ideatextarea' id="LandlordCostStatus" name="LandlordCostStatus" >@Model.CompanyDetails.LandlordCostStatus</textarea>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                       
+                        @if (!string.IsNullOrEmpty(Model.CompanyDetails.CompanyNumber))
+                        {
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyNumber").FirstOrDefault().QuestionText : "" )  </label>
                                         <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.CompanyNumber</textarea>
 
 
@@ -183,36 +232,25 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.CompanyDetails.VatNumber))
                         {
-                            Answered += 1;
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="wint1">@ViewBag.DisplayCompanyDetails["VatNumber"]</label>
-                                        <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.VatNumber</textarea>
+                            _ProgressCompanyDetail = _ProgressCompanyDetail + _ProgressCompanyDetailUnit;
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "VatNumber").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.VatNumber</textarea>
 
 
-                                    </div>
                                 </div>
-
                             </div>
+
+
                         }
-                        @*@if (Model.CompanyDetails.NumberofFounder != null)
-                            {
-                                Answered += 1;
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.DisplayCompanyDetails["NumberofFounder"]</label>
-                                            <textarea class='form-control form-control-line detailtextarea' readonly>@Model.CompanyDetails.NumberofFounder</textarea>
 
 
-                                        </div>
-                                    </div>
-
-                                </div>
-                            }*@
 
                     </section>
+
+
 
                 </form>
             </div>
@@ -221,27 +259,39 @@
 
     <div class="col-lg-3 col-xlg-2 col-md-4">
 
-        <!--- <ol class="breadcrumb">
-         <li class="breadcrumb-item"><span class="round" title="Total Questions">@Questions</span></li>
-         <li class="breadcrumb-item active"><span class="round bg-success" title="Answered"> @Answered</span></li>
-         <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(Questions - Answered) </span></li>
-     </ol>--->
 
         <div class="stickyside">
+
             <div class="list-group" id="top-menu">
+                @if (ViewBag.RateInfo != null)
+                {
+                    if (ViewBag.RateInfo.Rating != 0.0m)
+                    {
+                        <a href="#1" class="list-group-item" style="text-align:center">
+                            <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                        </a>
+                    }
+                    if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                    {
+                        <a href="#1" class="list-group-item">
+                            <span class="badge badge-info badge-info">NOTE</span> <br />
+                            @ViewBag.RateInfo.Note
+                        </a>
+                    }
+                }
                 <a href="#1" class="list-group-item">
                     About the Founder
-                    <div class="pull-right" style="text-align:right">@Model.Founder.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressFounder))% <i class="fa fa-level-up text-success"></i></div>
                     <div class="progress" style="height:auto">
-                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.Founder.Completed%; height: 6px;"> <span class="sr-only">@Model.Founder.Completed % Complete</span></div>
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressFounder))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressFounder))% Complete</span></div>
                     </div>
                 </a>
                 <a href="#22" class="list-group-item">
                     Company Detail(s)
 
-                    <div class="pull-left" style="text-align:right">@Model.CompanyDetails.Completed% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressCompanyDetail))% <i class="fa fa-level-up text-success"></i></div>
                     <div class="progress" style="height:auto">
-                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.CompanyDetails.Completed%; height: 6px;"> <span class="sr-only">@Model.CompanyDetails.Completed% Complete</span></div>
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressCompanyDetail))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressCompanyDetail))% Complete</span></div>
                     </div>
                 </a>
 

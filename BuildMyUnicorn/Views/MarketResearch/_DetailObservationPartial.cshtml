@@ -1,95 +1,155 @@
 ﻿
-@using Business_Model.Model;
 @using System.ComponentModel;
 @model Business_Model.Model.OurObservation
+@{
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    decimal _ProgressObservation = 0.0m;
+    decimal _ProgressObservationUnit = 25.00m;
+}
 
-
-<div class="row" id="validation">
-    <div class="col-lg-12 col-xlg-12 col-md-12">
-        <div class="card wizard-content">
-            <div class="card-body">
-                <div class="row " style="margin: 0 0px 2px;">
-                    <div class="col-md-5 align-self-center">
-                        <h4 class="card-title" id="1"></h4>
-                    </div>
-                    <div class="col-md-7 align-self-center text-right">
-                        <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "Observation", ModuleName = Module.MarketResearch, SectionName = ModuleSection.MarketResearch_Observation }, new { @class = "" })
+    <div class="row" id="validation">
+        <div class="col-lg-9 col-xlg-10 col-md-8">
+            <div class="card wizard-content">
+                <div class="card-body">
+                    <div class="row " style="margin: 0 0px 2px;">
+                        <div class="col-md-5 align-self-center">
+                            <h4 class="card-title" id="1"></h4>
+                        </div>
+                        <div class="col-md-7 align-self-center text-right">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "Observation", ModuleID = (int)Business_Model.Model.Module.MarketResearch, SectionID = (int)Business_Model.Model.ModuleSection.MarketResearch_Observation }, new { @class = "" })
+                            </div>
                         </div>
                     </div>
+                    <form class="form-material m-t-40">
+
+                        <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                        <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                        <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                        <input type="hidden" id="ObervationID" name="ObervationID" value="@Model.ObervationID" />
+                        <!-- Step 1 -->
+                        <h6>Observation</h6>
+                        <section>
+
+                            @if (!string.IsNullOrEmpty(Model.Observation))
+                            {
+                                _ProgressObservation = _ProgressObservation + _ProgressObservationUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Observation").FirstOrDefault().QuestionText : "" )  </label>
+                                            <textarea class='form-control form-control-line ideatextarea' readonly>@Model.Observation</textarea>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                            @if (Model.AnyPatterns != Guid.Empty)
+                            {
+                                _ProgressObservation = _ProgressObservation + _ProgressObservationUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AnyPatterns").FirstOrDefault().QuestionText : "" )  </label>
+
+                                            @Html.DropDownList("AnyPatterns", new SelectList(ViewBag.Choice, "ID", "Value", Model.AnyPatterns), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Patterns) && Model.AnyPatterns != Guid.Empty)
+                            { 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class='form-group jsPattern Patterns'>
+
+                                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().QuestionText : "" )  </label>
+                                            <textarea class='form-control ideatextarea' readonly>@Model.Patterns</textarea>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.KeyMoments))
+                            {
+                                _ProgressObservation = _ProgressObservation + _ProgressObservationUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().QuestionText : "" )  </label>
+                                            <textarea class='form-control form-control-line ideatextarea' readonly>@Model.KeyMoments</textarea>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Collection))
+                            {
+                                _ProgressObservation = _ProgressObservation + _ProgressObservationUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Collection").FirstOrDefault().QuestionText : "" )  </label>
+                                            <textarea class='form-control form-control-line ideatextarea' readonly>@Model.Collection</textarea>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </section>
+
+
+                    </form>
                 </div>
-                <form class="form-material m-t-40">
+            </div>
+        </div>
+        <div class="col-lg-3 col-xlg-2 col-md-4">
+            <!-- <div class="d-flex justify-content-end align-items-center">
+                 <ol class="breadcrumb">
+                     <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
+                     <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
+                     <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
+                 </ol>
+             </div>-->
 
-                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
-                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
-                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
-                    <input type="hidden" id="ObervationID" name="ObervationID" value="@Model.ObervationID" />
-                    <!-- Step 1 -->
-                    <h6>Who Does what</h6>
-                    <section>
+            <div class="stickyside">
+                <div class="list-group" id="top-menu">
+                    @if (ViewBag.RateInfo != null)
+                    {
+                        if (ViewBag.RateInfo.Rating != 0.0m)
+                        {
+                            <a href="#1" class="list-group-item" style="text-align:center">
+                                <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                            </a>
+                        }
+                        if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                        {
+                            <a href="#1" class="list-group-item">
+                                <span class="badge badge-info badge-info">NOTE</span> <br />
+                                @ViewBag.RateInfo.Note
+                            </a>
+                        }
+                    }
+                    <a href="#22" class="list-group-item">
+                        Observation
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["Observation"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.Observation</textarea>
-
-                                </div>
-                            </div>
-
+                        <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressObservation))% <i class="fa fa-level-up text-success"></i></div>
+                        <div class="progress" style="height:auto">
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressObservation))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressObservation))% Complete</span></div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["AnyPatterns"]</label>
-                                    <select class="custom-select col-12 jsOptionChange"data-optionchange="Patterns" disabled>
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.Patterns) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
+                    </a>
 
 
-                                </div>
-                                <div class='form-group jsPattern Patterns @(string.IsNullOrEmpty(@Model.Patterns) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleObservation["Patterns"]</label>
-                                    <textarea class='form-control ideatextarea' readonly>@Model.Patterns</textarea>
-
-
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["KeyMoments"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.KeyMoments</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["Collection"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.Collection</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                </form>
+                </div>
             </div>
         </div>
     </div>
-
-</div>
 
 
 

@@ -8,7 +8,7 @@ namespace Business_Model.Model
 
     public class OnlinePresance
     {
-        public Guid OnlinePresanceID { get; set; }
+        public Guid OnlinePresenceID { get; set; }
         public Guid ClientID { get; set; }
         public EntityState EntityState { get; set; }
         public YourWebsite YourWebsite { get; set; }
@@ -19,7 +19,7 @@ namespace Business_Model.Model
     public class YourWebsite
     {
         [Description("Have you registered a Domain")]
-        public bool HaveRegisteredDomain { get; set; }
+        public Guid HaveRegisteredDomain { get; set; }
         [Description("What is Domain Name")]
         public string DomainName { get; set; }
         [Description("What stage is your webpage at")]
@@ -35,13 +35,13 @@ namespace Business_Model.Model
         [Description("How much traffic are you anticipating per month")]
         public Guid TrafficAnticipatePerMonthID { get; set; }
         [Description("Do you use your domain emaill address")]
-        public bool UseDomainEmail { get; set; }
+        public Guid UseDomainEmail { get; set; }
         [Description("How will you measure success ")]
         public string SuccessMeasure { get; set; }
         [Description("Are you planning on making money directly with your website")]
-        public bool WebsitePlanMakeMoney { get; set; }
+        public Guid WebsitePlanMakeMoney { get; set; }
         [Description("Will you be putting adds on your webpage")]
-        public bool PutWebpageAdds { get; set; }
+        public Guid PutWebpageAdds { get; set; }
         [Description("When analyzing your competitors’ sites, what do you like and not like about their websites")]
         public string CompetitorSitelike { get; set; }
         [Description("When analyzing your competitors’ sites, what do you like and not like about their websites")]
@@ -69,12 +69,14 @@ namespace Business_Model.Model
 
     public class _OnlinePresance
     {
-        public Guid OnlinePresanceID { get; set; }
+        public Guid OnlinePresenceID { get; set; }
         public Guid ClientID { get; set; }
         public EntityState EntityState { get; set; }
         public YourWebsite YourWebsite { get; set; }
+        [Description("What is Domain Name")]
+        public string DomainName { get; set; }
         [Description("Have you registered a Domain")]
-        public bool HaveRegisteredDomain { get; set; }
+        public Guid HaveRegisteredDomain { get; set; }
         [Description("What stage is your webpage at")]
         public Guid WebPageStageID { get; set; }
         [Description("What do  you want to acheive with your website")]
@@ -88,13 +90,13 @@ namespace Business_Model.Model
         [Description("How much traffic are you anticipating per month")]
         public Guid TrafficAnticipatePerMonthID { get; set; }
         [Description("Do you use your domain emaill address")]
-        public bool UseDomainEmail { get; set; }
+        public Guid UseDomainEmail { get; set; }
         [Description("How will you measure success ")]
         public string SuccessMeasure { get; set; }
         [Description("Are you planning on making money directly with your website")]
-        public bool WebsitePlanMakeMoney { get; set; }
+        public Guid WebsitePlanMakeMoney { get; set; }
         [Description("Will you be putting adds on your webpage")]
-        public bool PutWebpageAdds { get; set; }
+        public Guid PutWebpageAdds { get; set; }
         [Description("When analyzing your competitors’ sites, what do you like and not like about their websites")]
         public string CompetitorSitelike { get; set; }
         [Description("When analyzing your competitors’ sites, what do you like and not like about their websites")]

@@ -319,4 +319,102 @@ namespace Business_Model.Model
         public decimal Markup { get; set; }
         public bool CarryForward { get; set; }
     }
+
+    public class Grants : Common
+    {
+        public Guid GrantID { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Description { get; set; }
+        public string ProvidedBy { get; set; }
+        public string Website { get; set; }
+        public string SupplierID { get; set; }
+        public string VideoUrl { get; set; }
+        public DateTime DueDate { get; set; }
+        public int CountryID { get; set; }
+        public int GrantStatus { get; set; }
+        public string CountryName { get; set; }
+    }
+
+    public class PersonalSurvivalBudget
+    {
+        public Guid PersonalSurvivalBudgetID { get; set; }
+        public Guid GrantID { get; set; }
+        public Guid ClientID { get; set; }
+        public int PersonalType { get; set; }
+        public int PartnerCount { get; set; }
+        public Guid OptionMasterID { get; set; }
+        public string Value { get; set; }
+        public int DisplayOrder { get; set; }
+        public decimal Monthly { get; set; }
+        public decimal Yearly { get; set; }
+        public string Notes { get; set; }
+        public string UsefullNote { get; set; }
+    }
+    public class SaleforeCast
+    {
+        public Guid SaleforeCastID { get; set; }
+        public Guid ClientID { get; set; }
+        public Guid GrantID { get; set; }
+        public string Item { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public decimal UnitsSold { get; set; }
+        public decimal UnitPrice { get; set; }
+        public string UsefullNote { get; set; }
+        public int ItemNumber { get; set; }
+        public decimal SubTotalSales { get; set; }
+
+    }
+    public class Cashflowforecast
+    {
+        public Guid CashflowforecastID { get; set; }
+        public Guid ClientID { get; set; }
+        public Guid GrantID { get; set; }
+        public Guid OptionMasterID { get; set; }
+        public int ForecastType { get; set; }
+        public decimal Amount { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int ItemNumber { get; set; }
+        public string Value { get; set; }
+        public int DisplayOrder { get; set; }
+        public decimal IncomeDecrease { get; set; }
+        public decimal ExpenditureIncrease { get; set; }
+        public string UsefullNote { get; set; }
+    }
+
+    public class LoanCalculator
+    {
+        public Guid LoanCalculatorID { get; set; }
+        public Guid ClientID { get; set; }
+        public Guid GrantID { get; set; }
+        public decimal AmountToBorrow { get; set; }
+        public int YearsToRepay { get; set; }
+        public decimal InterestRate { get; set; }
+    }
+
+    public class GrantSurvivalBudget:Common
+    {
+        public Guid GrantSurvivalBudgetLogID { get; set; }
+        public Guid GrantID { get; set; }
+        public Guid ClientID { get; set; }
+        public GrantStatus GrantStatus { get; set; }
+    }
+    public class GrantLog : Common
+    {
+        public string Name { get; set; }
+        public string CountryName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string StartupName { get; set; }
+        public decimal AmountToBorrow { get; set; }
+        public int YearsToRepay { get; set; }
+        public decimal InterestRate { get; set; }
+    }
+
+
 }
+
+
+

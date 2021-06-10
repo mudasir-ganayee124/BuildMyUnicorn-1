@@ -14,7 +14,6 @@ namespace Business_Model.Model
         public EntityState EntityState { get; set; }
         [Description("What is your idea, try to explain as simply as possible.")]
         public string IdeaExplain { get; set; }
-        public decimal ProgressValue { get; set; }
         public IdeaBreakDown IdeaBreakDown { get; set; }
         public AboutYou AboutYou { get; set; }
         public Company Company { get; set; }
@@ -23,6 +22,7 @@ namespace Business_Model.Model
 
 
     }
+
     public class IdeaBreakDown
     {
         [Description("What type of start-up is it")]
@@ -38,16 +38,17 @@ namespace Business_Model.Model
         [Description("Who was the feedback from")]
         public string FeedBackFrom { get; set; }
         [Description("Is there a demand for your product ")]
-        public int? ProductDemand { get; set; }
+        public Guid ProductDemand { get; set; }
         [Description("Do you have a niche if so what is it")]
         public string Niche { get; set; }
         [Description("Is there something on the market already")]
-        public int? InMarketAlready { get; set; }
+        public Guid InMarketAlready { get; set; }
         [Description("Who already exists in this space")]
         public string SpaceExist { get; set; }
         [Description("Is it scalable - If you got 100 customers on launch and 1000 the following week, could you handle it")]
-        public int? Scalable { get; set; }
+        public Guid Scalable { get; set; }
     }
+
     public class AboutYou
     {
         [Description("Why do you want to become an entrepreneur")]
@@ -59,25 +60,26 @@ namespace Business_Model.Model
         [Description("What are your priorities in life")]
         public string Priorities { get; set; }
         [Description("What is the end goal")]
-        public int? EndGoal { get; set; }
+        public Guid EndGoal { get; set; }
 
     }
+
     public class Company
     {
         [Description("Do you have a company set up")]
-        public int? CompanySetup { get; set; }
+        public Guid CompanySetup { get; set; }
         [Description("What is the name of the company  ")]
         public string CompanyName { get; set; }
         [Description("Have you got domain name")]
-        public int? HaveGotDomain { get; set; }
+        public Guid HaveGotDomain { get; set; }
         [Description("What is the domain")]
         public string DomainName { get; set; }
         [Description("Have you got a co-founder")]
-        public int? Cofounder { get; set; }
+        public Guid Cofounder { get; set; }
         [Description("Have you got someone that can support technically")]
-        public int? SupportTechnically { get; set; }
+        public Guid SupportTechnically { get; set; }
         [Description("Who is going to build it")]
-        public int? BuildFrom { get; set; }
+        public Guid BuildFrom { get; set; }
         [Description("Have you any thoughts on the brand that you want to create")]
         public string BrandThought { get; set; }
         [Description("Think about company mission what could it be")]
@@ -86,6 +88,7 @@ namespace Business_Model.Model
         public string CompanyLookFeel { get; set; }
 
     }
+
     public class IdeaSelling
     {
         [Description("What are you selling")]
@@ -97,18 +100,19 @@ namespace Business_Model.Model
         [Description("How much are going to charge")]
         public string ChargeGoing { get; set; }
         [Description("Who are you selling to")]
-        public string SellTo { get; set; }
+        public Guid SellTo { get; set; }
         [Description("How are you planning on finding customers")]
         public string CustomerFindPlan { get; set; }
         [Description("Are you planning on taking on sales staff")]
-        public int? SaleStaffPlan { get; set; }
+        public Guid SaleStaffPlan { get; set; }
 
 
     }
+
     public class Money
     {
         [Description("How much do you think it will cost to launch your business ")]
-        public int? BusinessCost { get; set; }
+        public Guid BusinessCost { get; set; }
         [Description("Can you afford that")]
         public string Affort { get; set; }
         [Description("How are you planning to raise the money ")]
@@ -141,15 +145,15 @@ namespace Business_Model.Model
         [Description("Who was the feedback from?")]
         public string FeedBackFrom { get; set; }
         [Description("Is there a demand for your product?")]
-        public int? ProductDemand { get; set; }
+        public Guid ProductDemand { get; set; }
         [Description("Do you have a niche if so what is it?")]
         public string Niche { get; set; }
         [Description("Is there something on the market already?")]
-        public int? InMarketAlready { get; set; }
+        public Guid InMarketAlready { get; set; }
         [Description("Who already exists in this space?")]
         public string SpaceExist { get; set; }
         [Description("Is it scalable - If you got 100 customers on launch and 1000 the following week, could you handle it?")]
-        public int? Scalable { get; set; }
+        public Guid Scalable { get; set; }
         [Description("Why do you want to become an entrepreneur?")]
         public string Entrepreneur { get; set; }
         [Description("Can you see yourself doing this for years?")]
@@ -159,21 +163,21 @@ namespace Business_Model.Model
         [Description("What are your priorities in life?")]
         public string Priorities { get; set; }
         [Description("What is the end goal?")]
-        public int? EndGoal { get; set; }
+        public Guid EndGoal { get; set; }
         [Description("Do you have a company set up?")]
-        public int? CompanySetup { get; set; }
+        public Guid CompanySetup { get; set; }
         [Description("What is the name of the company?")]
         public string CompanyName { get; set; }
         [Description("Have you got domain name?")]
-        public int? HaveGotDomain { get; set; }
+        public Guid HaveGotDomain { get; set; }
         [Description("What is the domain?")]
         public string DomainName { get; set; }
         [Description("Have you got a co-founder?")]
-        public int? Cofounder { get; set; }
+        public Guid Cofounder { get; set; }
         [Description("Have you got someone that can support technically?")]
-        public int? SupportTechnically { get; set; }
+        public Guid SupportTechnically { get; set; }
         [Description("Who is going to build it?")]
-        public int? BuildFrom { get; set; }
+        public Guid BuildFrom { get; set; }
         [Description("Have you any thoughts on the brand that you want to create?")]
         public string BrandThought { get; set; }
         [Description("Think about company mission what could it be?")]
@@ -189,13 +193,13 @@ namespace Business_Model.Model
         [Description("How much are going to charge?")]
         public string ChargeGoing { get; set; }
         [Description("Who are you selling to?")]
-        public string SellTo { get; set; }
+        public Guid SellTo { get; set; }
         [Description("How are you planning on finding customers?")]
         public string CustomerFindPlan { get; set; }
         [Description("Are you planning on taking on sales staff?")]
-        public int? SaleStaffPlan { get; set; }
+        public Guid SaleStaffPlan { get; set; }
         [Description("How much do you think it will cost to launch your business?")]
-        public int? BusinessCost { get; set; }
+        public Guid BusinessCost { get; set; }
         [Description("Can you afford that?")]
         public string Affort { get; set; }
         [Description("How are you planning to raise the money?")]

@@ -1,0 +1,209 @@
+﻿@using Business_Model.Model;
+@using System.Configuration;
+@model Business_Model.Model.StartupAccelerator
+@*@{
+
+        var RoleList = ViewBag.Role as IEnumerable<Business_Model.Model.MasterCommon>;
+        var arrayRoles = String.IsNullOrEmpty(Model.RoleInCompany) == false ? Model.RoleInCompany.Split(',').ToArray() : new string[0];
+        List<string> roleArray = new List<string>();
+    }*@
+@section PageStyle
+{
+    <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="~/assets/node_modules/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor"><a href="~/Dashboard"><i class="mdi mdi-arrow-left"></i>Back to Dashboard</a></h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <center class="m-t-30">
+                    <img src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)" class="img-circle" width="150" />
+
+                    <h4 class="card-title m-t-10">@Model.CompanyName </h4>
+                    <h6 class="card-subtitle"></h6>
+
+                </center>
+
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">Email address </small>
+                <h6>@Model.ContactEmail</h6>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+
+                @*<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profile Settings</a> </li>*@
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#settings" role="tab">Profile Settings</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+
+                <div class="tab-pane active" id="settings" role="tabpanel">
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <form id="frmUpdateProfile" class="form-material m-t-40" method="post">
+                                    <input type="hidden" id="StartupAcceleratorID" name="StartupAcceleratorID" value="@Model.StartupAcceleratorID" />
+
+
+
+
+                                    <div class="card-body">
+
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Company Name</label>
+                                                    <input type="text" id="CompanyName" name="CompanyName" class="form-control form-control-line" value="@Model.CompanyName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Contact Name</label>
+                                                    <input type="text" id="ContactName" name="ContactName" class="form-control form-control-line" value="@Model.ContactName">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Main Contact</label>
+                                                    <input type="text" id="MainContact" name="MainContact" class="form-control form-control-line" value="@Model.MainContact">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Contact Email</label>
+                                                    <input type="text" id="ContactEmail" name="ContactEmail" class="form-control form-control-line" value="@Model.ContactEmail">
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Website</label>
+                                                    <input type="text" id="Website" name="Website" class="form-control" value="@Model.Website">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <textarea class="form-control" type="text" id="Address" name="Address" placeholder="">@Model.Address</textarea>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                        </div>
+
+
+
+                                        <div class="form-group text-right">
+                                            <button type="submit" class="btn btn-info">Update</button>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+@section PageScript
+{
+    <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
+    <script src="~/assets/node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+       $("#frmUpdateProfile").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+        url: GetBaseURL() + "Profile/Update",
+        method: "POST",
+        data: $('#frmUpdateProfile').serialize(),
+        success: function (response) {
+          swal("Success!", "Profile updated succesfully", "success");
+            if (response == "OK") {
+
+            }
+            else {
+
+                $(".erorLabel").removeClass("invisible");
+                $(".errorMessage").text(response);}
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+
+ });
+    </script>
+
+}
+

@@ -45,10 +45,10 @@
             </div>
             @*<div class="form-group text-center">
 
-                <button type="button" class="btn btn-danger" id="jsDeleteBuyerpersona">Delete</button>
+                    <button type="button" class="btn btn-danger" id="jsDeleteBuyerpersona">Delete</button>
 
 
-            </div>*@
+                </div>*@
 
         </div>
     </div>
@@ -262,6 +262,7 @@
     <script src="~/assets/node_modules/jquery-confirm/jquery-confirm.js"></script>
     <script src="~/assets/node_modules/image-picker/image-picker.js"></script>
     <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
-    <script src="~/Content/app_script/page_script/customer.js?version=@DateTime.Now"></script>
+    <script src="@Url.ContentVersioned("~/page_script/customer.js")"></script>
+  
 }
 

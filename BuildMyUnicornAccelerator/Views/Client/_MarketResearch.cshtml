@@ -1,0 +1,259 @@
+﻿
+@using Business_Model.Model;
+@model Business_Model.Model.Idea
+@{
+    string[] ignoretypeofguidString = { "IdeaProgressed", "FeedbackReceived" };
+    var Observation = ViewBag.Observation as IEnumerable<Business_Model.Model.LanguageModule>;
+    var Keyfinding = ViewBag.Keyfinding as IEnumerable<Business_Model.Model.LanguageModule>;
+    var OnlineResearch = ViewBag.OnlineResearch as IEnumerable<Business_Model.Model.LanguageModule>;
+}
+<style>
+    html body .custom-select {
+        background-color: #353c48 !important;
+    }
+</style>
+<style>
+    p.form-control-static {
+        border-top: 1px solid #333;
+        margin-top: 5px;
+        padding-left: 30px;
+    }
+</style>
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">  <i class="mdi mdi-arrow-left"></i>  <a href="~/client?id=@ViewBag.ClientID">Back </a> </h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item"><a href="javascript:void(0)">&nbsp; &nbsp;Market Research </a></li>
+
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="card">
+
+            <div class="card-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <h3 class="box-title">Observation</h3>
+
+                        @if (ViewBag.ModelObservation != null)
+                        {
+
+                            foreach (System.Reflection.PropertyInfo pi in ViewBag.ModelObservation.GetType().GetProperties())
+                            {
+                                if (pi.PropertyType == typeof(string))
+                                {
+                                    string value = (string)pi.GetValue(ViewBag.ModelObservation);
+                                    string propertyname = (string)pi.Name;
+                                    <label class="control-label"> <span class="fa fa-circle text-info m-r-10"></span> @( Observation.Count() > 0 ? Observation.Where(x => x.PropertyName == propertyname).FirstOrDefault().QuestionText : "" )</label>
+
+
+                                    if (string.IsNullOrEmpty(value))
+                                    {
+                                        <p class="form-control-static" style="padding-top:5px">
+                                            <span class='badge badge-pill badge-danger'>Not Answered</span>
+                                        </p>
+
+                                    }
+                                    else
+                                    {
+                                        <p class="form-control-static">@value</p>
+                                    }
+                                }
+
+                            }
+
+
+                        }
+                        <h3 class="box-title">Key Finding</h3>
+                        <div class="col-md-12">
+                            @if (ViewBag.ModelKeyFinding != null)
+                            {
+
+                                foreach (System.Reflection.PropertyInfo pi in ViewBag.ModelKeyFinding.GetType().GetProperties())
+                                {
+                                    if (pi.PropertyType == typeof(string))
+                                    {
+                                        string value = (string)pi.GetValue(ViewBag.ModelKeyFinding);
+                                        string propertyname = (string)pi.Name;
+                                        <label class="control-label"> <span class="fa fa-circle text-info m-r-10"></span> @( Keyfinding.Count() > 0 ? Keyfinding.Where(x => x.PropertyName == propertyname).FirstOrDefault().QuestionText : "" )</label>
+
+
+                                        if (string.IsNullOrEmpty(value))
+                                        {
+                                            <p class="form-control-static" style="padding-top:5px">
+                                                <span class='badge badge-pill badge-danger'>Not Answered</span>
+                                            </p>
+
+                                        }
+                                        else
+                                        {
+                                            <p class="form-control-static">@value</p>
+                                        }
+                                    }
+
+                                }
+
+
+                            }
+
+                        </div>
+
+
+                        <h3>Online Research</h3>
+
+                        @if (ViewBag.ModelOnlineResearch != null)
+                        {
+
+                            foreach (System.Reflection.PropertyInfo pi in ViewBag.ModelOnlineResearch.GetType().GetProperties())
+                            {
+                                if (pi.PropertyType == typeof(string))
+                                {
+                                    string value = (string)pi.GetValue(ViewBag.ModelOnlineResearch);
+                                    string propertyname = (string)pi.Name;
+                                    if (!Array.Exists(ignoretypeofguidString, element => element == propertyname))
+                                    {
+                                        <label class="control-label"> <span class="fa fa-circle text-info m-r-10"></span> @( OnlineResearch.Count() > 0 ? OnlineResearch.Where(x => x.PropertyName == propertyname).FirstOrDefault().QuestionText : "" )</label>
+
+
+                                        if (string.IsNullOrEmpty(value))
+                                        {
+                                            <p class="form-control-static" style="padding-top:5px">
+                                                <span class='badge badge-pill badge-danger'>Not Answered</span>
+                                            </p>
+
+                                        }
+                                        else
+                                        {
+                                            <p class="form-control-static">@value</p>
+                                        }
+                                    }
+                                }
+
+                            }
+
+
+                        }
+
+
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+
+        <div class="stickyside">
+
+            <div class="card">
+                <div class="card-body">
+                    <form id="frmRateInfo" class="form-horizontal form-material" method="post">
+                        <input type="hidden" name="ModuleID" value="2" />
+                        @*<input type="hidden" name="SectionID" value="1" />*@
+                        <input type="hidden" name="ClientID" value="@ViewBag.ClientID" />
+                        <div class="col-md-12">
+                            <label>Section</label> <br /><br />
+                            <div class="form-group">
+
+                                <select class="custom-select " id="SectionID" name="SectionID">
+                                    <option value="10">Observation</option>
+                                    <option value="2">Keyfindig </option>
+                                    <option value="12">Online Research</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Rate</label>
+
+                                <input type="text" placeholder="100/100" name="Rating" class="form-control form-control-line">
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Note</label>
+
+                                <textarea rows="5" class="form-control form-control-line" name="Note"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-success">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScript
+{
+    <script>
+$("#frmRateInfo").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+        url: GetBaseURL() + "Client/AddRateInfo",
+        method: "POST",
+        data: $('#frmRateInfo').serialize(),
+        success: function (response) {
+            if (response == "OK") {
+              alert("Progress Note Updated Successfully");
+            }
+            else {
+                alert(response);
+                $(".erorLabel").removeClass("invisible");
+                $(".errorMessage").text(response);}
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+
+
+});
+    $("select#SectionID").change(function() {
+      $("input[name=Rating]").val("");
+       $("textarea[name=Note]").val("");
+       GetRateInfo();
+    });
+
+        GetRateInfo();
+ function GetRateInfo()
+ {
+        $.ajax({
+        url: GetBaseURL() + "Client/GetRateInfo",
+        method: "POST",
+        data: $('#frmRateInfo').serialize(),
+        success: function (data) {
+           $("input[name=Rating]").val(data.Rating);
+           $("textarea[name=Note]").val(data.Note);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+ }
+    </script>
+
+}

@@ -1,0 +1,87 @@
+﻿@section PageStyle
+{}
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Personal Survival Budget</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Personal Survival Budget</li>
+
+
+            </ol>
+            &nbsp;&nbsp;
+
+        </div>
+    </div>
+</div>
+<div class="row " style="margin: 0 0px 2px;">
+    <div class="col-md-5 align-self-center">
+        <h4 class="card-title" id="1"></h4>
+    </div>
+    @*<div class="col-md-7 align-self-center text-right">
+            <div class="d-flex justify-content-end align-items-center">
+                <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Team", ActionName = "Index", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Team }, new { @class = "" })
+            </div>
+        </div>*@
+</div>
+<div class="row">
+
+
+    <div class="col-md-12">
+        <!-- Card -->
+        <div class="card text-center">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Budget Applied</h4>
+                <h5 class="text-primary">Date Applied : @String.Format("{0:F}", ViewBag.GrantSurvivalBudget.ModifiedDateTime) </h5>
+                <input type="hidden" id="GrantID" value="@ViewBag.GrantID" />
+                <p class="card-text">You have successfully applied for the personal survival budget. <br />  Please downlaod Application form and Budget form</p>
+
+                <input type="button" class="btn btn-info jsDownloadBudget" value="Download" /> &nbsp;&nbsp;
+                <input type="button" class="btn btn-primary jsDownloadForm" value="Download " />
+            </div>
+
+            <div class="card-footer text-muted">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScript
+{
+    <script>
+        $(document).on("click", ".jsDownloadForm", function (e) {
+            window.location.replace(GetBaseURL() + "BusinessPlanFile");
+
+        });
+
+        $(document).on("click", ".jsDownloadBudget", function (e) {
+           
+            e.preventDefault();
+            $.ajax({
+                url: GetBaseURL() + "Finance/GeneratePersonlSurviveBudgetExcel",
+                method: "POST",
+                data: { id: $("#GrantID").val() } ,
+                success: function (response) {
+                    window.location.replace(GetBaseURL() + "Content/" + response);
+                   
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $(".erorLabel").removeClass("invisible");
+                    $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+                }
+            });
+
+        });
+    </script>
+
+
+
+}

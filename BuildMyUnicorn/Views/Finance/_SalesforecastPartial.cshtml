@@ -1,0 +1,155 @@
+﻿@using Business_Model.Model;
+
+@{
+    List<SaleforeCast> SaleforecastList = ViewBag.SaleforecastList as List<SaleforeCast>;
+    List<int> ItemNumberList = SaleforecastList.Select(o => o.ItemNumber).Distinct().ToList();
+    decimal TotalUnitsSold = 0.0m; decimal TotalUnitPrice = 0.0m; decimal TotalSubTotal = 0.0m;
+    decimal TotalSalesTotal = 0.0m;
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 1).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 2).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 3).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 4).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 5).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 6).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 7).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 8).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 9).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 10).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 11).Sum(x => x.SubTotalSales);
+    TotalSalesTotal += SaleforecastList.Where(x => x.Month == 12).Sum(x => x.SubTotalSales);
+
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card table-cus">
+            <div class="card-body">
+
+                <p>This spreadsheet helps you work out how much sales revenue you expect to generate each month. </p>
+                <p>Enter the number of units you expect to sell and the sale price of each unit. Add more rows if you need to. Separate cash sales from credit sales (you sell your product/service but don't get paid until 30 days). If you plan to charge VAT please add that onto your unit price (20%). Do not enter figures in the grey cells. </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="ns">MONTH:</th>
+                                <th>Month 1</th>
+                                <th>Month 2</th>
+                                <th>Month 3</th>
+                                <th>Month 4</th>
+                                <th>Month 5</th>
+                                <th>Month 6</th>
+                                <th>Month 7</th>
+                                <th>Month 8</th>
+                                <th>Month 9</th>
+                                <th>Month 10</th>
+                                <th>Month 11</th>
+                                <th>Month 12</th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+                        <tfoot>
+                            <tr>
+                                <td class="bbg">TOTAL SALES:</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 1).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 2).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 3).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 4).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 5).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 6).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 7).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 8).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 9).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 10).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 11).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@(SaleforecastList.Where(x => x.Month == 12).Sum(x => x.SubTotalSales).ToString("n2"))</td>
+                                <td>£@TotalSalesTotal.ToString("n2")</td>
+
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td class="nb" colspan="14">Sales</td>
+
+                            </tr>
+                            @foreach (var ItemNumber in ItemNumberList.OrderBy(p => p))
+                            {
+                               
+                                List<SaleforeCast> SaleforecastModel = SaleforecastList.Where(x => x.ItemNumber == ItemNumber).ToList();
+
+
+                                <tr>
+                                    <td class="nb" colspan="13">@(SaleforecastModel.Select(x => x.Item).FirstOrDefault())</td>
+                                    <td class="bbg">Totals</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="gbg">Units sold</td>
+                                    @foreach (var item in SaleforecastModel.OrderBy(x => x.Month))
+                                    {
+                                        TotalUnitsSold = TotalUnitsSold + @item.UnitsSold;
+                                        <td><input type="text" class="form-control jsSaleforecastChange" value="@(item.UnitsSold !=0 ? item.UnitsSold.ToString("n2") : "")" name="UnitsSold" data-id="@item.SaleforeCastID" /></td>
+                                    }
+
+                                    <td>£@TotalUnitsSold.ToString("n2")</td>
+
+
+                                </tr>
+                                <tr>
+
+                                    <td class="gbg">Unit Price</td>
+                                    @foreach (var item in SaleforecastModel.OrderBy(x => x.Month))
+                                    {
+                                        TotalUnitPrice = TotalUnitPrice + @item.UnitPrice;
+                                        <td><input type="text" class="form-control jsSaleforecastChange" value="@(item.UnitPrice !=0 ? item.UnitPrice.ToString("n2") : "")" name="UnitPrice" data-id="@item.SaleforeCastID"></td>
+                                    }
+                                    <td>£@TotalUnitPrice.ToString("n2")</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Sub-total</td>
+                                    @foreach (var item in SaleforecastModel.OrderBy(x => x.Month))
+                                    {
+                                        TotalSubTotal = TotalSubTotal + @item.SubTotalSales;
+                                        <td><input type="text" class="form-control" value="@item.SubTotalSales.ToString("n2")"></td>
+                                    }
+                                    <td>£@TotalSubTotal.ToString("n2")</td>
+
+                                </tr>
+
+                            }
+
+                            <tr class="spacer"><td></td></tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+                <h4 class="text-themecolor">How did you arrive at the figures above? </h4>
+
+                <textarea class="form-control jsUsefulNote jsUpdateNote" data-id="@SaleforecastList.Select(x=>x.SaleforeCastID).FirstOrDefault()" data-type="3" value="Notes" rows="3">@SaleforecastList.Select(x=>x.UsefullNote).FirstOrDefault()</textarea>
+
+            </div>
+        </div>
+    </div>
+</div>

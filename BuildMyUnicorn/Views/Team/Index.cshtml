@@ -50,12 +50,10 @@
 
             </ol>
             &nbsp;&nbsp;
-            <a href="~/Team/Create" class="btn btn-info return">Add New </a>
-            @*<a href="~/Team/Create" class="btn btn-info return jsSubmit">Add New </a>*@
-            @*<button type="button" class="btn btn-info btn-rounded m-t-10 float-right"
-                        data-toggle="modal" data-target="#add-contact">
-                    Add New Team
-                </button>*@
+            @if (Model.Count() > 0)
+            {
+                <a href="~/Team/Create" class="btn btn-info return">Add  </a>
+            }
         </div>
     </div>
 </div>
@@ -65,7 +63,8 @@
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
-            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Team", ActionName = "Index", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Team }, new { @class = "" })
+            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Team", ActionName = "Index", ModuleID = (int)Business_Model.Model.Module.TheBusiness, SectionID = (int)Business_Model.Model.ModuleSection.TheBusiness_Team }, new { @class = "" })
+
         </div>
     </div>
 </div>
@@ -76,11 +75,12 @@
             <label>Team Over view </label>
             <div class="form-group">
 
-                <textarea class='form-control ideatextarea form-control-line progress-required' id="TeamInfo" name="TeamInfo" oninput="auto_grow_idea_textarea(this)" style="overflow-y: hidden;"> @(Model.Count() != 0 ? Model.FirstOrDefault().TeamInfo : "")</textarea>
+                <textarea class='form-control ideatextarea form-control-line progress-required' id="TeamInfo" name="TeamInfo" oninput="auto_grow_idea_textarea(this)" style="overflow-y: hidden;" placeholder="Please add Team overview">@(Model.Count() != 0 ? Model.FirstOrDefault().TeamInfo : "")</textarea>
             </div>
         </form>
     </div>
-    @if (Model != null)
+
+    @if (Model.Count() > 0)
     {
         foreach (var item in Model)
         {
@@ -116,9 +116,9 @@
                             </address>
                         </div>
                         <div class="col-md-12 text-right" style="font-size:19px">
-                            <a href="@item.LinkedProfile"><i class="fab fa-linkedin"></i></a>
+                            <a href="@item.LinkedProfile" title="linkedin"><i class="fab fa-linkedin"></i></a>
 
-                            <a href="~/Profile?clientID=@item.ClientID"><i class="icons-Professor"></i></a>
+                            <a href="~/Team/Edit/@item.ClientID" title="update profile"><i class="icons-Pencil"></i></a>
                         </div>
                     </div>
                 </div>
@@ -127,6 +127,37 @@
 
         }
     }
+    else
+    {
+
+        <tr>
+            <td colspan="7" style="height:100px; text-align:center; padding-top:50px">
+
+                <div class="col-md-12">
+                    <!-- Card -->
+                    <div class="card text-center">
+                        <div class="card-header">
+
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">No Team Found</h4>
+                            <p class="card-text">Your Team(s) will be added here.</p>
+
+                            <a href="~/Team/Create" class="btn btn-info">Add </a>
+                        </div>
+                        <div class="card-footer text-muted">
+
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    }
+
+
+
+
 </div>
 <div id="myDialog3">
     <iframe id="cartoonVideo" width="100%" height="100%" src="@(ViewBag.Video != null ?  ViewBag.Video.VideoUrl : "")" auto frameborder="0" allowfullscreen></iframe>
@@ -135,7 +166,8 @@
 @section PageScript
 {
     <script src="~/assets/node_modules/draggable-resizable-modal/js/modalbox.js"></script>
-    <script src="~/Content/app_script/page_script/team.js?version=@DateTime.Now"></script>
+    <script src="@Url.ContentVersioned("~/page_script/team.js")"></script>
+   
     <script>
         var showMessage = "Temporayfor someytime";
         $("#myDialog3").myOwnDialog(

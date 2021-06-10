@@ -1,11 +1,17 @@
 ﻿
-@using Business_Model.Model;
+
 @using System.ComponentModel;
 @model Business_Model.Model.PricingProductService
+@{
+
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    decimal _ProgressPricing = 0.0m; decimal _ProgressPricingUnit = 7.14m;
+
+}
 
 
 <div class="row" id="validation">
-    <div class="col-lg-12 col-xlg-12 col-md-12">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
             <div class="card-body">
                 <div class="row " style="margin: 0 0px 2px;">
@@ -14,7 +20,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Selling", ActionName = "ProductServicePricing", ModuleName = Module.Selling, SectionName = ModuleSection.Selling_Pricing }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Selling", ActionName = "ProductServicePricing", ModuleID = (int)Business_Model.Model.Module.Selling, SectionID = (int)Business_Model.Model.ModuleSection.Selling_Pricing }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -25,149 +31,246 @@
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
                     <input type="hidden" id="ProductServicePricingID" name="ProductServicePricingID" value="@Model.ProductServicePricingID" />
                     <!-- Step 1 -->
-                    <h6>Who Does what</h6>
+                    <h4 class="text-center"> Pricing Product or Service</h4>
+                    
+
                     <section>
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.PricingStrategy))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PricingStrategy").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="PricingStrategy" name="PricingStrategy" readonly>@Model.ChosePricingStrategy.PricingStrategy</textarea>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategy"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.PricingStrategy</textarea>
+                                    </div>
+                                </div>
 
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.ProductValue))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductValue").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="ProductValue" name="ProductValue" readonly>@Model.ChosePricingStrategy.ProductValue</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.UsersBringValue))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "UsersBringValue").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="UsersBringValue" name="UsersBringValue" readonly>@Model.ChosePricingStrategy.UsersBringValue</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.ProductUnique))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductUnique").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="ProductUnique" name="ProductUnique" readonly>@Model.ChosePricingStrategy.ProductUnique</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.CustomersValue))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomersValue").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="CustomersValue" name="CustomersValue" readonly>@Model.ChosePricingStrategy.CustomersValue</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.CustomersWillingToPay))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomersWillingToPay").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="CustomersWillingToPay" name="CustomersWillingToPay" readonly>@Model.ChosePricingStrategy.CustomersWillingToPay</textarea>
+
+                                    </div>
                                 </div>
                             </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.OfferCustomers))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OfferCustomers").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="OfferCustomers" name="OfferCustomers" readonly>@Model.ChosePricingStrategy.OfferCustomers</textarea>
 
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductValue"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductValue</textarea>
-
+                                    </div>
                                 </div>
                             </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.OfferLevels))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OfferLevels").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="OfferLevels" name="OfferLevels" readonly>@Model.ChosePricingStrategy.OfferLevels</textarea>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["UsersBringValue"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.UsersBringValue</textarea>
-
+                                    </div>
                                 </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.OfferOpportunity))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OfferOpportunity").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="OfferOpportunity" name="OfferOpportunity" readonly>@Model.ChosePricingStrategy.OfferOpportunity</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.CustomersOftenToPay))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomersOftenToPay").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="CustomersOftenToPay" name="CustomersOftenToPay" readonly>@Model.ChosePricingStrategy.CustomersOftenToPay</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.PricingStrategyChosen))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PricingStrategyChosen").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="PricingStrategyChosen" name="PricingStrategyChosen" readonly>@Model.ChosePricingStrategy.PricingStrategyChosen</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.CostDeliverPicture))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CostDeliverPicture").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="CostDeliverPicture" name="CostDeliverPicture" readonly>@Model.ChosePricingStrategy.CostDeliverPicture</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.CustomerBuy))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerBuy").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="CustomerBuy" name="CustomerBuy" readonly>@Model.ChosePricingStrategy.CustomerBuy</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.SalesCertainPeriod))
+                        {
+                            _ProgressPricing = _ProgressPricing + _ProgressPricingUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesCertainPeriod").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="SalesCertainPeriod" name="SalesCertainPeriod" readonly>@Model.ChosePricingStrategy.SalesCertainPeriod</textarea>
+
+                                    </div>
+                                </div>
+
                             </div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductUnique"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductUnique</textarea>
 
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["CustomersValue"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.CustomersValue</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["CustomersWillingToPay"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.CustomersWillingToPay</textarea>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferCustomers"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.OfferCustomers</textarea>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferLevels"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.OfferLevels</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferOpportunity"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.OfferOpportunity</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategy"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.PricingStrategy</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategyChosen"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.PricingStrategyChosen</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductUnique"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductUnique</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductValue"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' readonly>@Model.ChosePricingStrategy.ProductValue</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-
-
-                    </section>
+                        }
+                        </section>
 
 
                 </form>
             </div>
         </div>
     </div>
+    <div class="col-lg-3 col-xlg-2 col-md-4">
 
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                @if (ViewBag.RateInfo != null)
+                {
+                    if (ViewBag.RateInfo.Rating != 0.0m)
+                    {
+                        <a href="#1" class="list-group-item" style="text-align:center">
+                            <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                        </a>
+                    }
+                    if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                    {
+                        <a href="#1" class="list-group-item">
+                            <span class="badge badge-info badge-info">NOTE</span> <br />
+                            @ViewBag.RateInfo.Note
+                        </a>
+                    }
+                }
+                <a href="#1" class="list-group-item">
+                    Pricing Product or Service
+                    <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressPricing))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressPricing))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressPricing))% Complete</span></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
 </div>
 
 

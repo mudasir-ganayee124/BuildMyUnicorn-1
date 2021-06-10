@@ -1,0 +1,196 @@
+﻿@using Business_Model.Model;
+@model IEnumerable<PersonalSurvivalBudget>
+@{
+
+    List<PersonalSurvivalBudget> ExpenseList = Model.Where(x => x.PersonalType == (int)OptionType.PersonalSurvivalBudget_Expenses).ToList();
+    List<PersonalSurvivalBudget> IncomeList = Model.Where(x => x.PersonalType == (int)OptionType.PersonalSurvivalBudget_Income).ToList();
+    // List<SaleforeCast> SaleforecastList = ViewBag.SaleforecastList as List<SaleforeCast>;
+    // List<int> ItemNumberList = SaleforecastList.Select(o => o.ItemNumber).Distinct().ToList();
+
+}
+
+
+    <div class="row">
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card table-cus">
+                    <div class="card-body">
+                        <p>The Personal Survival Budget works out the amount you need from your business to live and whether you can afford to take on a Start Up Loan. If your personal expenses are greater than your personal income, your business will need to cover these expenses.</p>
+                        <h4 class="text-themecolor"> INSTRUCTIONS FOR COMPLETING:</h4>
+                        <ul>
+                            <li>- These are your personal income and costs and should not include any income/costs from the business.   </li>
+
+                            <li>  - Only include costs you are responsible for, do not include anything paid for by a partner or other household member.   </li>
+
+                            <li> - Update the personal income and expense categories as necessary.  Some line items may not be applicable to you, so just skip over them.	   </li>
+
+                            <li>  - Input any comments or assumptions you have made in the notes column.   </li>
+
+                            <li>    - Enter figures into the white boxes only, the spreadsheet will calculate the rest.   </li>
+
+                            <li>   - Individual living costs vary, so start by thinking through all income and costs that you will incur.  You may find it helpful to review your last 3-months of bank statements to see how much you normally spend, in order to accurately build your personal survival budget.   </li>
+
+                            <li>   - If you are receiving housing or council tax benefits you should put the full amount of rent and council tax payable in your survival budget as once you start trading you may lose these or have them reduced.	   </li>
+
+                            <li>   - If you are planning to have another job while running your business, please let us know whether you currently hold this position.   </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th style="padding-left:4px !important"> <b>  PERSONAL EXPENSES </b></th>
+                                        <th class="text-center"> <b>Monthly £ </b></th>
+                                        <th class="text-center" style="padding:0px 15px !important"><b>Yearly £ </b></th>
+                                        <th class="text-center"><b>Notes </b></th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @{ Decimal TotalMonthlyExpense = 0; Decimal TotalYearlyExpense = 0; }
+                                    @foreach (var item in ExpenseList.Where(x => x.PersonalType == (int)OptionType.PersonalSurvivalBudget_Expenses).OrderBy(x => x.DisplayOrder))
+                                    {
+
+                                        <tr class="selected" data-id="@item.PersonalSurvivalBudgetID">
+                                            <td>@item.Value</td>
+                                            <td><input type="text" class="form-control jsPropertyName jsChangeItem" name="Income" value='@( item.Monthly != 0 ? item.Monthly.ToString("n2") : "")'></td>
+                                            <td class="text-center">  @(item.Monthly != 0 ? (item.Monthly * 12).ToString("n2") : "")</td>
+                                            <td><textarea class="form-control jsNote jsChangeItem" name="Note" rows="0">@item.Notes</textarea></td>
+
+                                        </tr>
+                                        TotalMonthlyExpense = TotalMonthlyExpense + @item.Monthly;
+                                        TotalYearlyExpense = TotalYearlyExpense + @item.Monthly * 12;
+
+                                    }
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>TOTAL EXPENSES</th>
+                                        <th>  £@TotalMonthlyExpense.ToString("n2") </th>
+                                        <th>  £@TotalYearlyExpense.ToString("n2") </th>
+                                        <th></th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="table-responsive ">
+
+                            <table id="example24" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="ns">PERSONAL INCOME</th>
+                                        <th>Monthly £</th>
+                                        <th>Yearly £</th>
+                                        <th class="ns">Notes</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @{ Decimal TotalMonthlyIncome = 0; Decimal TotalYearlyIncome = 0; }
+                                    @foreach (var item in IncomeList.Where(x => x.PersonalType == (int)OptionType.PersonalSurvivalBudget_Income).OrderBy(x => x.DisplayOrder))
+                                    {
+                                        <tr class="selected" data-id="@item.PersonalSurvivalBudgetID">
+                                            <td>@item.Value</td>
+                                            <td><input type="text" class="form-control jsPropertyName jsChangeItem" name="Income" value='@( item.Monthly != 0 ?  item.Monthly.ToString("n2") : "")'></td>
+                                            <td class="text-center">  @(item.Monthly != 0 ? (item.Monthly * 12).ToString("n2") : "")</td>
+                                            <td><textarea class="form-control jsNote jsChangeItem" name="Note" rows="0">@item.Notes</textarea></td>
+
+                                        </tr>
+                                        TotalMonthlyIncome = TotalMonthlyIncome + @item.Monthly;
+                                        TotalYearlyIncome = TotalYearlyIncome + @item.Monthly * 12;
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>PERSONAL INCOME</th>
+                                        <th> £@TotalMonthlyIncome.ToString("n2") </th>
+                                        <th>  £@TotalYearlyIncome.ToString("n2") </th>
+                                        <th></th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="table-responsive ">
+
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+
+
+                                <thead>
+                                    <tr>
+                                        <th><b> INCOME NEEDED TO SURVIVE </b></th>
+                                        <th><b> £@( (TotalMonthlyExpense - TotalMonthlyIncome).ToString("n2")) </b></th>
+                                        <th><b> £@( (TotalYearlyExpense - TotalYearlyIncome).ToString("n2")) </b></th>
+                                    
+
+
+                                    </tr>
+
+                                </thead>
+
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h4 class="text-themecolor"> PLEASE ADD ANY OTHER USEFUL NOTES BELOW</h4>
+
+                        <textarea class="form-control jsUsefulNote jsUpdateNote" data-id="@Model.Select(x=>x.PersonalSurvivalBudgetID).FirstOrDefault()" data-type="1" value="Notes" rows="5">@Model.Select(x=>x.UsefullNote).FirstOrDefault()</textarea>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+

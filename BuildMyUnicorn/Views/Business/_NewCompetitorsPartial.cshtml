@@ -1,7 +1,11 @@
-﻿@using Business_Model.Model;
-@using System.ComponentModel;
+﻿@using System.ComponentModel;
 @model Business_Model.Model.Competitor
+@{
 
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    decimal _ProgressBigPictureResearch = 0.0m; decimal _ProgressFocussedResearch = 0.0m;
+    decimal _ProgressBigPictureResearchUnit = 16.66m; decimal _ProgressFocussedResearchUnit = 12.50m;
+}
 <div class="row" id="validation">
     <div class="col-12">
         <div class="card wizard-content">
@@ -12,7 +16,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "Competitors", ModuleName = Module.TheBusiness, SectionName = ModuleSection.TheBusiness_Competitors}, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Business", ActionName = "CompetitorAnalysis", ModuleID = (int)Business_Model.Model.Module.TheBusiness, SectionID = (int)Business_Model.Model.ModuleSection.TheBusiness_Competitors }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -21,6 +25,7 @@
                     <input type="hidden" id="jsonRoleInCompany" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
                     <input type="hidden" id="SWOTID" name="SWOTID" value="@Model.SWOT.SWOTID" />
+                    <input type="hidden" id="IsRedirect" value='@(Model.SWOT.SWOTID == Guid.Empty ? "true" : "false")' />
 
                     @*<input type="hidden" id="ProgressValue" name="ProgressValue" value="@Model.ProgressValue" />*@
                     <!-- Step 1 -->
@@ -58,7 +63,7 @@
                                     </thead>
                                     <tbody class="jsContainerCompetitorAnalysis">
 
-                                        @if (Model.CompetitorAnalysis != null)
+                                        @if (Model.CompetitorAnalysis.Count() > 0)
                                         {
                                             foreach (var item in Model.CompetitorAnalysis)
                                             {
@@ -129,7 +134,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSWOT["Strengths"] </label> <br />
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Strengths").FirstOrDefault().QuestionText : "" )  </label>
+                                    <br />
                                     <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Strengths" name="Strengths">
                                         @if (Model.SWOT.Strengths != null)
                                         {
@@ -147,7 +153,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSWOT["Weaknesses"]</label> <br />
+
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Weaknesses").FirstOrDefault().QuestionText : "" )  </label><br />
                                     <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Weaknesses" name="Weaknesses">
                                         @if (Model.SWOT.Weaknesses != null)
                                         {
@@ -165,7 +172,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSWOT["Opportunities"]</label> <br />
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Opportunities").FirstOrDefault().QuestionText : "" )  </label>
+                                    <br />
                                     <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Opportunities" name="Opportunities">
                                         @if (Model.SWOT.Opportunities != null)
                                         {
@@ -183,7 +191,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSWOT["Threats"]</label> <br />
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Threats").FirstOrDefault().QuestionText : "" )  </label>
+                                    <br />
                                     <select multiple data-role="tagsinput" class="form-control ideatextarea custom-select col-12" id="Threats" name="Threats">
                                         @if (Model.SWOT.Threats != null)
                                         {

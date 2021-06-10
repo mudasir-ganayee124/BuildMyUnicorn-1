@@ -14,35 +14,23 @@ namespace BuildMyUnicorn.Business_Layer
     {
         public _OnlinePresance GetOnlinePresance()
         {
-
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_OnlinePresance>(CommandType.StoredProcedure, "sp_get_marketing_presance_by_client", parameters);
-
+            var query = $@"SELECT dbo.tbl_marketing_onlinepresence.*  FROM  dbo.tbl_marketing_onlinepresence WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<_OnlinePresance>(query);      
         }
 
         public IEnumerable<_Marketing> GetMarketingPlan()
         {
 
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetList<_Marketing>(CommandType.StoredProcedure, "sp_get_marketing_plan_by_client", parameters);
+            var query = $@"SELECT tbl_marketing_marketingplan.*, Goal.Value as GoalValue, AudianceReach.Value AS AudianceReachValue FROM  dbo.tbl_marketing_marketingplan LEFT join tbl_option_master Goal ON Goal.ID = tbl_marketing_marketingplan.GoalID LEFt JOIN tbl_option_master AudianceReach ON AudianceReach.ID = tbl_marketing_marketingplan.AudianceReachID WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' AND tbl_marketing_marketingplan.IsDeleted = 0 ";
+            return SharedManager.GetList<_Marketing>(query);
+            
 
         }
 
         public _MarketingBrand GetMarketingBrand()
         {
-
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings
-                ["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_MarketingBrand>(CommandType.StoredProcedure, "sp_get_marketing_brand_by_client", parameters);
+            var query = $@"SELECT dbo.tbl_marketing_brand.*  FROM  dbo.tbl_marketing_brand WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<_MarketingBrand>(query);
 
         }
 
@@ -60,8 +48,9 @@ namespace BuildMyUnicorn.Business_Layer
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@OnlinePresanceID", ParamterValue = Model.OnlinePresanceID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@OnlinePresenceID", ParamterValue = Model.OnlinePresenceID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@HaveRegisteredDomain", ParamterValue = Model.YourWebsite.HaveRegisteredDomain, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@DomainName", ParamterValue = Model.YourWebsite.DomainName, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@WebPageStageID", ParamterValue = Model.YourWebsite.WebPageStageID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@WantWebsiteAchieveID", ParamterValue = Model.YourWebsite.WantWebsiteAchieveID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
@@ -70,9 +59,9 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@SuccessMeasure", ParamterValue = Model.YourWebsite.SuccessMeasure, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CTA", ParamterValue = Model.YourWebsite.CTA , ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@TrafficAnticipatePerMonthID", ParamterValue = Model.YourWebsite.TrafficAnticipatePerMonthID , ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@UseDomainEmail", ParamterValue = Model.YourWebsite.UseDomainEmail, ParamterType = DbType.Boolean, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@WebsitePlanMakeMoney", ParamterValue = Model.YourWebsite.WebsitePlanMakeMoney, ParamterType = DbType.Boolean, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PutWebpageAdds", ParamterValue = Model.YourWebsite.PutWebpageAdds, ParamterType = DbType.Boolean, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@UseDomainEmail", ParamterValue = Model.YourWebsite.UseDomainEmail, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@WebsitePlanMakeMoney", ParamterValue = Model.YourWebsite.WebsitePlanMakeMoney, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@PutWebpageAdds", ParamterValue = Model.YourWebsite.PutWebpageAdds, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CompetitorSitelike", ParamterValue = Model.YourWebsite.CompetitorSitelike, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CompetitorSitedislike", ParamterValue = Model.YourWebsite.CompetitorSitedislike, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Facebook", ParamterValue = Model.SocialHandles.Facebook, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -88,10 +77,10 @@ namespace BuildMyUnicorn.Business_Layer
             if (result > 0)
             {
                 Guid ClientID = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
-                new Master().DeleteMultipleMaster((int)ModuleName.Marketing, Model.OnlinePresanceID);
+                new Master().DeleteMultipleMaster((int)ModuleName.Marketing, Model.OnlinePresenceID);
                 ModelList.ForEach(x => x.ID = Guid.NewGuid());
                 ModelList.ForEach(x => x.ModuleID = (int)ModuleName.Marketing);
-                ModelList.ForEach(x => x.EntityID = Model.OnlinePresanceID);
+                ModelList.ForEach(x => x.EntityID = Model.OnlinePresenceID);
                 ModelList.ForEach(x => x.Value1 = ClientID.ToString());
                 DataTable dtMarketKeyPlayer = Extensions.ListToDataTable(ModelList);
                 obj.ExecuteBulkInsert("sp_add_multiple_master_data", dtMarketKeyPlayer, "UT_MultipleMaster_Data", "@DataTable");
@@ -182,6 +171,28 @@ namespace BuildMyUnicorn.Business_Layer
             return result > 0 ? "OK" : "Can not Delete ";
 
 
+        }
+
+        public int ExistOnlinePresence(Guid id)
+        {
+            var query = $@"select count(OnlinePresenceID) from tbl_marketing_onlinepresence WHERE OnlinePresenceID = '{id}'";
+            if (id == Guid.Empty)
+            {
+                id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+                query = $@"select count(OnlinePresenceID) from tbl_marketing_onlinepresence WHERE ClientID = '{id}'";
+            }
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+
+        public int ExistMarketingBrand(Guid id)
+        {
+            var query = $@"select count(MarketingBrandID) from tbl_marketing_brand WHERE MarketingBrandID = '{id}'";
+            if (id == Guid.Empty)
+            {
+                id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+                query = $@"select count(MarketingBrandID) from tbl_marketing_brand WHERE ClientID = '{id}'";
+            }
+            return SharedManager.ExecuteScalar<int>(query);
         }
     }
 }

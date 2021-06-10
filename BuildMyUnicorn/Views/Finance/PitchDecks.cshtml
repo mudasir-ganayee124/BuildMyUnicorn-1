@@ -200,7 +200,7 @@
 
                 </div>
                 <div class="col-md-4 mb-3 imgcontainer">
-                    <a href="javascript:void(0)" class="jsPitchDeckPage" data-page="6">
+                    <a href="javascript:void(0)" class="jsPitchDeckPage" data-page="6" data-toggle="modal" data-target="#pitchDeck">
                         <img src="~/dist/images/p9.png" alt="banner">
                     </a>
                     <div class="desc row">
@@ -224,6 +224,10 @@
     </div>
 </div>
 
+
+
+
+
 @section PageScript
 {
     <script src="~/assets/node_modules/lazy/lazy.js"></script>
@@ -246,7 +250,7 @@
                 }
             });
               var id= $(this).data("page");
-             
+
 
         });
 

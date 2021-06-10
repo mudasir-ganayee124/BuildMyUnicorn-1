@@ -1,9 +1,9 @@
-﻿@using Business_Model.Model;
-@model Business_Model.Model.Idea
+﻿    @model Business_Model.Model.Idea
 @{
 
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
 }
+
 <div class="row" id="validation">
     <div class="col-12">
         <div class="card wizard-content">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Idea", ActionName = "Index", ModuleName = Module.MyIdea, SectionName = ModuleSection.MyIdea_Ideaoutofhead, flag = true }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Idea", ActionName = "Index", ModuleID = (int)Business_Model.Model.Module.MyIdea, SectionID = (int)Business_Model.Model.ModuleSection.MyIdea_Ideaoutofhead }, new { @class = "jsBackToOverview" })
                         </div>
                     </div>
                 </div>
@@ -23,8 +23,9 @@
                     <input type="hidden" id="jsIdea" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
                     <input type="hidden" id="ActionType" value="@ViewBag.ActionType" />
+                    <input type="hidden" id="IsRedirect" value='@(Model.IdeaID == Guid.Empty ? "true" : "false")' />
                     <input type="hidden" id="IdeaID" name="IdeaID" value="@Model.IdeaID" />
-                    <input type="hidden" id="ProgressValue" name="ProgressValue" value="@Model.ProgressValue" />
+
                     <!-- Step 1 -->
                     <h6>The Idea</h6>
                     <section>
@@ -35,7 +36,7 @@
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaExplain != null ? "progress-percent" : "")' id="IdeaExplain" name="IdeaExplain" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaExplain").FirstOrDefault().PlaceHolderText : "" )">@Model.IdeaExplain</textarea>
                                 </div>
                             </div>
-               
+
                         </div>
                     </section>
                     <!-- Step 2 -->
@@ -87,7 +88,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().QuestionText :"" )  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.ProblemSolver != null ? "progress-percent" : "")' id="ProblemSolver" name="ProblemSolver" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().PlaceHolderText:"" )">@Model.IdeaBreakDown.ProblemSolver</textarea>
                                 </div>
                             </div>
@@ -105,7 +106,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductDemand").FirstOrDefault().QuestionText :"" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductDemand").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var ProductDemandClass = Model.IdeaBreakDown.ProductDemand != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("ProductDemand", new SelectList(ViewBag.ProductDemandList, "ID", "Value", @Model.IdeaBreakDown.ProductDemand), "- Please select -", new { @class = "custom-select col-12 " + @ProductDemandClass + " progress-required" })
 
@@ -119,7 +120,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InMarketAlready").FirstOrDefault().QuestionText :"" )  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InMarketAlready").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var InMarketAlreadyClass = Model.IdeaBreakDown.InMarketAlready != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("InMarketAlready", new SelectList(ViewBag.InMarketAlreadyList, "ID", "Value", @Model.IdeaBreakDown.InMarketAlready), "- Please select -", new { @class = "custom-select col-12 " + @InMarketAlreadyClass + " progress-required" })
 
@@ -133,7 +134,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ?  LanguageList.Where(x => x.PropertyName == "Scalable").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Scalable").FirstOrDefault().QuestionText : "")  </label>
                                     @{ var ScalableClass = Model.IdeaBreakDown.Scalable != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("Scalable", new SelectList(ViewBag.ScalableList, "ID", "Value", @Model.IdeaBreakDown.Scalable), "- Please select -", new { @class = "custom-select col-12 " + @ScalableClass + " progress-required" })
 
@@ -155,26 +156,26 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().QuestionText : "")  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.YearsDoing != null ? "progress-percent" :"")' id="YearsDoing" name="YearsDoing" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutYou.YearsDoing</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.Experience != null ? "progress-percent" :"")' id="Experience" name="Experience" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0 ?  LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutYou.Experience</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "")  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.Priorities != null ? "progress-percent" :"")' id="Priorities" name="Priorities" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "Priorities").FirstOrDefault().PlaceHolderText : "")">@Model.AboutYou.Priorities</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "EndGoal").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EndGoal").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var EndGoalClass = Model.AboutYou.EndGoal != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("EndGoal", new SelectList(ViewBag.EndGoalList, "ID", "Value", @Model.AboutYou.EndGoal), "- Please select -", new { @class = "custom-select col-12 " + @EndGoalClass + " progress-required" })
 
@@ -189,50 +190,50 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CompanySetup").FirstOrDefault().QuestionText : "" )  </label>
-                                    @{ var CompanySetupClass = Model.Company.CompanySetup != null ? "progress-percent" : ""; }
-                                    @Html.DropDownList("CompanySetup", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.CompanySetup), "- Please select -", new { @class = "custom-select col-12 " + @CompanySetupClass + " progress-required" })
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanySetup").FirstOrDefault().QuestionText : "" )  </label>
+                           
+                                    @Html.DropDownList("CompanySetup", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.CompanySetup), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "CompanyName" })
 
 
 
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class='col-md-12 CompanyName  @(string.IsNullOrEmpty(@Model.Company.CompanyName) ? "hide" :"")'>
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().QuestionText : "" )  </label>
-                                    <input type="text" class='form-control  progress-required @( Model.Company.CompanyName != null ? "progress-percent" :"")' id="CompanyName" name="CompanyName" value="@Model.Company.CompanyName"  placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().PlaceHolderText :"" )"/>
-                                    @*<textarea class='form-control ideatextarea progress-required @( Model.Company.CompanyName != null ? "progress-percent" :"")' id="CompanyName" name="CompanyName" oninput="auto_grow_idea_textarea(this)">  @Model.Company.CompanyName</textarea>*@
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "HaveGotDomain").FirstOrDefault().QuestionText : "")  </label>
-                                    @{ var HaveGotDomainClass = Model.Company.HaveGotDomain != null ? "progress-percent" : ""; }
-                                    @Html.DropDownList("HaveGotDomain", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.HaveGotDomain), "- Please select -", new { @class = "custom-select col-12 " + @HaveGotDomainClass + " progress-required" })
-
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().QuestionText : "" )  </label>
+                                    <input type="text" class='form-control  progress-required' id="CompanyName" name="CompanyName" value="@Model.Company.CompanyName" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().PlaceHolderText :"" )" />
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText :"" )  </label>
-                                    <input type="text" class='form-control  progress-required @( Model.Company.DomainName != null ? "progress-percent" :"")' id="DomainName" name="DomainName" value="@Model.Company.DomainName" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().PlaceHolderText :"" )">
-                                    @*<textarea class='form-control ideatextarea progress-required @( Model.Company.DomainName != null ? "progress-percent" :"")' id="DomainName" name="DomainName" oninput="auto_grow_idea_textarea(this)">  @Model.Company.DomainName </textarea>*@
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HaveGotDomain").FirstOrDefault().QuestionText : "")  </label>
+                   
+                                   @Html.DropDownList("HaveGotDomain", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.HaveGotDomain), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "DomainName" })
+
+
+                                </div>
+                            </div>
+                            <div class='col-md-12 DomainName @(string.IsNullOrEmpty(@Model.Company.DomainName) ? "hide" :"")'>
+                                <div class="form-group">
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText : "" )  </label>
+                                    <input type="text" class='form-control' id="DomainName" name="DomainName" value="@Model.Company.DomainName" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().PlaceHolderText :"" )">
+                                 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "Cofounder").FirstOrDefault().QuestionText : "")  </label> <br />
-                                    @{ var CofounderClass = Model.Company.Cofounder != null ? "progress-percent" : ""; }
-                                    @Html.DropDownList("Cofounder", new SelectList(ViewBag.CofounderList, "ID", "Value", @Model.Company.Cofounder), "- Please select -", new { @class = "custom-select col-12 " + @CofounderClass + " progress-required" })
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Cofounder").FirstOrDefault().QuestionText : "")  </label> <br />
+                   
+                                    @Html.DropDownList("Cofounder", new SelectList(ViewBag.CofounderList, "ID", "Value", @Model.Company.Cofounder), "- Please select -", new { @class = "custom-select col-12" })
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "SupportTechnically").FirstOrDefault().QuestionText : "" )  </label>
-                                    @{ var SupportTechnicallyClass = Model.Company.SupportTechnically != null ? "progress-percent" : ""; }
-                                    @Html.DropDownList("SupportTechnically", new SelectList(ViewBag.SupportTechnicallyList, "ID", "Value", @Model.Company.SupportTechnically), "- Please select -", new { @class = "custom-select col-12 " + @SupportTechnicallyClass + " progress-required" })
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SupportTechnically").FirstOrDefault().QuestionText : "" )  </label>
+                          
+                                    @Html.DropDownList("SupportTechnically", new SelectList(ViewBag.SupportTechnicallyList, "ID", "Value", @Model.Company.SupportTechnically), "- Please select -", new { @class = "custom-select col-12" })
 
 
                                 </div>
@@ -241,27 +242,27 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BuildFrom").FirstOrDefault().QuestionText : "")  </label>
-                                    @{ var BuildFromClass = Model.Company.BuildFrom != null ? "progress-percent" : ""; }
-                                    @Html.DropDownList("BuildFrom", new SelectList(ViewBag.BuildFromList, "ID", "Value", @Model.Company.BuildFrom), "- Please select -", new { @class = "custom-select col-12 " + @BuildFromClass + " progress-required" })
+                             
+                                    @Html.DropDownList("BuildFrom", new SelectList(ViewBag.BuildFromList, "ID", "Value", @Model.Company.BuildFrom), "- Please select -", new { @class = "custom-select col-12" })
 
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().QuestionText :"" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.Company.BrandThought != null ? "progress-percent" :"")' id="BrandThought" name="BrandThought" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().PlaceHolderText : "")">@Model.Company.BrandThought</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.Company.CompanyMission != null ? "progress-percent" :"")' id="CompanyMission" name="CompanyMission" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().PlaceHolderText : "")">@Model.Company.CompanyMission</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().QuestionText :"" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.Company.CompanyLookFeel != null ? "progress-percent" :"")' id="CompanyLookFeel" name="CompanyLookFeel" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().PlaceHolderText :"" )">@Model.Company.CompanyLookFeel</textarea>
                                 </div>
                             </div>
@@ -276,7 +277,7 @@
                                 @{ var arraySellType = String.IsNullOrEmpty(@Model.IdeaSelling.SellType) == false ? @Model.IdeaSelling.SellType.Split(',').ToArray() : new string[0]; }
                                 <div class="form-group">
                                     <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellType").FirstOrDefault().QuestionText : "" )  </label>
-                                    <input type="hidden" id="_SellType" name="_SellType" class='progress-required @( arraySellType.Length > 0 ? "progress-percent" : "")'  />
+                                    <input type="hidden" id="_SellType" name="_SellType" class='' />
                                     @foreach (var item in ViewBag.MasterSelling)
                                     {
                                         <div class="custom-control custom-checkbox">
@@ -293,8 +294,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().QuestionText :"" )  </label>
-                                    <textarea id="ProductBuy" name="ProductBuy" class='form-control ideatextarea progress-required @( Model.IdeaSelling.ProductBuy != null ? "progress" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().PlaceHolderText : "")">@Model.IdeaSelling.ProductBuy</textarea>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea id="ProductBuy" name="ProductBuy" class='form-control ideatextarea' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().PlaceHolderText : "")">@Model.IdeaSelling.ProductBuy</textarea>
                                 </div>
 
                             </div>
@@ -304,7 +305,7 @@
                                 <div class="form-group">
                                     @{ var arrayProductCharge = String.IsNullOrEmpty(@Model.IdeaSelling.ProductCharge) == false ? @Model.IdeaSelling.ProductCharge.Split(',').ToArray() : new string[0]; }
 
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProductCharge").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductCharge").FirstOrDefault().QuestionText : "" )  </label>
                                     <input type="hidden" id="_ProductCharge" name="_ProductCharge" class='progress-required @( arrayProductCharge.Length > 0 ? "progress-percent" : "")' value="" />
                                     @foreach (var item in ViewBag.MasterCharge)
                                     {
@@ -332,7 +333,7 @@
                             <div class="col-md-12">
 
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "SellTo").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellTo").FirstOrDefault().QuestionText : "")  </label>
                                     @{ var SellToClass = Model.IdeaSelling.SellTo != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("SellTo", new SelectList(ViewBag.SellToList, "ID", "Value", @Model.IdeaSelling.SellTo), "- Please select -", new { @class = "custom-select col-12 " + @SellToClass + " progress-required" })
 
@@ -341,13 +342,13 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().QuestionText :"" )  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea id="CustomerFindPlan" name="CustomerFindPlan" class='form-control ideatextarea progress-required @( Model.IdeaSelling.CustomerFindPlan != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().PlaceHolderText : "" )">@Model.IdeaSelling.CustomerFindPlan</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "SaleStaffPlan").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SaleStaffPlan").FirstOrDefault().QuestionText : "" )  </label>
                                     @{ var SaleStaffPlanClass = Model.IdeaSelling.SaleStaffPlan != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("SaleStaffPlan", new SelectList(ViewBag.SaleStaffPlanList, "ID", "Value", @Model.IdeaSelling.SaleStaffPlan), "- Please select -", new { @class = "custom-select " + SaleStaffPlanClass + " col-12 progress-required" })
 
@@ -372,7 +373,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea id="Affort" name="Affort" class='form-control ideatextarea progress-required @( Model.Money.Affort != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().PlaceHolderText  : "")">@Model.Money.Affort</textarea>
                                 </div>
                             </div>
@@ -380,7 +381,7 @@
                                 <div class="form-group">
                                     @{ var arrayMoneyRaisePlan = String.IsNullOrEmpty(@Model.Money.MoneyRaisePlan) == false ? @Model.Money.MoneyRaisePlan.Split(',').ToArray() : new string[0]; }
 
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "MoneyRaisePlan").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MoneyRaisePlan").FirstOrDefault().QuestionText : "" )  </label>
                                     <input type="hidden" id="_MoneyRaisePlan" name="_MoneyRaisePlan" class='progress-required @( arrayMoneyRaisePlan.Length > 0 ? "progress-percent" : "")' value="" />
                                     @foreach (var item in ViewBag.MasterMoneyRasie)
                                     {
@@ -396,13 +397,13 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().QuestionText : "")  </label>
                                     <textarea id="ProfitableMake" name="ProfitableMake" class='form-control ideatextarea progress-required @( Model.Money.ProfitableMake != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().PlaceHolderText : "" )">@Model.Money.ProfitableMake</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().QuestionText : "" )  </label>
                                     <textarea id="ProfitableThinkTime" name="ProfitableThinkTime" class='form-control ideatextarea progress-required @( Model.Money.ProfitableThinkTime != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().PlaceHolderText : "" )">@Model.Money.ProfitableThinkTime</textarea>
                                 </div>
                             </div>

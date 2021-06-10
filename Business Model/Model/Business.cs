@@ -11,7 +11,7 @@ namespace Business_Model.Model
     public class Business
     {
 
-        public Guid BusinessID { get; set; }
+        public Guid BusinessOverID { get; set; }
         public Guid ClientID { get; set; }
         public EntityState EntityState { get; set; }
         public Founder Founder { get; set; }
@@ -51,6 +51,10 @@ namespace Business_Model.Model
         public string Founded { get; set; }
         [Description("What is the registered business address of the company?")]
         public string BusinessAddress { get; set; }
+        [Description("Does your business require premises?")]
+        public Guid BusinessRequirePremises { get; set; }
+        [Description("Please provide details of the costs involved and the current status of discussions with the landlord.")]
+        public string LandlordCostStatus { get; set; }
         [Description("Business phone number")]
         public string BusinessPhone { get; set; }
         [Description("Have you registered for VAT, if so what is you VAT number?")]
@@ -64,7 +68,7 @@ namespace Business_Model.Model
 
     public class _Business
     {
-        public Guid BusinessID { get; set; }
+        public Guid BusinessOverID { get; set; }
         public Guid ClientID { get; set; }
         public EntityState EntityState { get; set; }
         public Founder Founder { get; set; }
@@ -91,6 +95,10 @@ namespace Business_Model.Model
         public string Founded { get; set; }
         [Description("What is the registered business address of the company?")]
         public string BusinessAddress { get; set; }
+        [Description("Does your business require premises?")]
+        public Guid BusinessRequirePremises { get; set; }
+        [Description("Please provide details of the costs involved and the current status of discussions with the landlord.")]
+        public string LandlordCostStatus { get; set; }
         [Description("Business phone number")]
         public string BusinessPhone { get; set; }
         [Description("Have you registered for VAT, if so what is you VAT number?")]
@@ -129,15 +137,15 @@ namespace Business_Model.Model
         [Description("Are there different variations of your Product / Service?")]
         public string PSVariations { get; set; }
         [Description("Do you think you have anything that can be patentable?")]
-        public int PSHaveIPAddress { get; set; }
+        public Guid PSHaveIPAddress { get; set; }
         [Description("why do you think it is patentable?")]
         public string PSIPAddress { get; set; }
         [Description("Have you registered a trademark?")]
-        public int PSHaveTradeMark { get; set; }
+        public Guid PSHaveTradeMark { get; set; }
         [Description("What is your Trademark?")]
         public string PSTradeMark { get; set; }
         [Description("Have you created a technology road map?")]
-        public int PSHaveTechnologyRoadMap { get; set; }
+        public Guid PSHaveTechnologyRoadMap { get; set; }
         public decimal Completed { get; set; }
 
 
@@ -147,7 +155,7 @@ namespace Business_Model.Model
     public class MVP
     {
         [Description("Have you developed an MVP (Minimum Viable Product)?")]
-        public int MVPHavePrototype { get; set; }
+        public Guid MVPHavePrototype { get; set; }
         [Description("How far have you got in your development?")]
         public string MVPDevelopmentFarID { get; set; }
         [Description("What does it look like?")]
@@ -178,17 +186,17 @@ namespace Business_Model.Model
         [Description("Are there different variations of your Product / Service?")]
         public string PSVariations { get; set; }
         [Description("Do you think you have anything that can be patentable?")]
-        public int PSHaveIPAddress { get; set; }
+        public Guid PSHaveIPAddress { get; set; }
         [Description("why do you think it is patentable?")]
         public string PSIPAddress { get; set; }
         [Description("Have you registered a trademark?")]
-        public int PSHaveTradeMark { get; set; }
+        public Guid PSHaveTradeMark { get; set; }
         [Description("What is your Trademark?")]
         public string PSTradeMark { get; set; }
         [Description("Have you created a technology road map?")]
-        public int PSHaveTechnologyRoadMap { get; set; }
+        public Guid PSHaveTechnologyRoadMap { get; set; }
         [Description("Have you developed an MVP (Minimum Viable Product)?")]
-        public int MVPHavePrototype { get; set; }
+        public Guid MVPHavePrototype { get; set; }
         [Description("How far have you got in your development?")]
         public string MVPDevelopmentFarID { get; set; }
         [Description("What does it look like?")]
@@ -282,7 +290,7 @@ namespace Business_Model.Model
         [Description("Where will your staff work?")]
         public Guid StaffWorkID { get; set; }
         [Description("Do you need any equipment / Software?")]
-        public bool Needsoftware{ get; set; }
+        public Guid Needsoftware{ get; set; }
         [Description("What software is needed?")]
         public string SoftwareType { get; set; }
         //[Description("What is needed")]
@@ -292,15 +300,15 @@ namespace Business_Model.Model
         [Description("How many staff do you hope to have this time next year?")]
         public int? StaffCountNextYear { get; set; }
         [Description("Have you got insurance?")]
-        public bool HaveInsurance { get; set; }
+        public Guid HaveInsurance { get; set; }
         [Description("What type of insurance?")]
         public string InsuranceType { get; set; }
         [Description("Do you need any specific license to work?")]
-        public bool NeedLicense { get; set; }
+        public Guid NeedLicense { get; set; }
         [Description("What type of license?")]
         public string LicenseType { get; set; }
         [Description("Do you need any specific Qualifications?")]
-        public bool NeedQualification { get; set; }
+        public Guid NeedQualification { get; set; }
         [Description("What type of qualification?")]
         public string QualificationType { get; set; }
         public decimal Completed { get; set; }
@@ -341,7 +349,7 @@ namespace Business_Model.Model
         [Description("Where will your staff work?")]
         public Guid StaffWorkID { get; set; }
         [Description("Do you need any equipment / Software?")]
-        public bool Needsoftware { get; set; }
+        public Guid Needsoftware { get; set; }
         [Description("What software is needed?")]
         public string SoftwareType { get; set; }
         //[Description("What is needed")]
@@ -351,15 +359,15 @@ namespace Business_Model.Model
         [Description("How many staff do you hope to have this time next year?")]
         public int? StaffCountNextYear { get; set; }
         [Description("Have you got insurance?")]
-        public bool HaveInsurance { get; set; }
+        public Guid HaveInsurance { get; set; }
         [Description("What type of insurance?")]
         public string InsuranceType { get; set; }
         [Description("Do you need any specific license to work?")]
-        public bool NeedLicense { get; set; }
+        public Guid NeedLicense { get; set; }
         [Description("What type of license?")]
         public string LicenseType { get; set; }
         [Description("Do you need any specific Qualifications?")]
-        public bool NeedQualification { get; set; }
+        public Guid NeedQualification { get; set; }
         [Description("What type of qualification?")]
         public string QualificationType { get; set; }
         public decimal Completed { get; set; }
@@ -398,7 +406,7 @@ namespace Business_Model.Model
     [Description("Competitor")]
     public class SWOT
     {
-   
+        public Guid ClientID { get; set; }
         public Guid SWOTID { get; set; }
         [Description("What are your Strengths?")]
         public string Strengths { get; set; }

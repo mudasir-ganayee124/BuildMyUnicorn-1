@@ -8,7 +8,7 @@ using Business_Model.Model;
 
 namespace BuildMyUnicorn.Business_Layer
 {
-    public class Dashboard
+    public class DashboardManager
     {
         public IdeaProgress GetIdeaProgressData()
         {
@@ -75,5 +75,55 @@ namespace BuildMyUnicorn.Business_Layer
             return IdeaObj;
 
         }
+
+        public IEnumerable<ProgressAnalytic> GetClientProgressAnalytic(decimal ProgressData)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ProgressData", ParamterValue = ProgressData, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetList<ProgressAnalytic>(CommandType.StoredProcedure, "sp_add_progress_analytic", parameters);
+
+        }
+
+        public int GetClientTeamCount()
+        {
+            var query = $@"SELECT count(dbo.tbl_client.ClientID) FROM dbo.tbl_client WHERE TeamClientID = '{ new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' ";
+            return SharedManager.ExecuteScalar<int>(query);
+
+        }
+        public int GetClientMarketingPlanCount()
+        {
+            var query = $@"SELECT Count(MarketingPlanID) FROM  dbo.tbl_marketing_marketingplan  WHERE ClientID = '{ new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' AND tbl_marketing_marketingplan.IsDeleted = 0 ";
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+
+        public int GetClientEligibleGrantCount(int CountryID)
+        {
+          
+              var  query = $@"SELECT Count(GrantID) FROM tbl_grants WHERE CountryID = '{CountryID}' AND tbl_grants.IsDeleted = 0 ";
+              return SharedManager.ExecuteScalar<int>(query);
+        }
+
+        public decimal GetClientProfileProgress(Client Model)
+        {
+            decimal ClientProfileProgress = 0.0m;
+            decimal ClientProfileProgressUnit = 12.50m;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.StartupName) ? 0.0m: ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.FirstName) ? 0.0m : ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.LastName) ? 0.0m : ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.Email) ? 0.0m : ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.Phone) ? 0.0m : ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.RoleInCompany) ? 0.0m : ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.LinkedProfile) ? 0.0m : ClientProfileProgressUnit;
+            ClientProfileProgress += string.IsNullOrEmpty(Model.ShortBio) ? 0.0m : ClientProfileProgressUnit;
+            return Math.Round(ClientProfileProgress);
+
+
+        }
+
+
     }
 }

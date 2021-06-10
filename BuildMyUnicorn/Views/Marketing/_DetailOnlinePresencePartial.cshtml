@@ -1,11 +1,13 @@
-﻿
-@using Business_Model.Model;
-@using System.ComponentModel;
+﻿@using System.ComponentModel;
 @model Business_Model.Model.OnlinePresance
-
+@{
+    decimal _ProgressYourWebsite = 0.0m; decimal _ProgressOPerations = 0.0m;
+    decimal _ProgressYourWebsiteUnit = 7.14m; decimal _ProgressOPerationsUnit = 16.66m;
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+}
 
 <div class="row" id="validation">
-    <div class="col-lg-12 col-xlg-12 col-md-12">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
             <div class="card-body">
                 <div class="row " style="margin: 0 0px 2px;">
@@ -14,7 +16,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Marketing", ActionName = "OnlinePresence", ModuleName = Module.Marketing, SectionName = ModuleSection.Marketing_OnlinePresence }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Marketing", ActionName = "OnlinePresence", ModuleID = (int)Business_Model.Model.Module.Marketing, SectionID = (int)Business_Model.Model.ModuleSection.Marketing_OnlinePresence }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -23,248 +25,359 @@
                     <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
-                    <input type="hidden" id="OnlinePresanceID" name="OnlinePresanceID" value="@Model.OnlinePresanceID" />
+                    <input type="hidden" id="OnlinePresenceID" name="OnlinePresenceID" value="@Model.OnlinePresenceID" />
                     <!-- Step 1 -->
                     <h6>Your Website</h6>
                     <section>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["HaveRegisteredDomain"]</label>
-                                    <select class="custom-select col-12 jsOptionChange" id="HaveRegisteredDomain" name="HaveRegisteredDomain" data-optionchange="DomainName" disabled>
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.YourWebsite.DomainName) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-
-
-                                </div>
-                                <div class='form-group DomainName  @(string.IsNullOrEmpty(@Model.YourWebsite.DomainName) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["DomainName"]</label>
-                                    <textarea class='form-control ideatextarea' id="DomainName" name="DomainName">@Model.YourWebsite.DomainName</textarea>
-
-
-
+                        @if (Model.YourWebsite.HaveRegisteredDomain != Guid.Empty)
+                        {
+                            _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HaveRegisteredDomain").FirstOrDefault().QuestionText : "" ) </label>
+                                        @Html.DropDownList("HaveRegisteredDomain", new SelectList(ViewBag.Choice, "ID", "Value", @Model.YourWebsite.HaveRegisteredDomain), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "DomainName" })
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["WebPageStageID"]</label>
-                                    @Html.DropDownList("WebPageStageID", new SelectList(ViewBag.StageList, "ID", "Value", @Model.YourWebsite.WebPageStageID), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["WantWebsiteAchieveID"]</label>
-                                    @Html.DropDownList("WantWebsiteAchieveID", new SelectList(ViewBag.AchieveList, "ID", "Value", @Model.YourWebsite.WantWebsiteAchieveID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
-
-                                    @*<textarea class='form-control form-control-line ideatextarea' id="WantWebsiteAchieveID" name="WantWebsiteAchieveID">@Model.YourWebsite.WantWebsiteAchieveID</textarea>*@
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["ContentWebsiteCreatorID"]</label>
-                                    @Html.DropDownList("ContentWebsiteCreatorID", new SelectList(ViewBag.ContentList, "ID", "Value", @Model.YourWebsite.ContentWebsiteCreatorID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["VisitorsAccomplish"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="VisitorsAccomplish" name="VisitorsAccomplish">@Model.YourWebsite.VisitorsAccomplish</textarea>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["CTA"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="CTA" name="CTA">@Model.YourWebsite.CTA</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["TrafficAnticipatePerMonthID"]</label>
-                                    @Html.DropDownList("TrafficAnticipatePerMonthID", new SelectList(ViewBag.TrafficList, "ID", "Value", @Model.YourWebsite.TrafficAnticipatePerMonthID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">Which functions or features are necessary to have versus nice to have</label>
-                                </div>
-                            </div>
-                            @{
-                                var Featurelist = ViewBag.FeatureStatusList as IEnumerable<MultipleMaster>;
-                            }
-                            @foreach (var Item in @ViewBag.FunctionNecessary)
+                        }
+                            @if (!string.IsNullOrEmpty(Model.YourWebsite.DomainName) && Model.YourWebsite.HaveRegisteredDomain != Guid.Empty)
                             {
+                           
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class='form-group DomainName'>
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText : "" ) </label>
+                                            <textarea class='form-control ideatextarea' id="DomainName" name="DomainName" readonly>@Model.YourWebsite.DomainName</textarea>
 
 
-                                if (Featurelist != null && Featurelist.Any(x => x.Value2 == Convert.ToString(Item.ID)))
-                                {
-                                    <div class="col-md-4" style="margin-bottom:25px">
-                                        <div class="custom-control custom-checkbox jsCustomswitchery jsFeatureStatusContainer">
-                                            <input type="checkbox" class="custom-control-input jsFeatureID" id="@Item.ID" name="_FeatureStatus" value="@Item.ID" checked readonly disabled>
-                                            <label class="custom-control-label" for="@Item.ID"> @Item.Value</label>
-                                            <input type="checkbox" class="js-switch jsFeatureStatus" data-color="#03a9f3" data-size="small" readonly @(Featurelist.Where(x => x.Value2 == Convert.ToString(Item.ID)).Select(y => y.Value3).FirstOrDefault() == "Checked" ? "checked" : "" ) />
+
                                         </div>
-                                        <div>
-                                            <div class="switchery-demo">
+                                        
+                                    </div>
 
-                                            </div>
+                                </div>
+                            }
+                            @if (Model.YourWebsite.WebPageStageID != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WebPageStageID").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("WebPageStageID", new SelectList(ViewBag.StageList, "ID", "Value", @Model.YourWebsite.WebPageStageID), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                            @if (Model.YourWebsite.WantWebsiteAchieveID != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WantWebsiteAchieveID").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("WantWebsiteAchieveID", new SelectList(ViewBag.AchieveList, "ID", "Value", @Model.YourWebsite.WantWebsiteAchieveID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+
+                                            @*<textarea class='form-control form-control-line ideatextarea' id="WantWebsiteAchieveID" name="WantWebsiteAchieveID">@Model.YourWebsite.WantWebsiteAchieveID</textarea>*@
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.YourWebsite.ContentWebsiteCreatorID != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ContentWebsiteCreatorID").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("ContentWebsiteCreatorID", new SelectList(ViewBag.ContentList, "ID", "Value", @Model.YourWebsite.ContentWebsiteCreatorID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.YourWebsite.VisitorsAccomplish))
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "VisitorsAccomplish").FirstOrDefault().QuestionText : "" ) </label>
+                                            <textarea class='form-control form-control-line ideatextarea ' id="VisitorsAccomplish" name="VisitorsAccomplish" readonly>@Model.YourWebsite.VisitorsAccomplish</textarea>
                                         </div>
 
                                     </div>
+
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.YourWebsite.CTA))
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CTA").FirstOrDefault().QuestionText : "" ) </label>
+                                            <textarea class='form-control form-control-line ideatextarea' id="CTA" name="CTA" readonly>@Model.YourWebsite.CTA</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.YourWebsite.TrafficAnticipatePerMonthID != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TrafficAnticipatePerMonthID").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("TrafficAnticipatePerMonthID", new SelectList(ViewBag.TrafficList, "ID", "Value", @Model.YourWebsite.TrafficAnticipatePerMonthID), "- Please select -", new { @class = "custom-select col-12", @disabled = "disabled" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">Which functions or features are necessary to have versus nice to have</label>
+                                    </div>
+                                </div>
+                                @{
+                                    var Featurelist = ViewBag.FeatureStatusList as IEnumerable<Business_Model.Model.MultipleMaster>;
+                                    var Counter = 0;
+                                }
+                                @foreach (var Item in @ViewBag.FunctionNecessary)
+                                {
+
+
+                                    if (Featurelist != null && Featurelist.Any(x => x.Value2 == Convert.ToString(Item.ID)))
+                                    {
+                                        Counter = 1;
+                                        <div class="col-md-4" style="margin-bottom:25px">
+                                            <div class="custom-control custom-checkbox jsCustomswitchery jsFeatureStatusContainer">
+                                                <input type="checkbox" class="custom-control-input jsFeatureID" id="@Item.ID" name="_FeatureStatus" value="@Item.ID" checked readonly disabled>
+                                                <label class="custom-control-label" for="@Item.ID"> @Item.Value</label>
+                                                <input type="checkbox" class="js-switch jsFeatureStatus" data-color="#03a9f3" data-size="small" readonly @(Featurelist.Where(x => x.Value2 == Convert.ToString(Item.ID)).Select(y => y.Value3).FirstOrDefault() == "Checked" ? "checked" : "" ) />
+                                            </div>
+                                            <div>
+                                                <div class="switchery-demo">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+
+
                                 }
 
 
-                            }
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["UseDomainEmail"]</label>
-                                    <select class="custom-select col-12" id="UseDomainEmail" name="UseDomainEmail" disabled>
-                                        <option value="">- Please select -</option>
-                                        <option value="1">Yes </option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["WebsitePlanMakeMoney"]</label>
-                                    <select class="custom-select col-12" id="WebsitePlanMakeMoney" name="WebsitePlanMakeMoney" disabled>
-                                        <option value="">- Please select -</option>
-                                        <option value="1">Yes </option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["SuccessMeasure"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="SuccessMeasure" name="SuccessMeasure">@Model.YourWebsite.SuccessMeasure</textarea>
-                                </div>
-                            </div>
-                        </div>
+                            @if (Counter > 0) { _ProgressYourWebsite += _ProgressYourWebsiteUnit; }
+                            @if (Model.YourWebsite.UseDomainEmail != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "UseDomainEmail").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("UseDomainEmail", new SelectList(ViewBag.Choice, "ID", "Value", @Model.YourWebsite.UseDomainEmail), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
 
-
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["PutWebpageAdds"]</label>
-                                    <select class="custom-select col-12" id="PutWebpageAdds" name="PutWebpageAdds" disabled>
-                                        <option value="">- Please select -</option>
-                                        <option value="1">Yes </option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleYourWebsite["CompetitorSitelike"]</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <textarea class='form-control form-control-line ideatextarea' id="CompetitorSitelike" name="CompetitorSitelike" placeholder="Like">@Model.YourWebsite.CompetitorSitelike</textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <textarea class='form-control form-control-line ideatextarea ' id="CompetitorSitedislike" name="CompetitorSitedislike" placeholder="Dislike">@Model.YourWebsite.CompetitorSitedislike</textarea>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            }
+                            @if (Model.YourWebsite.WebsitePlanMakeMoney != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WebsitePlanMakeMoney").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("WebsitePlanMakeMoney", new SelectList(ViewBag.Choice, "ID", "Value", @Model.YourWebsite.WebsitePlanMakeMoney), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
 
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.YourWebsite.SuccessMeasure))
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SuccessMeasure").FirstOrDefault().QuestionText : "" ) </label>
+                                            <textarea class='form-control form-control-line ideatextarea' id="SuccessMeasure" name="SuccessMeasure" readonly>@Model.YourWebsite.SuccessMeasure</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.YourWebsite.PutWebpageAdds != Guid.Empty)
+                            {
+                                _ProgressYourWebsite += _ProgressYourWebsiteUnit;
 
-                    </section>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PutWebpageAdds").FirstOrDefault().QuestionText : "" ) </label>
+                                            @Html.DropDownList("PutWebpageAdds", new SelectList(ViewBag.Choice, "ID", "Value", @Model.YourWebsite.PutWebpageAdds), "- Please select -", new { @class = "custom-select col-12 ", @disabled = "disabled" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.YourWebsite.CompetitorSitelike) && !string.IsNullOrEmpty(Model.YourWebsite.CompetitorSitedislike))
+                            {
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompetitorSitelike").FirstOrDefault().QuestionText : "" ) </label>
+                                            <div class="row">
+                                                @if (!string.IsNullOrEmpty(Model.YourWebsite.CompetitorSitelike))
+                                                {
+                                                    _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                                    <div class="col-md-6">
+                                                        <textarea class='form-control form-control-line ideatextarea' id="CompetitorSitelike" name="CompetitorSitelike" placeholder="Like" readonly>@Model.YourWebsite.CompetitorSitelike</textarea>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(Model.YourWebsite.CompetitorSitedislike))
+                                                {
+                                                    _ProgressYourWebsite += _ProgressYourWebsiteUnit;
+                                                    <div class="col-md-6">
+                                                        <textarea class='form-control form-control-line ideatextarea ' id="CompetitorSitedislike" name="CompetitorSitedislike" placeholder="Dislike" readonly>@Model.YourWebsite.CompetitorSitedislike</textarea>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </section>
                     <h6>Operations</h6>
                     <section>
-
+                       
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSocialHandles["Facebook"]</label>
-                                    <textarea class='form-control ideatextarea' id="Facebook" name="Facebook" readonly>@Model.SocialHandles.Facebook</textarea>
+                            @if (!string.IsNullOrEmpty(Model.SocialHandles.Facebook))
+                            {
+                                _ProgressOPerations += _ProgressOPerationsUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Facebook").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control ideatextarea' id="Facebook" name="Facebook" readonly>@Model.SocialHandles.Facebook</textarea>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSocialHandles["Twitter"]</label>
-                                    <textarea class='form-control ideatextarea' id="Twitter" name="Twitter" readonly>@Model.SocialHandles.Twitter</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SocialHandles.Twitter))
+                            {
+                                _ProgressOPerations += _ProgressOPerationsUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Twitter").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control ideatextarea' id="Twitter" name="Twitter" readonly>@Model.SocialHandles.Twitter</textarea>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSocialHandles["Youtube"]</label>
-                                    <textarea class='form-control ideatextarea' id="Youtube" name="Youtube" readonly>@Model.SocialHandles.Youtube</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SocialHandles.Youtube))
+                            {
+                                _ProgressOPerations += _ProgressOPerationsUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Youtube").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control ideatextarea' id="Youtube" name="Youtube" readonly>@Model.SocialHandles.Youtube</textarea>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSocialHandles["Instagram"]</label>
-                                    <textarea class='form-control ideatextarea' id="Instagram" name="Instagram" readonly>@Model.SocialHandles.Instagram</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SocialHandles.Instagram))
+                            {
+                                _ProgressOPerations += _ProgressOPerationsUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Instagram").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control ideatextarea' id="Instagram" name="Instagram" readonly>@Model.SocialHandles.Instagram</textarea>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSocialHandles["TicTok"]</label>
-                                    <textarea class='form-control ideatextarea' id="TicTok" name="TicTok" readonly>@Model.SocialHandles.TicTok</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SocialHandles.TicTok))
+                            {
+                                _ProgressOPerations += _ProgressOPerationsUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TicTok").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control ideatextarea' id="TicTok" name="TicTok" readonly>@Model.SocialHandles.TicTok</textarea>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleSocialHandles["Linkedin"]</label>
-                                    <textarea class='form-control ideatextarea' id="Linkedin" name="Linkedin" readonly>@Model.SocialHandles.Linkedin</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SocialHandles.Linkedin))
+                            {
+                                _ProgressOPerations += _ProgressOPerationsUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Linkedin").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control ideatextarea' id="Linkedin" name="Linkedin" readonly>@Model.SocialHandles.Linkedin</textarea>
 
+                                    </div>
                                 </div>
-                            </div>
 
+
+                            }
                         </div>
-                    </section>
 
-                </form>
+                            </section>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xlg-2 col-md-4">
+
+                <div class="stickyside">
+                    <div class="list-group" id="top-menu">
+                        @if (ViewBag.RateInfo != null)
+                        {
+                            if (ViewBag.RateInfo.Rating != 0.0m)
+                            {
+                                <a href="#1" class="list-group-item" style="text-align:center">
+                                    <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                                </a>
+                            }
+                            if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                            {
+                                <a href="#1" class="list-group-item">
+                                    <span class="badge badge-info badge-info">NOTE</span> <br />
+                                    @ViewBag.RateInfo.Note
+                                </a>
+                            }
+                        }
+                        <a href="#1" class="list-group-item">
+                            Your Website
+                            <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressYourWebsite))% <i class="fa fa-level-up text-success"></i></div>
+                            <div class="progress" style="height:auto">
+                                <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressYourWebsite))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressYourWebsite))% Complete</span></div>
+                            </div>
+                        </a>
+                        <a href="#1" class="list-group-item">
+                            Operations
+                            <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressOPerations))% <i class="fa fa-level-up text-success"></i></div>
+                            <div class="progress" style="height:auto">
+                                <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressOPerations))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressOPerations))% Complete</span></div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-</div>
 
 
 

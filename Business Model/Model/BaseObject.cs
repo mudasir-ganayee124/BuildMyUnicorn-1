@@ -21,5 +21,6 @@ namespace Business_Model.Model
 
         [IgnoreInsert]
         public EntityState EntityState { get; set; }
+       
     }
 }

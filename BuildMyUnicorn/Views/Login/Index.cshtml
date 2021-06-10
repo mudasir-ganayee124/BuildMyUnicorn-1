@@ -58,16 +58,31 @@
     <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
         <div class="login-box card">
             <div class="card-body">
-                <form class="form-horizontal form-material text-center" id="loginform" >
-                    <a href="javascript:void(0)" class="db"><img src="~/Content/images/buil-my-unicorn-logo.png" alt="Build My Unicorn Logo" style="width:90px;height:90px" /><br /></a>
+                <form class="form-horizontal form-material text-center" id="loginform">
+                    <a class="navbar-brand" href="javascript:void(0)">
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Light Logo icon -->
+                            <img src="~/Content/images/logo-lite.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+
+                            <!--End Logo icon -->
+                            <!-- Logo text --><span style="font-size: 16px; color:#fff">
+                                <span>BUILDMY</span><span style="font-weight: 700;">UNICORN</span>
+                            </span>
+                        </span>
+                    </a>
+
                     <div class="form-group m-t-40">
                         <div class="col-xs-12">
-                            <input type="email" class="form-control" name="Email" placeholder="Username" data-parsley-required="true" data-parsley-required-message="Please enter email" data-parsley-type-message="Please enter valid email"/>
+                            <input type="email" class="form-control" name="Email" placeholder="Username" data-parsley-required="true" data-parsley-required-message="Please enter email" data-parsley-type-message="Please enter valid email" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input type="password" class="form-control" name="Password" placeholder="Password" data-parsley-required="true" data-parsley-required-message="Please enter password" autocomplete="off"/>
+                            <input type="password" class="form-control" name="Password" placeholder="Password" data-parsley-required="true" data-parsley-required-message="Please enter password" autocomplete="off" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -88,14 +103,14 @@
                             <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Log In</button>
                         </div>
                     </div>
-                 
+
                     <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
-                            Don't have an account? <a href="~/Register" class="text-primary m-l-5"><b>Register</b></a>
+                            Don't have an account? <a href="~/Plans" class="text-primary m-l-5"><b>Register</b></a>
                         </div>
                     </div>
                 </form>
-                <form class="form-horizontal" id="recoverform" action="Login">
+                <form class="form-horizontal jsfrmForgotPassword" id="recoverform" method="post">
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <h3>Recover Password</h3>
@@ -104,12 +119,22 @@
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="Email">
+                            <input class="form-control" type="text" name="Email" required="" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
                             <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger alert-rounded hide jsResetPasswordMsg">
+                        <span id="responseMessage"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="form-group m-b-0">
+                        <div class="col-sm-12 text-center">
+                            <p>Go to login: <a href="/Login" class="text-info m-l-5"><b>Sign In</b></a></p>
                         </div>
                     </div>
                 </form>
@@ -123,11 +148,12 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="~/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/assets/node_modules/popper/popper.min.js"></script>
     <script src="~/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/Content/app_script/parsley.js"></script>
-     <script src="~/Content/app_script/page_script/login.js?version=@DateTime.Now"></script>
+    <script src="@Url.ContentVersioned("~/page_script/login.js")"></script>
     <!--Custom JavaScript -->
     <script type="text/javascript">
         $(function () {

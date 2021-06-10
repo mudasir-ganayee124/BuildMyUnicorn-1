@@ -1,11 +1,14 @@
 ﻿
-@using Business_Model.Model;
 @using System.ComponentModel;
-@model Business_Model.Model.KeyFinding1
+@model Business_Model.Model.KeyFinding
 
+@{
+    decimal _ProgressMarketResearchResult = 0.0m; decimal _ProgressMarketResearchResultUnit = 12.50m;
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+}
 
 <div class="row" id="validation">
-    <div class="col-lg-12 col-xlg-12 col-md-12">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
             <div class="card-body">
                 <div class="row " style="margin: 0 0px 2px;">
@@ -14,7 +17,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "KeyFinding", ModuleName = Module.MarketResearch, SectionName = ModuleSection.MarketResearch_KeyFindings }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "KeyFinding", ModuleID = (int)Business_Model.Model.Module.MarketResearch, SectionID = (int)Business_Model.Model.ModuleSection.MarketResearch_KeyFindings }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -28,114 +31,133 @@
                     <h6>Market Research Results </h6>
                     <section>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["InterviewKeyFinding"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="InterviewKeyFinding" name="InterviewKeyFinding" readonly>@Model.MarketResearchResults.InterviewKeyFinding</textarea>
+                        @if (!string.IsNullOrEmpty(Model.MarketResearchResults.InterviewKeyFinding))
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InterviewKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="InterviewKeyFinding" name="InterviewKeyFinding" readonly>@Model.MarketResearchResults.InterviewKeyFinding</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.MarketResearchResults.InterviewKeyFindingConfident != Guid.Empty)
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InterviewKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
+                                    @foreach (var item in ViewBag.InterviewKeyFinding)
+                                    {
+                                        if (item.ID == Model.MarketResearchResults.InterviewKeyFindingConfident)
+                                        {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
+                                }
+
+
 
                                 </div>
+
                             </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.MarketResearchResults.ObservationKeyFinding))
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObservationKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="ObservationKeyFinding" name="ObservationKeyFinding" readonly>@Model.MarketResearchResults.ObservationKeyFinding</textarea>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="wint1">@ViewBag.TitleMarketResearchResults["InterviewKeyFindingConfident"]</label>
-                                <select class="custom-select col-12  progress-required" disabled id="InterviewKeyFindingConfident" name="InterviewKeyFindingConfident">
-                                    <option value=""> </option>
-                                    <option value="1" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
-                                    <option value="2" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
-                                    <option value="3" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
-                                    <option value="4" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
-                                    <option value="5" @(Model.MarketResearchResults.InterviewKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+                                    </div>
+                                </div>
 
-                                </select>
-                                @*<input type="hidden" id="InterviewKeyFindingConfident" name="InterviewKeyFindingConfident" value="@Model.MarketResearchResults.InterviewKeyFindingConfident" />
-        <div id="JsInterviewKeyFindingConfident"></div>*@
                             </div>
+                        }
+                        @if (Model.MarketResearchResults.ObservationKeyFindingConfident != Guid.Empty)
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObservationKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
+                                    @foreach (var item in ViewBag.ObservationKeyFinding)
+                                    {
+                                        if (item.ID == Model.MarketResearchResults.ObservationKeyFindingConfident)
+                                        {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
+                                }
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["ObservationKeyFinding"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="ObservationKeyFinding" name="ObservationKeyFinding" readonly>@Model.MarketResearchResults.ObservationKeyFinding</textarea>
 
                                 </div>
+
                             </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.MarketResearchResults.SurveyKeyFinding))
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SurveyKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="SurveyKeyFinding" name="SurveyKeyFinding" readonly>@Model.MarketResearchResults.SurveyKeyFinding</textarea>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="wint1">@ViewBag.TitleMarketResearchResults["ObservationKeyFindingConfident"]</label>
-                                <select class="custom-select col-12  progress-required" disabled id="ObservationKeyFindingConfident" name="ObservationKeyFindingConfident">
-                                    <option value=""> </option>
-                                    <option value="1" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
-                                    <option value="2" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
-                                    <option value="3" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
-                                    <option value="4" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
-                                    <option value="5" @(Model.MarketResearchResults.ObservationKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+                                    </div>
+                                </div>
 
-                                </select>
-                                @*<input type="hidden" id="ObservationKeyFindingConfident" name="ObservationKeyFindingConfident" value="@Model.MarketResearchResults.ObservationKeyFindingConfident" />
-        <div id="jsObservationKeyFindingConfident"></div>*@
                             </div>
+                        }
+                        @if (Model.MarketResearchResults.SurveyKeyFindingConfident != Guid.Empty)
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SurveyKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["SurveyKeyFinding"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="SurveyKeyFinding" name="SurveyKeyFinding" readonly>@Model.MarketResearchResults.SurveyKeyFinding</textarea>
+                                    @foreach (var item in ViewBag.SurveyKeyFinding)
+                                    {
+                                        if (item.ID == Model.MarketResearchResults.SurveyKeyFindingConfident)
+                                        {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
+                                }
 
                                 </div>
+
                             </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.MarketResearchResults.OnlineResearchKeyFinding))
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OnlineResearchKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="OnlineResearchKeyFinding" name="OnlineResearchKeyFinding" readonly>@Model.MarketResearchResults.OnlineResearchKeyFinding</textarea>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="wint1">@ViewBag.TitleMarketResearchResults["SurveyKeyFindingConfident"]</label>
-                                <select class="custom-select col-12  progress-required" disabled id="SurveyKeyFindingConfident" name="SurveyKeyFindingConfident">
-                                    <option value=""> </option>
-                                    <option value="1" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
-                                    <option value="2" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
-                                    <option value="3" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
-                                    <option value="4" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
-                                    <option value="5" @(Model.MarketResearchResults.SurveyKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
+                                    </div>
+                                </div>
 
-                                </select>
-                                @*<input type="hidden" id="SurveyKeyFindingConfident" name="SurveyKeyFindingConfident" value="@Model.MarketResearchResults.SurveyKeyFindingConfident" />
-                                <div id="jsSurveyKeyFindingConfident"></div>*@
                             </div>
+                        }
+                        @if (Model.MarketResearchResults.OnlineResearchKeyFindingConfident != Guid.Empty)
+                        {
+                            _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
+                          
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OnlineResearchKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleMarketResearchResults["OnlineResearchKeyFinding"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="OnlineResearchKeyFinding" name="OnlineResearchKeyFinding" readonly>@Model.MarketResearchResults.OnlineResearchKeyFinding</textarea>
+                                    @foreach (var item in ViewBag.OnlineResearchKeyFinding)
+                                    {
+                                        if (item.ID == Model.MarketResearchResults.OnlineResearchKeyFindingConfident)
+                                        {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
+                                }
 
                                 </div>
+
                             </div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="wint1">@ViewBag.TitleMarketResearchResults["OnlineResearchKeyFindingConfident"]</label>
-                                <select class="custom-select col-12  progress-required" disabled id="OnlineResearchKeyFindingConfident" name="OnlineResearchKeyFindingConfident">
-                                    <option value=""> </option>
-                                    <option value="1" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 1 ? "selected" : "")>I have never been more sure</option>
-                                    <option value="2" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 2 ? "selected" : "")>Still pretty confident</option>
-                                    <option value="3" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 3 ? "selected" : "")>Made no difference</option>
-                                    <option value="4" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 4 ? "selected" : "")>A little less confident</option>
-                                    <option value="5" @(Model.MarketResearchResults.OnlineResearchKeyFindingConfident == 5 ? "selected" : "")>I am having serious doubts</option>
-
-                                </select>
-                                @*<input type="hidden" id="OnlineResearchKeyFindingConfident" name="OnlineResearchKeyFindingConfident" value="@Model.MarketResearchResults.OnlineResearchKeyFindingConfident" />
-        <div id="jsOnlineResearchKeyFindingConfident"></div*@
-                            </div>
-
-                        </div>
+                        }
 
                     </section>
 
@@ -144,7 +166,45 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <!-- <div class="d-flex justify-content-end align-items-center">
+             <ol class="breadcrumb">
+                 <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
+                 <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
+                 <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
+             </ol>
+         </div>-->
 
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                @if (ViewBag.RateInfo != null)
+                {
+                    if (ViewBag.RateInfo.Rating != 0.0m)
+                    {
+                        <a href="#1" class="list-group-item" style="text-align:center">
+                            <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                        </a>
+                    }
+                    if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                    {
+                        <a href="#1" class="list-group-item">
+                            <span class="badge badge-info badge-info">NOTE</span> <br />
+                            @ViewBag.RateInfo.Note
+                        </a>
+                    }
+                }
+                <a href="#1" class="list-group-item">
+                    Market Research Results
+                    <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressMarketResearchResult))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressMarketResearchResult))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressMarketResearchResult))% Complete</span></div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
 </div>
 
 

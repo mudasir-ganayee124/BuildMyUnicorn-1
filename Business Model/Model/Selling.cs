@@ -43,6 +43,8 @@ namespace Business_Model.Model
         public string CustomerBuy { get; set; }
         [Description("What pricing strategy have you chosen and why?")]
         public string PricingStrategyChosen { get; set; }
+        [Description("Are there certain periods of the year when your sales will vary? If so, when will you have high sales, average sales and low sales, and why? - (text Area)")]
+        public string SalesCertainPeriod { get; set; }
         public decimal Completed { get; set; }
     }
     public class _PricingProductService
@@ -77,6 +79,8 @@ namespace Business_Model.Model
         public string CustomerBuy { get; set; }
         [Description("What pricing strategy have you chosen and why?")]
         public string PricingStrategyChosen { get; set; }
+        [Description("Are there certain periods of the year when your sales will vary? If so, when will you have high sales, average sales and low sales, and why? - (text Area)")]
+        public string SalesCertainPeriod { get; set; }
         public decimal Completed { get; set; }
     }
 }

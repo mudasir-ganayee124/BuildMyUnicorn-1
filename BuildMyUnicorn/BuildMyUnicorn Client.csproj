@@ -61,14 +61,27 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Syncfusion.Compression.Base, Version=18.4460.0.48, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Compression.Base.18.4.0.48\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Licensing, Version=18.4460.0.48, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.Licensing.18.4.0.48\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Base, Version=19.1450.0.63, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.AspNet.Mvc5.19.1.0.63\lib\net45\Syncfusion.Compression.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.XlsIO.Base, Version=18.4450.0.48, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syncfusion.XlsIO.AspNet.Mvc5.18.4.0.48\lib\net45\Syncfusion.XlsIO.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Portable, Version=19.1451.0.63, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.Compression.19.1.0.63\lib\netstandard2.0\Syncfusion.Compression.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=19.1450.0.63, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.DocIO.AspNet.Mvc5.19.1.0.63\lib\net45\Syncfusion.DocIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=19.1450.0.63, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.AspNet.Mvc5.19.1.0.63\lib\net45\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=19.1460.0.63, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.OfficeChart.Base.19.1.0.63\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=19.1450.0.63, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.XlsIO.AspNet.Mvc5.19.1.0.63\lib\net45\Syncfusion.XlsIO.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -133,9 +146,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ApplicationInsights">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
@@ -175,13 +185,16 @@
     <Compile Include="Business Layer\MarketingManager.cs" />
     <Compile Include="Business Layer\MarketResearchManager.cs" />
     <Compile Include="Business Layer\Master.cs" />
+    <Compile Include="Business Layer\RevolutManager.cs" />
     <Compile Include="Business Layer\SellingManager.cs" />
     <Compile Include="Business Layer\ProfessionalManager.cs" />
     <Compile Include="Business Layer\SharedManager.cs" />
     <Compile Include="Business Layer\ToDoTaskManager.cs" />
     <Compile Include="Controllers\AppendixController.cs" />
     <Compile Include="Controllers\BusinessController.cs" />
+    <Compile Include="Controllers\BusinessPlanFileController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\FinancialProjectionController.cs" />
@@ -189,15 +202,15 @@
     <Compile Include="Controllers\MarketingController.cs" />
     <Compile Include="Controllers\MarketResearchController.cs" />
     <Compile Include="Controllers\ModuleCourseController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeaController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\KeyFindingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PersonalSurvivalBudgetController.cs" />
+    <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\SellingController.cs" />
     <Compile Include="Controllers\SurveyProfessionalController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\QuestController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
@@ -3613,6 +3626,8 @@
     <Content Include="assets\node_modules\vectormap\jquery-jvectormap-us-il-chicago-mill-en.js" />
     <Content Include="assets\node_modules\vectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="assets\node_modules\vectormap\jvectormap.custom.js" />
+    <Content Include="assets\node_modules\waitMe\waitMe.css" />
+    <Content Include="assets\node_modules\waitMe\waitMe.js" />
     <Content Include="assets\node_modules\waypoints\lib\jquery.waypoints.js" />
     <Content Include="assets\node_modules\waypoints\lib\jquery.waypoints.min.js" />
     <Content Include="assets\node_modules\waypoints\lib\noframework.waypoints.js" />
@@ -3683,25 +3698,9 @@
     <Content Include="assets\node_modules\x-editable\dist\jqueryui-editable\js\jqueryui-editable.js" />
     <Content Include="assets\node_modules\x-editable\dist\jqueryui-editable\js\jqueryui-editable.min.js" />
     <Content Include="assets\style.min.css" />
-    <Content Include="Content\app_script\page_script\business-operation.js" />
-    <Content Include="Content\app_script\page_script\business-overview.js" />
     <Content Include="Content\app_script\jquery.validate.min.js" />
     <Content Include="Content\app_script\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\app_css\toastr.min.css" />
-    <Content Include="Content\app_script\page_script\business.js" />
-    <Content Include="Content\app_script\page_script\customer.js" />
-    <Content Include="Content\app_script\page_script\investors.js" />
-    <Content Include="Content\app_script\page_script\interview.js" />
-    <Content Include="Content\app_script\page_script\key-finding.js" />
-    <Content Include="Content\app_script\page_script\keyfinding.js" />
-    <Content Include="Content\app_script\page_script\marketing-brand.js" />
-    <Content Include="Content\app_script\page_script\marketing.js" />
-    <Content Include="Content\app_script\page_script\observation.js" />
-    <Content Include="Content\app_script\page_script\online-presence.js" />
-    <Content Include="Content\app_script\page_script\product-service-pricing.js" />
-    <Content Include="Content\app_script\page_script\product-service.js" />
-    <Content Include="Content\app_script\page_script\competitors.js" />
-    <Content Include="Content\app_script\page_script\running-business.js" />
     <Content Include="Content\app_script\toastr.min.js" />
     <Content Include="assets\icons\crypto-icons\cryptocoins-colors.css" />
     <Content Include="assets\icons\crypto-icons\cryptocoins.css" />
@@ -4117,16 +4116,6 @@
     <Content Include="Content\app_css\_notes\dwsync.xml" />
     <Content Include="Content\app_script\bootstrap-4.4.1.js" />
     <Content Include="Content\app_script\jquery-3.4.1.min.js" />
-    <Content Include="Content\app_script\page_script\dashboard.js" />
-    <Content Include="Content\app_script\page_script\global.js" />
-    <Content Include="Content\app_script\page_script\idea.js" />
-    <Content Include="Content\app_script\page_script\login.js" />
-    <Content Include="Content\app_script\page_script\questionnaire.js" />
-    <Content Include="Content\app_script\page_script\shared.js" />
-    <Content Include="Content\app_script\page_script\signup.js" />
-    <Content Include="Content\app_script\page_script\survey.js" />
-    <Content Include="Content\app_script\page_script\team.js" />
-    <Content Include="Content\app_script\page_script\todo.js" />
     <Content Include="Content\app_script\parsley.js" />
     <Content Include="Content\app_script\tstfile.js" />
     <Content Include="Content\app_script\_notes\dwsync.xml" />
@@ -4161,6 +4150,10 @@
     <Content Include="Content\images\instagram.png" />
     <Content Include="Content\images\linkedin.png" />
     <Content Include="Content\images\lock.png" />
+    <Content Include="Content\images\logo-black.png" />
+    <Content Include="Content\images\logo-lite.png" />
+    <Content Include="Content\images\logo-white.png" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\next-green.png" />
     <Content Include="Content\images\next.png" />
     <Content Include="Content\images\oracle-startup.png" />
@@ -4266,15 +4259,39 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="page_script\business-operation.js" />
+    <Content Include="page_script\business-overview.js" />
+    <Content Include="page_script\business.js" />
+    <Content Include="page_script\competitors.js" />
+    <Content Include="page_script\customer.js" />
+    <Content Include="page_script\dashboard.js" />
+    <Content Include="page_script\global.js" />
+    <Content Include="page_script\idea.js" />
+    <Content Include="page_script\interview.js" />
+    <Content Include="page_script\investors.js" />
+    <Content Include="page_script\keyfinding.js" />
+    <Content Include="page_script\login.js" />
+    <Content Include="page_script\marketing-brand.js" />
+    <Content Include="page_script\marketing.js" />
+    <Content Include="page_script\observation.js" />
+    <Content Include="page_script\online-presence.js" />
+    <Content Include="page_script\online-research.js" />
+    <Content Include="page_script\product-service-pricing.js" />
+    <Content Include="page_script\product-service.js" />
+    <Content Include="page_script\psb.js" />
+    <Content Include="page_script\questionnaire.js" />
+    <Content Include="page_script\running-business.js" />
+    <Content Include="page_script\shared.js" />
+    <Content Include="page_script\register.js" />
+    <Content Include="page_script\survey.js" />
+    <Content Include="page_script\team.js" />
+    <Content Include="page_script\todo.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4283,8 +4300,8 @@
     <Folder Include="Content\file_upload\" />
     <Folder Include="Views\Appendix\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\BusinessPlanFile\" />
     <Folder Include="Views\Global\" />
-    <Folder Include="Views\Image\" />
     <Folder Include="Views\PitchDeck\" />
     <Folder Include="Views\Web\" />
   </ItemGroup>
@@ -6252,10 +6269,8 @@
     <Content Include="Views\Team\Index.cshtml" />
     <Content Include="Views\Team\_DialogAddTeamPartial.cshtml" />
     <Content Include="Views\Team\Create.cshtml" />
-    <Content Include="Views\Team\Edit.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Questionnaire\Index.cshtml" />
-    <Content Include="Views\Quest\Index.cshtml" />
     <Content Include="Views\Survey\Index.cshtml" />
     <Content Include="Views\Questionnaire\_QuestionnairePartial.cshtml" />
     <Content Include="Views\Questionnaire\Create.cshtml" />
@@ -6278,10 +6293,8 @@
     <Content Include="Views\KeyFinding\_DetailPartial.cshtml" />
     <Content Include="Views\Business\BusinessOverview.cshtml" />
     <Content Include="Views\Business\ProductService.cshtml" />
-    <Content Include="Views\Business\KeyFinding.cshtml" />
     <Content Include="Views\Business\_DetailKeyFinding.cshtml" />
     <Content Include="Views\Business\_DetailProductServicePartial.cshtml" />
-    <Content Include="Views\Business\_NewBusinessOverview.cshtml" />
     <Content Include="Views\Business\_NewProductServicePartial.cshtml" />
     <Content Include="Views\Business\_NewKeyFinding.cshtml" />
     <Content Include="Views\Business\_NewBusinessOverviewPartial.cshtml" />
@@ -6289,7 +6302,7 @@
     <Content Include="Views\Business\_DetailRunningBusinessPartial.cshtml" />
     <Content Include="Views\Business\_NewRunningBusinessPartial.cshtml" />
     <Content Include="Views\Business\RunningBusiness.cshtml" />
-    <Content Include="Views\Business\Competitors.cshtml" />
+    <Content Include="Views\Business\CompetitorAnalysis.cshtml" />
     <Content Include="Views\Business\_NewCompetitorsPartial.cshtml" />
     <Content Include="Views\Business\_DetailCompetitorsPartial.cshtml" />
     <Content Include="Views\ModuleCourse\Index.cshtml" />
@@ -6320,11 +6333,11 @@
     <Content Include="Views\Marketing\OnlinePresence.cshtml" />
     <Content Include="Views\Marketing\_NewOnlinePresencePartial.cshtml" />
     <Content Include="Views\Marketing\_DetailOnlinePresencePartial.cshtml" />
-    <Content Include="Views\Marketing\Marketing.cshtml" />
+    <Content Include="Views\Marketing\Plan.cshtml" />
     <Content Include="Views\Marketing\_NewMarketingPlanPartial.cshtml" />
     <Content Include="Views\Marketing\_NewMarketingPlan.cshtml" />
     <Content Include="Views\Marketing\_EditMarketingPlan.cshtml" />
-    <Content Include="Views\Marketing\MarketingBrand.cshtml" />
+    <Content Include="Views\Marketing\Brand.cshtml" />
     <Content Include="Views\Marketing\_NewMarketingBrandPartial.cshtml" />
     <Content Include="Views\Marketing\_DetailMarketingBrandPartial.cshtml" />
     <Content Include="Views\Excel\Index.cshtml" />
@@ -6342,6 +6355,27 @@
     <Content Include="Views\Finance\_PitchDeckPage_5.cshtml" />
     <Content Include="Views\Finance\_PitchDeckPage_6.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\PersonalSurvivalBudget\Index.cshtml" />
+    <Content Include="Views\Finance\PersonalSurvivalBudge.cshtml" />
+    <Content Include="Views\Finance\_SalesforecastPartial.cshtml" />
+    <Content Include="Views\Finance\_CashflowforecastPartial.cshtml" />
+    <Content Include="Views\Finance\_PartnerOnePersonalSurviveBudget.cshtml" />
+    <Content Include="Views\Finance\_PartnerTwoPersonalSurviveBudget.cshtml" />
+    <Content Include="Views\Finance\_LoanCalculatorPartial.cshtml" />
+    <Content Include="Views\MarketResearch\OnlineResearch.cshtml" />
+    <Content Include="Views\Selling\_DetailCustomerPartial.cshtml" />
+    <Content Include="Views\Selling\_NewCustomerPartial.cshtml" />
+    <Content Include="Views\Selling\Customer.cshtml" />
+    <Content Include="Views\Selling\_NewCustomerBuyerPersonaPartial.cshtml" />
+    <Content Include="Views\MarketResearch\_NewOnlineResearchPartial.cshtml" />
+    <Content Include="Views\MarketResearch\_DetailOnlineResearchPartial.cshtml" />
+    <Content Include="Views\ErrorHandler\BadRequest.cshtml" />
+    <Content Include="Views\Finance\BudgetApplied.cshtml" />
+    <Content Include="Views\Dashboard\_CountryGrantPartial.cshtml" />
+    <Content Include="Views\Dialog\_ProfileUpdate.cshtml" />
+    <Content Include="Views\Selling\_DetailCustomerBuyerPersonaPartial.cshtml" />
+    <Content Include="Views\Dialog\_SessionIdealTimeout.cshtml" />
+    <Content Include="Views\Plans\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

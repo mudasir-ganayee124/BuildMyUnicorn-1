@@ -1,0 +1,429 @@
+﻿@using Business_Model.Model;
+@model IEnumerable<Cashflowforecast>
+
+@{
+    List<Cashflowforecast> ExpenditureList = Model.Where(x => x.ForecastType == (int)OptionType.Cashflowforecast_Expenditure).ToList();
+    List<Cashflowforecast> IncomeList = Model.Where(x => x.ForecastType == (int)OptionType.Cashflowforecast_Income).ToList();
+    List<Guid> ExpenditureIDList = ExpenditureList.OrderBy(x => x.DisplayOrder).Select(o => o.OptionMasterID).Distinct().ToList();
+    List<Guid> IncomeIDList = IncomeList.OrderBy(x => x.DisplayOrder).Select(o => o.OptionMasterID).Distinct().ToList();
+    decimal TotalRowMonth = 0.0m; decimal TotalColMonth = 0.0m; decimal TotalSubTotal = 0.0m; decimal TotalIncomeTotal = 0.0m;
+    decimal TotalExpenditureTotal = 0.0m;
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 0).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 1).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 3).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 4).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 5).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 6).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 7).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 8).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 9).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 10).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 11).Sum(x => x.Amount);
+    TotalIncomeTotal += IncomeList.Where(x => x.Month == 12).Sum(x => x.Amount);
+
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 0).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 1).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 2).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 3).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 4).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 5).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 6).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 7).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 8).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 9).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 10).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 11).Sum(x => x.Amount);
+    TotalExpenditureTotal += ExpenditureList.Where(x => x.Month == 12).Sum(x => x.Amount);
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card table-cus">
+            <div class="card-body">
+
+                <p>This spreadsheet helps you work out how much sales revenue you expect to generate each month. </p>
+                <p>Enter the number of units you expect to sell and the sale price of each unit. Add more rows if you need to. Separate cash sales from credit sales (you sell your product/service but don't get paid until 30 days). If you plan to charge VAT please add that onto your unit price (20%).</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="ns">MONTH:</th>
+                                <th>Pre-Start</th>
+                                <th>Month 1</th>
+                                <th>Month 2</th>
+                                <th>Month 3</th>
+                                <th>Month 4</th>
+                                <th>Month 5</th>
+                                <th>Month 6</th>
+                                <th>Month 7</th>
+                                <th>Month 8</th>
+                                <th>Month 9</th>
+                                <th>Month 10</th>
+                                <th>Month 11</th>
+                                <th>Month 12</th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+                                <td class="nb" colspan="14">Income</td>
+                                <td class="bbg">Totals</td>
+                            </tr>
+                            @foreach (var IncomeID in IncomeIDList)
+                            {
+                                TotalRowMonth = 0;
+                                List<Cashflowforecast> IncomeModel = IncomeList.Where(x => x.OptionMasterID == IncomeID).ToList();
+                                <tr>
+                                    <td class="gbg">@( IncomeModel.Select(x => x.Value).FirstOrDefault())</td>
+                                    @foreach (var item in IncomeModel.OrderBy(x => x.Month))
+                                    {
+                                        TotalRowMonth = TotalRowMonth + item.Amount;
+                                        <td><input type="text" class="form-control jsCashflowforecastChange" value="@(item.Amount != 0 ? item.Amount.ToString("n2") : "")" name="Income" data-id="@item.CashflowforecastID" /></td>
+                                    }
+                                    <td>£@TotalRowMonth.ToString("n2")</td>
+
+
+
+                                </tr>
+                            }
+
+
+
+                            <tr>
+                                <td>TOTAL INCOME</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 0).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 1).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 3).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 4).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 5).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 6).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 7).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 8).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 9).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 10).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 11).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 12).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@(TotalIncomeTotal.ToString("n2"))</td>
+
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+
+                            <tr>
+                                <td class="nb" colspan="15">Expenditure:</td>
+
+                            </tr>
+                            @foreach (var ExpenditureID in ExpenditureIDList)
+                            {
+                                TotalRowMonth = 0;
+                                List<Cashflowforecast> ExpenditureModel = ExpenditureList.Where(x => x.OptionMasterID == ExpenditureID).ToList();
+                                <tr>
+                                    <td class="gbg">@( ExpenditureModel.Select(x => x.Value).FirstOrDefault())</td>
+                                    @foreach (var item in ExpenditureModel.OrderBy(x => x.Month))
+                                    {
+                                        TotalRowMonth = TotalRowMonth + item.Amount;
+                                        <td><input type="text" class="form-control jsCashflowforecastChange" value="@(item.Amount != 0 ? item.Amount.ToString("n2") :"")" name="Income" data-id="@item.CashflowforecastID" /></td>
+                                    }
+                                    <td>£@TotalRowMonth.ToString("n2")</td>
+
+
+
+                                </tr>
+                            }
+
+                            <tr>
+                                <td>TOTAL EXPENDITURE</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 0).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 1).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 2).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 3).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 4).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 5).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 6).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 7).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 8).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 9).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 10).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 11).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((ExpenditureList.Where(x => x.Month == 12).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@(TotalExpenditureTotal.ToString("n2"))</td>
+
+                            </tr>
+
+                            <tr class="spacer"><td></td></tr>
+
+                            <tr>
+                                <td class="bbg">NET CASH FLOW</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 0).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 0).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 1).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 1).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 2).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 3).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 3).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 4).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 4).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 5).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 5).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 6).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 6).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 7).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 7).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 8).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 8).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 9).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 9).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 10).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 10).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 11).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 11).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>£@((IncomeList.Where(x => x.Month == 12).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 12).Sum(x => x.Amount)).ToString("n2"))</td>
+                                <td>-</td>
+
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                        </tbody>
+
+                        <tfoot>
+                            @{ 
+                                decimal Month0ClosingBalance = IncomeList.Where(x => x.Month == 0).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 0).Sum(x => x.Amount);
+                                decimal Month1ClosingBalance = IncomeList.Where(x => x.Month == 1).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 1).Sum(x => x.Amount) + Month0ClosingBalance;
+                                decimal Month2ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 2).Sum(x => x.Amount) + Month1ClosingBalance;
+                                decimal Month3ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 3).Sum(x => x.Amount) + Month2ClosingBalance;
+                                decimal Month4ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 4).Sum(x => x.Amount) + Month3ClosingBalance;
+                                decimal Month5ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 5).Sum(x => x.Amount) + Month4ClosingBalance;
+                                decimal Month6ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 6).Sum(x => x.Amount) + Month5ClosingBalance;
+                                decimal Month7ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 7).Sum(x => x.Amount) + Month6ClosingBalance;
+                                decimal Month8ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 8).Sum(x => x.Amount) + Month7ClosingBalance;
+                                decimal Month9ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 9).Sum(x => x.Amount) + Month8ClosingBalance;
+                                decimal Month10ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 10).Sum(x => x.Amount) + Month9ClosingBalance;
+                                decimal Month11ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 11).Sum(x => x.Amount) + Month10ClosingBalance;
+                                decimal Month12ClosingBalance = IncomeList.Where(x => x.Month == 2).Sum(x => x.Amount) - ExpenditureList.Where(x => x.Month == 12).Sum(x => x.Amount) + Month11ClosingBalance;
+                              }
+
+                            <tr>
+                                <td>OPENING BANK BALANCE*</td>
+                                <td>£0</td>
+                                <td>£@Month0ClosingBalance.ToString("n2")</td>
+                                <td>£@Month1ClosingBalance.ToString("n2")</td>
+                                <td>£@Month2ClosingBalance.ToString("n2")</td>
+                                <td>£@Month3ClosingBalance.ToString("n2")</td>
+                                <td>£@Month4ClosingBalance.ToString("n2")</td>
+                                <td>£@Month5ClosingBalance.ToString("n2")</td>
+                                <td>£@Month6ClosingBalance.ToString("n2")</td>
+                                <td>£@Month7ClosingBalance.ToString("n2")</td>
+                                <td>£@Month8ClosingBalance.ToString("n2")</td>
+                                <td>£@Month9ClosingBalance.ToString("n2")</td>
+                                <td>£@Month10ClosingBalance.ToString("n2")</td>
+                                <td>£@Month11ClosingBalance.ToString("n2")</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>CLOSING BANK BALANCE</td>
+                                <td>£@Month0ClosingBalance.ToString("n2")</td>
+                                <td>£@Month1ClosingBalance.ToString("n2")</td>
+                                <td>£@Month2ClosingBalance.ToString("n2")</td>
+                                <td>£@Month3ClosingBalance.ToString("n2")</td>
+                                <td>£@Month4ClosingBalance.ToString("n2")</td>
+                                <td>£@Month5ClosingBalance.ToString("n2")</td>
+                                <td>£@Month6ClosingBalance.ToString("n2")</td>
+                                <td>£@Month7ClosingBalance.ToString("n2")</td>
+                                <td>£@Month8ClosingBalance.ToString("n2")</td>
+                                <td>£@Month9ClosingBalance.ToString("n2")</td>
+                                <td>£@Month10ClosingBalance.ToString("n2")</td>
+                                <td>£@Month11ClosingBalance.ToString("n2")</td>
+                                <td>£@Month12ClosingBalance.ToString("n2")</td>
+
+
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+                <h4 class="text-themecolor">Notes </h4>
+
+                <textarea class="form-control jsUsefulNote jsUpdateNote" data-id="@IncomeList.Select(x=>x.CashflowforecastID).FirstOrDefault()" data-type="4" rows="3" placeholder="Please provide any justification for the figures entered above and why they are realistic.">@(IncomeList.Select(x=>x.UsefullNote).FirstOrDefault())</textarea>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+                <h4 class="text-themecolor">DO NOT EDIT: YEAR 1 CASHFLOW FORECAST - STRESS TEST </h4>
+                <div class="table-responsive">
+
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr class="gb">
+                                <td colspan="14">
+                                    Percentage to Decrease Sales Income by
+                                </td>
+                                <td>
+                                    10%
+                                </td>
+                            </tr>
+                            <tr class="gb">
+                                <td colspan="14">
+                                    Percentage to Increase All Expenditure by
+                                </td>
+                                <td>
+                                    10%
+                                </td>
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr>
+                                <th class="ns gbg">MONTH:</th>
+                                <th>Pre-Start*</th>
+                                <th>Month 1</th>
+                                <th>Month 2</th>
+                                <th>Month 3</th>
+                                <th>Month 4</th>
+                                <th>Month 5</th>
+                                <th>Month 6</th>
+                                <th>Month 7</th>
+                                <th>Month 8</th>
+                                <th>Month 9</th>
+                                <th>Month 10</th>
+                                <th>Month 11</th>
+                                <th>Month 12</th>
+                                <th></th>
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr>
+                                <td colspan="14">
+                                    Income:
+                                </td>
+                                <td class="bbg">
+                                    TOTALS
+                                </td>
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr>
+                                <td class="gbg">TOTAL INCOME</td>
+                                <td>£0</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr>
+                                <td colspan="15">
+                                    Expenditure:
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="gbg">TOTAL EXPENDITURE</td>
+                                <td>£0</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr>
+                                <td class="gbg">NET CASH FLOW</td>
+                                <td>£0</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr>
+                                <td class="gbg">OPENING BANK BALANCE*</td>
+                                <td>£0</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+
+
+                            </tr>
+                            <tr>
+                                <td class="gbg">Closing BANK BALANCE*</td>
+                                <td>£0</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+                                <td>£140</td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

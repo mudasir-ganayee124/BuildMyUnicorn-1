@@ -10,10 +10,12 @@ namespace Business_Model.Model
     public class ModuleCourse : Common
     {
         public Guid ModuleCourseID { get; set; }
+        public string ContollerName { get; set; }
+        public string ActionName { get; set; }
         public string ModuleName { get; set; }
         public string ModuleSectionName { get; set; }
-        public int ModuleID { get; set; }
-        public int ModuleSectionID { get; set; }
+        public Module ModuleID { get; set; }
+        public ModuleSection ModuleSectionID { get; set; }
         public string Title { get; set; }
         public string VideoUrl { get; set; }
         public string Duration { get; set; }
@@ -27,14 +29,14 @@ namespace Business_Model.Model
         public Guid ModuleCourseID { get; set; }
         public string Value { get; set; }
         public int DisplayOrder { get; set; }
-  
+
     }
     public class _ModuleCourse : Common
     {
         public Guid ModuleCourseID { get; set; }
         public string ModuleName { get; set; }
-        public int ModuleID { get; set; }
-        public int ModuleSectionID { get; set; }
+        public Module ModuleID { get; set; }
+        public ModuleSection ModuleSectionID { get; set; }
         public string Title { get; set; }
         public string VideoUrl { get; set; }
         public string Duration { get; set; }
@@ -44,5 +46,13 @@ namespace Business_Model.Model
         public int DisplayOrder { get; set; }
 
 
+    }
+    public class ModuleCourselog : Common
+    {
+        public Guid ModuleCourseLogID { get; set; }
+        public Guid ClientID { get; set; }
+        public Module ModuleID { get; set; }
+        public ModuleSection ModuleSectionID { get; set; }
+        public int Status { get; set; }
     }
 }

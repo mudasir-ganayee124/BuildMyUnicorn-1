@@ -10,20 +10,20 @@ using System.Web.Security;
 
 namespace BuildMyUnicornAccelerator.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : WebController
     {
-        [Authorize]
+
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated == true)
+           var Clientlist = new ClientManager().GetStartupAcceleratorClient();
+           foreach (var item in Clientlist)
             {
-                StartupAccelerator  obj = new BuildMyUnicornAccelerator.Business_Layer.AccountManager().GetAccelerator(Guid.Parse(User.Identity.Name));
-                ViewBag.obj = obj;
-
-
-
+                item.ProgressAnalytic = new Master().GetClientProgressAnalytic(item.ClientID);
             }
+            ViewBag.Model = Clientlist;
+            ViewBag.CustomerList = new ClientManager().GetStartupCountryClientList(ViewBag.Accelerator.LinkID);
             return View();
         }
     }
+   
 }

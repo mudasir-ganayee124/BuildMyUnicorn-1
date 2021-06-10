@@ -29,6 +29,7 @@ namespace BuildMyUnicornAccelerator.Controllers
             return new BuildMyUnicornAccelerator.Business_Layer.AccountManager().AddNewStartupAccelerator(Model);
 
         }
+
         public ActionResult EmailVerification()
         {
 
@@ -58,6 +59,18 @@ namespace BuildMyUnicornAccelerator.Controllers
 
             }
         }
+
+        public ActionResult ResetPasswordSuccess()
+        {
+            return View();
+        }
+
+        public string SendPasswordResetLink(String Email)
+        {
+
+            return new Business_Layer.AccountManager().SendPasswordResetLink(Email);
+        }
+
 
         public string UpdatePassword(Client Model)
         {

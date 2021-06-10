@@ -12,30 +12,42 @@ namespace BuildMyUnicorn.Business_Layer
 {
     public class BusinessManager
     {
-        public _Business GetBusiness()
+        public _Business GetBusinessOverview()
         {
 
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_Business>(CommandType.StoredProcedure, "sp_get_client_business", parameters);
-
+            var query = $@"SELECT dbo.tbl_business_overview.*  FROM  dbo.tbl_business_overview WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<_Business>(query);
         }
+        //public _Business GetBusinessOverview()
+        //{
 
+        //    DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+        //    List<ParametersCollection> parameters = new List<ParametersCollection>() {
+        //        new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+        //    };
+        //    return obj.GetSingle<_Business>(CommandType.StoredProcedure, "sp_get_business_overview_by_client", parameters);
+
+        //}
         public _ProductService GetProductService()
         {
 
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_ProductService>(CommandType.StoredProcedure, "sp_get_client_product_service", parameters);
-
+            var query = $@"SELECT dbo.tbl_business_productservice.*  FROM  dbo.tbl_business_productservice WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<_ProductService>(query);
         }
+        //public _ProductService GetProductService()
+        //{
+
+        //    DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+        //    List<ParametersCollection> parameters = new List<ParametersCollection>() {
+        //        new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+        //    };
+        //    return obj.GetSingle<_ProductService>(CommandType.StoredProcedure, "sp_get_client_product_service", parameters);
+
+        //}
 
         public RunningBusiness GetRunningBusiness()
         {
+
 
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
@@ -47,47 +59,34 @@ namespace BuildMyUnicorn.Business_Layer
 
         public IEnumerable<CompetitorAnalysis> GetCompetitorAnalysis()
         {
-
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetList<CompetitorAnalysis>(CommandType.StoredProcedure, "sp_get_business_competitor_analysis_by_client", parameters);
-
+            var query = $@"SELECT tbl_business_competitoranalysis.*  FROM  tbl_business_competitoranalysis WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetList<CompetitorAnalysis>(query);
         }
 
-        public _Customer GetBusinessCustomer()
+        public SWOT GetCompetitorSWOT()
         {
-
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_Customer>(CommandType.StoredProcedure, "sp_get_business_customer_by_client", parameters);
-
+            var query = $@"SELECT tbl_business_swot.*  FROM  tbl_business_swot WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<SWOT>(query);
         }
 
+       
         public _BusinessOperation GetBusinessOperation()
         {
 
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_BusinessOperation>(CommandType.StoredProcedure, "sp_get_client_business_operation", parameters);
-
+            var query = $@"SELECT dbo.tbl_business_operation.*  FROM  dbo.tbl_business_operation WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<_BusinessOperation>(query);
         }
-        public IEnumerable<BuyerPersona> GetCustomerbuyerPersona(Guid CustomerID)
-        {
+        //public _BusinessOperation GetBusinessOperation()
+        //{
 
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@CustomerID ", ParamterValue = CustomerID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetList<BuyerPersona>(CommandType.StoredProcedure, "sp_get_business_customer_buyerpersona", parameters);
+        //    DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+        //    List<ParametersCollection> parameters = new List<ParametersCollection>() {
+        //        new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+        //    };
+        //    return obj.GetSingle<_BusinessOperation>(CommandType.StoredProcedure, "sp_get_client_business_operation", parameters);
 
-        }
+        //}
+       
 
         public BuyerPersona GetbuyerPersona(Guid BuyerPersonaID)
         {
@@ -100,30 +99,23 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-        public SWOT GetCompetitorSWOT()
-        {
+    
 
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<SWOT>(CommandType.StoredProcedure, "sp_get_business_swot_by_client", parameters);
-
-        }
-
-        public string AddBusniess(Business Model, List<Client> ClientList)
+        public string AddBusniessOverview(Business Model)
         {
            
 
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@BusinessID", ParamterValue = Model.BusinessID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@BusinessOverID", ParamterValue = Model.BusinessOverID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@IdeaComeup", ParamterValue = Model.Founder.IdeaComeup, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@BusinessRun", ParamterValue = Model.Founder.BusinessRun, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PreviousWorkExperience", ParamterValue = Model.Founder.PreviousWorkExperience, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Qualification", ParamterValue = Model.Founder.Qualification, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@HobbiesInterest", ParamterValue = Model.Founder.HobbiesInterest, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@BusinessRequirePremises", ParamterValue = Model.CompanyDetails.BusinessRequirePremises, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@LandlordCostStatus", ParamterValue = Model.CompanyDetails.LandlordCostStatus, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@WhyYou", ParamterValue = Model.Founder.WhyYou, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CompanyRegisterdName", ParamterValue = Model.CompanyDetails.CompanyRegisterdName, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Founded", ParamterValue = Model.CompanyDetails.Founded, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -131,22 +123,15 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@BusinessAddress", ParamterValue = Model.CompanyDetails.BusinessAddress, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@BusinessPhone", ParamterValue = Model.CompanyDetails.BusinessPhone, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@VatNumber", ParamterValue = Model.CompanyDetails.VatNumber, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@CompanyLegalStructureID", ParamterValue = Model.CompanyDetails.CompanyLegalStructureID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@NumberofFounder", ParamterValue = Model.CompanyDetails.NumberofFounder, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input }
 
 
             };
-            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_client_business", parameters);
-            if (result > 0)
-            {
-                
-
-                //MarketKeyPlayerList.ForEach(x => x.MarketKeyPlayerID = Guid.NewGuid());
-                //MarketKeyPlayerList.ForEach(x => x.KeyFindingID = Model.KeyFindingID);
-                //DataTable dtMarketKeyPlayer = Extensions.ListToDataTable(MarketKeyPlayerList);
-                //obj.ExecuteBulkInsert("sp_add_client_keyplayer_data", dtMarketKeyPlayer, "UT_MarketKey_Player_Data", "@DataTable");
-            }
-            if (result > 0) return "OK"; else return "Client keyfinding Exists";
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_business_overview", parameters);
+            
+            if (result > 0) return "OK"; else return "Business overview exists";
 
         }
 
@@ -162,26 +147,26 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@PSDevelopStart", ParamterValue = Model.AboutProduct.PSDevelopStart, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PSReadylaunch", ParamterValue = Model.AboutProduct.PSReadylaunch, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PSVariations", ParamterValue = Model.AboutProduct.PSVariations, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PSHaveIPAddress", ParamterValue = Model.AboutProduct.PSHaveIPAddress, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@PSHaveIPAddress", ParamterValue = Model.AboutProduct.PSHaveIPAddress, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PSIPAddress", ParamterValue = Model.AboutProduct.PSIPAddress, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PSHaveTradeMark", ParamterValue = Model.AboutProduct.PSHaveTradeMark, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@PSHaveTradeMark", ParamterValue = Model.AboutProduct.PSHaveTradeMark, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PSTradeMark", ParamterValue = Model.AboutProduct.PSTradeMark, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PSHaveTechnologyRoadMap", ParamterValue = Model.AboutProduct.PSHaveTechnologyRoadMap, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@PSHaveTechnologyRoadMap", ParamterValue = Model.AboutProduct.PSHaveTechnologyRoadMap, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@MVPDevelopmentFarID", ParamterValue = Model.MVP.MVPDevelopmentFarID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@MVPHavePrototype", ParamterValue = Model.MVP.MVPHavePrototype, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@MVPHavePrototype", ParamterValue = Model.MVP.MVPHavePrototype, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@MVPPrototype", ParamterValue = Model.MVP.MVPPrototype, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@MVPCreate", ParamterValue = Model.MVP.MVPCreate, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@MVPReasonID", ParamterValue = Model.MVP.MVPReasonID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input }
             };
              
-            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_client_product_service", parameters);
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_business_productservice", parameters);
             if (result > 0)
             {
                 Master objMaster = new Master();
                 objMaster.DeleteMultipleMaster((int)ModuleName.ProductService, Model.ProductServiceID);
-                if(Model.AboutProduct.PSHaveTechnologyRoadMap == 1)
-                objMaster.AddMultipleMaster((int)ModuleName.ProductService, Model.ProductServiceID, MultipleMaster);
+               // if(Model.AboutProduct.PSHaveTechnologyRoadMap == 1)
+                objMaster.AddProductServiceMultipleMaster((int)ModuleName.ProductService, Model.ProductServiceID, MultipleMaster);
             }
             if (result > 0) return "OK"; else return "Error in adding product service";
 
@@ -232,8 +217,12 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@DeliveryMethodID", ParamterValue = Model.Operations.DeliveryMethodID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@ThirdPartyInvovedID", ParamterValue = Model.Operations.ThirdPartyInvovedID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PaymentMethodID", ParamterValue = Model.Operations.PaymentMethodID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@QualityControlMethod", ParamterValue = Model.Operations.QualityControlMethod, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@StaffWorkID", ParamterValue = Model.Operations.StaffWorkID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Needsoftware", ParamterValue = Model.Operations.Needsoftware, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@HaveInsurance", ParamterValue = Model.Operations.HaveInsurance, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@NeedLicense", ParamterValue = Model.Operations.NeedLicense, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@NeedQualification", ParamterValue = Model.Operations.NeedQualification, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@QualityControlMethod", ParamterValue = Model.Operations.QualityControlMethod, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@StaffCount", ParamterValue = Model.Operations.StaffCount, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@StaffCountNextYear", ParamterValue = Model.Operations.StaffCountNextYear, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@InsuranceType", ParamterValue = Model.Operations.InsuranceType, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -261,11 +250,9 @@ namespace BuildMyUnicorn.Business_Layer
         public string AddCompetitor(Competitor Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            Guid SWOTID = Guid.NewGuid();
-            if (Model.EntityState != 0) { SWOTID = Model.SWOT.SWOTID; }
             List<ParametersCollection> parameterswot = new List<ParametersCollection>() {
                
-                new ParametersCollection { ParamterName = "@SWOTID", ParamterValue = SWOTID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@SWOTID", ParamterValue = Model.SWOT.SWOTID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Strengths", ParamterValue = Model.SWOT.Strengths, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Weaknesses", ParamterValue = Model.SWOT.Weaknesses, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -278,7 +265,7 @@ namespace BuildMyUnicorn.Business_Layer
             foreach (var item in Model.CompetitorAnalysis)
             {
                 Guid CompetitorAnalysisID = Guid.NewGuid();
-                if (Model.EntityState != 0) { CompetitorAnalysisID = item.CompetitorAnalysisID; }
+                if (Model.EntityState ==EntityState.Old && item.CompetitorAnalysisID != Guid.Empty)  CompetitorAnalysisID = item.CompetitorAnalysisID; 
                 List<ParametersCollection> parametercompetitoranalysis = new List<ParametersCollection>() {
                 new ParametersCollection { ParamterName = "@CompetitorAnalysisID", ParamterValue = CompetitorAnalysisID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
@@ -298,60 +285,10 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-        public string AddCustomer(Customer Model)
-        {
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@CustomerID", ParamterValue = Model.CustomerID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@About", ParamterValue = Model.About, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Based", ParamterValue = Model.Based, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Buy", ParamterValue = Model.Buy, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Factors", ParamterValue = Model.Factors, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@RecognitionNeed", ParamterValue = Model.BuyerPurchaseCycle.RecognitionNeed, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@InformationSearch", ParamterValue = Model.BuyerPurchaseCycle.InformationSearch, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@AlternativeEvaluation", ParamterValue = Model.BuyerPurchaseCycle.AlternativeEvaluation, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PurchaseDecision", ParamterValue = Model.BuyerPurchaseCycle.PurchaseDecision, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PurchaseEvaluation", ParamterValue = Model.BuyerPurchaseCycle.PurchaseEvaluation, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@CreatedBy", ParamterValue = Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input }
-            };
-
-            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_business_customer", parameters);
-            if (result > 0) return "OK"; else return "Error in adding business customer";
-
-        }
+       
 
 
-        public string AddBuyerPersona(BuyerPersona Model)
-        {
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-
-            List<ParametersCollection> parameterswot = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@BuyerPersonaID", ParamterValue = Model.BuyerPersonaID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@CustomerID", ParamterValue = Model.CustomerID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Name", ParamterValue = Model.Name, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@AvtarID", ParamterValue = Model.AvtarID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@JobTitle", ParamterValue = Model.JobTitle, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Responsibility", ParamterValue = Model.Responsibility, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@AgeID", ParamterValue = Model.AgeID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@GenderID", ParamterValue = Model.GenderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@IncomeID", ParamterValue = Model.IncomeID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Location", ParamterValue = Model.Location, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PainPoints", ParamterValue = Model.PainPoints, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Goals", ParamterValue = Model.Goals, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@WantsKnow", ParamterValue = Model.WantsKnow, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@NotWantsKnow", ParamterValue = Model.NotWantsKnow, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@DriveBuy", ParamterValue = Model.DriveBuy, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@BuyFrom", ParamterValue = Model.BuyFrom, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Findus", ParamterValue = Model.Findus, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input }
-
-            };
-            int returnValue = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_business_customer_buyerpersona", parameterswot);
-            if (returnValue > 0) return "OK"; else return "Error in adding buyer persona";
-
-        }
+       
 
         public string DeleteBuyerPersona(Guid BuyerPersonaID)
         {
@@ -366,6 +303,52 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-
+        public int ExistBusinessOverview(Guid id)
+        {
+            var query = $@"select count(BusinessOverID) from tbl_business_overview WHERE BusinessOverID = '{id}'";
+            if (id == Guid.Empty)
+            {
+                id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+                query = $@"select count(BusinessOverID) from tbl_business_overview WHERE ClientID = '{id}'";
+            }
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+        public int ExistProductService(Guid id)
+        {
+            var query = $@"select count(ProductServiceID) from tbl_business_productservice WHERE ProductServiceID = '{id}'";
+            if (id == Guid.Empty)
+            {
+                id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+                query = $@"select count(ProductServiceID) from tbl_business_productservice WHERE ClientID = '{id}'";
+            }
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+        public int ExistBusinessOperation(Guid id)
+        {
+            var query = $@"select count(BusinessOperationID) from tbl_business_operation WHERE BusinessOperationID = '{id}'";
+            if (id == Guid.Empty)
+            {
+                id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+                query = $@"select count(BusinessOperationID) from tbl_business_operation WHERE ClientID = '{id}'";
+            }
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+        /// <summary>
+        /// id must always be client id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int ExistBusinessCompetitorsAnalysis(Guid id)
+        {
+            if(id == Guid.Empty) id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+            int Count = 0;
+         //   Guid ClientID = id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+            var query = $@"select count(CompetitorAnalysisID) from tbl_business_competitoranalysis WHERE ClientID = '{id}'";
+            Count =  SharedManager.ExecuteScalar<int>(query);
+            if (Count > 0) return Count;
+            else query = $@"select count(SWOTID) from tbl_business_swot WHERE ClientID = '{id}'";
+            return SharedManager.ExecuteScalar<int>(query);
+     
+        }
     }
 }

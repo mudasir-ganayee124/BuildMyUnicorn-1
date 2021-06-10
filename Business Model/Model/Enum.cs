@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,8 @@ namespace Business_Model.Model
 
         Admin = 1,
         Client = 2,
-        Supplier = 3
+        Supplier = 3,
+        Accelerator = 4
     }
 
     public enum AccountType
@@ -27,7 +29,8 @@ namespace Business_Model.Model
 
         Admin = 1,
         Client = 2,
-        Supplier = 3
+        Supplier = 3,
+        Accelerator = 4
     }
 
     public enum AccountStatus
@@ -139,7 +142,8 @@ namespace Business_Model.Model
         Exist = 10,
         NotExist = 11,
         Updated = 12,
-        NotUpdated = 14
+        NotUpdated = 14,
+        Started = 15
     }
 
     public enum MemberType
@@ -153,4 +157,36 @@ namespace Business_Model.Model
         Keyword = 1,
         Messgae = 2
     }
+    public enum GrantStatus
+    {
+        Continue = 1,
+        Locked = 2
+    }
+
+    public enum TemplateType
+    {
+        PlatformForgotPassword = 1
+    }
+
+    public enum GatewayType
+    {
+        Revolut = 1, Paypal  = 2, Stripe = 3
+        
+    }
+    public enum ResponseErrorType
+    {
+        HttpResponseError = 1,
+        PaymentDeclineResponseError = 2
+       
+    }
+
+    public enum CaptureModeEnum
+    {
+        AUTOMATIC, MANUAL
+    }
+    public enum OrderStatus
+    {
+        PENDING, COMPLETED
+    }
+    
 }

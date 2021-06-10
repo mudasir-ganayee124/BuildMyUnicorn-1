@@ -4,6 +4,7 @@ using Business_Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -13,14 +14,14 @@ namespace BuildMyUnicorn.Controllers
     public class RegisterController : Controller
     {
         // GET: Signup
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             if (Request.QueryString["refid"] != null)
             {
                 Guid AffiliateLinkID = Guid.Parse(Encryption.DecryptGuid(Request.QueryString["refid"]));
                 ViewBag.AffiliateLinkID = AffiliateLinkID;
             }
-
+            ViewBag.PlanID = id;
             return View();
         }
         public ActionResult SignupSuccess(string email)
@@ -90,13 +91,13 @@ namespace BuildMyUnicorn.Controllers
                 }
                 else
                 {
-                    return PartialView("_BadRequest");
+                    return RedirectToAction("BadRequest", "ErrorHandler");
 
                 }
             }
             else
             {
-                return PartialView("_BadRequest");
+                return RedirectToAction("BadRequest", "ErrorHandler");
 
             }
         }
@@ -117,10 +118,39 @@ namespace BuildMyUnicorn.Controllers
         }
 
 
-        public string AddCustomer(Client Model)
+        public async  Task<JsonResult> AddCustomer(Client Model)
         {
+            //Order order = new ClientManager().GetClientOrder(Guid.Parse("C51A8CB6-E702-4D9A-A79A-4D01352D9771"));
+            //return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);
+            var Client = new ClientManager().GetSingleClientByEmail(Model.Email);
+            if (Client == null)
+            {
+          
+                Model.ClientID = Guid.NewGuid();
+                string returnValue = new ClientManager().AddNewClient(Model);
+                if (returnValue == "OK")
+                {
+                   
+                    string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
+                    string PublicId = await new ClientManager().AddOrderinGateway(Model, CustomerID);
+                    Order OrderObj = new Order();
+                    OrderObj.ClientID = Model.ClientID;
+                    OrderObj.OrderStatus = OrderStatus.PENDING;
+                    OrderObj.PlanID = Model.PlanID;
+                    OrderObj.GatewayClientID = Guid.Parse(CustomerID);
+                    OrderObj.GatewayOrderID = Guid.Parse(PublicId);
+                    OrderObj.OrderPublicID = Guid.Parse(PublicId);
+                    new ClientManager().AddNewOrder(OrderObj);
+                    Order order = new ClientManager().GetClientOrder(Model.ClientID);
+                    return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                    return Json(new { status = "FAILED", msg = "Check the log" }, JsonRequestBehavior.AllowGet);
 
-            return new ClientManager().AddNewClient(Model);
+            }
+            else
+                return Json(new { status = "FAILED", msg = "The " + Model.Email.ToString() + " already exist in the system" }, JsonRequestBehavior.AllowGet);
+
 
         }
 
@@ -130,11 +160,19 @@ namespace BuildMyUnicorn.Controllers
             return new ClientManager().SendPasswordRestLink(Email);
         }
 
+        public void SendInvoice(Guid ClientID)
+        {
+            new ClientManager().SendClientPaymentInvoice(ClientID);
+        }
+
         public JsonResult GetCountryList()
         {
 
             IEnumerable<Country> countryList = new CountryManager().GetCountryList();
             return Json(new { country = countryList }, JsonRequestBehavior.AllowGet);
         }
+
+       
+
     }
 }

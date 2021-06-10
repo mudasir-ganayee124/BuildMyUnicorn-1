@@ -1,0 +1,334 @@
+﻿
+@model Business_Model.Model.OnlineResearch
+@{
+
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+
+    decimal _ProgressBigPictureResearch = 0.0m; decimal _ProgressFocussedResearch = 0.0m;
+    decimal _ProgressBigPictureResearchUnit = 10.00m; decimal _ProgressFocussedResearchUnit = 20.00m;
+
+
+
+}
+
+<div class="row">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+
+        <div class="card">
+            <div class="card-body wizard-content">
+                <div class="row " style="margin: 0 0px 2px;">
+                    <div class="col-md-5 align-self-center">
+                        <div id="markupContainer"> </div>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "OnlineResearch", ModuleID = (int)Business_Model.Model.Module.MarketResearch, SectionID = (int)Business_Model.Model.ModuleSection.MarketResearch_OnlineResearch }, new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <form class="form-material m-t-40">
+                    <input type="hidden" id="jsIdea" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                    <input type="hidden" id="OnlineResearchID" name="OnlineResearchID" value="@Model.OnlineResearchID" />
+                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                    <!-- Step 1 -->
+                    <h4 class="text-center">Big Picture Reserach</h4>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1"> What 3 bits of research have been carried out? </label>
+
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.BigPictureResearch.ResearchCarriedOutBit1))
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ResearchCarriedOutBit1").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <div class="form-group">
+
+                                            <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.ResearchCarriedOutBit1</textarea>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.BigPictureResearch.ResearchCarriedOutBit2))
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ResearchCarriedOutBit2").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.ResearchCarriedOutBit2</textarea>
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.BigPictureResearch.ResearchCarriedOutBit3))
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ResearchCarriedOutBit3").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.ResearchCarriedOutBit3</textarea>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                        <div class="row">
+                            @if (!string.IsNullOrEmpty(Model.BigPictureResearch.IndustryTrends))
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IndustryTrends").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.IndustryTrends</textarea>
+
+                                    </div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.BigPictureResearch.CaptureInitially))
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CaptureInitially").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea" readonly>@Model.BigPictureResearch.CaptureInitially</textarea>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="row">
+                            @if (Model.BigPictureResearch.MarketSize != 0)
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarketSize").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea jsCurrency" readonly>@Model.BigPictureResearch.MarketSize</textarea>
+
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.BigPictureResearch.CaptureShare != 0)
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CaptureShare").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea jsPercentage" readonly>@Model.BigPictureResearch.CaptureShare</textarea>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="row">
+                            @if (Model.BigPictureResearch.MarketShare != 0)
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarketShare").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea jsCurrency" readonly>@Model.BigPictureResearch.MarketShare</textarea>
+
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.BigPictureResearch.MarketShareCaptureDuration != 0)
+                            {
+                                _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarketShareCaptureDuration").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <input id="tch1" type="text" value="@Model.BigPictureResearch.MarketShareCaptureDuration" name="tch1" class="form-control  progress-required jsYear">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 jsKeyPlayerContainer">
+
+                                <label for="wint1">Who are the Key players in the market? </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="wint1">Company </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="wint1">Website</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                @foreach (var item in ViewBag.MarketKeyPlayer)
+                                {
+                                    _ProgressBigPictureResearch = _ProgressBigPictureResearch + _ProgressBigPictureResearchUnit;
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <textarea class="form-control form-control-line detailtextarea" readonly>@item.Company</textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <textarea class="form-control form-control-line detailtextarea" readonly>@item.Website</textarea>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                }
+
+
+
+
+
+                            </div>
+
+                        </div>
+                    </section>
+                    <!-- Step 2 -->
+                    <h4 class="text-center">Focused Research</h4><br />
+                    <section>
+                        <div class="row">
+                            @if (!String.IsNullOrEmpty(@Model.FocussedResearch.IdeaProgressed))
+                            {
+                                _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @{ var arrayIdeaProgressed = String.IsNullOrEmpty(@Model.FocussedResearch.IdeaProgressed) == false ? @Model.FocussedResearch.IdeaProgressed.Split(',').ToArray() : new string[0]; }
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaProgressed").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <input type="hidden" id="_StartupTechnology" name="_StartupTechnology" class='' value="" />
+                                        @foreach (var item in ViewBag.IdeaProgressed)
+                                        {
+                                            if (Array.Exists(arrayIdeaProgressed, x => x == Convert.ToString(item.ID)) == true)
+                                            {
+                                                <br />
+                                                <label class="custom-control-label"><i class="far fa-dot-circle"></i>  @item.Value</label>
+                                            }
+
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            @if (!String.IsNullOrEmpty(@Model.FocussedResearch.FeedbackReceived))
+                            {
+                                _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @{ var arrayFeedbackReceived = String.IsNullOrEmpty(@Model.FocussedResearch.FeedbackReceived) == false ? @Model.FocussedResearch.FeedbackReceived.Split(',').ToArray() : new string[0]; }
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackReceived").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <input type="hidden" id="_StartupTechnology" name="_StartupTechnology" class='' value="" />
+                                        @foreach (var item in ViewBag.FeedbackReceived)
+                                        {
+                                            if (Array.Exists(arrayFeedbackReceived, x => x == Convert.ToString(item.ID)) == true)
+                                            {
+                                                <br />
+                                                <label class="custom-control-label"><i class="far fa-dot-circle"></i>  @item.Value</label>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+
+                        <div class="row">
+                            @if (Model.FocussedResearch.CustomerFeedback != Guid.Empty)
+                            {
+                                _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFeedback").FirstOrDefault().QuestionText : "" )  </label> <br />
+
+                                        @Html.DropDownListFor(n => n.FocussedResearch.CustomerFeedback, new SelectList(ViewBag.CustomerFeedback, "ID", "Value", @Model.FocussedResearch.CustomerFeedback), "- Please select -", new { @class = "custom-select col-12  progress-required" , @disabled = "disabled" })
+
+
+                                    </div>
+                                </div>
+                            }
+                                @if (Model.FocussedResearch.FeedbackRate != Guid.Empty)
+                                {
+                                    _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackRate").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                            @Html.DropDownListFor(n => n.FocussedResearch.FeedbackRate, new SelectList(ViewBag.FeedbackRate, "ID", "Value", @Model.FocussedResearch.FeedbackRate), "- Please select -", new { @class = "custom-select col-12  progress-required" ,@disabled="disabled"})
+
+
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.FocussedResearch.FeedbackKeyfinding))
+                                {
+                                    _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackKeyfinding").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                            <textarea class="form-control form-control-line detailtextarea" readonly> @(Model.FocussedResearch.FeedbackKeyfinding)</textarea>
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                @if (ViewBag.RateInfo != null)
+                {
+                    if (ViewBag.RateInfo.Rating != 0.0m)
+                    {
+                        <a href="#1" class="list-group-item" style="text-align:center">
+                            <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                        </a>
+                    }
+                    if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                    {
+                        <a href="#1" class="list-group-item">
+                            <span class="badge badge-info badge-info">NOTE</span> <br />
+                            @ViewBag.RateInfo.Note
+                        </a>
+                    }
+                }
+                <a href="#1" class="list-group-item">
+                    Big Picture Research
+                    <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressBigPictureResearch))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressBigPictureResearch))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressBigPictureResearch))% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#22" class="list-group-item">
+                    Focused Research
+
+                    <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressFocussedResearch))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressFocussedResearch))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressFocussedResearch))% Complete</span></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

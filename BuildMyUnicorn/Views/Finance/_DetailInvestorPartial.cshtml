@@ -1,6 +1,13 @@
-﻿@using Business_Model.Model;
+﻿
 @using System.ComponentModel;
 @model Business_Model.Model.Investor
+@{
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    decimal _ProgressFriendsFamily = 0.0m; decimal _ProgressAngelInvestor = 0.0m; decimal _ProgressVC= 0.0m;
+    decimal _ProgressFriendsFamilyUnit = 9.09m; decimal _ProgressAngelInvestorUnit = 3.33m; decimal _ProgressVCUnit = 4.00m;
+   
+}
+
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
@@ -11,7 +18,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Finance", ActionName = "Investors", ModuleName = Module.Finance, SectionName = ModuleSection.Finance_FinancialProjections }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Finance", ActionName = "Investors", ModuleID = (int)Business_Model.Model.Module.Finance, SectionID = (int)Business_Model.Model.ModuleSection.Finance_FindingInvestors }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -23,75 +30,118 @@
                     <section>
 
                         <div class="row">
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.FriendsFamily.GrownExcitedCompany) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GrownExcitedCompany"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GrownExcitedCompany" name="GrownExcitedCompany" readonly>@Model.FriendsFamily.GrownExcitedCompany</textarea>
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.GrownExcitedCompany))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrownExcitedCompany").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="GrownExcitedCompany" name="GrownExcitedCompany" readonly>@Model.FriendsFamily.GrownExcitedCompany</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.FriendsFamily.InvolvementLevelRequired) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["InvolvementLevelRequired"]  </label>
-                                    <textarea class='form-control ideatextarea' id="InvolvementLevelRequired" name="InvolvementLevelRequired" readonly>@Model.FriendsFamily.InvolvementLevelRequired</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.InvolvementLevelRequired))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InvolvementLevelRequired").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="InvolvementLevelRequired" name="InvolvementLevelRequired" readonly>@Model.FriendsFamily.InvolvementLevelRequired</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.Timeframe) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Timeframe"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Timeframe" name="Timeframe" readonly>@Model.FriendsFamily.Timeframe</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.Timeframe))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Timeframe").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="Timeframe" name="Timeframe" readonly>@Model.FriendsFamily.Timeframe</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.GetBack) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GetBack"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GetBack" name="GetBack" readonly>@Model.FriendsFamily.GetBack</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.GetBack))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GetBack").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="GetBack" name="GetBack" readonly>@Model.FriendsFamily.GetBack</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.RealRisks) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["RealRisks"]  </label>
-                                    <textarea class='form-control ideatextarea' id="RealRisks" name="RealRisks" readonly>@Model.FriendsFamily.RealRisks</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.RealRisks))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "RealRisks").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="RealRisks" name="RealRisks" readonly>@Model.FriendsFamily.RealRisks</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.LoanOrInvestment) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["LoanOrInvestment"]  </label>
-                                    <textarea class='form-control ideatextarea' id="LoanOrInvestment" name="LoanOrInvestment" readonly>@Model.FriendsFamily.LoanOrInvestment</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.LoanOrInvestment))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LoanOrInvestment").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="LoanOrInvestment" name="LoanOrInvestment" readonly>@Model.FriendsFamily.LoanOrInvestment</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12   @( string.IsNullOrEmpty(Model.FriendsFamily.Investing) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Investing"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Investing" name="Investing" readonly>@Model.FriendsFamily.Investing</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.Investing))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12 '>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Investing").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="Investing" name="Investing" readonly>@Model.FriendsFamily.Investing</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.BusinessMoneyPut) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["BusinessMoneyPut"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessMoneyPut" name="BusinessMoneyPut" readonly>@Model.FriendsFamily.BusinessMoneyPut</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.BusinessMoneyPut))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessMoneyPut").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="BusinessMoneyPut" name="BusinessMoneyPut" readonly>@Model.FriendsFamily.BusinessMoneyPut</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.PayingCustomer) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["PayingCustomer"]  </label>
-                                    <textarea class='form-control ideatextarea' id="PayingCustomer" name="PayingCustomer" readonly>@Model.FriendsFamily.PayingCustomer</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.PayingCustomer))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PayingCustomer").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="PayingCustomer" name="PayingCustomer" readonly>@Model.FriendsFamily.PayingCustomer</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.FullTimeDoing) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["FullTimeDoing"]  </label>
-                                    <textarea class='form-control ideatextarea' id="FullTimeDoing" name="FullTimeDoing" readonly>@Model.FriendsFamily.FullTimeDoing</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.FullTimeDoing))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FullTimeDoing").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="FullTimeDoing" name="FullTimeDoing" readonly>@Model.FriendsFamily.FullTimeDoing</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.FriendsFamily.DecisionMakingAbility) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["DecisionMakingAbility"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DecisionMakingAbility" name="DecisionMakingAbility" readonly>@Model.FriendsFamily.DecisionMakingAbility</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FriendsFamily.DecisionMakingAbility))
+                            {
+                                _ProgressFriendsFamily = _ProgressFriendsFamily + _ProgressFriendsFamilyUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DecisionMakingAbility").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="DecisionMakingAbility" name="DecisionMakingAbility" readonly>@Model.FriendsFamily.DecisionMakingAbility</textarea>
+                                    </div>
                                 </div>
-                            </div>
+
+                            }
                         </div>
-
-
 
                     </section>
 
@@ -100,186 +150,306 @@
                     <section>
 
                         <div class="row">
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ProblemWantSolving) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemWantSolving"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ProblemWantSolving" name="ProblemWantSolving" readonly>@Model.AngelInvestor.ProblemWantSolving</textarea>
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.ProblemWantSolving))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemWantSolving").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ProblemWantSolving" name="ProblemWantSolving" readonly>@Model.AngelInvestor.ProblemWantSolving</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ProblemKindGroup) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemKindGroup"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ProblemKindGroup" name="ProblemKindGroup" readonly>@Model.AngelInvestor.ProblemKindGroup</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.ProblemKindGroup))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemKindGroup").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ProblemKindGroup" name="ProblemKindGroup" readonly>@Model.AngelInvestor.ProblemKindGroup</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.HowMany) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowMany"]  </label>
-                                    <textarea class='form-control ideatextarea' id="HowMany" name="HowMany" readonly>@Model.AngelInvestor.HowMany</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.HowMany))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HowMany").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="HowMany" name="HowMany" readonly>@Model.AngelInvestor.HowMany</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.HowDifferentYou) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowDifferentYou"]  </label>
-                                    <textarea class='form-control ideatextarea' id="HowDifferentYou" name="HowDifferentYou" readonly>@Model.AngelInvestor.HowDifferentYou</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.HowDifferentYou))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HowDifferentYou").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="HowDifferentYou" name="HowDifferentYou" readonly>@Model.AngelInvestor.HowDifferentYou</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12   @( string.IsNullOrEmpty(Model.AngelInvestor.CompeteWith) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompeteWith"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CompeteWith" name="CompeteWith" readonly>@Model.AngelInvestor.CompeteWith</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.CompeteWith))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompeteWith").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="CompeteWith" name="CompeteWith" readonly>@Model.AngelInvestor.CompeteWith</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.MakeMoney) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoney"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MakeMoney" name="MakeMoney" readonly>@Model.AngelInvestor.MakeMoney</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.MakeMoney))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MakeMoney").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="MakeMoney" name="MakeMoney" readonly>@Model.AngelInvestor.MakeMoney</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.MakeMoneyInvestors) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoneyInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MakeMoneyInvestors" name="MakeMoneyInvestors" readonly>@Model.AngelInvestor.MakeMoneyInvestors</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.MakeMoneyInvestors))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MakeMoneyInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="MakeMoneyInvestors" name="MakeMoneyInvestors" readonly>@Model.AngelInvestor.MakeMoneyInvestors</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.BusinessGrowFast) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessGrowFast"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessGrowFast" name="BusinessGrowFast" readonly>@Model.AngelInvestor.BusinessGrowFast</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.BusinessGrowFast))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessGrowFast").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="BusinessGrowFast" name="BusinessGrowFast" readonly>@Model.AngelInvestor.BusinessGrowFast</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.Proprietary) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Proprietary"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Proprietary" name="Proprietary" readonly>@Model.AngelInvestor.Proprietary</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.Proprietary))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Proprietary").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="Proprietary" name="Proprietary" readonly>@Model.AngelInvestor.Proprietary</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.TractionMade) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["TractionMade"]  </label>
-                                    <textarea class='form-control ideatextarea' id="TractionMade" name="TractionMade" readonly>@Model.AngelInvestor.TractionMade</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.TractionMade))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TractionMade").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="TractionMade" name="TractionMade" readonly>@Model.AngelInvestor.TractionMade</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.MileStonesMet) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MileStonesMet"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MileStonesMet" name="MileStonesMet" readonly>@Model.AngelInvestor.MileStonesMet</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.MileStonesMet))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MileStonesMet").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="MileStonesMet" name="MileStonesMet" readonly>@Model.AngelInvestor.MileStonesMet</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.WordoutGet) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WordoutGet"]  </label>
-                                    <textarea class='form-control ideatextarea' id="WordoutGet" name="WordoutGet" readonly>@Model.AngelInvestor.WordoutGet</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.WordoutGet))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WordoutGet").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="WordoutGet" name="WordoutGet" readonly>@Model.AngelInvestor.WordoutGet</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.SalesClose) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesClose"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SalesClose" name="SalesClose" readonly>@Model.AngelInvestor.SalesClose</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.SalesClose))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesClose").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="SalesClose" name="SalesClose" readonly>@Model.AngelInvestor.SalesClose</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.GetStarted) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GetStarted"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GetStarted" name="GetStarted" readonly>@Model.AngelInvestor.GetStarted</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.GetStarted))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GetStarted").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="GetStarted" name="GetStarted" readonly>@Model.AngelInvestor.GetStarted</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.SpendInvestorsMoney) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SpendInvestorsMoney"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SpendInvestorsMoney" name="SpendInvestorsMoney" readonly>@Model.AngelInvestor.SpendInvestorsMoney</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.SpendInvestorsMoney))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SpendInvestorsMoney").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="SpendInvestorsMoney" name="SpendInvestorsMoney" readonly>@Model.AngelInvestor.SpendInvestorsMoney</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.BusinessTeamSuited) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessTeamSuited"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessTeamSuited" name="BusinessTeamSuited" readonly>@Model.AngelInvestor.BusinessTeamSuited</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.BusinessTeamSuited))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessTeamSuited").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="BusinessTeamSuited" name="BusinessTeamSuited" readonly>@Model.AngelInvestor.BusinessTeamSuited</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.IdeaComeup) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["IdeaComeup"]  </label>
-                                    <textarea class='form-control ideatextarea' id="IdeaComeup" name="IdeaComeup" readonly>@Model.AngelInvestor.IdeaComeup</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.IdeaComeup))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaComeup").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="IdeaComeup" name="IdeaComeup" readonly>@Model.AngelInvestor.IdeaComeup</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.DecideTo) ? "hide" : "")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["DecideTo"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DecideTo" name="DecideTo" readonly>@Model.AngelInvestor.DecideTo</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.DecideTo))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DecideTo").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="DecideTo" name="DecideTo" readonly>@Model.AngelInvestor.DecideTo</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ObjectionAbout) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ObjectionAbout"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ObjectionAbout" name="ObjectionAbout" readonly>@Model.AngelInvestor.ObjectionAbout</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.ObjectionAbout))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObjectionAbout").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ObjectionAbout" name="ObjectionAbout" readonly>@Model.AngelInvestor.ObjectionAbout</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.YourInvestors) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["YourInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="YourInvestors" name="YourInvestors" readonly>@Model.AngelInvestor.YourInvestors</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.YourInvestors))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YourInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="YourInvestors" name="YourInvestors" readonly>@Model.AngelInvestor.YourInvestors</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.PatentStrong) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["PatentStrong"]  </label>
-                                    <textarea class='form-control ideatextarea' id="PatentStrong" name="PatentStrong" readonly>@Model.AngelInvestor.PatentStrong</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.PatentStrong))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12)'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PatentStrong").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="PatentStrong" name="PatentStrong" readonly>@Model.AngelInvestor.PatentStrong</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.GrowFaster) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GrowFaster"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GrowFaster" name="GrowFaster" readonly>@Model.AngelInvestor.GrowFaster</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.GrowFaster))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrowFaster").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="GrowFaster" name="GrowFaster" readonly>@Model.AngelInvestor.GrowFaster</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.MarketingExpenseRealize) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MarketingExpenseRealize"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MarketingExpenseRealize" name="MarketingExpenseRealize" readonly>@Model.AngelInvestor.MarketingExpenseRealize</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.MarketingExpenseRealize))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarketingExpenseRealize").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="MarketingExpenseRealize" name="MarketingExpenseRealize" readonly>@Model.AngelInvestor.MarketingExpenseRealize</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.BusinessComparable) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessComparable"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessComparable" name="BusinessComparable" readonly>@Model.AngelInvestor.BusinessComparable</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.BusinessComparable))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessComparable").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="BusinessComparable" name="BusinessComparable" readonly>@Model.AngelInvestor.BusinessComparable</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.WhyNeedInvestors) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WhyNeedInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="WhyNeedInvestors" name="WhyNeedInvestors" readonly>@Model.AngelInvestor.WhyNeedInvestors</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.WhyNeedInvestors))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WhyNeedInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="WhyNeedInvestors" name="WhyNeedInvestors" readonly>@Model.AngelInvestor.WhyNeedInvestors</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 s @( string.IsNullOrEmpty(Model.AngelInvestor.SalesMade) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesMade"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SalesMade" name="SalesMade" readonly>@Model.AngelInvestor.SalesMade</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.SalesMade))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesMade").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="SalesMade" name="SalesMade" readonly>@Model.AngelInvestor.SalesMade</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.CompaniesTalked) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompaniesTalked"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CompaniesTalked" name="CompaniesTalked" readonly>@Model.AngelInvestor.CompaniesTalked</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.CompaniesTalked))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompaniesTalked").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="CompaniesTalked" name="CompaniesTalked" readonly>@Model.AngelInvestor.CompaniesTalked</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.Interested) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Interested"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Interested" name="Interested" readonly>@Model.AngelInvestor.Interested</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.Interested))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Interested").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="Interested" name="Interested" readonly>@Model.AngelInvestor.Interested</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12  @( string.IsNullOrEmpty(Model.AngelInvestor.ShownTo) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ShownTo"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ShownTo" name="ShownTo" readonly>@Model.AngelInvestor.ShownTo</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.ShownTo))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ShownTo").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ShownTo" name="ShownTo" readonly>@Model.AngelInvestor.ShownTo</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.AngelInvestor.EvaluationComeup) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["EvaluationComeup"]  </label>
-                                    <textarea class='form-control ideatextarea' id="EvaluationComeup" name="EvaluationComeup" readonly>@Model.AngelInvestor.EvaluationComeup</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AngelInvestor.EvaluationComeup))
+                            {
+                                _ProgressAngelInvestor = _ProgressAngelInvestor + _ProgressAngelInvestorUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EvaluationComeup").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="EvaluationComeup" name="EvaluationComeup" readonly>@Model.AngelInvestor.EvaluationComeup</textarea>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
 
 
@@ -290,199 +460,317 @@
                     <section>
 
                         <div class="row">
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.GreatManagementTeam) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["GreatManagementTeam"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GreatManagementTeam" name="GreatManagementTeam" readonly>@Model.VC.GreatManagementTeam</textarea>
+                            @if (!string.IsNullOrEmpty(Model.VC.GreatManagementTeam))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GreatManagementTeam").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="GreatManagementTeam" name="GreatManagementTeam" readonly>@Model.VC.GreatManagementTeam</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.BigMarketOportunity) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["BigMarketOportunity"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BigMarketOportunity" name="BigMarketOportunity" readonly>@Model.VC.BigMarketOportunity</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.BigMarketOportunity))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BigMarketOportunity").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="BigMarketOportunity" name="BigMarketOportunity" readonly>@Model.VC.BigMarketOportunity</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.TractionPositiveAchieved) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["TractionPositiveAchieved"]  </label>
-                                    <textarea class='form-control ideatextarea' id="TractionPositiveAchieved" name="TractionPositiveAchieved" readonly>@Model.VC.TractionPositiveAchieved</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.TractionPositiveAchieved))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TractionPositiveAchieved").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="TractionPositiveAchieved" name="TractionPositiveAchieved" readonly>@Model.VC.TractionPositiveAchieved</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.FoundersUnderstand) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["FoundersUnderstand"]  </label>
-                                    <textarea class='form-control ideatextarea' id="FoundersUnderstand" name="FoundersUnderstand" readonly>@Model.VC.FoundersUnderstand</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.FoundersUnderstand))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FoundersUnderstand").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="FoundersUnderstand" name="FoundersUnderstand" readonly>@Model.VC.FoundersUnderstand</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.InitialInvestorPitchDesk) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["InitialInvestorPitchDesk"]  </label>
-                                    <textarea class='form-control ideatextarea' id="InitialInvestorPitchDesk" name="InitialInvestorPitchDesk" readonly>@Model.VC.InitialInvestorPitchDesk</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.InitialInvestorPitchDesk))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InitialInvestorPitchDesk").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="InitialInvestorPitchDesk" name="InitialInvestorPitchDesk" readonly>@Model.VC.InitialInvestorPitchDesk</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.BusinessPotentialRisk) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["BusinessPotentialRisk"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessPotentialRisk" name="BusinessPotentialRisk" readonly>@Model.VC.BusinessPotentialRisk</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.BusinessPotentialRisk))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessPotentialRisk").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="BusinessPotentialRisk" name="BusinessPotentialRisk" readonly>@Model.VC.BusinessPotentialRisk</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ProductMilestone) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ProductMilestone"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ProductMilestone" name="ProductMilestone" readonly>@Model.VC.ProductMilestone</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ProductMilestone))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductMilestone").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ProductMilestone" name="ProductMilestone" readonly>@Model.VC.ProductMilestone</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.KeyFeatures) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["KeyFeatures"]  </label>
-                                    <textarea class='form-control ideatextarea' id="KeyFeatures" name="KeyFeatures" readonly>@Model.VC.KeyFeatures</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.KeyFeatures))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyFeatures").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="KeyFeatures" name="KeyFeatures" readonly>@Model.VC.KeyFeatures</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.InvestmentCapital) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["InvestmentCapital"]  </label>
-                                    <textarea class='form-control ideatextarea' id="InvestmentCapital" name="InvestmentCapital" readonly>@Model.VC.InvestmentCapital</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.InvestmentCapital))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InvestmentCapital").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="InvestmentCapital" name="InvestmentCapital" readonly>@Model.VC.InvestmentCapital</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ExpectedEvaluation) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ExpectedEvaluation"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ExpectedEvaluation" name="ExpectedEvaluation" readonly>@Model.VC.ExpectedEvaluation</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ExpectedEvaluation))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ExpectedEvaluation").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ExpectedEvaluation" name="ExpectedEvaluation" readonly>@Model.VC.ExpectedEvaluation</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.DifferentiatedTechnology) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["DifferentiatedTechnology"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DifferentiatedTechnology" name="DifferentiatedTechnology" readonly>@Model.VC.DifferentiatedTechnology</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.DifferentiatedTechnology))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DifferentiatedTechnology").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="DifferentiatedTechnology" name="DifferentiatedTechnology" readonly>@Model.VC.DifferentiatedTechnology</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ReplicateTechnology) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ReplicateTechnology"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ReplicateTechnology" name="ReplicateTechnology" readonly>@Model.VC.ReplicateTechnology</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ReplicateTechnology))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ReplicateTechnology").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ReplicateTechnology" name="ReplicateTechnology" readonly>@Model.VC.ReplicateTechnology</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.KeyIntellectualProperty) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["KeyIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="KeyIntellectualProperty" name="KeyIntellectualProperty" readonly>@Model.VC.KeyIntellectualProperty</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.KeyIntellectualProperty))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="KeyIntellectualProperty" name="KeyIntellectualProperty" readonly>@Model.VC.KeyIntellectualProperty</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ClaimIntellectualProperty) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ClaimIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ClaimIntellectualProperty" name="ClaimIntellectualProperty" readonly>@Model.VC.ClaimIntellectualProperty</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ClaimIntellectualProperty))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ClaimIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ClaimIntellectualProperty" name="ClaimIntellectualProperty" readonly>@Model.VC.ClaimIntellectualProperty</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ViolateIntellectualProperty) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ViolateIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ViolateIntellectualProperty" name="ViolateIntellectualProperty" readonly>@Model.VC.ViolateIntellectualProperty</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ViolateIntellectualProperty))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ViolateIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ViolateIntellectualProperty" name="ViolateIntellectualProperty" readonly>@Model.VC.ViolateIntellectualProperty</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.OwnedIntellectualProperty) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["OwnedIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="OwnedIntellectualProperty" name="OwnedIntellectualProperty" readonly>@Model.VC.OwnedIntellectualProperty</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.OwnedIntellectualProperty))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OwnedIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="OwnedIntellectualProperty" name="OwnedIntellectualProperty" readonly>@Model.VC.OwnedIntellectualProperty</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.DevelopedIntellectualProperty) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["DevelopedIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DevelopedIntellectualProperty" name="DevelopedIntellectualProperty" readonly>@Model.VC.DevelopedIntellectualProperty</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.DevelopedIntellectualProperty))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DevelopedIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="DevelopedIntellectualProperty" name="DevelopedIntellectualProperty" readonly>@Model.VC.DevelopedIntellectualProperty</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.CompanyFinancialProjection) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["CompanyFinancialProjection"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CompanyFinancialProjection" name="CompanyFinancialProjection" readonly>@Model.VC.CompanyFinancialProjection</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.CompanyFinancialProjection))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12)'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyFinancialProjection").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="CompanyFinancialProjection" name="CompanyFinancialProjection" readonly>@Model.VC.CompanyFinancialProjection</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.Margins) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["Margins"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Margins" name="Margins" readonly>@Model.VC.Margins</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.Margins))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Margins").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="Margins" name="Margins" readonly>@Model.VC.Margins</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.SalesMarketingModel) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["SalesMarketingModel"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SalesMarketingModel" name="SalesMarketingModel" readonly>@Model.VC.SalesMarketingModel</textarea>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.VC.SalesMarketingModel))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrownExcitedCompany").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="SalesMarketingModel" name="SalesMarketingModel" readonly>@Model.VC.SalesMarketingModel</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ForecastingGrowth) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ForecastingGrowth"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ForecastingGrowth" name="ForecastingGrowth" readonly>@Model.VC.ForecastingGrowth</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ForecastingGrowth))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ForecastingGrowth").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ForecastingGrowth" name="ForecastingGrowth" readonly>@Model.VC.ForecastingGrowth</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.ExistingInvestors) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ExistingInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ExistingInvestors" name="ExistingInvestors" readonly>@Model.VC.ExistingInvestors</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.ExistingInvestors))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ExistingInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="ExistingInvestors" name="ExistingInvestors" readonly>@Model.VC.ExistingInvestors</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.AchieveMilestone) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["AchieveMilestone"]  </label>
-                                    <textarea class='form-control ideatextarea' id="AchieveMilestone" name="AchieveMilestone" readonly>@Model.VC.AchieveMilestone</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.AchieveMilestone))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AchieveMilestone").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="AchieveMilestone" name="AchieveMilestone" readonly>@Model.VC.AchieveMilestone</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.CurrentCash) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["CurrentCash"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CurrentCash" name="CurrentCash" readonly>@Model.VC.CurrentCash</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.CurrentCash))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CurrentCash").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="CurrentCash" name="CurrentCash" readonly>@Model.VC.CurrentCash</textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-md-12 @( string.IsNullOrEmpty(Model.VC.StructurePlan) ? "hide" :"")'>
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["StructurePlan"]  </label>
-                                    <textarea class='form-control ideatextarea' id="StructurePlan" name="StructurePlan" readonly>@Model.VC.StructurePlan</textarea>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.VC.StructurePlan))
+                            {
+                                _ProgressVC = _ProgressVC + _ProgressVCUnit;
+                                <div class='col-md-12'>
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StructurePlan").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control ideatextarea' id="StructurePlan" name="StructurePlan" readonly>@Model.VC.StructurePlan</textarea>
+                                    </div>
                                 </div>
-                            </div>
+
+                            }
                         </div>
-                    </section>
-                </form>
+                        </section>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-lg-3 col-xlg-2 col-md-4">
-        <!--<ol class="breadcrumb">
-            <li class="breadcrumb-item"><span class="round" title="Total Questions">65</span></li>
-            <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">@Model.Answered </span></li>
-            <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(65 - Model.Answered)</span></li>
-        </ol>-->
-        <div class="stickyside">
-            <div class="list-group" id="top-menu">
-                <a href="#22" class="list-group-item">
-                    FriendsFamily
+        <div class="col-lg-3 col-xlg-2 col-md-4">
+            <!--<ol class="breadcrumb">
+                <li class="breadcrumb-item"><span class="round" title="Total Questions">65</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">@Model.Answered </span></li>
+                <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(65 - Model.Answered)</span></li>
+            </ol>-->
+            <div class="stickyside">
+                <div class="list-group" id="top-menu">
+                    @if (ViewBag.RateInfo != null)
+                    {
+                        if (ViewBag.RateInfo.Rating != 0.0m)
+                        {
+                            <a href="#1" class="list-group-item" style="text-align:center">
+                                <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                            </a>
+                        }
+                        if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                        {
+                            <a href="#1" class="list-group-item">
+                                <span class="badge badge-info badge-info">NOTE</span> <br />
+                                @ViewBag.RateInfo.Note
+                            </a>
+                        }
+                    }
+                    <a href="#22" class="list-group-item">
+                        FriendsFamily
 
-                    <div class="pull-left" style="text-align:right">@Model.FriendsFamily.Completed% <i class="fa fa-level-up text-success"></i></div>
-                    <div class="progress" style="height:auto">
-                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.FriendsFamily.Completed%; height: 6px;"> <span class="sr-only">@Model.FriendsFamily.Completed% Complete</span></div>
-                    </div>
-                </a>
-                <a href="#1" class="list-group-item">
-                    Angel Investor
-                    <div class="pull-right" style="text-align:right">@Model.AngelInvestor.Completed% <i class="fa fa-level-up text-success"></i></div>
-                    <div class="progress" style="height:auto">
-                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.AngelInvestor.Completed%; height: 6px;"> <span class="sr-only">@Model.AngelInvestor.Completed % Complete</span></div>
-                    </div>
-                </a>
+                        <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressFriendsFamily))% <i class="fa fa-level-up text-success"></i></div>
+                        <div class="progress" style="height:auto">
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressFriendsFamily))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressFriendsFamily))% Complete</span></div>
+                        </div>
+                    </a>
+                    <a href="#1" class="list-group-item">
+                        Angel Investor
+                        <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressAngelInvestor))% <i class="fa fa-level-up text-success"></i></div>
+                        <div class="progress" style="height:auto">
+                            <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressAngelInvestor))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressAngelInvestor))% Complete</span></div>
+                        </div>
+                    </a>
 
-                <a href="#22" class="list-group-item">
-                    VC
+                    <a href="#22" class="list-group-item">
+                        VC
 
-                    <div class="pull-left" style="text-align:right">@Model.VC.Completed% <i class="fa fa-level-up text-success"></i></div>
-                    <div class="progress" style="height:auto">
-                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model.VC.Completed%; height: 6px;"> <span class="sr-only">@Model.VC.Completed% Complete</span></div>
-                    </div>
-                </a>
+                        <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressVC))% <i class="fa fa-level-up text-success"></i></div>
+                        <div class="progress" style="height:auto">
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressVC))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressVC))% Complete</span></div>
+                        </div>
+                    </a>
 
 
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>

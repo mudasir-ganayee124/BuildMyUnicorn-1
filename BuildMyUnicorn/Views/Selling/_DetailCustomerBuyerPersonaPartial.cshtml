@@ -1,0 +1,61 @@
+﻿
+@using Business_Model.Model;
+@using System.ComponentModel;
+@using System.Configuration;
+@model IEnumerable<Business_Model.Model.BuyerPersona>
+
+@if (Model.Count() > 0)
+{
+    <input type="hidden" id="ProgressBuyerPersonaUnit" value="100" />
+
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 col-lg-3 text-center">
+                            <a href="~/Business/Edit?BuyerPersonaID=@item.BuyerPersonaID">  <img class="card-img-top img-responsive" src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/assets/images/avtar/Avatar Users2_@(item.AvtarID).png" alt="Card image cap"></a>
+                        </div>
+                        <div class="col-md-8 col-lg-9">
+                            <h3 class="box-title m-b-0">@item.Name</h3>
+
+
+                            <address>
+                                @item.JobTitle
+
+                            </address>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        }
+
+
+    </div>
+}
+else
+{
+    <input type="hidden" id="ProgressBuyerPersonaUnit" value="0" />
+    <div class="col-md-12">
+        <!-- Card -->
+        <div class="card text-center">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">No Buyer Persona Found</h4>
+               
+            </div>
+            <div class="card-footer text-muted">
+
+            </div>
+        </div>
+    </div>
+
+}

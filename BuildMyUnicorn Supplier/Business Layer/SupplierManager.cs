@@ -38,7 +38,7 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
                 string ForgotPasswordURL = strUrl;
                 string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
                 ForgotPasswordURL = ForgotPasswordURL + "/Register/EmailVerification?refid=" + EncryptedID;
-                string ForgotEmailTemplate = EmailTemplates.Template["FP"];
+                string ForgotEmailTemplate = EmailTemplates.Templates["FP"];
                 ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Supplier.FirstName + " " + Supplier.LastName);
                 string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
                // Finally Send Mail and save data Async

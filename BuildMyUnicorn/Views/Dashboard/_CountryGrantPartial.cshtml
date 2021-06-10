@@ -1,0 +1,59 @@
+﻿@model  IEnumerable<Business_Model.Model.Grants>
+
+<div class="row">
+    <div class="col-6">
+        <h3>@(Model.Count() > 0 ? Model.FirstOrDefault().DueDate.ToString("MMM yyyy") : "")</h3>
+        <h5 class="font-light m-t-0">&nbsp;</h5>
+    </div>
+    <div class="col-6 align-self-center display-6 text-right">
+
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover no-wrap">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>NAME</th>
+                <th>STATUS</th>
+                <th>DUE DATE</th>
+                <th>TYPE</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ 
+                int Counter = 0;
+               
+            }
+
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    Counter = Counter + 1;
+                    <tr>
+                        <td class="text-center">@Counter </td>
+                        <td class="txt-oflo">@item.Name</td>
+                        <td>
+                            @if (item.GrantStatus == 0  || item.GrantStatus == 1)
+                            {
+                                <span class="badge badge-success badge-pill">ELIGIBLE</span>
+                            }
+                            else if (item.GrantStatus == 2)
+                            {
+                                <span class="badge badge-primary  badge-pill">APPLIED</span>
+                            }
+                        </td>
+                        <td class="txt-oflo">@item.DueDate.ToString("dd MMM yyyy")</td>
+                        <td><span class="text-success">@item.Type</span></td>
+                    </tr>
+
+                }
+            }
+            else
+            {
+                <tr> <td colspan="5" style="text-align:center"> <h5>No Grant Available</h5></td> </tr>
+            }
+        </tbody>
+    </table>
+</div>

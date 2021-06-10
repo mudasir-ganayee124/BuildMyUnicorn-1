@@ -21,6 +21,7 @@
                 <form id="frmBusinessCustomer" method="post" class="validation-wizard wizard-circle">
                     <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="CustomerID" name="CustomerID" value="@Model.CustomerID" class="jsCustomerID" />
+                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
 
                     <h6>Customer</h6>
                     <section>

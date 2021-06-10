@@ -1,0 +1,96 @@
+﻿@using Business_Model.Model;
+@model LoanCalculator
+<div class="row">
+    <div class="row">
+        <div class="col-12">
+            <div class="card table-cus">
+                <div class="card-body">
+                    <p>Enter the amount you want to borrow and the number of years you want to repay in the white boxes. Your repayments will automatically be copied across into your cashflow forecast (see the 3 separate tabs at the bottom of the spreadsheet).</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="table-responsive m-t-40">
+
+                        <table  class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" >
+
+                            <tbody>
+
+
+                                <tr class="loancalculatorid" data-id="@Model.LoanCalculatorID">
+                                    <td>Amount to borrow (min £1000, max £25,000)*</td>
+                                    <td><input type="text" class="form-control jsCalculatorChange" id="AmountToBorrow" value='@Model.AmountToBorrow.ToString("n2")' ></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Years to repay (minimum 1, maximum 5)</td>
+                                    <td><input type="text" class="form-control jsCalculatorChange" id="YearsToRepay" value="@Model.YearsToRepay"></td>
+
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="table-responsive m-t-40">
+                        @{
+
+                            decimal Interest = (Model.AmountToBorrow * (3.14m / 100)) * Model.YearsToRepay;
+                        }
+
+                        <table id="example24" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="ns">Interest (6.0% p.a. fixed)</th>
+                                    <th>£@(Interest.ToString("n2"))</th>
+                                </tr>
+                                <tr>
+                                    <th class="ns">Capital</th>
+                                    <th>£@Model.AmountToBorrow.ToString("n2")</th>
+                                </tr>
+                                <tr>
+                                    <th class="ns">Total to repay</th>
+                                    <th>£@((Interest + Model.AmountToBorrow).ToString("n2"))</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+
+                    </div>
+                    <div class="table-responsive m-t-40">
+
+                        <table id="example24" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="ns">Approximate monthly repayments**</th>
+                                    <th>£@((Model.YearsToRepay != 0 ? ((Interest + Model.AmountToBorrow) / (Model.YearsToRepay * 12)).ToString("n2") : ((Interest + Model.AmountToBorrow)).ToString("n2")))</th>
+
+
+
+                                </tr>
+                            </thead>
+
+                        </table>
+                        <p>
+                            <b>*PLEASE NOTE:</b> Our average loan size is around £7,000 - please carefully consider how much you need to borrow to start your business.
+
+                            **The calculator is for illustrative purposes only. Start Up Loans are personal loans for business use only and subject to status. The monthly repayment amounts quoted are estimates which may increase or decrease slightly depending on the number of days between approval and when the loan is advanced.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

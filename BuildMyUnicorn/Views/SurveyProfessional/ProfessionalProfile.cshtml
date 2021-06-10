@@ -237,7 +237,8 @@
 @section PageScript
 {
     <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
-    <script src="~/Content/app_script/page_script/professionalprofile.js?version=@DateTime.Now"></script>
+    <script src="@Url.ContentVersioned("~/page_script/professionalprofile.js")"></script>
+
     <script src="~/Content/card/card.js"></script>
     <script src="~/Content/card/jquery.card.js"></script>
     <script>

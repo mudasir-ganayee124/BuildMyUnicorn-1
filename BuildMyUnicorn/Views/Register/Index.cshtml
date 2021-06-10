@@ -18,9 +18,11 @@
 
     <!-- page css -->
     <link href="~/dist/css/pages/login-register-lock.css" rel="stylesheet">
+    <script src="https://sandbox-merchant.revolut.com/embed.js"></script>
     <!-- Custom CSS -->
     <link href="~/dist/css/style.min.css" rel="stylesheet">
     <link href="https://parsleyjs.org/src/parsley.css" />
+    <link href="~/assets/node_modules/waitMe/waitMe.css" rel="stylesheet" />
     <style>
         input.parsley-success,
         select.parsley-success,
@@ -85,12 +87,25 @@
                 background: #303641;
             }
     </style>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <style>
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 6px;
+        }
+    </style>
 </head>
 <body>
     <!-- ============================================================== -->
@@ -105,18 +120,30 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
+
+
+    <section id="wrapper" class="login-register login-sidebar ajax-wrapper" style="background-image:url(../assets/images/background/login-register.jpg);">
         <div class="login-box card">
             <div class="card-body">
-                <form class="form-horizontal form-material" id="Signupform" method="post">
+                <input type="hidden" id="ClientID" name="ClientID" value="093eced1-c453-4947-809c-297ccfade91c"/>
+
+                <form class="form-horizontal form-material" id="frmRegister" method="post">
                     <input type="hidden" name="AffiliateLinkID" value="@ViewBag.AffiliateLinkID" />
+                    <input type="hidden" name="PlanID" value="@ViewBag.PlanID" />
                     <div class="text-center">
                         <a href="javascript:void(0)" class="db"><img src="~/Content/images/buil-my-unicorn-logo.png" alt="Build My Unicorn Logo" style="width:70px;height:70px" /><br /></a>
                     </div>
-                    <h3 class="box-title">Register</h3>
+                    <table width="100%">
+                        <tr>
+                            <td><h3 class="box-title">Register</h3> </td>
+                            <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; ">STEP 1 OF 2 </span></td>
+                        </tr>
+                    </table>
+
+                    <h6>No risk. Cancel any time.</h6>
                     <div class="form-group m-t-20">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" name="StartupName" placeholder="Startup Name" autocomplete="off" />
+                            <input class="form-control" type="text" name="StartupName" placeholder="Startup Name" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter startup name" />
                         </div>
                     </div>
                     <div class="form-group m-t-20">
@@ -153,17 +180,22 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">
+                                <input type="checkbox" class="custom-control-input" id="Agreement" checked>
+                                <label class="custom-control-label" for="Agreement">
                                     I Agree to  <a href="javascript:void(0)">Marketing</a>
                                 </label>
                             </div>
                         </div>
                     </div>
+                    <div class="alert alert-danger hide alert-rounded">
+                        <span id="responseMessage"></span>
+                        <button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Sign Up</button>
+
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Continue  &nbsp;&nbsp; <i class="fa fa-arrow-right pull-right"></i></button>
                         </div>
                     </div>
                     <div class="form-group m-b-0">
@@ -171,6 +203,135 @@
                             <p>Already have an account? <a href="~/Login" class="text-info m-l-5"><b>Sign In</b></a></p>
                         </div>
                     </div>
+                </form>
+
+                <form class="form-horizontal jsfrmForgotPassword hide" id="frmPayment" method="post">
+                    <div class="text-center">
+                        <a href="javascript:void(0)" class="db"><img src="~/Content/images/buil-my-unicorn-logo.png" alt="Build My Unicorn Logo" style="width:70px;height:70px" /><br /></a>
+                    </div>
+                    <table width="100%">
+                        <tr>
+                            <td><h3 class="box-title">Payment</h3> </td>
+                            <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; ">STEP 2 OF 2 </span></td>
+                        </tr>
+                    </table>
+                    <h5 class="box-title">$20 per month. Standard access.</h5>
+                    <h6>No risk. Cancel any time.</h6>
+                    <div class="row">
+
+                        <aside class="col-sm-12">
+
+
+                            <article class="card">
+                                <div class="card-body p-12">
+
+                                    <ul class="nav bg-light nav-pills rounded nav-fill mb-12" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+                                                <i class="fa fa-credit-card"></i> Credit Card
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+                                                <i class="fab fa-paypal"></i>  Paypal
+                                            </a>
+                                        </li>
+                                        @*<li class="nav-item">
+                                                <a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
+                                                    <i class="fa fa-university"></i>  Bank Transfer
+                                                </a>
+                                            </li>*@
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <br />
+                                        <div class="tab-pane fade show active" id="nav-tab-card">
+                                            <input type="hidden" id="PublicID" value="" />
+                                            <div id="card-field" style="height:20px"></div> <br />
+                                            <button class="subscribe btn btn-primary btn-block" type="button" id="button-submit"> Confirm  </button>
+
+
+                                            @*<button id="pay-button">Pay</button>*@
+
+
+                                            @*<form role="form">
+                                                    <div class="form-group">
+                                                        <label for="username">Full name (on the card)</label>
+                                                        <input type="text" class="form-control" name="username" placeholder="" required="">
+                                                    </div> <!-- form-group.// -->
+
+                                                    <div class="form-group">
+                                                        <label for="cardNumber">Card number</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text text-muted">
+                                                                    <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
+                                                                    <i class="fab fa-cc-mastercard"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group">
+                                                                <label><span class="hidden-xs">Expiration</span> </label>
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" placeholder="MM" name="">
+                                                                    <input type="number" class="form-control" placeholder="YY" name="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                                                <input type="number" class="form-control" required="">
+                                                            </div> <!-- form-group.// -->
+                                                        </div>
+                                                    </div>
+                                                    <button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+                                                </form>*@
+                                        </div> <!-- tab-pane.// -->
+                                        <div class="tab-pane fade" id="nav-tab-paypal">
+                                            <p>Paypal is easiest way to pay online</p>
+                                            <p>
+                                                <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal </button>
+                                            </p>
+                                            <p>
+                                                <strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-tab-bank">
+                                            <p>Bank accaunt details</p>
+                                            <dl class="param">
+                                                <dt>BANK: </dt>
+                                                <dd> THE WORLD BANK</dd>
+                                            </dl>
+                                            <dl class="param">
+                                                <dt>Accaunt number: </dt>
+                                                <dd> 12345678912345</dd>
+                                            </dl>
+                                            <dl class="param">
+                                                <dt>IBAN: </dt>
+                                                <dd> 123456789</dd>
+                                            </dl>
+                                            <p>
+                                                <strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua.
+                                            </p>
+                                        </div> <!-- tab-pane.// -->
+                                    </div> <!-- tab-content .// -->
+
+                                </div> <!-- card-body.// -->
+                            </article> <!-- card.// -->
+
+
+                        </aside>
+                    </div>
+
+
                 </form>
             </div>
         </div>
@@ -182,11 +343,14 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="~/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/assets/node_modules/popper/popper.min.js"></script>
     <script src="~/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/Content/app_script/parsley.js?version=@DateTime.Now"></script>
-    <script src="~/Content/app_script/page_script/signup.js?version=@DateTime.Now"></script>
+    <script src="~/assets/node_modules/waitMe/waitMe.js"></script>
+    <script src="~/Content/app_script/parsley.js"></script>
+    <script src="~/page_script/global.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/register.js")"></script>
     <script src="~/dist/js/pages/validation.js"></script>
     <script>
         $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); });
@@ -201,12 +365,103 @@
         // ==============================================================
         // Login and Recover Password
         // ==============================================================
-        $('#to-recover').on("click", function () {
-            $("#loginform").slideUp();
-            $("#recoverform").fadeIn();
-        });
-        $('#loginform').parsley();
+        //$('#to-recover').on("click", function () {
+        //    $("#loginform").slideUp();
+        //    $("#recoverform").fadeIn();
+        //});
+
+
+        //$('#to-recover').on("click", function () {
+        //    $("#Signupform").slideUp();
+        //    $("#recoverform").fadeIn();
+        //});
     </script>
+
+    @*<script>
+
+
+            RevolutCheckout($("#PublicID").val()).then(function (instance) {
+
+                var card = instance.createCardField({
+                    target: document.getElementById("card-field"),
+                    hidePostcodeField: true,
+                    styles: {
+                        default: {
+                            color: "#fff",
+                            "::placeholder": {
+                                color: "#666"
+                            }
+                        },
+                        autofilled: {
+                            color: "#fff"
+                        }
+                    },
+                    onSuccess(message) {
+                        window.alert("Thank you!" + message);
+                        console.log("key", message);
+                    },
+                    onError(error) {
+                        debugger;
+                        window.alert("Oh no :(" + error);
+                        console.log("errorBQE", error);
+                    },
+
+                });
+
+
+                document.getElementById("button-submit")
+                    .addEventListener("click", function () {
+                        card.submit();
+                    });
+            });
+        </script>*@
+
+    @*<script>
+        RevolutCheckout("afc00dc6-ebf1-4048-a536-15e97d2b0426").then(function (RC) {
+          var payButton = document.getElementById("pay-button");
+          // On click open payment pop-up
+          payButton.addEventListener("click", function () {
+            RC.payWithPopup({
+              // (mandatory!) name of the cardholder
+              name: "First Last",
+              // (optional) email of the customer
+              email: "johndoe002@gmail.com",
+              // (optional) phone of the customer
+              phone: "+447950630319",
+              // (optional) billing address of the customer
+              billingAddress: {
+                countryCode: "GB", //if sending billing address, this field is mandatory
+                region: "Greater London",
+                city: "London",
+                streetLine1: "Revolut",
+                streetLine2: "1 Canada Square",
+                postcode: "EC2V 6DN", //if sending billing address, this field is mandatory
+              },
+              // (optional) shipping address of the customer
+              shippingAddress: {
+                countryCode: "GB", //if sending shipping address, this field is mandatory
+                region: "Greater London",
+                city: "London",
+                streetLine1: "Revolut",
+                streetLine2: "1 Canada Square",
+                postcode: "EC2V 6DN", //if sending shipping address, this field is mandatory
+              },
+              // Callback called when payment finished successfully
+              onSuccess() {
+                window.alert("Thank you!");
+              },
+              // Callback in case some error happened
+              onError(message) {
+                window.alert("Oh no :( message" +  message);
+              },
+              // (optional) Callback in case user cancelled a transaction
+              onCancel() {
+                window.alert("Payment cancelled!");
+              },
+            });
+          });
+        });
+          </script>*@
 </body>
 
 </html>

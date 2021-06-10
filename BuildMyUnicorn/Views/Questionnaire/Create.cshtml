@@ -280,7 +280,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
     <script src="~/assets/node_modules/draggable-resizable-modal/js/modalbox.js"></script>
-    <script src="~/Content/app_script/page_script/questionnaire.js?version=@DateTime.Now"></script>
+    <script src="@Url.ContentVersioned("~/page_script/questionnaire.js")"></script>
+
     <script>
         var showMessage = "Temporayfor someytime";
         $("#myDialog3").myOwnDialog(
@@ -291,7 +292,7 @@
                 height: "300",
                 bg_color: 'white',
                 title: '@(ViewBag.Video != null ?  ViewBag.Video.Title : "")',
-                body_margin:  '@(ViewBag.Video != null ?  ViewBag.Video.Duration : "")', 
+                body_margin:  '@(ViewBag.Video != null ?  ViewBag.Video.Duration : "")',
                 body_overflow_x: "hidden",
                 body_overflow_y: "scroll",
                 movable: true,

@@ -9,6 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using Business_Model.Helper;
+using System.Threading.Tasks;
 
 namespace BuildMyUnicorn.Controllers
 {
@@ -17,23 +18,75 @@ namespace BuildMyUnicorn.Controllers
         // GET: Pricing
         public ActionResult ProductServicePricing(string id)
         {
-            int State = (int)EntityState.New;
-            _PricingProductService Model = new SellingManager().GetPricingProductService();
-            if (Model != null && Model.ProductServicePricingID.ToString() != id) State = (int)EntityState.Old;
-            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
-            if (ResponseType.Redirect.ToString() == CheckModuleCourse(State, (int)ModuleSection.Selling_Pricing))
+            int Count = 0;
+            if (string.IsNullOrEmpty(id))
+                Count = new SellingManager().ExistPricingProductService(Guid.Empty);
+            else
             {
-                return RedirectToAction("Index", "ModuleCourse", new
-                {
-                    ControllerName = "Selling",
-                    ActionName = "ProductServicePricing",
-                    ModuleName = Module.Selling.ToString(),
-                    SectionName = ModuleSection.Selling_Pricing.ToString()
-                });
+                Guid ProductServicePricingID;
+                bool isValid = Guid.TryParse(id, out ProductServicePricingID);
+                if (isValid) Count = new SellingManager().ExistPricingProductService(ProductServicePricingID);
+                else return RedirectToAction("BadRequest", "ErrorHandler");
             }
+            int State = Count > 0 && string.IsNullOrEmpty(id) ? (int)EntityState.Old : (int)EntityState.New;
+            if (State == (int)EntityState.New && string.IsNullOrEmpty(id))
+            {
+                ModuleCourselog objlog = new ModuleCourselog();
+                objlog.ModuleID = Module.Selling;
+                objlog.ModuleSectionID = ModuleSection.Selling_Pricing;
+                if (new Master().AddModuleCourselog(objlog).Status == (int)ResponseType.Redirect && new Master().ExistModuleCourse((int)Module.Selling, (int)ModuleSection.Selling_Customers) > 0)
+                {
+
+                    return RedirectToAction("Index", "ModuleCourse", new
+                    {
+                        ControllerName = "Selling",
+                        ActionName = "ProductServicePricing",
+                        ModuleID = (int)Module.Selling,
+                        SectionID = (int)ModuleSection.Selling_Pricing
+                    });
+                }
+            }
+
+            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
             return View(State);
+
         }
 
+        public ActionResult Customer(string id)
+        {
+            int Count = 0;
+            if (string.IsNullOrEmpty(id))
+                Count = new SellingManager().ExistCustomer(Guid.Empty);
+            else
+            {
+                Guid CustomerID;
+                bool isValid = Guid.TryParse(id, out CustomerID);
+                if (isValid) Count = new SellingManager().ExistCustomer(CustomerID);
+                else return RedirectToAction("BadRequest", "ErrorHandler");
+            }
+            int State = Count > 0 && string.IsNullOrEmpty(id) ? (int)EntityState.Old : (int)EntityState.New;
+            if (State == (int)EntityState.New && string.IsNullOrEmpty(id))
+            {
+                ModuleCourselog objlog = new ModuleCourselog();
+                objlog.ModuleID = Module.Selling;
+                objlog.ModuleSectionID = ModuleSection.Selling_Customers;
+                if (new Master().AddModuleCourselog(objlog).Status == (int)ResponseType.Redirect && new Master().ExistModuleCourse((int)Module.Selling, (int)ModuleSection.Selling_Customers) > 0)
+                {
+
+                    return RedirectToAction("Index", "ModuleCourse", new
+                    {
+                        ControllerName = "Selling",
+                        ActionName = "Customer",
+                        ModuleID = (int)Module.Selling,
+                        SectionID = (int)ModuleSection.Selling_Customers
+                    });
+                }
+            }
+
+            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.Selling, (int)ModuleSection.Selling_Customers);
+            return View(State);
+
+        }
 
         public ActionResult New(int Type)
         {
@@ -41,43 +94,95 @@ namespace BuildMyUnicorn.Controllers
 
             if ((int)ModuleSection.Selling_Pricing == Type)
             {
-
-
-                ViewBag.TitleChosePricingStrategy = TypeDescriptor.GetProperties(typeof(Business_Model.Model.ChosePricingStrategy))
-                                       .Cast<PropertyDescriptor>()
-                                       .ToDictionary(p => p.Name, p => p.Description);
                 PricingProductService obj = new PricingProductService();
-                ChosePricingStrategy objChosePricingStrategy = new ChosePricingStrategy();
+
                 _PricingProductService Model = new SellingManager().GetPricingProductService();
-
-                if (Model != null)
+                var GetModelDependency = Task.Factory.StartNew(() =>
                 {
-                    obj.ProductServicePricingID = Model.ProductServicePricingID;
-                    obj.ClientID = Model.ClientID;
-                    objChosePricingStrategy.CostDeliverPicture = Model.CostDeliverPicture;
-                    objChosePricingStrategy.CustomerBuy = Model.CustomerBuy;
-                    objChosePricingStrategy.CustomersOftenToPay = Model.CustomersOftenToPay;
-                    objChosePricingStrategy.CustomersValue = Model.CustomersValue;
-                    objChosePricingStrategy.CustomersWillingToPay = Model.CustomersWillingToPay;
-                    objChosePricingStrategy.OfferCustomers = Model.OfferCustomers;
-                    objChosePricingStrategy.UsersBringValue = Model.UsersBringValue;
-                    objChosePricingStrategy.OfferLevels = Model.OfferLevels;
-                    objChosePricingStrategy.OfferOpportunity = Model.OfferOpportunity;
-                    objChosePricingStrategy.PricingStrategy = Model.PricingStrategy;
-                    objChosePricingStrategy.PricingStrategyChosen = Model.PricingStrategyChosen;
-                    objChosePricingStrategy.ProductUnique = Model.ProductUnique;
-                    objChosePricingStrategy.ProductValue = Model.ProductValue;
-                    obj.ChosePricingStrategy = objChosePricingStrategy;
-                    obj.EntityState = EntityState.Old;
-                }
-                else
+                    GetServicePricingDataDependency();
+
+                });
+
+                var GetModelData = Task.Factory.StartNew(() =>
                 {
-                    obj.EntityState = EntityState.New;
-                    obj.ChosePricingStrategy = objChosePricingStrategy;
-                }
 
 
+                    ChosePricingStrategy objChosePricingStrategy = new ChosePricingStrategy();
+                    if (Model != null)
+                    {
+                        obj.ProductServicePricingID = Model.ProductServicePricingID;
+                        obj.ClientID = Model.ClientID;
+                        objChosePricingStrategy.CostDeliverPicture = Model.CostDeliverPicture;
+                        objChosePricingStrategy.CustomerBuy = Model.CustomerBuy;
+                        objChosePricingStrategy.CustomersOftenToPay = Model.CustomersOftenToPay;
+                        objChosePricingStrategy.CustomersValue = Model.CustomersValue;
+                        objChosePricingStrategy.CustomersWillingToPay = Model.CustomersWillingToPay;
+                        objChosePricingStrategy.OfferCustomers = Model.OfferCustomers;
+                        objChosePricingStrategy.UsersBringValue = Model.UsersBringValue;
+                        objChosePricingStrategy.OfferLevels = Model.OfferLevels;
+                        objChosePricingStrategy.OfferOpportunity = Model.OfferOpportunity;
+                        objChosePricingStrategy.PricingStrategy = Model.PricingStrategy;
+                        objChosePricingStrategy.PricingStrategyChosen = Model.PricingStrategyChosen;
+                        objChosePricingStrategy.ProductUnique = Model.ProductUnique;
+                        objChosePricingStrategy.ProductValue = Model.ProductValue;
+                        objChosePricingStrategy.SalesCertainPeriod = Model.SalesCertainPeriod;
+                        obj.ChosePricingStrategy = objChosePricingStrategy;
+
+                        obj.EntityState = EntityState.Old;
+                    }
+                    else
+                    {
+                        obj.EntityState = EntityState.New;
+                        obj.ChosePricingStrategy = objChosePricingStrategy;
+                    }
+                });
+                Task.WaitAll(new Task[] { GetModelData, GetModelDependency });
                 return PartialView("_NewProductServicePricingPartial", obj);
+            }
+
+            else if ((int)ModuleSection.Selling_Customers == Type)
+            {
+                Customer obj = new Customer();
+                _Customer Model = new SellingManager().GetCustomers();
+                var GetModelDependency = Task.Factory.StartNew(() =>
+                {
+                    GetCustomerDataDependency();
+
+                });
+
+                var GetModelData = Task.Factory.StartNew(() =>
+                {
+                    BuyerPersona objPersona = new BuyerPersona();
+                    BuyerPurchaseCycle objPurchaseCycle = new BuyerPurchaseCycle();
+                    
+
+                    if (Model != null)
+                    {
+
+                        obj.EntityState = EntityState.Old;
+                        obj.CustomerID = Model.CustomerID;
+                        obj.About = Model.About;
+                        obj.Based = Model.Based;
+                        obj.Buy = Model.Buy;
+                        obj.Factors = Model.Factors;
+                        obj.ClientID = Model.ClientID;
+                        objPurchaseCycle.RecognitionNeed = Model.RecognitionNeed;
+                        objPurchaseCycle.InformationSearch = Model.InformationSearch;
+                        objPurchaseCycle.AlternativeEvaluation = Model.AlternativeEvaluation;
+                        objPurchaseCycle.PurchaseDecision = Model.PurchaseDecision;
+                        objPurchaseCycle.PurchaseEvaluation = Model.PurchaseDecision;
+                        obj.BuyerPurchaseCycle = objPurchaseCycle;
+                    }
+                    else
+                    {
+                        obj.EntityState = EntityState.New;
+                        obj.BuyerPersona = new List<BuyerPersona>();
+                        obj.BuyerPurchaseCycle = new BuyerPurchaseCycle();
+
+                    }
+                });
+                Task.WaitAll(new Task[] { GetModelData, GetModelDependency });
+                return PartialView("_NewCustomerPartial", obj);
             }
             return PartialView("_NewObservationPartial");
         }
@@ -87,44 +192,136 @@ namespace BuildMyUnicorn.Controllers
             if ((int)ModuleSection.Selling_Pricing == Type)
             {
 
-
-                ViewBag.TitleChosePricingStrategy = TypeDescriptor.GetProperties(typeof(Business_Model.Model.ChosePricingStrategy))
-                                       .Cast<PropertyDescriptor>()
-                                       .ToDictionary(p => p.Name, p => p.Description);
                 PricingProductService obj = new PricingProductService();
-                ChosePricingStrategy objChosePricingStrategy = new ChosePricingStrategy();
+
                 _PricingProductService Model = new SellingManager().GetPricingProductService();
-
-                if (Model != null)
+                var GetModelDependency = Task.Factory.StartNew(() =>
                 {
-                    obj.ProductServicePricingID = Model.ProductServicePricingID;
-                    obj.ClientID = Model.ClientID;
-                    objChosePricingStrategy.CostDeliverPicture = Model.CostDeliverPicture;
-                    objChosePricingStrategy.CustomerBuy = Model.CustomerBuy;
-                    objChosePricingStrategy.CustomersOftenToPay = Model.CustomersOftenToPay;
-                    objChosePricingStrategy.CustomersValue = Model.CustomersValue;
-                    objChosePricingStrategy.CustomersWillingToPay = Model.CustomersWillingToPay;
-                    objChosePricingStrategy.OfferCustomers = Model.OfferCustomers;
-                    objChosePricingStrategy.UsersBringValue = Model.UsersBringValue;
-                    objChosePricingStrategy.OfferLevels = Model.OfferLevels;
-                    objChosePricingStrategy.OfferOpportunity = Model.OfferOpportunity;
-                    objChosePricingStrategy.PricingStrategy = Model.PricingStrategy;
-                    objChosePricingStrategy.PricingStrategyChosen = Model.PricingStrategyChosen;
-                    objChosePricingStrategy.ProductUnique = Model.ProductUnique;
-                    objChosePricingStrategy.ProductValue = Model.ProductValue;
-                    obj.ChosePricingStrategy = objChosePricingStrategy;
-                    obj.EntityState = EntityState.Old;
-                }
-                else
-                {
-                    obj.EntityState = EntityState.New;
-                    obj.ChosePricingStrategy = objChosePricingStrategy;
-                }
+                    GetServicePricingDataDependency();
 
+                });
+
+                var GetModelData = Task.Factory.StartNew(() =>
+                {
+
+
+                    ChosePricingStrategy objChosePricingStrategy = new ChosePricingStrategy();
+                    if (Model != null)
+                    {
+                        obj.ProductServicePricingID = Model.ProductServicePricingID;
+                        obj.ClientID = Model.ClientID;
+                        objChosePricingStrategy.CostDeliverPicture = Model.CostDeliverPicture;
+                        objChosePricingStrategy.CustomerBuy = Model.CustomerBuy;
+                        objChosePricingStrategy.CustomersOftenToPay = Model.CustomersOftenToPay;
+                        objChosePricingStrategy.CustomersValue = Model.CustomersValue;
+                        objChosePricingStrategy.CustomersWillingToPay = Model.CustomersWillingToPay;
+                        objChosePricingStrategy.OfferCustomers = Model.OfferCustomers;
+                        objChosePricingStrategy.UsersBringValue = Model.UsersBringValue;
+                        objChosePricingStrategy.OfferLevels = Model.OfferLevels;
+                        objChosePricingStrategy.OfferOpportunity = Model.OfferOpportunity;
+                        objChosePricingStrategy.PricingStrategy = Model.PricingStrategy;
+                        objChosePricingStrategy.PricingStrategyChosen = Model.PricingStrategyChosen;
+                        objChosePricingStrategy.ProductUnique = Model.ProductUnique;
+                        objChosePricingStrategy.ProductValue = Model.ProductValue;
+                        objChosePricingStrategy.SalesCertainPeriod = Model.SalesCertainPeriod;
+                        obj.ChosePricingStrategy = objChosePricingStrategy;
+
+                        obj.EntityState = EntityState.Old;
+                    }
+                    else
+                    {
+                        obj.EntityState = EntityState.New;
+                        obj.ChosePricingStrategy = objChosePricingStrategy;
+                    }
+                });
+                Task.WaitAll(new Task[] { GetModelData, GetModelDependency });
 
                 return PartialView("_DetailProductServicePricingPartial", obj);
             }
+
+            else if ((int)ModuleSection.Selling_Customers == Type)
+            {
+                Customer obj = new Customer();
+                _Customer Model = new SellingManager().GetCustomers();
+
+                var GetModelDependency = Task.Factory.StartNew(() =>
+                {
+                    GetCustomerDataDependency();
+
+                });
+                //temporary
+                IEnumerable<BuyerPersona> ModelList = new SellingManager().GetCustomerbuyerPersona(obj.CustomerID);
+                if (ModelList.Count() > 0) ViewBag.ProgressBuyerPersonaUnit = 100; else ViewBag.ProgressBuyerPersonaUnit = 0;
+                var GetModelData = Task.Factory.StartNew(() =>
+                {
+                    BuyerPersona objPersona = new BuyerPersona();
+                    BuyerPurchaseCycle objPurchaseCycle = new BuyerPurchaseCycle();
+
+                    if (Model != null)
+                    {
+
+                        obj.EntityState = EntityState.Old;
+                        obj.CustomerID = Model.CustomerID;
+                        obj.About = Model.About;
+                        obj.Based = Model.Based;
+                        obj.Buy = Model.Buy;
+                        obj.Factors = Model.Factors;
+                        obj.ClientID = Model.ClientID;
+                        objPurchaseCycle.RecognitionNeed = Model.RecognitionNeed;
+                        objPurchaseCycle.InformationSearch = Model.InformationSearch;
+                        objPurchaseCycle.AlternativeEvaluation = Model.AlternativeEvaluation;
+                        objPurchaseCycle.PurchaseDecision = Model.PurchaseDecision;
+                        objPurchaseCycle.PurchaseEvaluation = Model.PurchaseDecision;
+                        obj.BuyerPurchaseCycle = objPurchaseCycle;
+                    }
+                    else
+                    {
+                        obj.EntityState = EntityState.New;
+                        obj.BuyerPersona = new List<BuyerPersona>();
+                        obj.BuyerPurchaseCycle = new BuyerPurchaseCycle();
+
+                    }
+                });
+                Task.WaitAll(new Task[] { GetModelData, GetModelDependency });
+                return PartialView("_DetailCustomerPartial", obj);
+            }
+
             return PartialView("_NewObservationPartial");
+
+
+        }
+
+        public ActionResult GetNewBuyerPersona(Guid CustomerID)
+        {
+            IEnumerable<BuyerPersona> ModelList = new SellingManager().GetCustomerbuyerPersona(CustomerID);
+            return PartialView("_NewCustomerBuyerPersonaPartial", ModelList);
+
+        }
+        public ActionResult GetDetailBuyerPersona(Guid CustomerID)
+        {
+            IEnumerable<BuyerPersona> ModelList = new SellingManager().GetCustomerbuyerPersona(CustomerID);
+            return PartialView("_DetailCustomerBuyerPersonaPartial", ModelList);
+
+        }
+
+        public string AddCustomer(Customer Model)
+        {
+
+            if (Model.EntityState == EntityState.New && Model.CustomerID == Guid.Empty)
+            {
+
+                Model.CustomerID = Guid.NewGuid();
+            }
+            return new SellingManager().AddCustomer(Model);
+        }
+
+        public JsonResult AddBuyerPersona(BuyerPersona Model)
+        {
+            if (Model.BuyerPersonaID == Guid.Empty)
+                Model.BuyerPersonaID = Guid.NewGuid();
+            if (Model.CustomerID == Guid.Empty)
+                Model.CustomerID = Guid.NewGuid();
+            return Json(new { Status = new SellingManager().AddBuyerPersona(Model), CustomerID = Model.CustomerID }, JsonRequestBehavior.AllowGet);
 
 
         }
@@ -137,41 +334,32 @@ namespace BuildMyUnicorn.Controllers
             return new SellingManager().AddPricingProductService(Model);
         }
 
-
-
-        public string CheckModuleCourse(int State, int SectionValue)
+        public void GetServicePricingDataDependency()
         {
-            if (State == 0)
-            {
-                string getValue = "0";
-                string getClientID = string.Empty;
-                string LoginUserID = User.Identity.Name.ToString();
-                string SectionName = Enum.GetName(typeof(ModuleSection), SectionValue);
-                string CookieID = SectionName.ToString() + LoginUserID;
-                if (Request.Cookies[CookieID.ToString()] != null)
-                {
-                    HttpCookie aCookie = Request.Cookies[CookieID.ToString()];
-                    getValue = aCookie.Values["Status"];
-                }
-                else
-                {
-                    HttpCookie appCookie = new HttpCookie(CookieID.ToString());
-                    appCookie.Values["Status"] = "0";
-                    appCookie.Values["ClientID"] = User.Identity.Name.ToString();
-                    appCookie.Expires = DateTime.Now.AddDays(1);
-                    Response.Cookies.Add(appCookie);
-                }
-                ModuleCourse objCourse = new Master().GetSingleModuleCourse((int)Module.Selling, SectionValue);
-
-                if (getValue == "0" && objCourse.ModuleCourseID != Guid.Empty)
-                    return ResponseType.Redirect.ToString();
-                else return ResponseType.NotRedirect.ToString();
-
-            }
-            else
-                return ResponseType.NotRedirect.ToString();
-
+            ViewBag.TitleChosePricingStrategy = TypeDescriptor.GetProperties(typeof(Business_Model.Model.ChosePricingStrategy))
+                                     .Cast<PropertyDescriptor>()
+                                     .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
         }
+
+        public void GetCustomerDataDependency()
+        {
+            ViewBag.TitleCustomer = TypeDescriptor.GetProperties(typeof(Business_Model.Model.Customer))
+                                      .Cast<PropertyDescriptor>()
+                                      .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.TitleBuyerPersona = TypeDescriptor.GetProperties(typeof(Business_Model.Model.BuyerPersona))
+                                    .Cast<PropertyDescriptor>()
+                                    .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.TitleBuyerPurchaseCycle = TypeDescriptor.GetProperties(typeof(Business_Model.Model.BuyerPurchaseCycle))
+                                   .Cast<PropertyDescriptor>()
+                                   .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Selling, (int)ModuleSection.Selling_Customers);
+
+            ViewBag.AgeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Age);
+            ViewBag.IncomeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Income);
+            ViewBag.GenderList = new Master().GetOptionMasterList((int)OptionType.Gender);
+        }
+
 
     }
 }

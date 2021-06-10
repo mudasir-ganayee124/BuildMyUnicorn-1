@@ -1,95 +1,100 @@
 ﻿
-@using Business_Model.Model;
+
 @using System.ComponentModel;
 @model Business_Model.Model.OurObservation
+@{
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+}
 
-
-<div class="row" id="validation">
-    <div class="col-lg-12 col-xlg-12 col-md-12">
-        <div class="card wizard-content">
-            <div class="card-body">
-                <div class="row " style="margin: 0 0px 2px;">
-                    <div class="col-md-5 align-self-center">
-                        <h4 class="card-title" id="1"></h4>
-                    </div>
-                    <div class="col-md-7 align-self-center text-right">
-                        <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "Observation", ModuleName = Module.MarketResearch, SectionName = ModuleSection.MarketResearch_Observation }, new { @class = "" })
+    <div class="row" id="validation">
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+            <div class="card wizard-content">
+                <div class="card-body">
+                    <div class="row " style="margin: 0 0px 2px;">
+                        <div class="col-md-5 align-self-center">
+                            <h4 class="card-title" id="1"></h4>
+                        </div>
+                        <div class="col-md-7 align-self-center text-right">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "MarketResearch", ActionName = "Observation", ModuleID = (int)Business_Model.Model.Module.MarketResearch, SectionID = (int)Business_Model.Model.ModuleSection.MarketResearch_Observation }, new { @class = "" })
+                            </div>
                         </div>
                     </div>
+                    <form id="frmOurObservation" method="post" class="validation-wizard wizard-circle">
+
+                        <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
+                        <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                        <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                        <input type="hidden" id="IsRedirect" value='@(Model.ObervationID == Guid.Empty ? "true" : "false")' />
+                        <input type="hidden" id="ObervationID" name="ObervationID" value="@Model.ObervationID" />
+                        <!-- Step 1 -->
+                        <h6>Observation</h6>
+                        <section>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Observation").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="Observation" name="Observation" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Observation").FirstOrDefault().PlaceHolderText : "" )">@Model.Observation</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AnyPatterns").FirstOrDefault().QuestionText : "" )  </label>
+                                        @Html.DropDownList("AnyPatterns", new SelectList(ViewBag.Choice, "ID", "Value", Model.AnyPatterns), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "Patterns" })
+
+
+
+                                    </div>
+                                    <div class='form-group Patterns @(string.IsNullOrEmpty(@Model.Patterns) ? "hide" :"")'>
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().QuestionText : "" )  </label>
+
+                                        <textarea class='form-control ideatextarea' id="Patterns" name="Patterns" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().PlaceHolderText : "" )">@Model.Patterns</textarea>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="KeyMoments" name="KeyMoments" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().PlaceHolderText : "" )">@Model.KeyMoments</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Collection").FirstOrDefault().QuestionText : "" )  </label>
+                                        <textarea class='form-control form-control-line ideatextarea' id="Collection" name="Collection" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Collection").FirstOrDefault().PlaceHolderText : "" )">@Model.Collection</textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                    </form>
                 </div>
-                <form id="frmOurObservation" method="post" class="validation-wizard wizard-circle">
-
-                    <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
-                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
-                    <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
-                    <input type="hidden" id="ObervationID" name="ObervationID" value="@Model.ObervationID" />
-                    <!-- Step 1 -->
-                    <h6>Who Does what</h6>
-                    <section>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["Observation"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="Observation" name="Observation">@Model.Observation</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["AnyPatterns"]</label>
-                                    <select class="custom-select col-12 jsOptionChange" id="AnyPatterns" name="AnyPatterns" data-optionchange="Patterns">
-                                        <option value="">- Please select -</option>
-                                        <option value="1" @( string.IsNullOrEmpty(@Model.Patterns) ? "" : "Selected")>Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-
-
-                                </div>
-                                <div class='form-group jsPattern Patterns @(string.IsNullOrEmpty(@Model.Patterns) ? "hide" :"")'>
-                                    <label for="wint1">@ViewBag.TitleObservation["Patterns"]</label>
-                                    <textarea class='form-control ideatextarea' id="Patterns" name="Patterns">@Model.Patterns</textarea>
-
-
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["KeyMoments"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="KeyMoments" name="KeyMoments">@Model.KeyMoments</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleObservation["Collection"]</label>
-                                    <textarea class='form-control form-control-line ideatextarea' id="Collection" name="Collection">@Model.Collection</textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </section>
-           
-                    
-                </form>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 
 
 

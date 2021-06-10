@@ -1,19 +1,25 @@
 ﻿@using Business_Model.Model;
 @using System.Configuration;
 @model Business_Model.Model.Client
+@{
+
+    var RoleList = ViewBag.Role as IEnumerable<Business_Model.Model.MasterCommon>;
+    var arrayRoles = String.IsNullOrEmpty(Model.RoleInCompany) == false ? Model.RoleInCompany.Split(',').ToArray() : new string[0];
+    List<string> roleArray = new List<string>();
+}
 @section PageStyle
 {
     <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
 }
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor"><a href="~/Team"><i class="mdi mdi-arrow-left"></i>Back to Team</a></h4>
+        <h4 class="text-themecolor"><a href="~/Dashboard"><i class="mdi mdi-arrow-left"></i>Back to Dashboard</a></h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item active">The Business</li>
+                <li class="breadcrumb-item active">Dashboard</li>
                 <li class="breadcrumb-item active">Profile</li>
             </ol>
 
@@ -33,13 +39,11 @@
         <div class="card">
             <div class="card-body">
                 <center class="m-t-30">
-                    <img  src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)"  class="img-circle" width="150" />
- 
+                    <img src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)" class="img-circle" width="150" />
+
                     <h4 class="card-title m-t-10">@Model.FirstName @Model.LastName </h4>
                     <h6 class="card-subtitle">
-                        @{ var arrayRoles = String.IsNullOrEmpty(Model.RoleInCompany) == false ? Model.RoleInCompany.Split(',').ToArray() : new string[0];
-                            List<string> roleArray = new List<string>();
-                        }
+
                         @foreach (var role in ViewBag.Role)
                         {
                             if (Array.Exists(arrayRoles, x => x == Convert.ToString(@role.ID)) == true)
@@ -52,8 +56,9 @@
 
 
                     </h6>
-                   
+
                 </center>
+                <h4 class="card-title m-t-10 text-center">@Model.StartupName </h4>
             </div>
             <div>
                 <hr>
@@ -86,233 +91,159 @@
             <!-- Tab panes -->
             <div class="tab-content">
 
-                <!--second tab-->
-                <div class="tab-pane active" id="profile" role="tabpanel">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 col-xs-6 b-r">
-                                <strong>Full Name</strong>
-                                <br>
-                                <p class="text-muted">@Model.FirstName @Model.LastName</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6 b-r">
-                                <strong>Mobile</strong>
-                                <br>
-                                <p class="text-muted">@Model.Phone</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6 b-r">
-                                <strong>Email</strong>
-                                <br>
-                                <p class="text-muted">@Model.Email</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6">
-                                <strong>Country</strong>
-                                <br>
-                                <p class="text-muted">@Model.CountryName</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <p class="m-t-30"> @Model.ShortBio</p>
-                        @*<h4 class="font-medium m-t-30">Skill Set</h4>*@
-                        <hr>
 
-                    </div>
-                </div>
                 <div class="tab-pane active" id="settings" role="tabpanel">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
 
-                                <div class="card">
-                                    <form id="frm_UpdateProfile" class="form-material m-t-40" method="post">
-                                        <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
-                                        <input type="hidden" id="ImageID" name="ImageID" value="@Model.ImageID" />
-                                        <input type="hidden" id="RoleInCompany" name="RoleInCompany" value="@Model.RoleInCompany" />
+                    <div class="row">
+                        <div class="col-12">
 
-
-                                        <div class="card-body">
+                            <div class="card">
+                                <form id="frm_UpdateProfile" class="form-material m-t-40" method="post">
+                                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                                    <input type="hidden" id="ImageID" name="ImageID" value="@Model.ImageID" />
+                                    <input type="hidden" id="RoleInCompany" name="RoleInCompany" value="@Model.RoleInCompany" />
 
 
+                                    <div class="card-body">
 
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>First Name</label>
-                                                        <input type="text" id="FirstName" name="FirstName" class="form-control form-control-line" value="@Model.FirstName">
-                                                    </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Startup Name</label>
+                                                    <input type="text" id="StartupName" name="StartupName" class="form-control form-control-line" value="@Model.StartupName">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Last Name</label>
-                                                        <input type="text" id="LastName" name="LastName" class="form-control form-control-line" value="@Model.LastName">
-                                                    </div>
-                                                </div>
-                                                @if (Model.TeamClientID != Guid.Empty)
-                                                {
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Type</label>
-
-                                                        <select class="custom-select col-12" id="MemberType" name="MemberType">
-                                                            <option>- Please select -</option>
-                                                             <option value="@((int)MemberType.TeamMember)" @(Model.MemberType == MemberType.TeamMember? "selected" : "")>Team Member</option>
-                                                             <option value="@((int)MemberType.Contributor)" @(Model.MemberType == MemberType.Contributor? "selected" : "")>Contributor</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                }
-
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Email</label>
-                                                        <input type="text" id="Email" name="Email" class="form-control form-control-line" value="@Model.Email">
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input type="text" id="Email" name="Email" class="form-control form-control-line" value="@Model.Email">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Phone</label>
-                                                        <input type="text" id="Phone" name="Phone" class="form-control form-control-line" value="@Model.Phone">
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>First Name</label>
+                                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-line" value="@Model.FirstName">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Country</label>
-                                                        @Html.DropDownList("CountryID", new SelectList(ViewBag.CountryList, "CountryID", "CountryName"), "- Please select -", new { @class = "custom-select col-12" })
-                                                        @*<input type="text" class="form-control" value="" autocomplete="off">*@
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Last Name</label>
+                                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-line" value="@Model.LastName">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label>Role at company</label>
-                                                <div class="row">
-                                                    <div class="col-md-4">
 
-                                                        @for (var i = 0; i <= 4; i++)
-                                                        {
-                                                            if (Array.Exists(arrayRoles, x => x == Convert.ToString(ViewBag.Role[i].ID)) == true)
-                                                            {
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="@ViewBag.Role[i].ID" name="_RoleInCompany" value="@ViewBag.Role[i].ID" checked>
-                                                                    <label class="custom-control-label" for="@ViewBag.Role[i].ID">@ViewBag.Role[i].Value</label>
-                                                                </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="@ViewBag.Role[i].ID" name="_RoleInCompany" value="@ViewBag.Role[i].ID">
-                                                                    <label class="custom-control-label" for="@ViewBag.Role[i].ID">@ViewBag.Role[i].Value</label>
-                                                                </div>
-                                                            }
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Phone</label>
+                                                    <input type="text" id="Phone" name="Phone" class="form-control form-control-line" value="@Model.Phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    @Html.DropDownList("CountryID", new SelectList(ViewBag.CountryList, "CountryID", "CountryName"), "- Please select -", new { @class = "custom-select col-12" })
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row">
 
 
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Role at company</label>
+                                                    @foreach (var item in RoleList)
+                                                    {
 
 
-                                                        }
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="@item.ID" name="_RoleInCompany" value="@item.ID" @(Array.Exists(arrayRoles, x => x == Convert.ToString(item.ID)) == true ? "Checked" : "")>
+                                                            <label class="custom-control-label" for="@item.ID">@item.Value</label>
+                                                        </div>
 
-                                                    </div>
+                                                    }
 
-                                                    <div class="col-md-4">
-                                                        @for (var i = 5; i <= 7; i++)
-                                                        {
-                                                            if (Array.Exists(arrayRoles, x => x == Convert.ToString(ViewBag.Role[i].ID)) == true)
-                                                            {
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="@ViewBag.Role[i].ID" name="_RoleInCompany" value="@ViewBag.Role[i].ID" checked>
-                                                                    <label class="custom-control-label" for="@ViewBag.Role[i].ID">@ViewBag.Role[i].Value</label>
-                                                                </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="@ViewBag.Role[i].ID" name="_RoleInCompany" value="@ViewBag.Role[i].ID">
-                                                                    <label class="custom-control-label" for="@ViewBag.Role[i].ID">@ViewBag.Role[i].Value</label>
-                                                                </div>
-                                                            }
+                                                </div>
 
+                                            </div>
+                                            <div class="col-md-6">
 
+                                                <div class="form-group">
+                                                    <label for="wint1">Photograph</label>
+                                                    <div class="fileupload">
 
-
-
-                                                        }
-                                                    </div>
-
-
-                                                    <div class="col-md-4">
-
-                                                        <div class="form-group">
-                                                            <label for="wint1">Photograph</label>
-                                                            <div class="fileupload">
-
-                                                                <div class="btn btn-default btn-file" style="position: relative; text-align:right">
-                                                                    <input type="button" class="btn btn-primary pull-right" style="display:inline !important" value="Choose File" />
-                                                                    <input type="file" id="ImageUpload" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;margin: 0;opacity: 0;">
-
-                                                                </div>
-
-                                                                <div class="dropzone" id="imagepreview" style="padding:5px;">
-                                                                    <div id="my_img" class="dz-preview dz-file-preview dz-error" style="position:relative;text-align:center">
-                                                                        <img id="profileImage" src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)" class="img-responsive img-thumbnail" />
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
+                                                        <div class="btn btn-default btn-file" style="position: relative; text-align:right">
+                                                            <input type="button" class="btn btn-primary pull-right" style="display:inline !important" value="Choose File" />
+                                                            <input type="file" id="ImageUpload" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;margin: 0;opacity: 0;">
 
                                                         </div>
+
+                                                        <div class="dropzone" id="imagepreview" style="padding:5px;">
+                                                            <div id="my_img" class="dz-preview dz-file-preview dz-error" style="position:relative;text-align:center">
+                                                                <img id="profileImage" src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(Model.ImageID == null ? "profile-dummy.png" : Model.ImageID)" class="img-responsive img-thumbnail" />
+                                                            </div>
+                                                        </div>
+
                                                     </div>
 
 
                                                 </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Linked in Profile</label>
-                                                        <input type="text" id="LinkedProfile" name="LinkedProfile" class="form-control" value="@Model.LinkedProfile">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Short Bio</label>
-                                                        <input type="text" id="ShortBio" name="ShortBio" class="form-control" value="@Model.ShortBio">
-                                                    </div>
-                                                </div>
-
                                             </div>
 
 
                                         </div>
 
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Linked in Profile</label>
+                                                    <input type="text" id="LinkedProfile" name="LinkedProfile" class="form-control" value="@Model.LinkedProfile">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Short Bio</label>
+                                                    <input type="text" id="ShortBio" name="ShortBio" class="form-control" value="@Model.ShortBio">
+                                                </div>
+                                            </div>
+
+                                        </div>
                                         <div class="form-group text-right">
                                             <button type="submit" class="btn btn-info">Update</button>
 
 
                                         </div>
-                                    </form>
-                                </div>
 
+                                    </div>
 
-
-
-
-
-                            </div>
+                         
+                            </form>
                         </div>
+
+
+
+
+
+
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-    <!-- Column -->
+</div>
+<!-- Column -->
 </div>
 @section PageScript
 {
     <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
-    <script src="~/Content/app_script/page_script/team.js?version=@DateTime.Now"></script>
+    <script src="@Url.ContentVersioned("~/page_script/team.js")"></script>
 }
 

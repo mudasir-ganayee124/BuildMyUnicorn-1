@@ -1,8 +1,11 @@
 ﻿
-@using Business_Model.Model;
 @using System.ComponentModel;
 @model Business_Model.Model.PricingProductService
+@{
+   
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
 
+}
 
 <div class="row" id="validation">
     <div class="col-lg-12 col-xlg-12 col-md-12">
@@ -14,7 +17,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Selling", ActionName = "ProductServicePricing", ModuleName = Module.Selling, SectionName = ModuleSection.Selling_Pricing }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Selling", ActionName = "ProductServicePricing", ModuleID = (int)Business_Model.Model.Module.Selling, SectionID = (int)Business_Model.Model.ModuleSection.Selling_Pricing }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -23,15 +26,16 @@
                     <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="IsRedirect" value='@(Model.ProductServicePricingID == Guid.Empty ? "true" : "false")' />
                     <input type="hidden" id="ProductServicePricingID" name="ProductServicePricingID" value="@Model.ProductServicePricingID" />
                     <!-- Step 1 -->
-                    <h6>Who Does what</h6>
+                    <h6 class="text-center"> Pricing Product or Service</h6>
                     <section>
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategy"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PricingStrategy").FirstOrDefault().QuestionText : "" ) </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="PricingStrategy" name="PricingStrategy">@Model.ChosePricingStrategy.PricingStrategy</textarea>
 
                                 </div>
@@ -42,7 +46,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductValue"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductValue").FirstOrDefault().QuestionText : "" ) </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="ProductValue" name="ProductValue">@Model.ChosePricingStrategy.ProductValue</textarea>
 
                                 </div>
@@ -52,7 +56,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["UsersBringValue"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "UsersBringValue").FirstOrDefault().QuestionText : "" ) </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="UsersBringValue" name="UsersBringValue">@Model.ChosePricingStrategy.UsersBringValue</textarea>
 
                                 </div>
@@ -62,7 +66,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductUnique"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductUnique").FirstOrDefault().QuestionText : "" ) </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="ProductUnique" name="ProductUnique">@Model.ChosePricingStrategy.ProductUnique</textarea>
 
                                 </div>
@@ -72,7 +76,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["CustomersValue"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomersValue").FirstOrDefault().QuestionText : "" ) </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="CustomersValue" name="CustomersValue">@Model.ChosePricingStrategy.CustomersValue</textarea>
 
                                 </div>
@@ -82,84 +86,94 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@ViewBag.TitleChosePricingStrategy["CustomersWillingToPay"]</label>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomersWillingToPay").FirstOrDefault().QuestionText : "" ) </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="CustomersWillingToPay" name="CustomersWillingToPay">@Model.ChosePricingStrategy.CustomersWillingToPay</textarea>
 
                                 </div>
                             </div>
                         </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferCustomers"]</label>
-                                        <textarea class='form-control form-control-line ideatextarea' id="OfferCustomers" name="OfferCustomers">@Model.ChosePricingStrategy.OfferCustomers</textarea>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OfferCustomers").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="OfferCustomers" name="OfferCustomers">@Model.ChosePricingStrategy.OfferCustomers</textarea>
 
-                                    </div>
                                 </div>
                             </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferLevels"]</label>
-                                            <textarea class='form-control form-control-line ideatextarea' id="OfferLevels" name="OfferLevels">@Model.ChosePricingStrategy.OfferLevels</textarea>
-
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OfferLevels").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="OfferLevels" name="OfferLevels">@Model.ChosePricingStrategy.OfferLevels</textarea>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.TitleChosePricingStrategy["OfferOpportunity"]</label>
-                                            <textarea class='form-control form-control-line ideatextarea' id="OfferOpportunity" name="OfferOpportunity">@Model.ChosePricingStrategy.OfferOpportunity</textarea>
+                            </div>
 
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategy"]</label>
-                                            <textarea class='form-control form-control-line ideatextarea' id="PricingStrategy" name="PricingStrategy">@Model.ChosePricingStrategy.PricingStrategy</textarea>
-
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OfferOpportunity").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="OfferOpportunity" name="OfferOpportunity">@Model.ChosePricingStrategy.OfferOpportunity</textarea>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.TitleChosePricingStrategy["PricingStrategyChosen"]</label>
-                                            <textarea class='form-control form-control-line ideatextarea' id="PricingStrategyChosen" name="PricingStrategyChosen">@Model.ChosePricingStrategy.PricingStrategyChosen</textarea>
+                            </div>
 
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductUnique"]</label>
-                                            <textarea class='form-control form-control-line ideatextarea' id="ProductUnique" name="ProductUnique">@Model.ChosePricingStrategy.ProductUnique</textarea>
-
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomersOftenToPay").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="CustomersOftenToPay" name="CustomersOftenToPay">@Model.ChosePricingStrategy.CustomersOftenToPay</textarea>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@ViewBag.TitleChosePricingStrategy["ProductValue"]</label>
-                                            <textarea class='form-control form-control-line ideatextarea' id="ProductValue" name="ProductValue">@Model.ChosePricingStrategy.ProductValue</textarea>
+                            </div>
 
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PricingStrategyChosen").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="PricingStrategyChosen" name="PricingStrategyChosen">@Model.ChosePricingStrategy.PricingStrategyChosen</textarea>
 
                                 </div>
+                            </div>
 
-                       
-                   
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CostDeliverPicture").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="CostDeliverPicture" name="CostDeliverPicture">@Model.ChosePricingStrategy.CostDeliverPicture</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerBuy").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="CustomerBuy" name="CustomerBuy">@Model.ChosePricingStrategy.CustomerBuy</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesCertainPeriod").FirstOrDefault().QuestionText : "" ) </label>
+                                    <textarea class='form-control form-control-line ideatextarea' id="SalesCertainPeriod" name="SalesCertainPeriod">@Model.ChosePricingStrategy.SalesCertainPeriod</textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
                     </section>
 
 

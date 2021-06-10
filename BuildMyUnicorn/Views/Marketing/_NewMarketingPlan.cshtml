@@ -122,7 +122,7 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
 
-        <i class="mdi mdi-arrow-left"></i>  <a class="" href="~/Marketing/Marketing">Back to Marketing Plan</a>
+        <i class="mdi mdi-arrow-left"></i>  <a class="" href="~/Marketing/Plan">Back to Marketing Plan</a>
 
     </div>
     <div class="col-md-7 align-self-center text-right">
@@ -564,9 +564,9 @@
 
                         </div>
                         <div class="col-md-4">
-                      
-                        
-                       
+
+
+
                             <div class="card">
                                 <center class="m-t-30">
                                     <h4 class="card-title m-t-10">Marketing budget </h4>
@@ -574,10 +574,10 @@
                                     <h2><i class="ti-arrow-up text-purple"></i> <span class="jsAdvertisingBudget"><i class="fas fa-dollar-sign"></i> @Model.MarketingBudget.AdvertisingBudget.ToString("n0")</span></h2>
 
                                 </center>
-            
+
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                   
+
                                         <table class="table text-left display nowrap table table-hover table-striped  dataTable">
 
                                             <tbody>
@@ -675,8 +675,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 @{
 
-                   IEnumerable<Business_Model.Model.BuyerPersona> ModelList  = ViewBag.BuyerPersonaList as ICollection<Business_Model.Model.BuyerPersona>;
-                 }
+                    IEnumerable<Business_Model.Model.BuyerPersona> ModelList = ViewBag.BuyerPersonaList as ICollection<Business_Model.Model.BuyerPersona>;
+                }
 
             </div>
             <form id="frmBuyerPersona" class="form-horizontal mt-4" method="post">
@@ -688,193 +688,193 @@
                 {
                     <input type="hidden" name="CustomerID" id="CustomerID" />
                 }
-                    <div class="modal-body">
+                <div class="modal-body">
 
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="wint1">  @ViewBag.TitleBuyerPersona["Name"]  </label>
-                                    <input type="text" class="form-control  progress-required " id="Name" name="Name">
-                                </div>
-
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="wint1">  @ViewBag.TitleBuyerPersona["Name"]  </label>
+                                <input type="text" class="form-control  progress-required " id="Name" name="Name">
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="wint1">  @ViewBag.TitleBuyerPersona["JobTitle"]  </label>
-                                    <input type="text" class="form-control  progress-required " id="JobTitle" name="JobTitle">
-                                </div>
 
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="wint1">  @ViewBag.TitleBuyerPersona["JobTitle"]  </label>
+                                <input type="text" class="form-control  progress-required " id="JobTitle" name="JobTitle">
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    @*<label for="wint1">  @ViewBag.TitleBuyerPersona["ImageID"]  </label>*@
-                                    <input type="hidden" id="AvtarID" name="AvtarID" value="1" />
 
-                                    <div class="row">
-                                        <div class="col-md-12" style="text-align:right">
-                                            <a href="javascript:void(0)" class="btn btn-info" data-toggle="modal" data-target="#avtarModal" title="Avtar">
-                                                <div class="thumbnail"><img id="avtarSelected" class="image_picker_image" src="/assets/images/avtar/Avatar Users2_1.png" alt="Page 2" style="width:45px;height:45px"></div>
-                                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @*<label for="wint1">  @ViewBag.TitleBuyerPersona["ImageID"]  </label>*@
+                                <input type="hidden" id="AvtarID" name="AvtarID" value="1" />
 
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right">
+                                        <a href="javascript:void(0)" class="btn btn-info" data-toggle="modal" data-target="#avtarModal" title="Avtar">
+                                            <div class="thumbnail"><img id="avtarSelected" class="image_picker_image" src="/assets/images/avtar/Avatar Users2_1.png" alt="Page 2" style="width:45px;height:45px"></div>
+                                        </a>
 
                                     </div>
 
                                 </div>
 
                             </div>
+
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["IncomeID"]  </label>
-                                    @Html.DropDownList("IncomeID", new SelectList(ViewBag.IncomeList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
-
-                                </div>
-
-
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["IncomeID"]  </label>
+                                @Html.DropDownList("IncomeID", new SelectList(ViewBag.IncomeList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
 
                             </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["GenderID"]  </label>
-                                    @Html.DropDownList("GenderID", new SelectList(ViewBag.GenderList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
 
 
-                                </div>
 
+                        </div>
+                        <div class="col-md-4">
 
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["AgeID"]  </label>
-                                    @Html.DropDownList("AgeID", new SelectList(ViewBag.AgeList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
-
-                                </div>
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["GenderID"]  </label>
+                                @Html.DropDownList("GenderID", new SelectList(ViewBag.GenderList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
 
 
                             </div>
 
 
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="col-md-4">
 
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Responsibility"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="Responsibility" name="Responsibility" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Location"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required ' id="Location" name="Location" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["PainPoints"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="PainPoints" name="PainPoints" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-
-                                </div>
-
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["AgeID"]  </label>
+                                @Html.DropDownList("AgeID", new SelectList(ViewBag.AgeList, "ID", "Value"), "- Please select -", new { @class = "custom-select col-12" })
 
                             </div>
 
 
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
 
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Goals"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="Goals" name="Goals" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["WantsKnow"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="WantsKnow" name="WantsKnow" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["NotWantsKnow"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="NotWantsKnow" name="NotWantsKnow" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["DriveBuy"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="DriveBuy" name="DriveBuy" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["BuyFrom"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="BuyFrom" name="BuyFrom" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleBuyerPersona["Findus"]  </label>
-                                    <textarea class='form-control ideatextarea progress-required' id="Findus" name="Findus" oninput="auto_grow_idea_textarea(this)"></textarea>
-
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info waves-effect text-left"> submit</button>
-                        <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Responsibility"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="Responsibility" name="Responsibility" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Location"]  </label>
+                                <textarea class='form-control ideatextarea progress-required ' id="Location" name="Location" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["PainPoints"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="PainPoints" name="PainPoints" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+
+
                     </div>
-                </form>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Goals"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="Goals" name="Goals" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["WantsKnow"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="WantsKnow" name="WantsKnow" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["NotWantsKnow"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="NotWantsKnow" name="NotWantsKnow" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["DriveBuy"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="DriveBuy" name="DriveBuy" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["BuyFrom"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="BuyFrom" name="BuyFrom" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label for="wint1"> @ViewBag.TitleBuyerPersona["Findus"]  </label>
+                                <textarea class='form-control ideatextarea progress-required' id="Findus" name="Findus" oninput="auto_grow_idea_textarea(this)"></textarea>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info waves-effect text-left"> submit</button>
+                    <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -974,8 +974,8 @@
     <script src="~/assets/node_modules/switchery/dist/switchery.min.js"></script>
     <script src="~/assets/node_modules/image-picker/image-picker.js"></script>
     <script src="~/assets/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
-    <script src="~/assetsss/js/jq.progress-bar.js?version=@DateTime.Now"></script>
-    <script src="~/Content/app_script/page_script/marketing.js?version=@DateTime.Now"></script>
+    <script src="~/assetsss/js/jq.progress-bar.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/marketing.js")"></script>
     <script>
         $(function () {
             $('#BuyerPersonaID')

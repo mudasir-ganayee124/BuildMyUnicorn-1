@@ -1,6 +1,9 @@
 ﻿@model Business_Model.Model.ModuleCourse
 @using System.Configuration;
+@{
+    List<Business_Model.Model.Supplier> SupplierList = ViewBag.BusinessSupplier as List<Business_Model.Model.Supplier>;
 
+}
 
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
@@ -38,67 +41,67 @@
 
                         <div class="col-md-6">
 
-
-
-                            @foreach (var item in Model.ModuleCourseOption)
+                            @if (Model != null && Model.ModuleCourseOption != null)
                             {
-                                if (@item.Value != null)
+
+                                foreach (var item in Model.ModuleCourseOption)
                                 {
-                                    <p style="margin-bottom: 0rem;">  <i class="far fa-dot-circle"></i>  @item.Value </p>
+                                    if (@item.Value != null)
+                                    {
+                                        <p style="margin-bottom: 0rem;">  <i class="far fa-dot-circle"></i>  @item.Value </p>
+                                    }
                                 }
                             }
-
 
                         </div>
 
                     </div>
 
                 </div>
-   
-                @if (Model != null)
+
+                @if (SupplierList.Count() > 0)
                 {
-                    foreach (var item in ViewBag.BusinessSupplier)
-                    {
-                        <div class="row">
-                            <div class="col-md-12">
-                                <br />
-                                <h3 class="card-title">Build My Unicorn Network</h3>
-                                <h5 style="font-size:14px;font-style:italic"><sup><i class="fas fa-quote-left"></i></sup>The BMU network is a collection of trusted suppliers that specialise in working with start-ups <sub><i class="fas fa-quote-right"></i></sub></h5>
-                            </div>
-                        </div>
-                        break;
-                    }
+
                     <div class="row">
+                        <div class="col-md-12">
+                            <br />
+                            <h3 class="card-title">Build My Unicorn Network</h3>
+                            <h5 style="font-size:14px;font-style:italic"><sup><i class="fas fa-quote-left"></i></sup>The BMU network is a collection of trusted suppliers that specialise in working with start-ups <sub><i class="fas fa-quote-right"></i></sub></h5>
+                        </div>
+                    </div>
+
+                }
+                <div class="row">
 
 
-                        @foreach (var item in ViewBag.BusinessSupplier)
-                        {
+                    @foreach (var item in SupplierList)
+                    {
 
-                            <div class="col-md-2 col-lg-2 col-xl-2">
-                                <div class="card card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-12 col-lg-12 text-center">
-                                            <a href="~/SurveyProfessional/ProfessionalProfile?SupplierID=@item.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(item.ImageID == null ? "profile-dummy.png" : item.ImageID)" width="90" alt="user" class="img-fluid"></a>
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 text-center">
-
-
-                                            <address>
-                                                @item.CompanyName
-                                            </address>
-                                        </div>
-
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <div class="card card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-12 col-lg-12 text-center">
+                                        <a href="~/SurveyProfessional/ProfessionalProfile?SupplierID=@item.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(item.ImageID == null ? "profile-dummy.png" : item.ImageID)" width="90" alt="user" class="img-fluid"></a>
                                     </div>
+                                    <div class="col-md-12 col-lg-12 text-center">
+
+
+                                        <address>
+                                            @item.CompanyName
+                                        </address>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div>
 
 
 
-                        }
+                    }
 
 
-                    </div>
-                }
+                </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <br />
@@ -113,7 +116,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <br />
-                        @Html.ActionLink("Get Started", "Action", new { ControllerName = ViewBag.ControllerName, ActionName = ViewBag.ActionName, ModuleName = ViewBag.ModuleName }, new { @class = "btn btn-primary" })
+                        <form method="post" action="~/ModuleCourse/GetStarted">
+                            <input type="hidden" name="ContollerName" value="@Model.ContollerName" />
+                            <input type="hidden" name="ActionName" value="@Model.ActionName" />
+                            <input type="hidden" name="ModuleID" value="@Model.ModuleID" />
+                            <input type="hidden" name="ModuleSectionID" value="@Model.ModuleSectionID" />
+                            <input type="submit" class="btn btn-primary" value="Get Started" />
+
+                        </form>
+
                     </div>
                 </div>
             </div>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Business_Model.Model.LanguageModule>
+<div class="content">
+    <h3>Marketing - Online Presence</h3>
+    <section id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body current" aria-hidden="false">
+
+        @foreach (var item in Model.OrderBy(x => x.DisplayOrder))
+        {
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstName1">@ViewBag.Title[item.PropertyName.Trim()]</label>
+                        <input type="text" class="form-control jsQuestion" data-languagemoduleid="@item.LanguageModuleID" value="@item.QuestionText">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lastName1">Placeholder</label>
+                        <input type="text" class="form-control jsPlaceholder" data-languagemoduleid="@item.LanguageModuleID" value="@item.PlaceHolderText">
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </section>
+
+</div>
+<script>
+    $(document).on("blur", ".jsQuestion", function() {
+         var LanguageModuleID = $(this).data("languagemoduleid");
+         var QuestionText =  $(this).val();
+       $.ajax({
+        url:  "/ManageLanguage/UpdateQuestionText",
+        method: "POST",
+        data: { LanguageModuleID: LanguageModuleID, QuestionText : QuestionText  },
+        success: function (response) {
+         //  $("#partialView").html(response);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+    });
+    $(document).on("blur", ".jsPlaceholder", function() {
+        var LanguageModuleID = $(this).data("languagemoduleid");
+        var PlaceHolderText =  $(this).val();
+       $.ajax({
+        url:  "/ManageLanguage/UpdatePlaceHolderText",
+        method: "POST",
+       data: { LanguageModuleID: LanguageModuleID, PlaceHolderText : PlaceHolderText  },
+        success: function (response) {
+          // $("#partialView").html(response);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+    });
+
+</script>
+

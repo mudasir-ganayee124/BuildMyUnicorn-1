@@ -1,6 +1,9 @@
-﻿@using Business_Model.Model;
+﻿
 @using System.ComponentModel;
 @model Business_Model.Model.Investor
+@{
+    var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+ }
 <div class="row" id="validation">
     <div class="col-12">
         <div class="card wizard-content">
@@ -11,7 +14,7 @@
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
-                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Finance", ActionName = "Investors", ModuleName = Module.Finance, SectionName = ModuleSection.Finance_FinancialProjections }, new { @class = "" })
+                            <i class="mdi mdi-arrow-left"></i>  @Html.ActionLink("Back to Overview", "Index", "ModuleCourse", new { ControllerName = "Finance", ActionName = "Investors", ModuleID = (int)Business_Model.Model.Module.Finance, SectionID = (int)Business_Model.Model.ModuleSection.Finance_FindingInvestors }, new { @class = "" })
                         </div>
                     </div>
                 </div>
@@ -19,74 +22,75 @@
                     <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="InvestorID" name="InvestorID" value="@Model.InvestorID" />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                    <input type="hidden" id="IsRedirect" value='@(Model.InvestorID == Guid.Empty ? "true" : "false")' />
                     <h6>Friends and Family</h6>
                     <section>
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GrownExcitedCompany"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GrownExcitedCompany" name="GrownExcitedCompany">@Model.FriendsFamily.GrownExcitedCompany</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrownExcitedCompany").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="GrownExcitedCompany" name="GrownExcitedCompany" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrownExcitedCompany").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.GrownExcitedCompany</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["InvolvementLevelRequired"]  </label>
-                                    <textarea class='form-control ideatextarea' id="InvolvementLevelRequired" name="InvolvementLevelRequired">@Model.FriendsFamily.InvolvementLevelRequired</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InvolvementLevelRequired").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="InvolvementLevelRequired" name="InvolvementLevelRequired" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InvolvementLevelRequired").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.InvolvementLevelRequired</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Timeframe"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Timeframe" name="Timeframe">@Model.FriendsFamily.Timeframe</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Timeframe").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="Timeframe" name="Timeframe" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Timeframe").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.Timeframe</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["GetBack"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GetBack" name="GetBack">@Model.FriendsFamily.GetBack</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GetBack").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="GetBack" name="GetBack" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GetBack").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.GetBack</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["RealRisks"]  </label>
-                                    <textarea class='form-control ideatextarea' id="RealRisks" name="RealRisks">@Model.FriendsFamily.RealRisks</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "RealRisks").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="RealRisks" name="RealRisks" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "RealRisks").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.RealRisks</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["LoanOrInvestment"]  </label>
-                                    <textarea class='form-control ideatextarea' id="LoanOrInvestment" name="LoanOrInvestment">@Model.FriendsFamily.LoanOrInvestment</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LoanOrInvestment").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="LoanOrInvestment" name="LoanOrInvestment" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "LoanOrInvestment").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.LoanOrInvestment</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["Investing"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Investing" name="Investing">@Model.FriendsFamily.Investing</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Investing").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="Investing" name="Investing" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Investing").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.Investing</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["BusinessMoneyPut"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessMoneyPut" name="BusinessMoneyPut">@Model.FriendsFamily.BusinessMoneyPut</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessMoneyPut").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessMoneyPut" name="BusinessMoneyPut" @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessMoneyPut").FirstOrDefault().PlaceHolderText : "" )>@Model.FriendsFamily.BusinessMoneyPut</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["PayingCustomer"]  </label>
-                                    <textarea class='form-control ideatextarea' id="PayingCustomer" name="PayingCustomer">@Model.FriendsFamily.PayingCustomer</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PayingCustomer").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="PayingCustomer" name="PayingCustomer" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PayingCustomer").FirstOrDefault().PlaceHolderText : "" )">@Model.FriendsFamily.PayingCustomer</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["FullTimeDoing"]  </label>
-                                    <textarea class='form-control ideatextarea' id="FullTimeDoing" name="FullTimeDoing">@Model.FriendsFamily.FullTimeDoing</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FullTimeDoing").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="FullTimeDoing" name="FullTimeDoing" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FullTimeDoing").FirstOrDefault().PlaceHolderText : "" ) ">@Model.FriendsFamily.FullTimeDoing</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleFriendsFamily["DecisionMakingAbility"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DecisionMakingAbility" name="DecisionMakingAbility">@Model.FriendsFamily.DecisionMakingAbility</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DecisionMakingAbility").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="DecisionMakingAbility" name="DecisionMakingAbility" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DecisionMakingAbility").FirstOrDefault().PlaceHolderText : "" ) ">@Model.FriendsFamily.DecisionMakingAbility</textarea>
                                 </div>
                             </div>
                         </div>
@@ -102,182 +106,182 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemWantSolving"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ProblemWantSolving" name="ProblemWantSolving">@Model.AngelInvestor.ProblemWantSolving</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemWantSolving").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ProblemWantSolving" name="ProblemWantSolving" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemWantSolving").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.ProblemWantSolving</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ProblemKindGroup"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ProblemKindGroup" name="ProblemKindGroup">@Model.AngelInvestor.ProblemKindGroup</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemKindGroup").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ProblemKindGroup" name="ProblemKindGroup" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemKindGroup").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.ProblemKindGroup</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowMany"]  </label>
-                                    <textarea class='form-control ideatextarea' id="HowMany" name="HowMany">@Model.AngelInvestor.HowMany</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HowMany").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="HowMany" name="HowMany" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HowMany").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.HowMany</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["HowDifferentYou"]  </label>
-                                    <textarea class='form-control ideatextarea' id="HowDifferentYou" name="HowDifferentYou">@Model.AngelInvestor.HowDifferentYou</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HowDifferentYou").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="HowDifferentYou" name="HowDifferentYou" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HowDifferentYou").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.HowDifferentYou</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompeteWith"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CompeteWith" name="CompeteWith">@Model.AngelInvestor.CompeteWith</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompeteWith").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="CompeteWith" name="CompeteWith" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompeteWith").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.CompeteWith</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoney"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MakeMoney" name="MakeMoney">@Model.AngelInvestor.MakeMoney</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MakeMoney").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="MakeMoney" name="MakeMoney" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MakeMoney").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.MakeMoney</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MakeMoneyInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MakeMoneyInvestors" name="MakeMoneyInvestors">@Model.AngelInvestor.MakeMoneyInvestors</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MakeMoneyInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="MakeMoneyInvestors" name="MakeMoneyInvestors" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MakeMoneyInvestors").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.MakeMoneyInvestors</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessGrowFast"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessGrowFast" name="BusinessGrowFast">@Model.AngelInvestor.BusinessGrowFast</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessGrowFast").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessGrowFast" name="BusinessGrowFast" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessGrowFast").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.BusinessGrowFast</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Proprietary"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Proprietary" name="Proprietary">@Model.AngelInvestor.Proprietary</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Proprietary").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="Proprietary" name="Proprietary" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Proprietary").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.Proprietary</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["TractionMade"]  </label>
-                                    <textarea class='form-control ideatextarea' id="TractionMade" name="TractionMade">@Model.AngelInvestor.TractionMade</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TractionMade").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="TractionMade" name="TractionMade" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TractionMade").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.TractionMade</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MileStonesMet"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MileStonesMet" name="MileStonesMet">@Model.AngelInvestor.MileStonesMet</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MileStonesMet").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="MileStonesMet" name="MileStonesMet" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MileStonesMet").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.MileStonesMet</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WordoutGet"]  </label>
-                                    <textarea class='form-control ideatextarea' id="WordoutGet" name="WordoutGet">@Model.AngelInvestor.WordoutGet</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WordoutGet").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="WordoutGet" name="WordoutGet" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WordoutGet").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.WordoutGet</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesClose"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SalesClose" name="SalesClose">@Model.AngelInvestor.SalesClose</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesClose").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesClose" name="SalesClose" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesClose").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.SalesClose</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GetStarted"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GetStarted" name="GetStarted">@Model.AngelInvestor.GetStarted</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GetStarted").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="GetStarted" name="GetStarted" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GetStarted").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.GetStarted</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SpendInvestorsMoney"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SpendInvestorsMoney" name="SpendInvestorsMoney">@Model.AngelInvestor.SpendInvestorsMoney</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SpendInvestorsMoney").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="SpendInvestorsMoney" name="SpendInvestorsMoney" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SpendInvestorsMoney").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.SpendInvestorsMoney</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessTeamSuited"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessTeamSuited" name="BusinessTeamSuited">@Model.AngelInvestor.BusinessTeamSuited</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessTeamSuited").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessTeamSuited" name="BusinessTeamSuited" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessTeamSuited").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.BusinessTeamSuited</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["IdeaComeup"]  </label>
-                                    <textarea class='form-control ideatextarea' id="IdeaComeup" name="IdeaComeup">@Model.AngelInvestor.IdeaComeup</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaComeup").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="IdeaComeup" name="IdeaComeup" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaComeup").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.IdeaComeup</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["DecideTo"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DecideTo" name="DecideTo">@Model.AngelInvestor.DecideTo</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DecideTo").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="DecideTo" name="DecideTo" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DecideTo").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.DecideTo</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ObjectionAbout"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ObjectionAbout" name="ObjectionAbout">@Model.AngelInvestor.ObjectionAbout</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObjectionAbout").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ObjectionAbout" name="ObjectionAbout" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObjectionAbout").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.ObjectionAbout</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["YourInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="YourInvestors" name="YourInvestors">@Model.AngelInvestor.YourInvestors</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YourInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="YourInvestors" name="YourInvestors" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YourInvestors").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.YourInvestors</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["PatentStrong"]  </label>
-                                    <textarea class='form-control ideatextarea' id="PatentStrong" name="PatentStrong">@Model.AngelInvestor.PatentStrong</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PatentStrong").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="PatentStrong" name="PatentStrong" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "PatentStrong").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.PatentStrong</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["GrowFaster"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GrowFaster" name="GrowFaster">@Model.AngelInvestor.GrowFaster</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrowFaster").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="GrowFaster" name="GrowFaster" @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GrowFaster").FirstOrDefault().PlaceHolderText : "" )>@Model.AngelInvestor.GrowFaster</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["MarketingExpenseRealize"]  </label>
-                                    <textarea class='form-control ideatextarea' id="MarketingExpenseRealize" name="MarketingExpenseRealize">@Model.AngelInvestor.MarketingExpenseRealize</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarketingExpenseRealize").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="MarketingExpenseRealize" name="MarketingExpenseRealize" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MarketingExpenseRealize").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.MarketingExpenseRealize</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["BusinessComparable"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessComparable" name="BusinessComparable">@Model.AngelInvestor.BusinessComparable</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessComparable").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessComparable" name="BusinessComparable" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessComparable").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.BusinessComparable</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["WhyNeedInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="WhyNeedInvestors" name="WhyNeedInvestors">@Model.AngelInvestor.WhyNeedInvestors</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WhyNeedInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="WhyNeedInvestors" name="WhyNeedInvestors" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "WhyNeedInvestors").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.WhyNeedInvestors</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["SalesMade"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SalesMade" name="SalesMade">@Model.AngelInvestor.SalesMade</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesMade").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesMade" name="SalesMade" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesMade").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.SalesMade</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["CompaniesTalked"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CompaniesTalked" name="CompaniesTalked">@Model.AngelInvestor.CompaniesTalked</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompaniesTalked").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="CompaniesTalked" name="CompaniesTalked" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompaniesTalked").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.CompaniesTalked</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["Interested"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Interested" name="Interested">@Model.AngelInvestor.Interested</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Interested").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="Interested" name="Interested" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Interested").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.Interested</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["ShownTo"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ShownTo" name="ShownTo">@Model.AngelInvestor.ShownTo</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ShownTo").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ShownTo" name="ShownTo" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ShownTo").FirstOrDefault().PlaceHolderText : "" ) ">@Model.AngelInvestor.ShownTo</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleAngelInvestor["EvaluationComeup"]  </label>
-                                    <textarea class='form-control ideatextarea' id="EvaluationComeup" name="EvaluationComeup">@Model.AngelInvestor.EvaluationComeup</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EvaluationComeup").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="EvaluationComeup" name="EvaluationComeup" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EvaluationComeup").FirstOrDefault().PlaceHolderText : "" )">@Model.AngelInvestor.EvaluationComeup</textarea>
                                 </div>
                             </div>
                         </div>
@@ -285,159 +289,159 @@
 
 
                     </section>
-         
+
                     <h6>VC</h6>
                     <section>
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["GreatManagementTeam"]  </label>
-                                    <textarea class='form-control ideatextarea' id="GreatManagementTeam" name="GreatManagementTeam">@Model.VC.GreatManagementTeam</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GreatManagementTeam").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="GreatManagementTeam" name="GreatManagementTeam" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "GreatManagementTeam").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.GreatManagementTeam</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["BigMarketOportunity"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BigMarketOportunity" name="BigMarketOportunity">@Model.VC.BigMarketOportunity</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BigMarketOportunity").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="BigMarketOportunity" name="BigMarketOportunity" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BigMarketOportunity").FirstOrDefault().PlaceHolderText : "" ) ">@Model.VC.BigMarketOportunity</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["TractionPositiveAchieved"]  </label>
-                                    <textarea class='form-control ideatextarea' id="TractionPositiveAchieved" name="TractionPositiveAchieved">@Model.VC.TractionPositiveAchieved</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TractionPositiveAchieved").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="TractionPositiveAchieved" name="TractionPositiveAchieved" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "TractionPositiveAchieved").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.TractionPositiveAchieved</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["FoundersUnderstand"]  </label>
-                                    <textarea class='form-control ideatextarea' id="FoundersUnderstand" name="FoundersUnderstand">@Model.VC.FoundersUnderstand</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FoundersUnderstand").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="FoundersUnderstand" name="FoundersUnderstand" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FoundersUnderstand").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.FoundersUnderstand</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["InitialInvestorPitchDesk"]  </label>
-                                    <textarea class='form-control ideatextarea' id="InitialInvestorPitchDesk" name="InitialInvestorPitchDesk">@Model.VC.InitialInvestorPitchDesk</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InitialInvestorPitchDesk").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="InitialInvestorPitchDesk" name="InitialInvestorPitchDesk" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InitialInvestorPitchDesk").FirstOrDefault().PlaceHolderText : "" ) ">@Model.VC.InitialInvestorPitchDesk</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["BusinessPotentialRisk"]  </label>
-                                    <textarea class='form-control ideatextarea' id="BusinessPotentialRisk" name="BusinessPotentialRisk">@Model.VC.BusinessPotentialRisk</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessPotentialRisk").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="BusinessPotentialRisk" name="BusinessPotentialRisk" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessPotentialRisk").FirstOrDefault().QuestionText : "" )">@Model.VC.BusinessPotentialRisk</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ProductMilestone"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ProductMilestone" name="ProductMilestone">@Model.VC.ProductMilestone</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductMilestone").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ProductMilestone" name="ProductMilestone" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductMilestone").FirstOrDefault().QuestionText : "" )">@Model.VC.ProductMilestone</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["KeyFeatures"]  </label>
-                                    <textarea class='form-control ideatextarea' id="KeyFeatures" name="KeyFeatures">@Model.VC.KeyFeatures</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyFeatures").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="KeyFeatures" name="KeyFeatures" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyFeatures").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.KeyFeatures</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["InvestmentCapital"]  </label>
-                                    <textarea class='form-control ideatextarea' id="InvestmentCapital" name="InvestmentCapital">@Model.VC.InvestmentCapital</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InvestmentCapital").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="InvestmentCapital" name="InvestmentCapital" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InvestmentCapital").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.InvestmentCapital</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ExpectedEvaluation"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ExpectedEvaluation" name="ExpectedEvaluation">@Model.VC.ExpectedEvaluation</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ExpectedEvaluation").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ExpectedEvaluation" name="ExpectedEvaluation" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ExpectedEvaluation").FirstOrDefault().PlaceHolderText : "" ) ">@Model.VC.ExpectedEvaluation</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["DifferentiatedTechnology"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DifferentiatedTechnology" name="DifferentiatedTechnology">@Model.VC.DifferentiatedTechnology</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DifferentiatedTechnology").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="DifferentiatedTechnology" name="DifferentiatedTechnology" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DifferentiatedTechnology").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.DifferentiatedTechnology</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ReplicateTechnology"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ReplicateTechnology" name="ReplicateTechnology">@Model.VC.ReplicateTechnology</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ReplicateTechnology").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ReplicateTechnology" name="ReplicateTechnology" placeholder=">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ReplicateTechnology").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.ReplicateTechnology</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["KeyIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="KeyIntellectualProperty" name="KeyIntellectualProperty">@Model.VC.KeyIntellectualProperty</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="KeyIntellectualProperty" name="KeyIntellectualProperty" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyIntellectualProperty").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.KeyIntellectualProperty</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ClaimIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ClaimIntellectualProperty" name="ClaimIntellectualProperty">@Model.VC.ClaimIntellectualProperty</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ClaimIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ClaimIntellectualProperty" name="ClaimIntellectualProperty" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ClaimIntellectualProperty").FirstOrDefault().PlaceHolderText : "" ) ">@Model.VC.ClaimIntellectualProperty</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ViolateIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ViolateIntellectualProperty" name="ViolateIntellectualProperty">@Model.VC.ViolateIntellectualProperty</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ViolateIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ViolateIntellectualProperty" name="ViolateIntellectualProperty" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ViolateIntellectualProperty").FirstOrDefault().PlaceHolderText : "" ) ">@Model.VC.ViolateIntellectualProperty</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["OwnedIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="OwnedIntellectualProperty" name="OwnedIntellectualProperty">@Model.VC.OwnedIntellectualProperty</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OwnedIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="OwnedIntellectualProperty" name="OwnedIntellectualProperty" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OwnedIntellectualProperty").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.OwnedIntellectualProperty</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["DevelopedIntellectualProperty"]  </label>
-                                    <textarea class='form-control ideatextarea' id="DevelopedIntellectualProperty" name="DevelopedIntellectualProperty">@Model.VC.DevelopedIntellectualProperty</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DevelopedIntellectualProperty").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="DevelopedIntellectualProperty" name="DevelopedIntellectualProperty" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DevelopedIntellectualProperty").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.DevelopedIntellectualProperty</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["CompanyFinancialProjection"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CompanyFinancialProjection" name="CompanyFinancialProjection">@Model.VC.CompanyFinancialProjection</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyFinancialProjection").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="CompanyFinancialProjection" name="CompanyFinancialProjection" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyFinancialProjection").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.CompanyFinancialProjection</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["Margins"]  </label>
-                                    <textarea class='form-control ideatextarea' id="Margins" name="Margins">@Model.VC.Margins</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Margins").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="Margins" name="Margins" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Margins").FirstOrDefault().QuestionText : "" ) ">@Model.VC.Margins</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["SalesMarketingModel"]  </label>
-                                    <textarea class='form-control ideatextarea' id="SalesMarketingModel" name="SalesMarketingModel">@Model.VC.SalesMarketingModel</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesMarketingModel").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="SalesMarketingModel" name="SalesMarketingModel" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SalesMarketingModel").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.SalesMarketingModel</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ForecastingGrowth"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ForecastingGrowth" name="ForecastingGrowth">@Model.VC.ForecastingGrowth</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ForecastingGrowth").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ForecastingGrowth" name="ForecastingGrowth" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ForecastingGrowth").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.ForecastingGrowth</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["ExistingInvestors"]  </label>
-                                    <textarea class='form-control ideatextarea' id="ExistingInvestors" name="ExistingInvestors">@Model.VC.ExistingInvestors</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ExistingInvestors").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="ExistingInvestors" name="ExistingInvestors" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ExistingInvestors").FirstOrDefault().PlaceHolderText : "" ) ">@Model.VC.ExistingInvestors</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["AchieveMilestone"]  </label>
-                                    <textarea class='form-control ideatextarea' id="AchieveMilestone" name="AchieveMilestone">@Model.VC.AchieveMilestone</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AchieveMilestone").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="AchieveMilestone" name="AchieveMilestone" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AchieveMilestone").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.AchieveMilestone</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["CurrentCash"]  </label>
-                                    <textarea class='form-control ideatextarea' id="CurrentCash" name="CurrentCash">@Model.VC.CurrentCash</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CurrentCash").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="CurrentCash" name="CurrentCash" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CurrentCash").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.CurrentCash</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1"> @ViewBag.TitleVC["StructurePlan"]  </label>
-                                    <textarea class='form-control ideatextarea' id="StructurePlan" name="StructurePlan">@Model.VC.StructurePlan</textarea>
+                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StructurePlan").FirstOrDefault().QuestionText : "" )  </label>
+                                    <textarea class='form-control ideatextarea' id="StructurePlan" name="StructurePlan" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StructurePlan").FirstOrDefault().PlaceHolderText : "" )">@Model.VC.StructurePlan</textarea>
                                 </div>
                             </div>
                         </div>

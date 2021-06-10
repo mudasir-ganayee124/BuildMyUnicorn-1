@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Linq;
 using System.Web;
-using Business_Model.Helper;
+
 
 
 namespace BuildMyUnicorn.Business_Layer
@@ -15,13 +14,8 @@ namespace BuildMyUnicorn.Business_Layer
     {
         public _Investor GetFinanceInvestor()
         {
-
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
-            };
-            return obj.GetSingle<_Investor>(CommandType.StoredProcedure, "sp_get_finance_investors_by_client", parameters);
-
+            var query = $@"SELECT tbl_finance_investors.* FROM tbl_finance_investors WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<_Investor>(query);
         }
         public IEnumerable<FinancialProjection> GetFinanceProjection()
         {
@@ -34,16 +28,88 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-        public IEnumerable<Grants> GetCountryGrant(int CountryID)
+        public IEnumerable<GrantSurvivalBudget> GetClientSurvivalBudget()
+        {
+
+            var query = $@"SELECT dbo.tbl_grant_survival_budget.*  FROM  dbo.tbl_grant_survival_budget WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetList<GrantSurvivalBudget>(query);
+        }
+
+        public GrantSurvivalBudget GetGrantSurvivalBudget(Guid GrantID)
+        {
+
+            var query = $@"SELECT dbo.tbl_grant_survival_budget.*  FROM  dbo.tbl_grant_survival_budget WHERE  GrantID = '{GrantID}'  AND ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<GrantSurvivalBudget>(query);
+        }
+
+        public IEnumerable<Grants> GetCountGrantByMonth(int Month, int CountryID)
+        {
+            var query = $@"SELECT tbl_grants.*, ISNULL((SELECT GrantStatus FROM tbl_grant_survival_budget WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' AND GrantID = tbl_grants.GrantID), 0) AS GrantStatus FROM tbl_grants WHERE DATEPART(MM, tbl_grants.DueDate) = '{Month}' AND  CountryID = {CountryID} AND   tbl_grants.IsDeleted = 0 ";
+            //var query = $@"SELECT tbl_grants.*, tbl_grant_survival_budget.GrantStatus FROM tbl_grants LEFT JOIN tbl_grant_survival_budget ON tbl_grant_survival_budget.GrantID = tbl_grants.GrantID WHERE DATEPART(MM, tbl_grants.DueDate) = '{Month}' AND CountryID = '{CountryID}' AND   tbl_grants.IsDeleted = 0 ";
+            if (Month == 0)
+                query = $@"SELECT tbl_grants.*, ISNULL((SELECT GrantStatus FROM tbl_grant_survival_budget WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' AND GrantID = tbl_grants.GrantID), 0) AS GrantStatus FROM tbl_grants WHERE  CountryID = {CountryID} AND   tbl_grants.IsDeleted = 0 ";
+                //query = $@"SELECT tbl_grants.*, tbl_grant_survival_budget.GrantStatus FROM tbl_grants LEFT JOIN tbl_grant_survival_budget ON tbl_grant_survival_budget.GrantID = tbl_grants.GrantID WHERE CountryID = '{CountryID}' AND tbl_grants.IsDeleted = 0 ";
+            return SharedManager.GetList<Grants>(query);
+        }
+
+        //public IEnumerable<Grants> GetCountryGrant(int CountryID)
+        //{
+
+        //    DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+        //    List<ParametersCollection> parameters = new List<ParametersCollection>() {
+        //        new ParametersCollection { ParamterName = "@CountryID", ParamterValue = CountryID, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input }
+        //    };
+        //    return obj.GetList<Grants>(CommandType.StoredProcedure, "sp_get_single_grant_by_country", parameters);
+
+        //}
+
+        public IEnumerable<PersonalSurvivalBudget> GetPersonalSurvivalBudget(Guid GrantID)
         {
 
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@CountryID", ParamterValue = CountryID, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input }
+                new ParametersCollection { ParamterName = "@GrantID", ParamterValue = GrantID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
             };
-            return obj.GetList<Grants>(CommandType.StoredProcedure, "sp_get_single_grant_by_country", parameters);
+            return obj.GetList<PersonalSurvivalBudget>(CommandType.StoredProcedure, "sp_get_personal_survival_budget_by_grant", parameters);
 
         }
+        public LoanCalculator GetLoanCalculator(Guid GrantID)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@GrantID", ParamterValue = GrantID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetSingle<LoanCalculator>(CommandType.StoredProcedure, "sp_get_loan_calculator_by_grant", parameters);
+
+        }
+        public IEnumerable<SaleforeCast> GetSalesforecast(Guid GrantID)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@GrantID", ParamterValue = GrantID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetList<SaleforeCast>(CommandType.StoredProcedure, "sp_get_sales_forecast_by_grant", parameters);
+
+        }
+
+        public IEnumerable<Cashflowforecast> GetCashflowforecast(Guid GrantID)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@GrantID", ParamterValue = GrantID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetList<Cashflowforecast>(CommandType.StoredProcedure, "sp_get_cashflow_forecast_by_grant", parameters);
+
+        }
+
+
         public string AddFinanceInvestor(Investor Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
@@ -121,8 +187,23 @@ namespace BuildMyUnicorn.Business_Layer
 
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_finance_investors", parameters);
             if (result > 0) return "OK"; else return "Error in adding finance investors";
-        
 
+
+
+        }
+
+
+        public string AddGrantSurvivalBudget(GrantSurvivalBudget Model)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@GrantID", ParamterValue = Model.GrantID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@GrantStatus", ParamterValue = Model.GrantStatus, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+            };
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_grant_survival_budget", parameters);
+            if (result > 0) return "OK"; else return "Grant Budget alreay exist(s)";
 
         }
 
@@ -147,5 +228,81 @@ namespace BuildMyUnicorn.Business_Layer
 
 
         }
+
+        public IEnumerable<Cashflowforecast> UpdateCashflowforecast(Guid CashflowforecastID, decimal Amount)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@CashflowforecastID", ParamterValue = CashflowforecastID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Amount", ParamterValue = Amount, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input }
+
+            };
+            return obj.GetList<Cashflowforecast>(CommandType.StoredProcedure, "sp_update_cashflow_forecast", parameters);
+
+        }
+
+        public IEnumerable<SaleforeCast> UpdateSalesforecast(Guid SaleforecastID, string Property, decimal Value)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@SaleforecastID", ParamterValue = SaleforecastID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Property", ParamterValue = Property, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Value", ParamterValue = Value, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetList<SaleforeCast>(CommandType.StoredProcedure, "sp_update_sales_forecast", parameters);
+
+        }
+
+        public IEnumerable<PersonalSurvivalBudget> UpdatePersonalSurviveBudget(Guid PersonalSurvivalBudgetID, decimal Monthly, string Notes)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@PersonalSurvivalBudgetID", ParamterValue = PersonalSurvivalBudgetID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Monthly", ParamterValue = Monthly, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Notes", ParamterValue = Notes, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetList<PersonalSurvivalBudget>(CommandType.StoredProcedure, "sp_update_personalsurvive_Budget", parameters);
+
+        }
+        public LoanCalculator UpdateLoanCalculator(Guid LoanCalculatorID, decimal AmountToBorrow, int YearsToRepay)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@LoanCalculatorID", ParamterValue = LoanCalculatorID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@AmountToBorrow", ParamterValue = AmountToBorrow, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@YearsToRepay", ParamterValue = YearsToRepay, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input }
+            };
+            return obj.GetSingle<LoanCalculator>(CommandType.StoredProcedure, "sp_update_loan_calculator", parameters);
+
+        }
+        public string UpdateNote(Guid Id, int Type, string Note)
+        {
+
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@Id", ParamterValue = Id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Type", ParamterValue = Type, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Note", ParamterValue = Note, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input }
+            };
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_update_note", parameters);
+            if (result > 0) return "OK"; else return "Note Update Failed";
+            ;
+
+        }
+        public int ExistFinanceInvestor(Guid id)
+        {
+            var query = $@"select count(InvestorID) from tbl_finance_investors WHERE InvestorID = '{id}'";
+            if (id == Guid.Empty)
+            {
+                id = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+                query = $@"select count(InvestorID) from tbl_finance_investors WHERE ClientID = '{id}'";
+            }
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+
     }
 }
