@@ -4,29 +4,66 @@
     <link href="~/assets/node_modules/kendoui/styles/kendo.common.min.css" rel="stylesheet" />
     <link href="~/assets/node_modules/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
     <link href="~/assets/node_modules/kendoui/styles/kendo.flat.mobile.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
 
 
 }
-<div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Manage Grants</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item active">Manage Grants </li>
-            </ol>
 
-            <button type="button" data-toggle="modal" data-target="#NewModel" class="btn btn-info d-none d-lg-block m-l-15 JsUpdateIdea"> Add New </button>
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor">Manage Grants</h4>
+        </div>
+        <div class="col-md-7 align-self-center text-right">
+            <div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active">Manage Grants </li>
+                </ol>
+
+                <button type="button" data-toggle="modal" data-target="#NewModel" class="btn btn-info d-none d-lg-block m-l-15 JsUpdateIdea"> Add New </button>
+            </div>
         </div>
     </div>
-</div>
+    <div class="card">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs profile-tab" role="tablist">
+            <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#Grant" role="tab" aria-selected="true">Grants</a> </li>
+            <li class="nav-item"> <a class="nav-link jsGrantLog" data-toggle="tab" href="#GrantsLog" role="tab" aria-selected="false">Grants Log</a> </li>
 
-<div id="Grid"></div>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="Grant" role="tabpanel">
+                <div class="card-body">
+             
+
+                    <div id="Grid"></div>
+                </div>
+            </div>
+            <!--second tab-->
+            <div class="tab-pane" id="GrantsLog" role="tabpanel">
+                <div class="card-body">
+
+                    <div id="GridLog">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
 
 <div id="NewModel" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="NewForm" method="post">
                 <div class="modal-header">
@@ -52,34 +89,73 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Type:</label>
-                                <input type="text" class="form-control" name="Type" data-parsley-required="true" data-parsley-required-message="Please enter type" />
+                                <input type="text" class="form-control" name="Type" />
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Website:</label>
-                                <input type="text" class="form-control" name="Website" data-parsley-required="true" data-parsley-required-message="Please enter website" />
+                                <input type="text" class="form-control" name="Website" />
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="hidden" class="jsNewSupplierID" name="SupplierID" />
+                                <label for="recipient-name" class="control-label">Assign Supplier:</label>
+                                <select id="_SupplierID" name="_SupplierID" class="selectpicker form-control" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
+                                    @foreach (var item in ViewBag.SupplierList)
+                                    {
+                                        <option value="@item.SupplierID" selected="selected">@item.FirstName @item.LastName</option>
+                                    }
+                                </select>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">Video:</label>
-                            <input type="text" class="form-control" name="VideoUrl" data-parsley-required="true" data-parsley-required-message="Please enter video" />
+
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Provide By:</label>
+                                <input type="text" class="form-control" name="ProvidedBy" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Video:</label>
+                                <input type="text" class="form-control" name="VideoUrl" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">DueDate:</label>
+                                <input name="DueDate" class="form-control" type="date" required data-parsley-required="true" data-parsley-required-message="Please Select Date" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">Description:</label>
                             <textarea class='form-control ideatextarea form-control-line progress-required' name="Description"> </textarea>
                         </div>
+                    </div>
 
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger waves-effect waves-light">Add</button>
-                    </div>
-</form>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger waves-effect waves-light">Add</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -87,7 +163,7 @@
 
 
 <div id="UpdateModel" class="modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="UpdateForm" method="post">
                 <input type="hidden" id="GrantID" name="GrantID" />
@@ -115,26 +191,61 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Type:</label>
-                                <input type="text" class="form-control" id="Type" name="Type" data-parsley-required="true" data-parsley-required-message="Please enter type" />
+                                <input type="text" class="form-control" id="Type" name="Type" />
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Website:</label>
-                                <input type="text" class="form-control" name="Website" data-parsley-required="true" data-parsley-required-message="Please enter website" />
+                                <input type="text" class="form-control" name="Website" />
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="control-label">Video:</label>
-                        <input type="text" class="form-control" id="VideoUrl" name="VideoUrl" data-parsley-required="true" data-parsley-required-message="Please enter video" />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Provide By:</label>
+                                <input type="text" class="form-control" id="ProvidedBy" name="ProvidedBy" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="hidden" class="jsEditSupplierID" name="SupplierID" />
+                                <label for="recipient-name" class="control-label">Assign Supplier:</label>
+                                <select id="_EditSupplierID" name="_SupplierID" class="selectpicker form-control" multiple data-style="form-control btn-secondary" data-dropup-auto="false">
+
+                                    @foreach (var item in ViewBag.SupplierList)
+                                    {
+                                        <option value="@item.SupplierID">@item.FirstName @item.LastName</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="control-label">Description:</label>
-                        <textarea class='form-control ideatextarea form-control-line progress-required' id="Description" name="Description"> </textarea>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Video:</label>
+                                <input type="text" class="form-control" id="VideoUrl" name="VideoUrl" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">DueDate:</label>
+                                <input id="DueDate" name="DueDate" class="form-control" type="date"  required data-parsley-required="true" data-parsley-required-message="Please Select Date" />
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Description:</label>
+                            <textarea class='form-control ideatextarea form-control-line progress-required' id="Description" name="Description"> </textarea>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -150,5 +261,7 @@
 {
     <script src="~/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
     <script src="~/assets/node_modules/kendoui/js/jszip.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <script src="~/assets/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="~/Content/page_script/grant.js?version=@DateTime.Now"></script>
 }
