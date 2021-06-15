@@ -188,5 +188,7 @@ namespace Business_Model.Model
     {
         PENDING, COMPLETED
     }
-    
+
+    public enum PaymentMode
+    { Cash, Checks , DebitCard , CreditCard , ACH , MoneyTransfer}
 }

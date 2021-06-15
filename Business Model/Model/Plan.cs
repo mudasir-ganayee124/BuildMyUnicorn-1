@@ -15,6 +15,7 @@ namespace Business_Model.Model
         public decimal Amount { get; set; }
         public string PlanHeading { get; set; }
         public string Code { get; set; }
+        public string Symbol { get; set; }
         public string PlanSubHeading { get; set; }
         public int DisplayOrder { get; set; }
     }

@@ -265,6 +265,7 @@ namespace BuildMyUnicorn.Business_Layer
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
+             new ParametersCollection { ParamterName = "@OrderID", ParamterValue = Model.OrderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Model.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@PlanID", ParamterValue = Model.PlanID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@OrderStatus", ParamterValue = Model.OrderStatus, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
@@ -710,24 +711,7 @@ namespace BuildMyUnicorn.Business_Layer
             {
                 return "User does not exist";
             }
-        }
-
-        public void SendClientPaymentInvoice(Guid ClientID)
-        {
-            string query = $@"select * from tbl_email_templates where EmailTemplateCode = 'CI'";
-            _EmailTemplates InvoiceTemplate =  SharedManager.GetSingle<_EmailTemplates>(query);
-           // InvoiceTemplate = InvoiceTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Customer.FirstName + " " + Customer.LastName);
-            string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
-
-            //Finally Send Mail and save data Async
-            Thread email_sender_thread = new Thread(delegate ()
-            {
-                EmailSender emailobj = new EmailSender();
-                emailobj.SendMail(SenderEmail, "mudee124@gmail.com", InvoiceTemplate.EmailTemplateSubject.ToString(), InvoiceTemplate.EmailTemplateBody.ToString());
-            });
-            email_sender_thread.IsBackground = true;
-            email_sender_thread.Start();
-        }
+        }    
 
         public string DeleteSurvey(Guid SurveyID)
         {

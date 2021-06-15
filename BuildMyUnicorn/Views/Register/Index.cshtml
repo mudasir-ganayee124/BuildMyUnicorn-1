@@ -135,7 +135,9 @@
                     </div>
                     <table width="100%">
                         <tr>
-                            <td><h3 class="box-title">Register</h3> </td>
+                            <td><h3 class="box-title">Register</h3>
+                                <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
+                            </td>
                             <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; ">STEP 1 OF 2 </span></td>
                         </tr>
                     </table>
@@ -215,7 +217,7 @@
                             <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; ">STEP 2 OF 2 </span></td>
                         </tr>
                     </table>
-                    <h5 class="box-title">$20 per month. Standard access.</h5>
+                    <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
                     <h6>No risk. Cancel any time.</h6>
                     <div class="row">
 
@@ -352,116 +354,6 @@
     <script src="~/page_script/global.js"></script>
     <script src="@Url.ContentVersioned("~/page_script/register.js")"></script>
     <script src="~/dist/js/pages/validation.js"></script>
-    <script>
-        $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); });
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $(".preloader").fadeOut();
-        });
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
-        // ==============================================================
-        // Login and Recover Password
-        // ==============================================================
-        //$('#to-recover').on("click", function () {
-        //    $("#loginform").slideUp();
-        //    $("#recoverform").fadeIn();
-        //});
-
-
-        //$('#to-recover').on("click", function () {
-        //    $("#Signupform").slideUp();
-        //    $("#recoverform").fadeIn();
-        //});
-    </script>
-
-    @*<script>
-
-
-            RevolutCheckout($("#PublicID").val()).then(function (instance) {
-
-                var card = instance.createCardField({
-                    target: document.getElementById("card-field"),
-                    hidePostcodeField: true,
-                    styles: {
-                        default: {
-                            color: "#fff",
-                            "::placeholder": {
-                                color: "#666"
-                            }
-                        },
-                        autofilled: {
-                            color: "#fff"
-                        }
-                    },
-                    onSuccess(message) {
-                        window.alert("Thank you!" + message);
-                        console.log("key", message);
-                    },
-                    onError(error) {
-                        debugger;
-                        window.alert("Oh no :(" + error);
-                        console.log("errorBQE", error);
-                    },
-
-                });
-
-
-                document.getElementById("button-submit")
-                    .addEventListener("click", function () {
-                        card.submit();
-                    });
-            });
-        </script>*@
-
-    @*<script>
-        RevolutCheckout("afc00dc6-ebf1-4048-a536-15e97d2b0426").then(function (RC) {
-          var payButton = document.getElementById("pay-button");
-          // On click open payment pop-up
-          payButton.addEventListener("click", function () {
-            RC.payWithPopup({
-              // (mandatory!) name of the cardholder
-              name: "First Last",
-              // (optional) email of the customer
-              email: "johndoe002@gmail.com",
-              // (optional) phone of the customer
-              phone: "+447950630319",
-              // (optional) billing address of the customer
-              billingAddress: {
-                countryCode: "GB", //if sending billing address, this field is mandatory
-                region: "Greater London",
-                city: "London",
-                streetLine1: "Revolut",
-                streetLine2: "1 Canada Square",
-                postcode: "EC2V 6DN", //if sending billing address, this field is mandatory
-              },
-              // (optional) shipping address of the customer
-              shippingAddress: {
-                countryCode: "GB", //if sending shipping address, this field is mandatory
-                region: "Greater London",
-                city: "London",
-                streetLine1: "Revolut",
-                streetLine2: "1 Canada Square",
-                postcode: "EC2V 6DN", //if sending shipping address, this field is mandatory
-              },
-              // Callback called when payment finished successfully
-              onSuccess() {
-                window.alert("Thank you!");
-              },
-              // Callback in case some error happened
-              onError(message) {
-                window.alert("Oh no :( message" +  message);
-              },
-              // (optional) Callback in case user cancelled a transaction
-              onCancel() {
-                window.alert("Payment cancelled!");
-              },
-            });
-          });
-        });
-          </script>*@
 </body>
 
 </html>

@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
@@ -8,42 +9,54 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Build My Unicorn - Bad Request</title>
-    <link href="~/Content/app_css/bootstrap-4.4.1.css" rel="stylesheet" />
-    <link href="~/Content/app_css/style.css" rel="stylesheet" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <title>BuildMyUNicorn - BadRequest</title>
+
+    <!-- Custom CSS -->
+    <link href="~/dist/css/style.min.css" rel="stylesheet">
+    <!-- page css -->
+    <link href="~/dist/css/pages/error-pages.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body class="login-bg">
-    <div class="container">
-        <div class="login-container">
 
-            <div class="row">
-
-                <div class="col-xl-6 mx-auto">
-                    <div class="card">
-                        <div class="card-body">
-
-                            <div class="text-center" id="signup-success">
-                                <div class="mb-3 mb-md-4 mb-lg-5 "><img src="~/Content/images/buil-my-unicorn-logo.png" alt="Build My Unicorn Logo" class="img-fluid logo"></div>
-                                <h1 class="mb-3 mb-md-4 mb-lg-5">Bad Request!</h1>
-
-                                <p>We  have Received Bad Request. Please return to login </p>
-                                <p>Cheers!</p>
-                                <hr>
-                                <div>Go back to <a href="~/Login">Login</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
+<body class="skin-default-dark fixed-layout">
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <section id="wrapper" class="error-page">
+        <div class="error-box">
+            <div class="error-body text-center">
+                <h1>400</h1>
+                <h3 class="text-uppercase">Page Not Found !</h3>
+                <p class="text-muted m-t-30 m-b-30">YOU SEEM TO BE TRYING TO FIND HIS WAY HOME</p>
+                <a href="~/Login" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back to home</a>
             </div>
+
         </div>
-    </div>
+    </section>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="~/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/assets/node_modules/popper/popper.min.js"></script>
+    <script src="~/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--Wave Effects -->
+    <script src="~/dist/js/waves.js"></script>
 </body>
 
-<!--container end.//-->
 </html>
-
-
-

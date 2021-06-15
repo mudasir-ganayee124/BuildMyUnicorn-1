@@ -16,20 +16,38 @@ namespace BuildMyUnicorn.Controllers
         // GET: Signup
         public ActionResult Index(string id)
         {
-            if (Request.QueryString["refid"] != null)
+            try
             {
-                Guid AffiliateLinkID = Guid.Parse(Encryption.DecryptGuid(Request.QueryString["refid"]));
-                ViewBag.AffiliateLinkID = AffiliateLinkID;
+                if (Request.QueryString["refid"] == null)
+                {
+                    if (!string.IsNullOrEmpty(id))
+                    {
+
+                        Session.Add("PlanID", id);
+                    }
+                    var PlanID = Session["PlanID"].ToString();
+                    ViewBag.Plan = new PaymentOrderManager().GetSinglePlan(Guid.Parse(PlanID));
+                    ViewBag.PlanID = PlanID;
+
+                }
+                else
+                {
+                    Guid AffiliateLinkID = Guid.Parse(Encryption.DecryptGuid(Request.QueryString["refid"]));
+                    ViewBag.AffiliateLinkID = AffiliateLinkID;
+                    return View("AffilateView");
+                }
+                return View();
             }
-            ViewBag.PlanID = id;
-            return View();
+            catch (Exception e)
+            {
+                return PartialView("_BadRequest");
+            }
         }
         public ActionResult SignupSuccess(string email)
         {
             ViewBag.Email = email.ToString();
             return View();
         }
-
 
         public ActionResult ResetPasswordEmailSuccess()
         {
@@ -71,7 +89,6 @@ namespace BuildMyUnicorn.Controllers
             return View();
         }
 
-
         public ActionResult ResetPassword()
         {
 
@@ -102,7 +119,6 @@ namespace BuildMyUnicorn.Controllers
             }
         }
 
-
         public string UpdatePassword(Client Model)
         {
             new ClientManager().UpdateCustomerEmailConfirmation(Model);
@@ -117,11 +133,9 @@ namespace BuildMyUnicorn.Controllers
             return new ClientManager().UpdateCustomerPassword(Model);
         }
 
-
         public async  Task<JsonResult> AddCustomer(Client Model)
         {
-            //Order order = new ClientManager().GetClientOrder(Guid.Parse("C51A8CB6-E702-4D9A-A79A-4D01352D9771"));
-            //return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);
+            string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
             var Client = new ClientManager().GetSingleClientByEmail(Model.Email);
             if (Client == null)
             {
@@ -131,15 +145,18 @@ namespace BuildMyUnicorn.Controllers
                 if (returnValue == "OK")
                 {
                    
-                    string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
+                    
                     string PublicId = await new ClientManager().AddOrderinGateway(Model, CustomerID);
+               
                     Order OrderObj = new Order();
+                    OrderObj.OrderID = Guid.NewGuid();
                     OrderObj.ClientID = Model.ClientID;
                     OrderObj.OrderStatus = OrderStatus.PENDING;
                     OrderObj.PlanID = Model.PlanID;
                     OrderObj.GatewayClientID = Guid.Parse(CustomerID);
                     OrderObj.GatewayOrderID = Guid.Parse(PublicId);
                     OrderObj.OrderPublicID = Guid.Parse(PublicId);
+                    Session.Add("OrderID", OrderObj.OrderID);
                     new ClientManager().AddNewOrder(OrderObj);
                     Order order = new ClientManager().GetClientOrder(Model.ClientID);
                     return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);
@@ -162,7 +179,7 @@ namespace BuildMyUnicorn.Controllers
 
         public void SendInvoice(Guid ClientID)
         {
-            new ClientManager().SendClientPaymentInvoice(ClientID);
+            new  PaymentOrderManager().SendClientPaymentInvoice(ClientID);
         }
 
         public JsonResult GetCountryList()
@@ -172,7 +189,6 @@ namespace BuildMyUnicorn.Controllers
             return Json(new { country = countryList }, JsonRequestBehavior.AllowGet);
         }
 
-       
-
+      
     }
 }

@@ -48,11 +48,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ALMS DAL">
-      <HintPath>..\packages\Data Access Layer\ALMS DAL.dll</HintPath>
+      <HintPath>..\packages\Dapper\ALMS DAL.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Data Access Layer\Dapper.dll</HintPath>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />

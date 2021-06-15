@@ -1,6 +1,7 @@
 ﻿
 $(function () {
     $(".preloader").fadeOut();
+    $('[data-toggle="tooltip"]').tooltip()
     $.ajax({
         url: GetBaseURL() + "Register/GetCountryList",
         type: 'GET',
@@ -16,6 +17,7 @@ $(function () {
             $('#CountryID').html(options).trigger('change');
         }
     });
+    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 });
 
 $('#frmRegister').parsley();
@@ -45,6 +47,7 @@ $("#frmRegister").submit(function (e) {
             {
                 $('.alert').show();
                 $("#responseMessage").text(response.msg);
+                
             }
                          
         },
