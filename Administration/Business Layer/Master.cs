@@ -102,7 +102,11 @@ namespace Administration.Business_Layer
             return obj.GetSingle<Grants>(CommandType.StoredProcedure, "sp_get_single_grant", parameters);
 
         }
-
+        public IEnumerable<Currency> GetCurrencyList()
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            return obj.GetList<Currency>(CommandType.StoredProcedure, "sp_get_all_currency", null);
+        }
 
         public ModuleVideo GetSingleModuleVideo(Guid ModuleVideoID)
         {
@@ -248,11 +252,7 @@ namespace Administration.Business_Layer
             return result > 0 ? "OK" : Model.ModuleName + " already exists";
         }
 
-
-
-
-
-
+       
         public string UpdateOptionMaster(Option Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));

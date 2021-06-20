@@ -160,6 +160,7 @@
     <Compile Include="Business Layer\PlanManager.cs" />
     <Compile Include="Business Layer\SharedManager.cs" />
     <Compile Include="Business Layer\SupplierManager.cs" />
+    <Compile Include="Business Layer\TransactionManager.cs" />
     <Compile Include="Controllers\AppnedixController.cs" />
     <Compile Include="Controllers\BusinessPlacementController.cs" />
     <Compile Include="Controllers\ChargeController.cs" />
@@ -183,9 +184,11 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\RecurringOrdersController.cs" />
     <Compile Include="Controllers\SellingController.cs" />
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\WorkLocationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4089,6 +4092,7 @@
     <Content Include="Content\page_script\selling.js" />
     <Content Include="Content\page_script\startup.js" />
     <Content Include="Content\page_script\technology.js" />
+    <Content Include="Content\page_script\transaction.js" />
     <Content Include="Content\page_script\work-location.js" />
     <Content Include="Content\parsley.js" />
     <Content Include="dist\css\custom-style.css" />
@@ -6203,6 +6207,9 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Gateway\Index.cshtml" />
     <Content Include="Views\Plan\Index.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\RecurringOrders\Index.cshtml" />
+    <Content Include="Views\Plan\RecurringPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
