@@ -15,12 +15,12 @@ namespace BuildMyUnicorn.Controllers
 
     public class DashboardController : WebController
     {
-        private readonly ToDoTaskManager _todoManager;
+        //private readonly ToDoTaskManager _todoManager;
 
-        public DashboardController()
-        {
-            _todoManager = new ToDoTaskManager();
-        }
+        //public DashboardController()
+        //{
+        //    _todoManager = new ToDoTaskManager();
+        //}
 
         // GET: Dashboard
         public ActionResult Index()
@@ -51,21 +51,21 @@ namespace BuildMyUnicorn.Controllers
             return PartialView("_CountryGrantPartial", new FinanceManager().GetCountGrantByMonth(Month, CountryID));
         }
 
-        public ActionResult TodoList()
-        {
-            ViewBag.AssignedTo = new SelectList(_todoManager.GetTeamMembers(), "Key", "Value");
-            return PartialView("_ToDoList", _todoManager.GetTodoList());
-        }
+        //public ActionResult TodoList()
+        //{
+        //    ViewBag.AssignedTo = new SelectList(_todoManager.GetTeamMembers(), "Key", "Value");
+        //    return PartialView("_ToDoList", _todoManager.GetTodoList());
+        //}
 
-        public ActionResult AssignedToDoList()
-        {
-            return PartialView("_AssignedToDo", _todoManager.GetAssignedToDoList());
-        }
+        //public ActionResult AssignedToDoList()
+        //{
+        //    return PartialView("_AssignedToDo", _todoManager.GetAssignedToDoList());
+        //}
 
-        public JsonResult UpdateToDoStatus(ToDoStatus status, Guid toDoTaskId)
-        {
-            return Json(_todoManager.UpdateToDoStatus(status, toDoTaskId));
-        }
+        //public JsonResult UpdateToDoStatus(ToDoStatus status, Guid toDoTaskId)
+        //{
+        //    return Json(_todoManager.UpdateToDoStatus(status, toDoTaskId));
+        //}
 
         public void GenerateLoanFile()
         {

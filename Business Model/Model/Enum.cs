@@ -186,9 +186,19 @@ namespace Business_Model.Model
     }
     public enum OrderStatus
     {
-        PENDING, COMPLETED
+        Completed, Pending
+    }
+
+    public enum TransactionStatus
+    { 
+     Success, Failed
     }
 
     public enum PaymentMode
     { Cash, Checks , DebitCard , CreditCard , ACH , MoneyTransfer}
+
+    public enum Frequency
+    { 
+       None, Daily, Weekly, Biweekly, Monthly, SemiMonthly, Quarterly
+    }
 }

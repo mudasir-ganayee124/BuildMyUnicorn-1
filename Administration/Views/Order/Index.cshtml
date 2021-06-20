@@ -6,6 +6,7 @@
 
 
 }
+
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Order</h4>
@@ -15,15 +16,45 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Order</a></li>
-            
+
             </ol>
 
-          
+
         </div>
     </div>
 </div>
+<div class="card">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs profile-tab" role="tablist">
+        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#Order" role="tab" aria-selected="true">Order</a> </li>
+        <li class="nav-item"> <a class="nav-link jsRecurringOrder" data-toggle="tab" href="#RecurringOrder" role="tab" aria-selected="false">Recurring Order</a> </li>
+        <li class="nav-item"> <a class="nav-link jsInvoices" data-toggle="tab" href="#Invoices" role="tab" aria-selected="false">Invoices</a> </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="Order" role="tabpanel">
+            <div class="card-body">
 
-<div id="Grid"></div>
+
+                <div id="GridOrder"></div>
+            </div>
+        </div>
+        <!--second tab-->
+        <div class="tab-pane" id="RecurringOrder" role="tabpanel">
+            <div class="card-body">
+
+                <div id="GridRecurringOrder"></div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="Invoices" role="tabpanel">
+            <div class="card-body">
+
+                <div id="GridInvoices"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section PageScript

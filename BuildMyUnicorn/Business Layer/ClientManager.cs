@@ -252,6 +252,7 @@ namespace BuildMyUnicorn.Business_Layer
             reqOrder.CustomerEmail = Model.Email;
             reqOrder.Description = Plan.PlanName.ToString();
             reqOrder.MerchantCustomerExtRef = CustomerID.ToString();
+            reqOrder.CustomerID = CustomerID;
             reqOrder.MerchantOrderExtRef = CustomerID.ToString();
             reqOrder.SettlementCurrency = Plan.Code.ToString();
             Result<CreateOrderReq> order = await new RevolutManager().Post<CreateOrderReq>("orders", gateway, reqOrder);

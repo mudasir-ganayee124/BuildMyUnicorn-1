@@ -35,6 +35,9 @@ namespace Business_Model.Model
         [JsonProperty("merchant_order_ext_ref")]
         public string MerchantOrderExtRef { get; set; }
 
+        [JsonProperty("customer_id")]
+        public string CustomerID { get; set; }
+
         [JsonProperty("customer_email")]
         public string CustomerEmail { get; set; }
 

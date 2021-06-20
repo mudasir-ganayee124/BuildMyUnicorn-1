@@ -7,7 +7,7 @@ $(document).ready(() => {
     $("#liManage").addClass("active");
     $("#liManage_Startup").addClass("active");
 
-    $("#Grid").kendoGrid({
+    $("#GridOrder").kendoGrid({
         dataSource: {
             type: "json",
             transport: {
@@ -65,7 +65,7 @@ $(document).ready(() => {
             field: "OrderStatus",
             title: "Status",
             width: 100,
-            template: '#if(data.OrderStatus == "0"){#<span class="label label-danger"> Pending</span>#}else if(data.AccountStatus == "1"){#<span class="label label-info">Completed</span>#}else if(data.AccountStatus == "2"){#<span class="label label-danger">Rejected</span>#}else if(data.AccountStatus == "3"){#<span class="label label-danger">Progress</span>#}#',
+             template: '#if(data.OrderStatus == "1"){#<span class="label label-danger"> Pending</span>#}else if(data.OrderStatus == "0"){#<span class="label label-info">Completed</span>#}else if(data.OrderStatus == "2"){#<span class="label label-danger">Rejected</span>#}else if(data.OrderStatus == "3"){#<span class="label label-danger">Progress</span>#}#',
             filterable: false
 
          },

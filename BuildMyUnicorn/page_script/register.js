@@ -37,7 +37,8 @@ $("#frmRegister").submit(function (e) {
                 $("#frmRegister").slideUp();
                 $("#frmPayment").fadeIn();
                 $("#PublicID").val(response.data.OrderPublicID);
-                $("#ClientID").val(response.data.ClientID);               
+                $("#ClientID").val(response.data.ClientID);
+                $("#OrderID").val(response.data.OrderID);
                 RevolutCheckoutPayment(response.data.OrderPublicID);
                // $('<form action="Register/SignupSuccess/" method="post"><input type="text"  name="email" value="' + $("#Email").val() +'"/></form>').appendTo('body').submit().remove();
                
@@ -80,6 +81,7 @@ function RevolutCheckoutPayment(OrderPublicID)
             var card = instance.createCardField({
                 target: document.getElementById("card-field"),
                 hidePostcodeField: true,
+                savePaymentMethodFor: 'merchant',
                 styles: {
                     default: {
                         color: "#fff",
@@ -98,9 +100,13 @@ function RevolutCheckoutPayment(OrderPublicID)
                    // console.log("key", message);
                 },
                 onError(error) {
-                    debugger;
-                    window.alert("Oh no :(" + error);
-                    console.log("errorBQE", error);
+                    $("#button-submit").removeClass("hide");
+                    $("#button-wait").addClass("hide");
+                    _fn_AddPaymentLog(error);
+                    $('.alert').show();
+                    $("#responsePaymentMessage").text(error);
+                    //window.alert("Oh no :(" + error);
+                    //console.log("errorBQE", error);
                 },
 
             });
@@ -108,6 +114,8 @@ function RevolutCheckoutPayment(OrderPublicID)
 
             document.getElementById("button-submit")
                 .addEventListener("click", function () {
+                    $("#button-submit").addClass("hide");
+                    $("#button-wait").removeClass("hide");
                     card.submit();
                 });
         });
@@ -139,5 +147,29 @@ function _fn_SendCustomerInvoice()
             $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
         }
     });  
+}
+
+function _fn_AddPaymentLog(PaymentStatus)
+{
+    $.ajax({
+        url: GetBaseURL() + "Register/AddTransactionLog",
+        method: "POST",
+        data: { OrderID: $("#OrderID").val(), PaymentStatus: PaymentStatus, TransactionStatus : 'Failed'}, //$('#loginform').serialize(),
+        success: function (response) {
+            // if (response == "OK") {
+
+           // $('<form action="Register/SignupSuccess/" method="post"><input type="text"  name="email" value="' + $("#Email").val() + '"/></form>').appendTo('body').submit().remove();
+
+            // }
+            // else {
+            //    alert(response);
+            //  $(".erorLabel").removeClass("invisible");
+            //$(".errorMessage").text(response);}
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
 }
 

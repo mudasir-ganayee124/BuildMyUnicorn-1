@@ -7,24 +7,24 @@
 
 
 }
-<input type="hidden" id="ModuleID" name="ModuleID" value="" />
+
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Manage Module Course</h4>
+        <h4 class="text-themecolor">Recurring Orders</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
 
-                <li class="breadcrumb-item active">Manage Module Course </li>
+                <li class="breadcrumb-item active">Recurring Orders </li>
             </ol>
 
             <button type="button" data-toggle="modal" data-target="#NewModel" class="btn btn-info d-none d-lg-block m-l-15 JsUpdateIdea"> Add New </button>
         </div>
     </div>
 </div>
-<input type="hidden" id="ss" value="6e083f05-fd69-44ad-9bec-bd2162fc9e6b" />
+
 <div id="Grid"></div>
 
 <div id="NewModel" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -42,16 +42,16 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Module:</label>
-                                @{
+                                @*@{
                                     List<Business_Model.Model.Modules> ModulesList = ViewBag.Modules as List<Business_Model.Model.Modules>;
-                                }
+                                }*@
                                 <select class="form-control custom-select" id="ModuleID" name="ModuleID">
                                     <option>--Select Module--</option>
 
-                                    @foreach (var item in ModulesList.Select(y => new { y.ID, y.ModuleID, y.DisplayAs }).Distinct().OrderBy(o=>o.ModuleID).ToList())
+                                    @*@foreach (var item in ModulesList.Select(y => new { y.ID, y.ModuleID, y.DisplayAs }).Distinct().OrderBy(o => o.ModuleID).ToList())
                                     {
                                         <option value="@item.ModuleID">  @item.DisplayAs </option>
-                                    }
+                                    }*@
                                 </select>
                             </div>
 
@@ -69,7 +69,6 @@
                                 <label for="recipient-name" class="control-label">Module Section:</label>
 
                                 <select class="form-control custom-select" id="ModuleSectionID" name="ModuleSectionID">
-                                   
                                 </select>
                             </div>
                             <div class="form-group">
@@ -123,14 +122,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Module:</label>
-                                
+
                                 <select class="form-control custom-select" id="EditModuleID" name="ModuleID">
                                     <option>--Select Module--</option>
 
-                                    @foreach (var item in ModulesList.Select(y => new { y.ID, y.ModuleID, y.DisplayAs }).Distinct().OrderBy(o => o.ModuleID).ToList())
+                                    @*@foreach (var item in ModulesList.Select(y => new { y.ID, y.ModuleID, y.DisplayAs }).Distinct().OrderBy(o => o.ModuleID).ToList())
                                     {
                                         <option value="@item.ModuleID">  @item.DisplayAs </option>
-                                    }
+                                    }*@
                                 </select>
                             </div>
 
@@ -183,11 +182,9 @@
     </div>
 </div>
 
-
-
 @section PageScript
 {
     <script src="~/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
     <script src="~/assets/node_modules/kendoui/js/jszip.min.js"></script>
-    <script src="~/Content/page_script/module-course.js?version=@DateTime.Now"></script>
+    <script src="~/Content/page_script/recurring-orders.js?version=@DateTime.Now"></script>
 }

@@ -135,7 +135,7 @@ namespace BuildMyUnicorn.Controllers
 
         public async  Task<JsonResult> AddCustomer(Client Model)
         {
-            string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
+           
             var Client = new ClientManager().GetSingleClientByEmail(Model.Email);
             if (Client == null)
             {
@@ -144,14 +144,14 @@ namespace BuildMyUnicorn.Controllers
                 string returnValue = new ClientManager().AddNewClient(Model);
                 if (returnValue == "OK")
                 {
-                   
-                    
+
+                    string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
                     string PublicId = await new ClientManager().AddOrderinGateway(Model, CustomerID);
                
                     Order OrderObj = new Order();
                     OrderObj.OrderID = Guid.NewGuid();
                     OrderObj.ClientID = Model.ClientID;
-                    OrderObj.OrderStatus = OrderStatus.PENDING;
+                    OrderObj.OrderStatus = OrderStatus.Pending;
                     OrderObj.PlanID = Model.PlanID;
                     OrderObj.GatewayClientID = Guid.Parse(CustomerID);
                     OrderObj.GatewayOrderID = Guid.Parse(PublicId);
@@ -171,6 +171,15 @@ namespace BuildMyUnicorn.Controllers
 
         }
 
+        public string AddTransactionLog(Guid OrderID, string PaymentStatus, TransactionStatus TransactionStatus)
+        {
+            TransactionLog log = new TransactionLog();
+            log.MerchantTransactionStatus = PaymentStatus;
+            log.OrderID = OrderID;
+            log.TransactionStatus = TransactionStatus;
+            return new PaymentOrderManager().AddTransactionLog(log);
+        }
+
         public string SendPasswordResetLink(String Email)
         {
 
@@ -181,6 +190,8 @@ namespace BuildMyUnicorn.Controllers
         {
             new  PaymentOrderManager().SendClientPaymentInvoice(ClientID);
         }
+
+
 
         public JsonResult GetCountryList()
         {

@@ -11,6 +11,7 @@ $("#loginform").submit(function (e) {
         method: "POST",
         data: $('#loginform').serialize(),
         success: function (response) {
+            alert(response);
             if (response == "OK") {
                
                 window.location.replace(GetBaseURL() + "Dashboard");

@@ -13,29 +13,30 @@ namespace BuildMyUnicorn.Business_Layer
 {
     public class PaymentOrderManager
     {
-        public string AddPayment(_Payment Model)
+        public string AddTransaction(Transaction Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {              
-                new ParametersCollection { ParamterName = "@PaymentMode", ParamterValue = Model.PaymentMode, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Amount", ParamterValue = Model.Amount, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@OrderID", ParamterValue = Model.OrderID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@PaymentMode", ParamterValue = Model.PaymentMode, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Amount", ParamterValue = Model.Amount, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@OrderID", ParamterValue = Model.OrderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              
             };
 
-            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_order", parameters);
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_transaction", parameters);
             if (result > 0) return "OK"; else return "Error in adding order";
 
         }
-        public string AddPaymentLog(PaymentLog Model)
+        public string AddTransactionLog(TransactionLog Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@PaymentMode", ParamterValue = Model.PaymentStatus, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@PaymentStatus", ParamterValue = Model.OrderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+                new ParametersCollection { ParamterName = "@OrderID", ParamterValue = Model.OrderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@TransactionStatus", ParamterValue = Model.TransactionStatus, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@MerchantTransactionStatus", ParamterValue = Model.MerchantTransactionStatus, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input }
              
             };
-            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_order_log", parameters);
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_transaction_log", parameters);
             if (result > 0) return "OK"; else return "Error in adding order log";
 
         }
@@ -56,17 +57,34 @@ namespace BuildMyUnicorn.Business_Layer
             Order Order = SharedManager.GetSingle<Order>(queryOrder);
             string queryPlan = $@"select * from tbl_plan where PlanID = '{Order.PlanID}'";
             Plan Plan = SharedManager.GetSingle<Plan>(queryPlan);
-            Invoice = Invoice.Replace("@Date", DateTime.Now.ToString()).Replace("@OrderID", Order.OrderID.ToString()).Replace("@Amount", Plan.Amount.ToString());
+            Invoice = Invoice.Replace("@Date", Order.OrderDateTime.ToString()).Replace("@OrderID", Order.OrderID.ToString()).Replace("@Amount", Plan.Amount.ToString()).Replace("@Phone", client.Phone).Replace("@Email",  client.Email).Replace("@Name", client.FirstName + " " + client.LastName).Replace("@PlanName", Plan.PlanName);
             string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
+            Thread Transaction = new Thread(delegate () {
+                Transaction Model = new Transaction();
+                Model.PaymentMode = PaymentMode.CreditCard;
+                Model.Amount = Plan.Amount;
+                Model.OrderID = Order.OrderID;
+                new PaymentOrderManager().AddTransaction( Model);
+            });
+
+            Thread TransactionLog = new Thread(delegate () {
+                TransactionLog log = new TransactionLog();
+                log.MerchantTransactionStatus = "Completed";
+                log.OrderID = Order.OrderID;
+                log.TransactionStatus = TransactionStatus.Success;
+                new PaymentOrderManager().AddTransactionLog(log);
+            });
 
             //Finally Send Mail and save data Async
             Thread email_sender_thread = new Thread(delegate ()
             {
                 EmailSender emailobj = new EmailSender();
-                emailobj.SendMail(SenderEmail, client.Email.ToString(), InvoiceTemplate.EmailTemplateSubject.ToString(), InvoiceTemplate.EmailTemplateBody.ToString());
+                emailobj.SendMail(SenderEmail, client.Email.ToString(), InvoiceTemplate.EmailTemplateSubject.ToString(), Invoice.ToString());
             });
             email_sender_thread.IsBackground = true;
             email_sender_thread.Start();
+            Transaction.Start();
+            TransactionLog.Start();
         }
     }
 }
