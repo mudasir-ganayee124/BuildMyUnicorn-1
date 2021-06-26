@@ -13,7 +13,8 @@ namespace Administration.Business_Layer
     {
         public IEnumerable<Plan> GetAllPlan()
         {
-            var query = $@"select * from tbl_plan";
+            var query = $@"select tbl_plan.* ,tbl_plan_recurring.PlanRecurringID, tbl_plan_recurring.Frequency, tbl_plan_recurring.ProcessAutomatically FROM tbl_plan
+                        LEFT JOIN tbl_plan_recurring ON tbl_plan.PlanID = tbl_plan_recurring.PlanID where IsActive = 1 and IsDeleted = 0";
             return SharedManager.GetList<Plan>(query).ToList();
 
         }
@@ -27,7 +28,12 @@ namespace Administration.Business_Layer
             Plan.PlanAttribute = PlanAttribute;
             return Plan;
         }
-
+        public PlanRecurring GetPlanRecurring(Guid PlanRecurringID)
+        {
+            var query= $@"select * from tbl_plan_recurring where PlanRecurringID = '{PlanRecurringID}'";
+             return SharedManager.GetSingle<PlanRecurring>(query);
+   
+        }
         public string AddPlan(Plan Model)
         {
 
@@ -38,6 +44,7 @@ namespace Administration.Business_Layer
              new ParametersCollection { ParamterName = "@CurrencyID", ParamterValue = Model.CurrencyID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Amount", ParamterValue = Model.Amount, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@DisplayOrder", ParamterValue = Model.DisplayOrder, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Duration", ParamterValue = Model.Duration, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@PlanHeading", ParamterValue = Model.PlanHeading, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@PlanSubHeading", ParamterValue = Model.PlanSubHeading, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Url", ParamterValue = Model.Url, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -72,6 +79,13 @@ namespace Administration.Business_Layer
 
             }
             return result > 0 ? "OK" : Model.PlanName + " already exists";
+        }
+
+        public string UpdateRecurringPlan(PlanRecurring Model)
+        {
+            var query = $@"Update tbl_plan_recurring SET Frequency = '{(Int16)Model.Frequency}',  ProcessAutomatically = '{Model.ProcessAutomatically}' WHERE PlanRecurringID = '{Model.PlanRecurringID}'";
+            var result  = SharedManager.ExecuteScalar<int>(query);
+            return result == 0 ? "OK" : "Recurring Update failed";
         }
     }
 }

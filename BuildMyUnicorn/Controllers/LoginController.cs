@@ -43,8 +43,21 @@ namespace BuildMyUnicorn.Controllers
 
         public ActionResult Logout()
         {
+            if (Session["HeartBeat"] != null)
+            {
+                Session.Remove("HeartBeat");
+            }
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Login");
+        }
+
+        public void HeartBeat()
+        {
+            if (Session["HeartBeat"] != null)
+            {
+                Session["HeartBeat"] = true;
+            }
+        
         }
     }
 }

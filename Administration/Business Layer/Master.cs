@@ -55,6 +55,17 @@ namespace Administration.Business_Layer
             return SharedManager.GetList<GrantLog>(query);
         }
 
+        public IEnumerable<_EmailTemplates> GetAllEmailTemplates()
+        {
+            var query = $@"select * from tbl_email_templates";
+            return SharedManager.GetList<_EmailTemplates>(query);
+        }
+
+        public _EmailTemplates GetSingleEmailTemplate(Guid EmailTemplateID)
+        {
+            var query = $@"select * from tbl_email_templates where EmailTemplateID = '{EmailTemplateID}'";
+            return SharedManager.GetSingle<_EmailTemplates>(query);
+        }
         public IEnumerable<ModuleCourse> GetModuleCourseList()
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));

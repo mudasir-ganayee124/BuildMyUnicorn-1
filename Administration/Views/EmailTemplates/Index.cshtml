@@ -1,0 +1,94 @@
+﻿@section PageStyle
+{
+    <link href="/assets/node_modules/kendoui/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="/assets/node_modules/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
+    <link href="/assets/node_modules/kendoui/styles/kendo.flat.mobile.min.css" rel="stylesheet" />
+
+
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Manage Startup</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Masters</a></li>
+                <li class="breadcrumb-item active">Manage Email Templates </li>
+            </ol>
+
+
+        </div>
+    </div>
+</div>
+<div class="row" id="validation">
+    <div class="col-12">
+        <div class="card wizard-content">
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="wint1">Select Email Template </label>
+                        @Html.DropDownList("rr", new SelectList(@ViewBag.emailtemplates, "EmailTemplateID", "EmailTemplateCode"), "--select--", new { @class = "form-control", id = "ddlEmp" })
+                    </div>
+                </div>
+
+                <div id="divtemplatedetail" style="display:nonee;">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="field-2" class="control-label">Subject</label>
+                            <input type="text" class="form-control" id="EmailTemplateSubject" name="EmailTemplateSubject" placeholder="Enter Subject" data-parsley-required="true" data-parsley-required-message="Please Enter Subject!">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="field-2" class="control-label">Body</label>
+                            <textarea type="text" class="form-control" id="EmailTemplateBody" name="EmailTemplateBody"> </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group no-margin">
+                            <div class="checkbox checkbox-custom">
+                                <input id="EmailTemplateActive" name="EmailTemplateActive" type="checkbox">
+                                <label for="EmailTemplateActive">Template Active</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="field-2" class="control-label">Last Updated By</label>
+                            <input type="text" class="form-control" id="EmailTemplateUpdatedBy" name="EmailTemplateUpdatedBy" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="field-2" class="control-label">Last Update Date</label>
+                            <input type="text" class="form-control" id="EmailTemplateUpdatedDate" name="EmailTemplateUpdatedDate" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info waves-effect waves-light" id="btnAdd">Update Template</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section PageScript
+{
+    <script src="/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
+    <script src="/assets/node_modules/kendoui/js/jszip.min.js"></script>
+    <script src="~/Content/page_script/email-templates.js?version=@DateTime.Now"></script>
+}

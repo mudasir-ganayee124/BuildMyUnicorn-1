@@ -12,6 +12,7 @@ namespace BuildMyUnicorn.Controllers
         {
             if (User.Identity.IsAuthenticated == true)
             {
+           
                 Client Clientobj = new ClientManager().GetClient(Guid.Parse(User.Identity.Name));
                 ViewBag.Client = Clientobj;
               

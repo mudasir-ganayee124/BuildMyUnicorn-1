@@ -55,7 +55,18 @@ namespace BuildMyUnicorn.Business_Layer
             return obj.GetList<LanguageModule>(CommandType.StoredProcedure, "sp_get_default_language_by_module", parameters);
 
         }
+        public IEnumerable<Plan> GetAllPlan()
+        {
+            var query = $@"select tbl_plan.* FROM tbl_plan where IsActive = 1 and IsDeleted = 0";
+            var planlist = SharedManager.GetList<Plan>(query).ToList();
+            foreach (var item in planlist)
+            {
+                var queryFeature = $@"select * from tbl_plan_attribute where PlanID = '{item.PlanID}'";
+                item.PlanAttribute =  SharedManager.GetList<PlanAttribute>(queryFeature).ToList();
+            }
+            return planlist;
 
+        }
         public IEnumerable<MasterCommon> GetOptionMasterList(int Type)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));

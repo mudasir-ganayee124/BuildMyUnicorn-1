@@ -57,6 +57,25 @@ namespace Business_Model.Model
         public string PublicId { get; set; }
     }
 
+    public class CreateOrderRecrrring
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("customer_id")]
+        public string CustomerID { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("public_id")]
+        public string PublicId { get; set; }
+
+    }
+
     public class OrderResp
     {
         [JsonProperty("id")]

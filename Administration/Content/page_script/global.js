@@ -41,7 +41,6 @@
 })(jQuery);
 
 $.fn.extend({
-
     "ajaxCall": function (options) {
 
         var settings = $.extend({
@@ -74,6 +73,7 @@ $.fn.extend({
     },
 
     "successMsg": function (msg) {
+      
         swal("Success!", msg, "success");
        
 

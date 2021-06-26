@@ -41,6 +41,10 @@ namespace Administration.Controllers
             return Json(new PlanManager().GetSinglePlan(ID), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetPlanRecurring(Guid ID)
+        {
+            return Json(new PlanManager().GetPlanRecurring(ID), JsonRequestBehavior.AllowGet);
+        }
         public string Add(Plan Model)
         {
             Model.EntityState = EntityState.New;
@@ -52,6 +56,11 @@ namespace Administration.Controllers
         {
             Model.EntityState = EntityState.Old;
             return new PlanManager().AddPlan(Model);
+        }
+
+        public string UpdateRecurring(PlanRecurring Model)
+        {
+            return new PlanManager().UpdateRecurringPlan(Model);
         }
     }
 }

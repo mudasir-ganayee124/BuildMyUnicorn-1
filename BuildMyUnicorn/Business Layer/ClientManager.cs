@@ -469,8 +469,11 @@ namespace BuildMyUnicorn.Business_Layer
 
                         if (Encryption.Encrypt(Model.Password) == Customer.Password)
                         {
-
-                            FormsAuthentication.SetAuthCookie(Customer.ClientID.ToString(), true); return "OK";
+                            
+                            FormsAuthentication.SetAuthCookie(Customer.ClientID.ToString(), true);
+                            HttpContext.Current.Session["HeartBeat"] = true;
+                            return "OK";
+                          
                         }
                         else
                         {

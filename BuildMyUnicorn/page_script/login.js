@@ -10,8 +10,7 @@ $("#loginform").submit(function (e) {
         url: GetBaseURL() + "Login/ValidateUser",
         method: "POST",
         data: $('#loginform').serialize(),
-        success: function (response) {
-            alert(response);
+        success: function (response) {      
             if (response == "OK") {
                
                 window.location.replace(GetBaseURL() + "Dashboard");

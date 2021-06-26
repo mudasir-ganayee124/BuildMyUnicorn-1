@@ -199,6 +199,6 @@ namespace Business_Model.Model
 
     public enum Frequency
     { 
-       None, Daily, Weekly, Biweekly, Monthly, SemiMonthly, Quarterly
+       None, Daily, Weekly, Biweekly, Monthly, SemiMonthly, Quarterly, Yearly
     }
 }

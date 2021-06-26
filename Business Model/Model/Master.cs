@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Business_Model.Model
 {
@@ -150,10 +151,11 @@ namespace Business_Model.Model
 
     public class _EmailTemplates :Common
     {
-        public int EmailTemplateID { get; set; }
+        public Guid EmailTemplateID { get; set; }
         public string EmailTemplateName { get; set; }
         public string EmailTemplateCode { get; set; }
         public string EmailTemplateSubject { get; set; }
+        [AllowHtml]
         public string EmailTemplateBody { get; set; }
     }
 }

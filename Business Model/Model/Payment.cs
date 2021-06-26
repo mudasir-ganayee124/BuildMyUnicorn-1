@@ -26,11 +26,9 @@ namespace Business_Model.Model
         public DateTime TransactionDateTime { get; set; }
         public string FirstName { get; set;}
         public string LastName { get; set; }
-
         public string StartupName { get; set; }
         public string PlanName { get; set; }
         public string Email { get; set; }
-
         public string Symbol { get; set; }
     }
     public class TransactionLog

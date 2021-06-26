@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business_Model.Model
 {
-   public class Order
+    public class Order
     {
         public Guid OrderID { get; set; }
         public Guid ClientID { get; set; }
@@ -33,4 +33,24 @@ namespace Business_Model.Model
         public decimal Amount { get; set; }
         public string Code { get; set; }
     }
+
+    public class RecurringOrder
+    {
+        public Guid OrderID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PlanName { get; set; }
+        public string StartupName { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime OrderDateTime { get; set; }
+        public DateTime NextOrderDateTime { get; set; }
+        public OrderStatus OrderStatus { get; set; }
+        public Frequency Frequency { get; set; }
+        public string FrequencyString => Frequency.ToString();
+        public string OrderStatusString => OrderStatus.ToString();
+        public bool ProcessAutomatically { get; set; }
+    }
+
 }
+
+

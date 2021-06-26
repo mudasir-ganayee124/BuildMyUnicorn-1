@@ -8,7 +8,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
     <link href="~/dist/css/style.min.css" rel="stylesheet">
     <link href="~/dist/css/custom-style.css" rel="stylesheet" />
-    <link href="~/assets/node_modules/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+    @*<link href="~/assets/node_modules/sweetalert/dist/sweetalert.css" rel="stylesheet" />*@
+    <link href="http://admin.buildmyunicorn.com/assets/node_modules/sweetalert/dist/sweetalert.css" />
+   
     <link href="~/assets/node_modules/jquery-confirm/jquery-confirm.css" rel="stylesheet" />
     @RenderSection("PageStyle", required: false)
     <style>
@@ -108,8 +110,8 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="javascript:void(0)"><i class="ti-user"></i> My Profile</a></li>
                                 @*<li><a href="javascript:void(0)"><i class="ti-wallet"></i> My Balance</a></li>
-                <li><a href="javascript:void(0)"><i class="ti-email"></i> Inbox</a></li>
-                <li><a href="javascript:void(0)"><i class="ti-settings"></i> Account Setting</a></li>*@
+                                    <li><a href="javascript:void(0)"><i class="ti-email"></i> Inbox</a></li>
+                                    <li><a href="javascript:void(0)"><i class="ti-settings"></i> Account Setting</a></li>*@
                                 <li><a href="~/Login"><i class="fa fa-power-off"></i> Logout</a></li>
                             </ul>
                         </li>
@@ -119,7 +121,7 @@
                         <li id="liPlans">
                             <a class="waves-effect waves-dark" href="~/Plan"><i class="icon-bell"></i><span class="hide-menu">Plan</span></a>
                         </li>
-                    
+
                         <li id="liOrder">
                             <a class="waves-effect waves-dark" href="~/Order"><i class="icon-bell"></i><span class="hide-menu">Order</span></a>
                         </li>
@@ -142,27 +144,27 @@
                             <a class="waves-effect waves-dark" href="~/ManageLanguage"><i class="fas fa-language"></i><span class="hide-menu">Manage Language</span></a>
                         </li>
                         @*<li>
-            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Apps</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a href="app-calendar.html">Calendar</a></li>
-                <li><a href="app-chat.html">Chat app</a></li>
-                <li><a href="app-ticket.html">Support Ticket</a></li>
-                <li><a href="app-contact.html">Contact / Employee</a></li>
-                <li><a href="app-contact2.html">Contact Grid</a></li>
-                <li><a href="app-contact-detail.html">Contact Detail</a></li>
-            </ul>
-        </li>*@
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Apps</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="app-calendar.html">Calendar</a></li>
+                                    <li><a href="app-chat.html">Chat app</a></li>
+                                    <li><a href="app-ticket.html">Support Ticket</a></li>
+                                    <li><a href="app-contact.html">Contact / Employee</a></li>
+                                    <li><a href="app-contact2.html">Contact Grid</a></li>
+                                    <li><a href="app-contact-detail.html">Contact Detail</a></li>
+                                </ul>
+                            </li>*@
 
                         @*<li>
-            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-palette"></i><span class="hide-menu">Client Management</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a href="ui-cards.html"> Startup Management</a></li>
-                <li><a href="ui-user-card.html">Technology Management</a></li>
-                <li><a href="ui-buttons.html"> Selling Management</a></li>
-                <li><a href="ui-modals.html">Money Raise Management</a></li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-palette"></i><span class="hide-menu">Client Management</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="ui-cards.html"> Startup Management</a></li>
+                                    <li><a href="ui-user-card.html">Technology Management</a></li>
+                                    <li><a href="ui-buttons.html"> Selling Management</a></li>
+                                    <li><a href="ui-modals.html">Money Raise Management</a></li>
 
-            </ul>
-        </li>*@
+                                </ul>
+                            </li>*@
                         <li id="liManagement">
                             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-align-left"></i><span class="hide-menu">Management</span></a>
                             <ul aria-expanded="false" id="ulManage" class="collapse">
@@ -284,31 +286,32 @@
                         </li>
 
                         @*<li id="liManage">
-            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-palette"></i><span class="hide-menu">Masters</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li id="liManage_Startup"><a href="~/Startup"> Startup</a></li>
-                <li id="liManage_Technology"><a href="~/Technology">  Technology </a></li>
-                <li id="liManage_Selling"><a href="~/Selling"> Selling </a></li>
-                <li id="liManage_MoneyRaise"><a href="~/MoneyRaise"> MoneyRaise </a></li>
-                <li id="liManage_Worklocation"><a href="~/WorkLocation"> Worklocation </a></li>
-                <li id="liManage_BusinessPlacement"><a href="~/BusinessPlacement"> Business Placement </a></li>
-                <li id="liManage_CompanyType"><a href="~/CompanyType"> Company Type </a></li>
-                <li id="li_IdeaProgress"> <a href="~/ManageMaster/IdeaProgress">Idea Progress</a></li>
-                <li id="li_Feedback"> <a href="~/ManageMaster/FeedBack">Feedback</a></li>
-                <li id="li_CompanyLegalStructure"> <a href="~/ManageMaster/CompanyLegalStructure">CompanyLegal Structure</a></li>
-                <li id="li_ProductServiceProduce"> <a href="~/ManageMaster/ProductServiceProduce">Product Service Produce</a></li>
-                <li id="li_MVPReson"> <a href="~/ManageMaster/MVPReason">MVP Reason</a></li>
-                <li id="liManage_RoleAtCompany"> <a href="~/ManageMemberRole">Role At Company</a></li>
-                <li id="liManageThirdPartyInvolved"> <a href="~/ManageThirdPartyInvolved">Third Party Involved</a></li>
-                <li id="liManagePaymentMethod"> <a href="~/ManagePaymentMethod">Payment Method</a></li>
-                <li id="liManagePaymentMethod"> <a href="~/ManageGoals">Marketing Plan Goal</a></li>
-                <li id="liManageDevelopmentFarGot"> <a href="~/ManageMaster/ManageDevelopment">Development</a></li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-palette"></i><span class="hide-menu">Masters</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li id="liManage_Startup"><a href="~/Startup"> Startup</a></li>
+                                    <li id="liManage_Technology"><a href="~/Technology">  Technology </a></li>
+                                    <li id="liManage_Selling"><a href="~/Selling"> Selling </a></li>
+                                    <li id="liManage_MoneyRaise"><a href="~/MoneyRaise"> MoneyRaise </a></li>
+                                    <li id="liManage_Worklocation"><a href="~/WorkLocation"> Worklocation </a></li>
+                                    <li id="liManage_BusinessPlacement"><a href="~/BusinessPlacement"> Business Placement </a></li>
+                                    <li id="liManage_CompanyType"><a href="~/CompanyType"> Company Type </a></li>
+                                    <li id="li_IdeaProgress"> <a href="~/ManageMaster/IdeaProgress">Idea Progress</a></li>
+                                    <li id="li_Feedback"> <a href="~/ManageMaster/FeedBack">Feedback</a></li>
+                                    <li id="li_CompanyLegalStructure"> <a href="~/ManageMaster/CompanyLegalStructure">CompanyLegal Structure</a></li>
+                                    <li id="li_ProductServiceProduce"> <a href="~/ManageMaster/ProductServiceProduce">Product Service Produce</a></li>
+                                    <li id="li_MVPReson"> <a href="~/ManageMaster/MVPReason">MVP Reason</a></li>
+                                    <li id="liManage_RoleAtCompany"> <a href="~/ManageMemberRole">Role At Company</a></li>
+                                    <li id="liManageThirdPartyInvolved"> <a href="~/ManageThirdPartyInvolved">Third Party Involved</a></li>
+                                    <li id="liManagePaymentMethod"> <a href="~/ManagePaymentMethod">Payment Method</a></li>
+                                    <li id="liManagePaymentMethod"> <a href="~/ManageGoals">Marketing Plan Goal</a></li>
+                                    <li id="liManageDevelopmentFarGot"> <a href="~/ManageMaster/ManageDevelopment">Development</a></li>
 
-            </ul>
-        </li>*@
+                                </ul>
+                            </li>*@
                         <li>
                             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icons-Add-User"></i><span class="hide-menu">Administration</span></a>
                             <ul aria-expanded="false" class="collapse">
+                                <li><a href="~/EmailTemplates"> Email Templates</a></li>
                                 <li><a href="~/Gateway"> Gateway</a></li>
                                 <li><a href="~/Startup"> Manage Roles</a></li>
                                 <li><a href="~/Technology">Admin Users</a></li>
@@ -417,7 +420,8 @@
     <script src="~/dist/js/custom.min.js"></script>
     <script src="~/Content/page_script/global.js"></script>
     <script src="~/assets/node_modules/parsely/parsley.js"></script>
-    <script src="~/assets/node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @*<script src="~/assets/node_modules/sweetalert/dist/sweetalert.min.js"></script>*@
     <script src="~/assets/node_modules/jquery-confirm/jquery-confirm.js"></script>
     @RenderSection("PageScript", required: false)
 </body>
