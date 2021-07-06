@@ -19,9 +19,9 @@
             </thead>
             <tbody>
                 @{ /**/
-                                /**/
-                                int index = 1;
-                                String strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, VirtualPathUtility.ToAbsolute("~/"));
+                    /**/
+                    int index = 1;
+                    String strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, VirtualPathUtility.ToAbsolute("~/"));
                 }
                 @if (Model.Count() > 0)
                 {
@@ -31,7 +31,7 @@
 
                             <td class="text-left">
 
-                                <input type="hidden" id="@item.SurveyID" value="@strUrl/Survey?SurveyID=@item.SurveyID)" />
+                                <input type="hidden" id="@item.SurveyID" value="@strUrl/Survey/Form/@item.SurveyID" />
                                 @index
                                 @{ index++; }
                             </td>
@@ -75,11 +75,14 @@
                                 <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Close" onclick="copyToClipboard('@item.SurveyID')">
                                     <i class="mdi mdi-content-copy" title="Copy link"></i>
                                 </a>
-                                <a href="~/Survey?SurveyID=@item.SurveyID" data-toggle="tooltip" data-original-title="Close">
+                                <a href="~/Survey/Form/@item.SurveyID" data-toggle="tooltip" data-original-title="Close">
                                     <i class="fas fa-external-link-square-alt" title="Sury form"></i>
                                 </a>
-                                <a href="~/Questionnaire/GetSurveyData?SurveyID=@item.SurveyID" data-toggle="tooltip" data-original-title="Close">
-                                    <i class="fas fa-sort-amount-up" title="Sury data"></i>
+                                <a href="~/Questionnaire/GetSurveyData/@item.SurveyID" data-toggle="tooltip" data-original-title="Close">
+                                    <i class="fas fa-sort-amount-up" title="Survey data"></i>
+                                </a>
+                                <a href="~/Questionnaire/SurveyAnalytics/@item.SurveyID" data-toggle="tooltip" data-original-title="Close">
+                                    <i class="fas fa-chart-line" title="Survey Analytics "></i>
                                 </a>
                             </td>
                             @*<td class="text-left">

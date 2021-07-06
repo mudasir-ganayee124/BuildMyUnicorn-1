@@ -13,10 +13,10 @@ namespace BuildMyUnicorn.Controllers
     public class SurveyController : Controller
     {
         // GET: Survey
-        public ActionResult Index(string SurveyID)
+        public ActionResult Form(string id)
         {
 
-            ViewBag.obj = new ClientManager().GetClientSurveyForm(Guid.Parse(SurveyID));
+            ViewBag.obj = new ClientManager().GetClientSurveyForm(Guid.Parse(id));
             if (ViewBag.obj != null)
             return View();
             else
@@ -24,13 +24,14 @@ namespace BuildMyUnicorn.Controllers
 
         }
 
-        public void AddSurveyData(string SurveyID)
+        public string AddSurveyData(string id)
         {
             //  string json = new StreamReader(Request.InputStream).ReadToEnd();
             Stream req = Request.InputStream;
             req.Seek(0, SeekOrigin.Begin);
             string jsonData = new StreamReader(req).ReadToEnd();
             dynamic dyn = JsonConvert.DeserializeObject(jsonData);
+            string JsonData = Convert.ToString(dyn.jsonData);
             List<SurveyData> SurveyDataList = new List<SurveyData>();
            // Dictionary<string, string> sData = new Dictionary<string, string>();
             // var jsonDatas = JsonObjectAttribute.Parse(jsonData);
@@ -44,16 +45,18 @@ namespace BuildMyUnicorn.Controllers
 
             //var facebookFriends = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<jsonData>(json);
 
-            foreach (var item in dyn.data)
-            {
-                string key = Convert.ToString(item.Name);
-                string value = Convert.ToString(item.Value);
+            foreach (var item in dyn.formData)
+            {//displayValue
+                
+                string key = Convert.ToString(item.title);
+                string value = Convert.ToString(item.value);
                 SurveyDataList.Add(new SurveyData() { KeyField = key, KeyValue = value });
                 //sData.Add(key, value);
                 //Console.WriteLine("id: {0}, name: {1}", item.id, item.name);
             }
 
-            new ClientManager().AddSurveyData(SurveyDataList, Guid.Parse(SurveyID));
+            new ClientManager().AddSurveyData(SurveyDataList, Guid.Parse(id), JsonData);
+            return "OK";
             //SurveyData
             //return new ClientManager().AddClientSurvey(Model);
         }

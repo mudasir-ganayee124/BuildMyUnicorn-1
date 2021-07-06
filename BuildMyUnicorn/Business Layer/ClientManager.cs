@@ -184,7 +184,7 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-        public void AddSurveyData(List<SurveyData> ModelList, Guid SurveyID)
+        public void AddSurveyData(List<SurveyData> ModelList, Guid SurveyID, string JsonData)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             //List<ParametersCollection> parameters = new List<ParametersCollection>() {
@@ -195,6 +195,7 @@ namespace BuildMyUnicorn.Business_Layer
             //};
             ModelList.ForEach(x => x.SurveyDataID = new Guid());
             ModelList.ForEach(x => x.SurveyID = SurveyID);
+            ModelList.ForEach(x => x.JsonData = JsonData);
             ModelList.ForEach(x => x.CreatedDateTime = DateTime.Now);
             DataTable dtSurveyData = Extensions.ListToDataTable(ModelList);
             obj.ExecuteBulkInsert("sp_add_survey_data", dtSurveyData, "UT_Survey_Data", "@DataTable");
@@ -469,15 +470,17 @@ namespace BuildMyUnicorn.Business_Layer
 
                         if (Encryption.Encrypt(Model.Password) == Customer.Password)
                         {
-                            
+                          
                             FormsAuthentication.SetAuthCookie(Customer.ClientID.ToString(), true);
-                            HttpContext.Current.Session["HeartBeat"] = true;
+                            //HttpContext.Current.Session["HeartBeat"] = true;
+                            HttpContext.Current.Response.SetCookie(new HttpCookie("HeartBeat", "true"));
+
                             return "OK";
                           
                         }
                         else
                         {
-                            return "Invalid Username or Password";
+                              return "Invalid Username or Password";
                         }
                     }
                     else

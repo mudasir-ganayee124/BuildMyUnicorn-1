@@ -37,7 +37,7 @@ $(document).ready(function () {
             'originalTitle': document.title, //store the original title of this page
 
             'tabID': false, //each tab needs a unique ID so you can tell which one last updated the timer - false makes it autogenerate one
-            'timeoutAfter': 60, //pass this from server side to be fully-dynamic. For PHP: ini_get('session.gc_maxlifetime'); - 1440 is generally the default timeout
+            'timeoutAfter': 600, //pass this from server side to be fully-dynamic. For PHP: ini_get('session.gc_maxlifetime'); - 1440 is generally the default timeout
             'heartbeat': 1, //how many seconds in between checking and updating the timer - warning: this will effect the speed of the countdown prior
 
             'extendOnMouseMove': false, //Whether or not to extend the session when the mouse is moved

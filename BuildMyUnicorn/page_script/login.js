@@ -10,14 +10,14 @@ $("#loginform").submit(function (e) {
         url: GetBaseURL() + "Login/ValidateUser",
         method: "POST",
         data: $('#loginform').serialize(),
-        success: function (response) {      
+        success: function (response) {
+     
             if (response == "OK") {
-               
                 window.location.replace(GetBaseURL() + "Dashboard");
              
             }
             else {
-                alert(response);
+               
                 $(".erorLabel").removeClass("invisible");
                 $(".errorMessage").text(response);}
         },

@@ -49,16 +49,23 @@ namespace BuildMyUnicorn.Controllers
             return PartialView("_QuestionnairePartial", new ClientManager().GetClientAllSurveyForm());
         }
 
-        public ActionResult GetSurveyData(string surveyID)
+        public ActionResult GetSurveyData(string id)
         {
-            IEnumerable<SurveyData> modelList = new ClientManager().GetSurveyData(Guid.Parse(surveyID));  
-            return View("SurveyData",modelList);
+            IEnumerable<SurveyData> modelList = new ClientManager().GetSurveyData(Guid.Parse(id));
+            return View("SurveyData", modelList);
+        }
+
+        public ActionResult SurveyAnalytics(string id)
+        {
+            ViewBag.SurveyAnalyticsForm = new ClientManager().GetClientSurveyForm(Guid.Parse(id));
+            ViewBag.SurveyData = new ClientManager().GetSurveyData(Guid.Parse(id));
+            return View("SurveyAnalytics");
         }
 
         //public JsonResult GetClientIdeaProgressData()
         //{
         //    string surveyID = "2022fc15-8e34-4216-9271-995e27cd2fc0";
-          
+
         //    return Json(new ClientManager().GetClientSurveyForm(Guid.Parse(surveyID)), JsonRequestBehavior.AllowGet);
         //}
 

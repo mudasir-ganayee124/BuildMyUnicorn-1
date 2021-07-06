@@ -24,6 +24,8 @@ namespace Business_Model.Model
         public int SurveyUnitID { get; set; } 
         public string KeyField { get; set; }
         public string KeyValue { get; set; }
+
+        public string JsonData { get; set; }
         public DateTime CreatedDateTime { get; set; }
     }
     public class Interview : Common

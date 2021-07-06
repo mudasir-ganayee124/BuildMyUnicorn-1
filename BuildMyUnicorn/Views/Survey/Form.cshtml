@@ -46,22 +46,24 @@
         survey.render("surveyElement");
 
         survey.onComplete.add(function (sender, options) {
-            modifySurveyResults(Survey);
 
-            return false;
-            //return fetch(GetBaseURL() + "Survey/AddSurveyData/" + $("#SurveyID").val() + "", {
-            //    body: JSON.stringify(sender.data),
-            //    headers: {
-            //        'content-type': 'application/json'
-            //    },
+          //  alert(JSON.stringify(sender.data)); 
+            var formData = modifySurveyResults(sender);
+           // alert(formData);
 
-            //    method: 'POST',
-            //    mode: 'cors',
-            //})
-            //    .then(response => {
-            //        form.emit('submitDone', sender.data)
+            return fetch(GetBaseURL() + "Survey/AddSurveyData/" + $("#SurveyID").val() + "", {
+                body: JSON.stringify({ formData: formData, jsonData: sender.data }),
+                headers: {
+                    'content-type': 'application/json'
+                },
 
-            //    });
+                method: 'POST',
+                mode: 'cors',
+            })
+                .then(response => {
+                    form.emit('submitDone', sender.data)
+
+                });
 
             //$.ajax({
             //    url: GetBaseURL() + "Survey/AddSurveyData?SurveyID=" + $("#SurveyID").val() + "",
@@ -98,7 +100,8 @@
                         }
                         //If question value different from displayValue
                         if (item.value != question.displayValue) {
-                            item.displayValue = question.displayValue
+                            item.value = question.displayValue
+                           // item.displayValue = question.displayValue
                         }
                         //If the custom property tag is defined set
                         if (question.tag !== undefined) {
@@ -107,8 +110,8 @@
                         resultData.push(item);
                     }
                 }
-                alert(resultData)
-                return  resultData;
+                console.log(resultData)
+                return resultData;
             }
 
         });

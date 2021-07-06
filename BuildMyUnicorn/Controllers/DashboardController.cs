@@ -10,6 +10,7 @@ using Syncfusion.DocIO.DLS;
 using System.Collections;
 
 
+
 namespace BuildMyUnicorn.Controllers
 {
 
@@ -25,6 +26,8 @@ namespace BuildMyUnicorn.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
+            
+            // HttpContext.Current.Session["HeartBeat"] = true;
             GetDashboardWidget();
             //int CountryID = ViewBag.Client.CountryID;
            // ViewBag.Grants = new FinanceManager().GetCountryGrant(CountryID);

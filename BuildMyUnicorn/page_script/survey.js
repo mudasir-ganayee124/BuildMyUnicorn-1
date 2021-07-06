@@ -10,9 +10,8 @@
             // Triggered when they click the submit button.
             form.on('submit', function (submission) {
 
-              //  alert('Submission sent to custom endpoint. See developer console.');
-                //SurveyID
-                return fetch(GetBaseURL() + "Survey/AddSurveyData?SurveyID=" + $("#SurveyID").val()+"", {
+
+                return fetch(GetBaseURL() + "Survey/AddSurveyData?SurveyID=" + $("#SurveyID").val() + "", {
                     body: JSON.stringify(submission),
                     headers: {
                         'content-type': 'application/json'
@@ -23,8 +22,7 @@
                 })
                     .then(response => {
                         form.emit('submitDone', submission)
-                        //alert();
-                       // response.json()
+
                     })
             });
         });

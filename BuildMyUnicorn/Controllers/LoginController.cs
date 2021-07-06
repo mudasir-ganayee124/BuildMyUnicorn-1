@@ -28,7 +28,7 @@ namespace BuildMyUnicorn.Controllers
 
         public string ValidateUser(Client Model)
         {
-            
+           // Session["HeartBeat"] = true;
             return new ClientManager().ValidateCustomerLogin(Model);
 
         }
@@ -43,21 +43,38 @@ namespace BuildMyUnicorn.Controllers
 
         public ActionResult Logout()
         {
-            if (Session["HeartBeat"] != null)
+
+         
+            if (Request.Cookies["HeartBeat"] != null)
             {
-                Session.Remove("HeartBeat");
+                Response.Cookies["HeartBeat"].Expires = DateTime.Now.AddDays(-1);
             }
+            //if (Session["HeartBeat"] != null)
+            //{
+            //    Session.Remove("HeartBeat");
+            //}
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Login");
         }
 
         public void HeartBeat()
         {
-            if (Session["HeartBeat"] != null)
+            if (Request.Cookies["HeartBeat"] != null)
             {
-                Session["HeartBeat"] = true;
+                Response.SetCookie(new HttpCookie("HeartBeat", "true"));
             }
-        
+            // HttpContext.Current.Response.SetCookie(new HttpCookie("HeartBeat", "true"));
+
+            //if (Request.Cookies.Get("HeartBeat") != null)
+            //{ 
+            //   Response.SetCookie(new HttpCookie("HeartBeat", "true"));
+            //}
+
+            //if (Session["HeartBeat"] != null)
+            //{
+            //    Session["HeartBeat"] = true;
+            //}
+
         }
     }
 }
