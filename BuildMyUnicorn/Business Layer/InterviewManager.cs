@@ -36,9 +36,11 @@ namespace BuildMyUnicorn.Business_Layer
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@InterviewID", ParamterValue =  Model.InterviewID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@ClientID", ParamterValue =  new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name)), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Title", ParamterValue = Model.Title, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Form", ParamterValue = Model.Form, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CreatedBy", ParamterValue = Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
             };
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_interview", parameters);

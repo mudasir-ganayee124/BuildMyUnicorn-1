@@ -85,22 +85,11 @@
             //Creator will update the status from Saving to saved
             callback(saveNo, true);
         }
-        var defaultJSON = {
-            pages: [
-                {
-                    name: 'page1',
-                    questions: [
-                        {
-                            type: 'text',
-                            name: "q1"
-                        }
-                    ]
-                }
-            ]
-        };
-        creator.text = window
-            .localStorage
-            .getItem(localStorageName) || JSON.stringify(defaultJSON);
+        var defaultJSON = [];
+        //creator.text = window
+        //    .localStorage
+        //    .getItem(localStorageName) || JSON.stringify(defaultJSON);
+        creator.text =  JSON.stringify(defaultJSON);
         if (!window.creator && creator !== undefined) {
             window.creator = creator;
         }

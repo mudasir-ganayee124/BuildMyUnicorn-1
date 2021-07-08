@@ -7,7 +7,7 @@ $(document).ready(function () {
     $("#liSurvey").addClass("active");
     $("#AddNewSurvey").click(function () {
         var SurveyTitle = $("#SurveyTitle").val();
-        var SurveyForm = localStorage.getItem("SaveLoadSurveyCreatorExample");
+        var SurveyForm = creator.text; //localStorage.getItem("SaveLoadSurveyCreatorExample");
         if (SurveyTitle == "") {
             toastMessage("Required", "danger", "Survey title is required");
             return false;
@@ -41,9 +41,6 @@ $(document).ready(function () {
     });
 
 
- 
-
- 
 });
 
 

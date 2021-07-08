@@ -5,10 +5,10 @@ $(document).ready(function () {
     $("li ul").removeClass("in");
     $("#ulMarketResearch").addClass("in");
     $("#liInterview").addClass("active");
-    $("#btnAddInterview").click(function () {
-        var SurveyTitle = $("#Title").val();
-        var SurveyForm = $("#Form").val();
-        if (SurveyTitle == "") {
+    $("#AddNewInterview").click(function () {
+        var Title = $("#InterviewTitle").val();
+        var SurveyForm = creator.text; // localStorage.getItem("SaveLoadSurveyCreatorExample");
+        if (Title == "") {
             toastMessage("Required", "danger", "Interview title is required");
             return false;
         }
@@ -16,16 +16,16 @@ $(document).ready(function () {
             toastMessage("Required", "danger", "Interview form is  required");
             return false;
         }
-        var Model = { "Title": SurveyTitle, "Form": SurveyForm };
+        var Model = { "Title": Title, "Form": SurveyForm };
         $.ajax({
             url: GetBaseURL() + "Interview/Add",
             type: "POST",
             data: JSON.stringify(Model),
             contentType: "application/json",
             dataType: "json",
-           success: function (response) {
+            success: function (response) {
                 if (response == "OK") {
-                    toastMessage("Interview Created", "success", "Survey form created successfully");
+                    toastMessage("Interview Created", "success", "Interview form created successfully");
                     setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
                 }
                 else {
@@ -35,10 +35,80 @@ $(document).ready(function () {
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastMessage("Interview Created", "success", "Interview form created successfully");
                 setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
-              //  toastMessage("Failed", "danger", textStatus + " " + errorThrown);
+                //  toastMessage("Failed", "danger", textStatus + " " + errorThrown);
             }
         });
     });
+
+    $("#UpdateInterview").click(function () {
+        var Title = $("#InterviewTitle").val();
+        var SurveyForm = creator.text; // localStorage.getItem("SaveLoadSurveyCreatorExample");
+        if (Title == "") {
+            toastMessage("Required", "danger", "Interview title is required");
+            return false;
+        }
+        if (SurveyForm == "") {
+            toastMessage("Required", "danger", "Interview form is  required");
+            return false;
+        }
+        var Model = { "InterviewID": $("#InterviewID").val() ,  "Title": Title, "Form": SurveyForm };
+        $.ajax({
+            url: GetBaseURL() + "Interview/UpdateInterview",
+            type: "POST",
+            data: JSON.stringify(Model),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                if (response == "OK") {
+                    toastMessage("Interview Created", "success", "Interview form created successfully");
+                    setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
+                }
+                else {
+                    toastMessage("Failed", "danger", response);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastMessage("Interview Created", "success", "Interview form created successfully");
+                setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
+                //  toastMessage("Failed", "danger", textStatus + " " + errorThrown);
+            }
+        });
+    });
+
+    //$("#btnAddInterview").click(function () {
+    //    var SurveyTitle = $("#Title").val();
+    //    var SurveyForm = $("#Form").val();
+    //    if (SurveyTitle == "") {
+    //        toastMessage("Required", "danger", "Interview title is required");
+    //        return false;
+    //    }
+    //    if (SurveyForm == "") {
+    //        toastMessage("Required", "danger", "Interview form is  required");
+    //        return false;
+    //    }
+    //    var Model = { "Title": SurveyTitle, "Form": SurveyForm };
+    //    $.ajax({
+    //        url: GetBaseURL() + "Interview/Add",
+    //        type: "POST",
+    //        data: JSON.stringify(Model),
+    //        contentType: "application/json",
+    //        dataType: "json",
+    //       success: function (response) {
+    //            if (response == "OK") {
+    //                toastMessage("Interview Created", "success", "Survey form created successfully");
+    //                setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
+    //            }
+    //            else {
+    //                toastMessage("Failed", "danger", response);
+    //            }
+    //        },
+    //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //            toastMessage("Interview Created", "success", "Interview form created successfully");
+    //            setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
+    //          //  toastMessage("Failed", "danger", textStatus + " " + errorThrown);
+    //        }
+    //    });
+    //});
     $(document).on("click", ".jsDeleteInterview", function () {
         var InterviewID = $(this).data("interview-id");
         swal({

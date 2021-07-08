@@ -1,189 +1,124 @@
 ﻿
-
-<link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
-@section PageStyle
-{
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/formiojs@3.9.0/dist/formio.full.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-okaidia.min.css" />
-    <style>
-        body {
-            color: #000;
-        }
-
-        .container {
-            padding-right: 1px;
-            padding-left: 1px;
-            margin-right: 0px;
-            margin-left: 0px;
-        }
-
-        .topbar .top-navbar {
-            min-height: 50px !important;
-            padding: 0;
-        }
-
-        .navbar {
-            position: relative;
-            min-height: 50px;
-            margin-bottom: -18px;
-            border: 0px solid transparent;
-        }
-
-        .drag-container {
-            padding: 10px;
-            border: dotted 2px #e8e8e8;
-            background: #fff;
-        }
-
-        .btn {
-            color: #000;
-        }
-
-        .formio-form {
-            position: relative;
-            min-height: 80px;
-            background: #fff;
-            padding: 5px;
-        }
-
-        .card-body {
-            background: #fff;
-        }
-
-        .btn-secondary {
-            border-color: #4F5467 !important;
-            color: #fff !important;
-        }
-
-        .btn-circle {
-            border-radius: 100% !important;
-            width: 40px !important;
-            height: 40px !important;
-            padding: 10px !important;
-        }
-
-        .login-box {
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .body {
-            overflow: scroll;
-        }
-    </style>
-
-    <style>
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px #353b47 inset !important;
-        }
-        /*Change text in autofill textbox*/
-        input:-webkit-autofill {
-            -webkit-text-fill-color: #fff !important;
-        }
-    </style>
-    <style>
-        .inActiveSurvey {
-            border-left: 2px solid red !important;
-        }
-    </style>
+@{
+    Layout = null;
 }
-<div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor"><a href="/Interview"><i class="mdi mdi-arrow-left"></i>Back to Interview</a></h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item" style="color:#fff">Interview </li>
-            </ol>
-
-
-            <a href="" class="btn btn-info d-none d-lg-block m-l-15" onClick="window.location.reload();">New Interview</a>
-            
-
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-
-
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-2"> </div>
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <input type="hidden" id="InterviewID" value="@ViewBag.obj.InterviewID" />
-                                <input type="hidden" id="Form" value="@ViewBag.obj.Form" />
-                                <h1>@ViewBag.obj.Title</h1>
-                                <div id="formio"> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
 
 
-        </div>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Load survey json from the SurveyJS Service, Knockoutjs Survey Library Example</title>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/knockout@3.5.1/build/output/knockout-latest.js"></script>
+    <script src="https://unpkg.com/survey-knockout@1.8.53/survey.ko.min.js"></script>
+    <link href="https://unpkg.com/survey-core@1.8.53/modern.min.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
 
-
-
-
-@section PageScript
-{
-    <script src="https://unpkg.com/formiojs@3.9.0/dist/formio.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
+    <input type="hidden" id="InterviewID" value="@ViewBag.obj.InterviewID" />
+    <input type="hidden" id="Form" value="@ViewBag.obj.Form" />
+    <div id="surveyElement" style="display:inline-block;width:100%;"></div>
+    <div id="surveyResult"></div>
+    <script type="text/javascript" src="./index.js"></script>
     <script>
-         $("li a, li").removeClass("active");
-         $("li ul").removeClass("in");
-         $("#ulMarketResearch").addClass("in");
-         $("#liInterview").addClass("active");
-    $(document).ready(function () {
 
-    Formio.createForm(document.getElementById('formio'),
-        //readOnly: true,
-        //renderMode: 'html',
-        JSON.parse($("#Form").val())).then(function (form) {
-            // Prevent the submission from going to the form.io server.
-            form.nosubmit = true;
+        Survey
+            .StylesManager
+            .applyTheme("modern");
 
-            // Triggered when they click the submit button.
-            form.on('submit', function (submission) {
+        //var json = {
+        //    surveyId: '5af48e08-a0a5-44a5-83f4-1c90e8e98de1'
+        //};
 
-              //  alert('Submission sent to custom endpoint. See developer console.');
-                //SurveyID
-                return fetch(GetBaseURL() + "Interview/AddInterviewData?InterviewID=" + $("#InterviewID").val()+"", {
-                    body: JSON.stringify(submission),
-                    headers: {
-                        'content-type': 'application/json'
-                    },
+        window.survey = new Survey.Model($("#Form").val());
 
-                    method: 'POST',
-                    mode: 'cors',
-                })
-                    .then(response => {
-                        form.emit('submitDone', submission)
-                        //alert();
-                       // response.json()
-                    })
-            });
+        //survey
+        //    .onComplete
+        //    .add(function (sender) {
+        //        document
+        //            .querySelector('#surveyResult')
+        //            .textContent = "Result JSON:\n" + JSON.stringify(sender.data, null, 3);
+        //    });
+
+        survey.render("surveyElement");
+
+        survey.onComplete.add(function (sender, options) {
+
+            //  alert(JSON.stringify(sender.data));
+            var formData = modifySurveyResults(sender);
+            // alert(formData);
+
+            return fetch(GetBaseURL() + "Interview/AddInterviewData/" + $("#InterviewID").val() + "", {
+                body: JSON.stringify({ formData: formData, jsonData: sender.data }),
+                headers: {
+                    'content-type': 'application/json'
+                },
+
+                method: 'POST',
+                mode: 'cors',
+            })
+                .then(response => {
+                    form.emit('submitDone', sender.data)
+
+                });
+
+            //$.ajax({
+            //    url: GetBaseURL() + "Survey/AddSurveyData?SurveyID=" + $("#SurveyID").val() + "",
+            //    body: JSON.stringify(sender.data),
+            //    processData: false,
+            //    headers: {
+            //        'content-type': 'application/json'
+            //    },
+            //    method: 'POST',
+            //     mode: 'cors',
+            //    success: function (response) {
+
+            //    },
+            //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            //    }
+            //});
+
+            //var xhr = new XMLHttpRequest();
+            //xhr.open("POST", GetBaseURL() + "Survey/AddSurveyData?SurveyID=" + $("#SurveyID").val() + "");
+            //xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            //alert(sender.data);
+            //alert(JSON.stringify(sender.data));
+            //xhr.send(JSON.stringify(sender.data));
+            function modifySurveyResults(survey) {
+                var resultData = [];
+                for (var key in survey.data) {
+                    var question = survey.getQuestionByValueName(key);
+                    if (!!question) {
+                        var item = { value: question.value };
+                        //If question name (question.valueName) doesn't equal to question.title
+                        if (key !== question.title) {
+                            item.title = question.title;
+                        }
+                        //If question value different from displayValue
+                        if (item.value != question.displayValue) {
+                            item.value = question.displayValue
+                            // item.displayValue = question.displayValue
+                        }
+                        //If the custom property tag is defined set
+                        if (question.tag !== undefined) {
+                            item.tag = question.tag;
+                        }
+                        resultData.push(item);
+                    }
+                }
+                console.log(resultData)
+                return resultData;
+            }
+
         });
-});
     </script>
+</body>
+</html>
 
-}
+
+
 

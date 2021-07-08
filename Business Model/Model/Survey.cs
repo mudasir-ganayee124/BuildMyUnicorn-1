@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Business_Model.Helper;
 
 namespace Business_Model.Model
 {
@@ -37,6 +38,7 @@ namespace Business_Model.Model
         public string Form { get; set; }
         public string ClientName { get; set; }
         public int InterviewReceived { get; set; }
+        public EntityState EntityState { get; set; }
     }
 
     public class InterviewData

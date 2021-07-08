@@ -31,7 +31,7 @@
 
                             <td class="text-left">
 
-                                <input type="hidden" id="@item.InterviewID" value="@strUrl/Interview?InterviewID=@item.InterviewID" />
+                                <input type="hidden" id="@item.InterviewID" value="@strUrl/Interview?id=@item.InterviewID" />
                                 @index
                                 @{ index++; }
                             </td>
@@ -75,10 +75,10 @@
                                 <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Close" onclick="copyToClipboard('@item.InterviewID')">
                                     <i class="mdi mdi-content-copy" title="Copy link"></i>
                                 </a>
-                                <a href="~/Interview?InterviewID=@item.InterviewID" data-toggle="tooltip" data-original-title="Close">
-                                    <i class="fas fa-external-link-square-alt" title="Interview form"></i>
+                                <a href="~/Interview/Edit/@item.InterviewID" data-toggle="tooltip" data-original-title="Close">
+                                    <i class="fas fa-external-link-square-alt" title="Update Interview form"></i>
                                 </a>
-                                <a href="~/Interview/GetData?InterviewID=@item.InterviewID" data-toggle="tooltip" data-original-title="Close">
+                                <a href="~/Interview/GetData/@item.InterviewID" data-toggle="tooltip" data-original-title="Close">
                                     <i class="fas fa-sort-amount-up" title="Interview data"></i>
                                 </a>
                             </td>

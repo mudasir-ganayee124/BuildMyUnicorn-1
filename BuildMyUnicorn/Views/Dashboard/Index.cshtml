@@ -240,7 +240,7 @@
                 <div class="card">
                     <div class="card-body" style="height:420px">
 
-
+                        
 
                         @*<h5 class="card-title">ACTIVITY</h5>
                         <div class="steamline m-t-40">
@@ -291,24 +291,24 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex no-block align-items-center">
-                    @*<div>
+                    <div>
                         <h5 class="card-title m-b-0">TO DO LIST</h5>
                     </div>
                     <div class="ml-auto">
                         <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
-                    </div>*@
+                    </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- To do list widgets -->
                 <!-- ============================================================== -->
-                <div class="to-do-widget m-t-20" id="todo" style="height: 350px;position: relative;">
+                <div class="to-do-widget m-t-20 ps ps--theme_default ps--active-y" id="todo" style="height: 400px;position: relative;" data-ps-id="ff50d516-1b4a-7ba0-ebc6-c66dba14f059">
                     <!-- .modal for add task -->
-                    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Add Task</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
                                 </div>
                                 <div class="modal-body">
                                     <form>
@@ -342,8 +342,8 @@
                         <li class="list-group-item" data-role="task">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                                <label class="custom-control-label" for="customCheck">
-                                    <span>Create new marketing plan for Facebook</span> <span class="badge badge-pill badge-danger float-right">Today</span>
+                                <label class="custom-control-label task-done" for="customCheck">
+                                    <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been</span> <span class="badge badge-pill badge-danger float-right">Today</span>
                                 </label>
                             </div>
                             <ul class="assignedto">
@@ -357,7 +357,7 @@
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="customCheck1">
                                 <label class="custom-control-label" for="customCheck1">
-                                    <span>Register for LEO Training on marketing</span><span class="badge badge-pill badge-primary float-right">1 week </span>
+                                    <span>Lorem Ipsum is simply dummy text of the printing</span><span class="badge badge-pill badge-primary float-right">1 week </span>
                                 </label>
                             </div>
                             <div class="item-date"> 26 jun 2017</div>
@@ -366,7 +366,7 @@
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="customCheck2">
                                 <label class="custom-control-label" for="customCheck2">
-                                    <span>Work on Pitch Deck</span> <span class="badge badge-pill badge-info float-right">Yesterday</span>
+                                    <span>Give Purchase report to</span> <span class="badge badge-pill badge-info float-right">Yesterday</span>
                                 </label>
                             </div>
                             <ul class="assignedto">
@@ -378,13 +378,25 @@
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="customCheck3">
                                 <label class="custom-control-label" for="customCheck3">
-                                    <span>Work on 1 year forcast</span> <span class="badge badge-pill badge-warning float-right">2 weeks</span>
+                                    <span>Lorem Ipsum is simply dummy text of the printing </span> <span class="badge badge-pill badge-warning float-right">2 weeks</span>
                                 </label>
                             </div>
                             <div class="item-date"> 26 jun 2017</div>
                         </li>
-
-                    </ul>*@
+                        <li class="list-group-item" data-role="task">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                <label class="custom-control-label task-done" for="customCheck4">
+                                    <span>Give Purchase report to</span> <span class="badge badge-pill badge-info float-right">Yesterday</span>
+                                </label>
+                            </div>
+                            <ul class="assignedto">
+                                <li><img src="../assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
+                                <li><img src="../assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__scrollbar-y-rail" style="top: 0px; height: 400px; right: 0px;"><div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 236px;"></div></div>
                 </div>
             </div>
         </div>

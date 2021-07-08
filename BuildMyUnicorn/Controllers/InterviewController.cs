@@ -14,7 +14,7 @@ namespace BuildMyUnicorn.Controllers
     public class InterviewController : WebController
     {
         // GET: Interview
-        public ActionResult Index(string InterviewID)
+        public ActionResult Index(string id)
         {
             int State = (int)EntityState.New;
             IEnumerable<Interview> InterviewList = new InterviewManager().GetAllInterview();
@@ -32,9 +32,9 @@ namespace BuildMyUnicorn.Controllers
                 }
 
             }
-            if (InterviewID != null)
+            if (id != null)
             {
-                ViewBag.obj = new InterviewManager().GetInterview(Guid.Parse(InterviewID));
+                ViewBag.obj = new InterviewManager().GetInterview(Guid.Parse(id));
                 if (ViewBag.obj != null)
                     return View("Interview");
                 else
@@ -55,34 +55,53 @@ namespace BuildMyUnicorn.Controllers
             return View();
         }
 
+        public ActionResult Edit(string id)
+        {
+            ViewBag.obj = new InterviewManager().GetInterview(Guid.Parse(id));
+            if (ViewBag.obj != null)
+                return View("Edit");
+            else
+                return PartialView("_BadRequest");
+        }
+
         public string Add(Interview Model)
         {
+            Model.EntityState = EntityState.New;
+            Model.InterviewID = Guid.NewGuid();
             return new InterviewManager().AddInterview(Model);
         }
 
-        public void AddInterviewData(string InterviewID)
+        public string UpdateInterview(Interview Model)
+        {
+            Model.EntityState = EntityState.Old;
+            return new InterviewManager().AddInterview(Model);
+        }
+
+        public void AddInterviewData(string id)
         {
        
             Stream req = Request.InputStream;
             req.Seek(0, SeekOrigin.Begin);
             string jsonData = new StreamReader(req).ReadToEnd();
             dynamic dyn = JsonConvert.DeserializeObject(jsonData);
+            string JsonData = Convert.ToString(dyn.jsonData);
+         
             List<InterviewData> InterviewDataList = new List<InterviewData>();
-            foreach (var item in dyn.data)
+            foreach (var item in dyn.formData)
             {
-                string key = Convert.ToString(item.Name);
-                string value = Convert.ToString(item.Value);
+                string key = Convert.ToString(item.title);
+                string value = Convert.ToString(item.value);
                 InterviewDataList.Add(new InterviewData() { KeyField = key, KeyValue = value });
  
             }
 
-            new InterviewManager().AddInterviewData(InterviewDataList, Guid.Parse(InterviewID));
+            new InterviewManager().AddInterviewData(InterviewDataList, Guid.Parse(id));
             
         }
 
-        public ActionResult GetData(string InterviewID)
+        public ActionResult GetData(string id)
         {
-            IEnumerable<InterviewData> modelList = new InterviewManager().GetInterviewData(Guid.Parse(InterviewID));
+            IEnumerable<InterviewData> modelList = new InterviewManager().GetInterviewData(Guid.Parse(id));
             return View("InterviewAnswers", modelList);
         }
 
