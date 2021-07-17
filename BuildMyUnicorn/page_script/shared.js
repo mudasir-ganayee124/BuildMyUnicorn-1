@@ -85,6 +85,7 @@ $(document).on("click", "div#myDialog3 .close", function () {
     $('iframe').attr('src', src);
 
 });
+
 $('#frmPasswordChange').parsley();
 //$(".parsley-required").css("color","red !important")
 

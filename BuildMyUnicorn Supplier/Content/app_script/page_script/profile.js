@@ -71,7 +71,9 @@ $("#frm_UpdateProfile").submit(function(e) {
         e.preventDefault();
         var BusinessPlacement = [];
         var Worklocation = [];
-        var CompanyType = [];
+    var CompanyType = [];
+ 
+
         $.each($("input[name='_BusinessPlacement']:checked"), function () {
             BusinessPlacement.push($(this).val());
 

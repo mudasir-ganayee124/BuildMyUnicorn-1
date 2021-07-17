@@ -1,179 +1,106 @@
 ﻿
 @section PageStyle
 {
+    <script src="https://unpkg.com/survey-jquery@1.8.53/survey.jquery.min.js"></script>
+    <script src="https://unpkg.com/knockout@3.5.1/build/output/knockout-latest.js"></script>
+    <script src="https://unpkg.com/survey-knockout@1.8.53/survey.ko.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.10/ace.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.10/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Uncomment to enable Select2 <script src="https://unpkg.com/jquery"></script> <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> -->
+    <script src="https://unpkg.com/survey-creator@1.8.53/survey-creator.min.js"></script>
+    <link href="https://unpkg.com/survey-creator@1.8.53/survey-creator.min.css" type="text/css" rel="stylesheet" />
 
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/formiojs@3.9.0/dist/formio.full.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-okaidia.min.css" />
-
+    <link rel="stylesheet" href="./index.css">
     <style>
-        body {
-            color: #000;
-        }
-
-        .container {
-            padding-right: 1px;
-            padding-left: 1px;
-            margin-right: 0px;
-            margin-left: 0px;
-        }
-
-        .topbar .top-navbar {
-            min-height: 50px !important;
-            padding: 0;
-        }
-
-        .navbar {
-            position: relative;
-            min-height: 50px;
-            margin-bottom: -18px;
-            border: 0px solid transparent;
-        }
-
-        .drag-container {
-            padding: 10px;
-            border: dotted 2px #e8e8e8;
-            background: #fff;
-        }
-
-        .btn {
-            color: #000;
-        }
-
-        .formio-form {
-            position: relative;
-            min-height: 80px;
-            background: #fff;
-            padding: 5px;
-        }
-
-        .card-body {
-            background: #fff;
-        }
-
-        .btn-secondary {
-            border-color: #4F5467 !important;
-            color: #fff !important;
-        }
-
-        .btn-circle {
-            border-radius: 100% !important;
-            width: 40px !important;
-            height: 40px !important;
-            padding: 10px !important;
-        }
-
-        .jq-toast-single {
-            background-color: #dc6b6b;
-            color: #fff;
-            font-size: 13px;
-        }
-
-        .glyphicon-new-window {
-            // display:none;
-        }
-        /*.navbar-brand {
-            float: left;
-            height: 80px;
-            padding: 15px 15px;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            font-size: 18px;
-            line-height: 20px;
-        }*/
-
-        .navbar-brand {
-            display: inline-block;
-            padding-top: .33594rem;
-            padding-bottom: .33594rem;
-            margin-right: 1rem;
-            font-size: 1.09375rem;
-            height: 80px;
-            line-height: inherit;
-        }
-        .app-search {
-          margin-top:16px;
+        .svd_commercial_container {
+            display: none;
         }
     </style>
-
-
 }
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <div class="d-flex">
+            <i class="mdi mdi-arrow-left"></i>  <a href="~/Questionnaire"> Back to Survey</a>
+        </div>
+
+    </div>
+
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Market Research</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Survey</a></li>
+                <li class="breadcrumb-item active">New Survey </li>
+            </ol>
+
+            <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="AddNewSurvey">Add Survey</button>
+
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-
-
-                <div id="formio">
-
-
-                </div>
-
-                <div class="container mt-3">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="QuestionTitle" name="QuestionTitle" placeholder="Title" value="@ViewBag.question.QuestionTitle" />
-                           
-                            <input type="hidden" id="QuestionForm" name="QuestionForm" data-orginalvalue='@(ViewBag.question.QuestionForm == null ? "{ \"components\": [] }" : ViewBag.question.QuestionForm)' value='@(ViewBag.question.QuestionForm == null ? "{ \"components\": [] }" : ViewBag.question.QuestionForm)'/>
-                                   @*<input type="hidden" id="QuestionForm" name="QuestionForm"  value='{"components":[{"label":"Question","allowMultipleMasks":false,"showWordCount":false,"showCharCount":false,"tableView":true,"alwaysEnabled":false,"type":"textfield","key":"question2","input":true,"widget":{"type":""}},{"label":"Question","tableView":true,"alwaysEnabled":false,"type":"email","key":"question","input":true},{"type":"button","label":"Submit","key":"submit","disableOnInvalid":true,"theme":"primary","input":true,"tableView":true}]}'/>*@
-                        </div>
-                        @if (ViewBag.question.QuestionForm == null)
-                        {<div class="col-md-3"> <button type="button" class="btn btn-info d-none d-lg-block m-l-15" id="btnAddQuestion">Add Question</button></div>
-                        }
-                        else
-                        {
-                            <div class="col-md-3"> <button type="button" class="btn btn-info d-none d-lg-block m-l-15" id="btnAddQuestion">Update Question</button></div>
-                        }
-
-                    </div>
-
-
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="nav-item">
-                            <a href="#builder" class="active" role="tab" data-toggle="tab" aria-selected="true">Builder</a>
-                        </li>
-                        <li role="presentation" class="nav-item">
-                            <a href="#form" role="tab" data-toggle="tab" aria-selected="true">Form</a>
-                        </li>
-                        <li role="presentation" class="nav-item">
-                            <a href="#result" role="tab" data-toggle="tab" aria-selected="true">Result</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content container">
-                        <div class="tab-pane active" id="builder" role="tabpanel">
-                            <div id="formio-builder"></div>
-                        </div>
-                        <div class="tab-pane" id="form" role="tabpanel">
-                            <pre><code class="language-javascript"></code></pre>
-                        </div>
-                        <div class="tab-pane" id="result" role="tabpanel">
-                            <div id="formio-form">
-                                Form not initialized
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+        <div id="surveyContainer">
+            <input type="text" id="SurveyTitle" name="SurveyTitle" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Survey Title--" />
+            <div id="creatorElement"></div>
         </div>
     </div>
 </div>
 
 
 
+
 @section PageScript
 {
-
-
-    <script src="https://unpkg.com/formiojs@3.9.0/dist/formio.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
     <script src="~/Content/app_script/page_script/startup-question.js?version=@DateTime.Now"></script>
+    @*<script src="@Url.ContentVersioned("~/page_script/survey-create.js")"></script>*@
+    <script>
+        // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
+        var options = {
+            showLogicTab: true
+        };
+        //create the SurveyJS Creator and render it in div with id equals to "creatorElement"
+        var creator = new SurveyCreator.SurveyCreator("creatorElement", options);
+        //Show toolbox in the right container. It is shown on the left by default
+        creator.showToolbox = "right";
+        //Show property grid in the right container, combined with toolbox
+        creator.showPropertyGrid = "right";
+        //Make toolbox active by default
+        creator.rightContainerActiveItem("toolbox");
+        //Automatically save survey definition on changing. Hide "Save" button
+        creator.isAutoSave = true;
+        //Show state button here
+        creator.showState = true;
+        var localStorageName = "SaveLoadSurveyCreatorExample";
+        //Setting this callback will make visible the "Save" button
+        creator.saveSurveyFunc = function (saveNo, callback) {
+            //save the survey JSON
+            console.log(creator.text);
+            //You can store in your database JSON as text: creator.text  or as JSON: creator.JSON
+            window
+                .localStorage
+                .setItem(localStorageName, creator.text);
 
+            //We assume that we can't get error on saving data in local storage
+            //Tells creator that changing (saveNo) saved successfully.
+            //Creator will update the status from Saving to saved
+            callback(saveNo, true);
+        }
+        var defaultJSON = [];
+        //creator.text = window
+        //    .localStorage
+        //    .getItem(localStorageName) || JSON.stringify(defaultJSON);
+        creator.text = JSON.stringify(defaultJSON);
+        if (!window.creator && creator !== undefined) {
+            window.creator = creator;
+        }
+
+                    //$(document).on("click", "#Create", function () {
+
+                    //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
+                    //});
+    </script>
 }
 

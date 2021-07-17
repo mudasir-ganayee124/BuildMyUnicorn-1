@@ -11,9 +11,11 @@ namespace Business_Model.Model
         public Guid OrderID { get; set; }
         public Guid ClientID { get; set; }
         public Guid PlanID { get; set; }
+        public string Order_ID { get; set; }
         public Guid OrderPublicID { get; set; }
         public Guid GatewayClientID { get; set; }
         public Guid GatewayOrderID { get; set; }
+        public OrderType OrderType { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime OrderDateTime { get; set; }
     }

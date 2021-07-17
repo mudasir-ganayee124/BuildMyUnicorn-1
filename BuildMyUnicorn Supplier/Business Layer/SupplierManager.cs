@@ -175,6 +175,7 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
              new ParametersCollection { ParamterName = "@ImageID", ParamterValue = Model.ImageID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@WorkLocation", ParamterValue = Model.WorkLocation, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@BusinessPlacement", ParamterValue = Model.BusinessPlacement, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@RecommendedDocument", ParamterValue = Model.RecommendedDocument, ParamterType = DbType.Boolean, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@CompanyType", ParamterValue = Model.CompanyType, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Twitter", ParamterValue = Model.Twitter, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Address", ParamterValue = Model.Address, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input }
@@ -347,18 +348,18 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
 
         public string SendPasswordRestLink(string Email)
         {
-            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-            List<ParametersCollection> Customerparameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@Email", ParamterValue = Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input } };
-            Client Customer = obj.GetSingle<Client>(CommandType.StoredProcedure, "sp_get_customer_by_email", Customerparameters);
-            if (Customer != null)
+            var query = $@"SELECT tbl_supplier.* FROM tbl_supplier WHERE Email = '{Email}' AND IsDeleted = 0";
+            Supplier Supplier = SharedManager.GetSingle<Supplier>(query);
+            if (Supplier != null)
             {
                 Guid Ref_id = Guid.NewGuid();
                 String strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, VirtualPathUtility.ToAbsolute("~/"));
                 string ForgotPasswordURL = strUrl;
                 string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
-                ForgotPasswordURL = ForgotPasswordURL + "/Signup/ResetPassword?refid=" + EncryptedID;
-                string ForgotEmailTemplate = "";// ForgotPasswordTemplate.Template["FP"];
-                ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Customer.FirstName + " " + Customer.LastName);
+                ForgotPasswordURL = ForgotPasswordURL + "/Register/ResetPassword?refid=" + EncryptedID;
+                var template = new MasterManager().GetEmailTemplate(TemplateType.SFP.ToString());
+                var ForgotEmailTemplate  = template.EmailTemplateBody.ToString();
+                ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Supplier.FirstName + " " + Supplier.LastName);
                 string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
                 //Finally Send Mail and save data Async
                 Thread email_sender_thread = new Thread(delegate ()
@@ -369,9 +370,10 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
 
                 Thread SaveRestLink = new Thread(delegate ()
                 {
+                    DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
                     List<ParametersCollection> parametersConfirmation = new List<ParametersCollection>() {
-                new ParametersCollection { ParamterName = "@id", ParamterValue = Ref_id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Customer.ClientID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                    new ParametersCollection { ParamterName = "@id", ParamterValue = Ref_id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                    new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Supplier.SupplierID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
 
                 };
                     obj.Execute(CommandType.StoredProcedure, "sp_add_password_reset", parametersConfirmation);

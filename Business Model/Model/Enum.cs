@@ -165,7 +165,8 @@ namespace Business_Model.Model
 
     public enum TemplateType
     {
-        PlatformForgotPassword = 1
+       NPC,NSC,NACC,NAA, PFP,SFP,ACFP, ADFP, CPLI, CPAI
+
     }
 
     public enum GatewayType
@@ -200,5 +201,10 @@ namespace Business_Model.Model
     public enum Frequency
     { 
        None, Daily, Weekly, Biweekly, Monthly, SemiMonthly, Quarterly, Yearly
+    }
+
+    public enum OrderType
+    {
+        Plan, Package
     }
 }

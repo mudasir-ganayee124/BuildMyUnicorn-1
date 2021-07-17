@@ -127,6 +127,7 @@
     <Compile Include="Model\Plan.cs" />
     <Compile Include="Model\ProgressAnalytic.cs" />
     <Compile Include="Model\RateInfo.cs" />
+    <Compile Include="Model\RecommendDocument.cs" />
     <Compile Include="Model\Revolut.cs" />
     <Compile Include="Model\Selling.cs" />
     <Compile Include="Model\StartupAccelerator.cs" />

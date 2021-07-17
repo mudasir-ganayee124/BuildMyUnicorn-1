@@ -125,19 +125,20 @@
     <section id="wrapper" class="login-register login-sidebar ajax-wrapper" style="background-image:url(../assets/images/background/login-register.jpg);">
         <div class="login-box card">
             <div class="card-body">
-                <input type="hidden" id="ClientID" name="ClientID" value=""/>
+                <input type="hidden" id="ClientID" name="ClientID" value="" />
                 <input type="hidden" id="OrderID" name="OrderID" value="" />
 
                 <form class="form-horizontal form-material" id="frmRegister" method="post">
                     <input type="hidden" name="AffiliateLinkID" value="@ViewBag.AffiliateLinkID" />
                     <input type="hidden" name="PlanID" value="@ViewBag.PlanID" />
-                  
+
                     <div class="text-center">
                         <a href="javascript:void(0)" class="db"><img src="~/Content/images/buil-my-unicorn-logo.png" alt="Build My Unicorn Logo" style="width:70px;height:70px" /><br /></a>
                     </div>
                     <table width="100%">
                         <tr>
-                            <td><h3 class="box-title">Register</h3>
+                            <td>
+                                <h3 class="box-title">Register</h3>
                                 <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
                             </td>
                             <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; ">STEP 1 OF 2 </span></td>
@@ -263,43 +264,43 @@
 
 
                                             @*<form role="form">
-            <div class="form-group">
-                <label for="username">Full name (on the card)</label>
-                <input type="text" class="form-control" name="username" placeholder="" required="">
-            </div> <!-- form-group.// -->
+                                                    <div class="form-group">
+                                                        <label for="username">Full name (on the card)</label>
+                                                        <input type="text" class="form-control" name="username" placeholder="" required="">
+                                                    </div> <!-- form-group.// -->
 
-            <div class="form-group">
-                <label for="cardNumber">Card number</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" name="cardNumber" placeholder="">
-                    <div class="input-group-append">
-                        <span class="input-group-text text-muted">
-                            <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
-                            <i class="fab fa-cc-mastercard"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
+                                                    <div class="form-group">
+                                                        <label for="cardNumber">Card number</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text text-muted">
+                                                                    <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
+                                                                    <i class="fab fa-cc-mastercard"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <label><span class="hidden-xs">Expiration</span> </label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" placeholder="MM" name="">
-                            <input type="number" class="form-control" placeholder="YY" name="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                        <input type="number" class="form-control" required="">
-                    </div> <!-- form-group.// -->
-                </div>
-            </div>
-            <button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
-        </form>*@
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group">
+                                                                <label><span class="hidden-xs">Expiration</span> </label>
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" placeholder="MM" name="">
+                                                                    <input type="number" class="form-control" placeholder="YY" name="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                                                <input type="number" class="form-control" required="">
+                                                            </div> <!-- form-group.// -->
+                                                        </div>
+                                                    </div>
+                                                    <button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+                                                </form>*@
                                         </div> <!-- tab-pane.// -->
                                         <div class="tab-pane fade" id="nav-tab-paypal">
                                             <p>Paypal is easiest way to pay online</p>

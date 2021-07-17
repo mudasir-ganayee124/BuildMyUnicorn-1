@@ -22,3 +22,21 @@
     }
 
 }(jQuery));
+
+$('input[type="checkbox"]').click(function () {
+ 
+    if ($(this).prop("checked") == true) {
+        $(this).prop("checked", true);
+        $(this).attr('checked', 'checked');
+        $(this).val("true");
+        
+    }
+    else if ($(this).prop("checked") == false) {
+        $(this).prop("checked", false);
+        $(this).removeAttr('checked', 'checked');
+        $(this).val("false");
+       
+
+    }
+    
+});

@@ -1,0 +1,168 @@
+﻿@using Business_Model.Model;
+@model Business_Model.Model.Package
+@section PageStyle
+{
+
+    <link href="~/dist/css/pages/pricing-page.css" rel="stylesheet">
+
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Packages</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+
+
+                <li class="breadcrumb-item"><a href="javascript:void(0)"> Home</a></li>
+                <li class="breadcrumb-item">Recommend Documentation </li>
+                <li class="breadcrumb-item active"> Packages &nbsp;&nbsp; </li>
+
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @if (ViewBag.Packages != null)
+    {
+        foreach (var item in ViewBag.Packages)
+        {
+            <div class="col-md-4">
+
+
+                <div class="pricing-box b-l">
+                    <div class="pricing-body">
+                        <div class="pricing-header">
+                            <h4 class="text-center jsTitle">@item.PackageTitle</h4>
+                            <h2 class="text-center jsAmount">@item.PackageAmount</h2>
+                            <p class="uppercase jsDuration">@item.Duration </p>
+                        </div>
+                        <div class="price-table-content jsAttribute">
+                            @{ var arrayPackageAttribute = String.IsNullOrEmpty(item.PackageAttribute) == false ? item.PackageAttribute.Split(',') : new string[0]; }
+
+                            @foreach (var attribute in arrayPackageAttribute)
+                            {
+
+                                <div class="price-row"><i class="icon-user"></i> @attribute</div>
+                            }
+                        </div>
+                        <div class="price-row">
+
+                            <button class="btn btn-success waves-effect waves-light m-t-20 jsSubscribe" data-packageid="@item.SupplierPackageID" @*data-toggle="modal" data-target="#checkoutModel"*@>Buy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+
+        <div class="col-md-12">
+            <!-- Card -->
+            <div class="card text-center">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">No Package(s) Found</h4>
+                    <p class="card-text">Supplier packages will be  here.</p>
+
+
+                </div>
+                <div class="card-footer text-muted">
+
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+<div id="checkoutModel" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="NewForm" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Checkout</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="card-field" style="height:20px"></div>
+                </div>
+
+                <div class="alert alert-danger hide alert-rounded">
+                    <span id="responsePaymentMessage"></span>
+                    <button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" id="button-submit" class="btn btn-success waves-effect waves-light">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section PageScript
+{
+    <script src="https://sandbox-merchant.revolut.com/embed.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/recommend-document.js")"></script>
+
+
+
+    @*<script>
+            function RevolutCheckoutPayment(OrderPublicID) {
+                //var OrderPublicID = "6f875bce-ac95-4439-b423-52d59f47c753";
+                RevolutCheckout(OrderPublicID).then(function (instance) {
+
+                    var card = instance.createCardField({
+                        target: document.getElementById("card-field"),
+                        hidePostcodeField: true,
+                        savePaymentMethodFor: 'merchant',
+                        styles: {
+                            default: {
+                                color: "#00c292",
+                                "::placeholder": {
+                                    color: "#666"
+                                }
+                            },
+                            autofilled: {
+                                color: "#000"
+                            }
+                        },
+                        onSuccess(message) {
+                            // _fn_SendCustomerInvoice();
+
+                            //  window.alert("Thank you!" + message);
+                            // console.log("key", message);
+                        },
+                        onError(error) {
+                            $("#button-submit").removeClass("hide");
+                            $("#button-wait").addClass("hide");
+                            // _fn_AddPaymentLog(error);
+                            $('.alert').show();
+                            $("#responsePaymentMessage").text(error);
+                            //window.alert("Oh no :(" + error);
+                            //console.log("errorBQE", error);
+                        },
+
+                    });
+
+
+                    document.getElementById("button-submit")
+                        .addEventListener("click", function () {
+                            $("#button-submit").addClass("hide");
+                            $("#button-wait").removeClass("hide");
+                            card.submit();
+                        });
+                });
+                // $("#checkoutModel").modal("show");
+
+
+            }
+        </script>*@
+}

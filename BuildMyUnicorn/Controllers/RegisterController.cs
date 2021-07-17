@@ -133,6 +133,9 @@ namespace BuildMyUnicorn.Controllers
             return new ClientManager().UpdateCustomerPassword(Model);
         }
 
+
+      
+
         public async  Task<JsonResult> AddCustomer(Client Model)
         {
            
@@ -156,7 +159,6 @@ namespace BuildMyUnicorn.Controllers
                     OrderObj.GatewayClientID = Guid.Parse(CustomerID);
                     OrderObj.GatewayOrderID = Guid.Parse(PublicId);
                     OrderObj.OrderPublicID = Guid.Parse(PublicId);
-                    Session.Add("OrderID", OrderObj.OrderID);
                     new ClientManager().AddNewOrder(OrderObj);
                     Order order = new ClientManager().GetClientOrder(Model.ClientID);
                     return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);

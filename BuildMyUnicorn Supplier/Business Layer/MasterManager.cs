@@ -24,6 +24,12 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             return obj.GetList<Modules>(CommandType.StoredProcedure, "sp_get_all_module", null);
 
         }
-       
+
+        public _EmailTemplates GetEmailTemplate(string EmailTemplateCode)
+        {
+            var query = $@"select * from tbl_email_templates where EmailTemplateCode = '{EmailTemplateCode}' and IsActive = 1";
+            return SharedManager.GetSingle<_EmailTemplates>(query);
+        }
+
     }
 }

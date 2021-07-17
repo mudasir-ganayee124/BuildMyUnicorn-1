@@ -38,14 +38,14 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@Password", ParamterValue = Encryption.Encrypt(Keygen.Random()), ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Phone", ParamterValue = Model.Phone, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CountryID", ParamterValue = Model.CountryID, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input }
-                
+
             };
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_client", parameters);
-            if (result > 0) 
+            if (result > 0)
             {
 
 
-               
+
                 //List<Task> taskList = new List<Task>();
                 //taskList.Add(Task.Factory.StartNew(() => AddCustomerinGateway(Model)));
 
@@ -97,8 +97,8 @@ namespace BuildMyUnicorn.Business_Layer
 
                  }; obj.Execute(CommandType.StoredProcedure, "sp_update_account_network", parametersNetwork);
                 });
-                
-               
+
+
                 email_sender_thread.IsBackground = true;
                 email_sender_thread.Start();
                 SaveRestLink.Start();
@@ -203,7 +203,7 @@ namespace BuildMyUnicorn.Business_Layer
 
         public async Task<string> AddCustomerinGateway(Client Model)
         {
-          
+
             var queryPlan = $@"SELECT *, tbl_currency.Code FROM tbl_plan INNER JOIN  dbo.tbl_currency ON tbl_currency.CurrencyID = tbl_plan.CurrencyID where PlanID = '{Model.PlanID}'";
             var queryGateway = $@"select * from tbl_gateway WHERE GatewayType = '{(int)GatewayType.Revolut}'";
             Gateway gateway = SharedManager.GetSingle<Gateway>(queryGateway);
@@ -239,13 +239,35 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
+        public async Task<string> AddPackageinGateway(Client Model, string CustomerID)
+        {
+            var queryPlan = $@"SELECT *, tbl_currency.Code FROM tbl_supplier_package INNER JOIN  dbo.tbl_currency ON tbl_currency.CurrencyID = tbl_supplier_package.CurrencyID where SupplierPackageID = '{Model.PlanID}'";
+            var queryGateway = $@"select * from tbl_gateway WHERE GatewayType = '{(int)GatewayType.Revolut}'";
+            Gateway gateway = SharedManager.GetSingle<Gateway>(queryGateway);
+            Package Package = SharedManager.GetSingle<Package>(queryPlan);
+
+            CreateOrderReq reqOrder = new CreateOrderReq();
+            reqOrder.InternalAmount = Package.PackageAmount;
+            reqOrder.CaptureMode = CaptureModeEnum.AUTOMATIC;
+            reqOrder.Currency = Package.Code.ToString();
+            reqOrder.CustomerEmail = Model.Email;
+            reqOrder.Description = Package.PackageTitle.ToString();
+            reqOrder.MerchantCustomerExtRef = CustomerID.ToString();
+            reqOrder.CustomerID = CustomerID;
+            reqOrder.MerchantOrderExtRef = CustomerID.ToString();
+            reqOrder.SettlementCurrency = Package.Code.ToString();
+            Result<CreateOrderReq> order = await new RevolutManager().Post<CreateOrderReq>("orders", gateway, reqOrder);
+            return order.Value.PublicId;
+
+
+        }
         public async Task<string> AddOrderinGateway(Client Model, string CustomerID)
         {
             var queryPlan = $@"SELECT *, tbl_currency.Code FROM tbl_plan INNER JOIN  dbo.tbl_currency ON tbl_currency.CurrencyID = tbl_plan.CurrencyID where PlanID = '{Model.PlanID}'";
             var queryGateway = $@"select * from tbl_gateway WHERE GatewayType = '{(int)GatewayType.Revolut}'";
             Gateway gateway = SharedManager.GetSingle<Gateway>(queryGateway);
             Plan Plan = SharedManager.GetSingle<Plan>(queryPlan);
-         
+
             CreateOrderReq reqOrder = new CreateOrderReq();
             reqOrder.InternalAmount = Plan.Amount;
             reqOrder.CaptureMode = CaptureModeEnum.AUTOMATIC;
@@ -259,7 +281,7 @@ namespace BuildMyUnicorn.Business_Layer
             Result<CreateOrderReq> order = await new RevolutManager().Post<CreateOrderReq>("orders", gateway, reqOrder);
             return order.Value.PublicId;
 
- 
+
         }
 
 
@@ -268,8 +290,10 @@ namespace BuildMyUnicorn.Business_Layer
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
              new ParametersCollection { ParamterName = "@OrderID", ParamterValue = Model.OrderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Order_ID", ParamterValue = Model.Order_ID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Model.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@PlanID", ParamterValue = Model.PlanID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@OrderType", ParamterValue = Model.OrderType, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@OrderStatus", ParamterValue = Model.OrderStatus, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@OrderPublicID", ParamterValue = Model.OrderPublicID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@GatewayClientID", ParamterValue = Model.GatewayClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
@@ -278,7 +302,7 @@ namespace BuildMyUnicorn.Business_Layer
 
             };
             obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_order", parameters);
-            //if (result > 0) return "OK"; else return "Order failed";
+            //  if (result > 0) return "OK"; else return "Order failed";
 
         }
 
@@ -300,6 +324,12 @@ namespace BuildMyUnicorn.Business_Layer
             return SharedManager.GetSingle<Order>(query);
         }
 
+        public Order GetClientSingleOrder(Guid ClientID)
+        {
+            var query = $@"select  top 1 * from tbl_order where ClientID  =  '{ClientID}'";
+            return SharedManager.GetSingle<Order>(query);
+        }
+
         public Client GetClient(Guid ClientID)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
@@ -315,7 +345,7 @@ namespace BuildMyUnicorn.Business_Layer
             if (Model.MemberType == MemberType.Contributor)
             {
                 if (Model.TeamClientID != Guid.Empty)
-                     return Model.TeamClientID;
+                    return Model.TeamClientID;
                 else return Model.ClientID;
             }
             else return Model.ClientID;
@@ -323,10 +353,10 @@ namespace BuildMyUnicorn.Business_Layer
 
         public IEnumerable<ClientTeam> GetClientTeam()
         {
-            Guid ClientID  = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
+            Guid ClientID = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
             var query = $@"SELECT dbo.tbl_client.ClientID, dbo.tbl_client.TeamClientID, dbo.tbl_client.FirstName, dbo.tbl_client.LastName, dbo.tbl_client.MemberType, dbo.tbl_client.RoleInCompany, dbo.tbl_client.Email, dbo.tbl_client.LinkedProfile, dbo.tbl_client.ImageID, dbo.tbl_client.ShortBio, dbo.tbl_client.Phone, dbo.tbl_client.CountryID, dbo.tbl_client.CreatedBy, dbo.tbl_client.ModifiedBy, dbo.tbl_client.CreatedDateTime, dbo.tbl_client.ModifiedDateTime, dbo.tbl_client.IsActive, tbl_countries.CountryName, (SELECT TeamInfo FROM tbl_client WHERE ClientID = '{ new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}') AS TeamInfo FROM dbo.tbl_client LEFT JOIN tbl_countries ON tbl_client.CountryID = tbl_countries.CountryID WHERE TeamClientID = '{ClientID}' OR ClientID = '{ClientID}' ";
             return SharedManager.GetList<ClientTeam>(query);
-           
+
         }
 
         public IEnumerable<Survey> GetClientAllSurveyForm()
@@ -470,17 +500,17 @@ namespace BuildMyUnicorn.Business_Layer
 
                         if (Encryption.Encrypt(Model.Password) == Customer.Password)
                         {
-                          
+
                             FormsAuthentication.SetAuthCookie(Customer.ClientID.ToString(), true);
                             //HttpContext.Current.Session["HeartBeat"] = true;
-                            HttpContext.Current.Response.SetCookie(new HttpCookie("HeartBeat", "true"));
+                            //  HttpContext.Current.Response.SetCookie(new HttpCookie("HeartBeat", "true"));
 
                             return "OK";
-                          
+
                         }
                         else
                         {
-                              return "Invalid Username or Password";
+                            return "Invalid Username or Password";
                         }
                     }
                     else
@@ -530,7 +560,6 @@ namespace BuildMyUnicorn.Business_Layer
                 return "Password update Failed, Please Try again";
             }
         }
-
 
         public string[] ConfirmEmail(string refid)
         {
@@ -608,7 +637,7 @@ namespace BuildMyUnicorn.Business_Layer
 
                 Guid ConfirmationID = Guid.Parse(Encryption.DecryptGuid(refid));
                 var query = $@"SELECT tbl_forgot_password.* FROM tbl_forgot_password WHERE ForgotPasswordID= '{ConfirmationID}'";
-                ForgotPassword link =  SharedManager.GetSingle<ForgotPassword>(query);
+                ForgotPassword link = SharedManager.GetSingle<ForgotPassword>(query);
 
                 if (link != null)
                 {
@@ -671,7 +700,7 @@ namespace BuildMyUnicorn.Business_Layer
         public string SendPasswordRestLink(string Email)
         {
             var query = $@"SELECT tbl_client.* FROM tbl_client WHERE Email = '{Email}'";
-            Client Client  =  SharedManager.GetSingle<Client>(query);
+            Client Client = SharedManager.GetSingle<Client>(query);
             if (Client != null)
             {
                 if (Client.IsActive == true)
@@ -681,29 +710,29 @@ namespace BuildMyUnicorn.Business_Layer
                     string ForgotPasswordURL = strUrl;
                     string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
                     ForgotPasswordURL = ForgotPasswordURL + "/Register/ResetPassword?refid=" + EncryptedID;
-                    var template = new Master().GetTemplate((int)TemplateType.PlatformForgotPassword);
-                    string ForgotEmailTemplate = template.Body.ToString();//ForgotPasswordTemplate.Template["FP"];
+                    var template = new Master().GetEmailTemplate(TemplateType.PFP.ToString());
+                    string ForgotEmailTemplate = template.EmailTemplateBody.ToString();//ForgotPasswordTemplate.Template["FP"];
                     ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Client.FirstName + " " + Client.LastName);
                     string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
                     //Finally Send Mail and save data Async
                     Thread email_sender_thread = new Thread(delegate ()
                     {
                         EmailSender emailobj = new EmailSender();
-                        emailobj.SendMail(SenderEmail, Email, template.Subject.ToString(), ForgotEmailTemplate);
+                        emailobj.SendMail(SenderEmail, Email, template.EmailTemplateSubject.ToString(), ForgotEmailTemplate);
                     });
 
                     Thread SaveRestLink = new Thread(delegate ()
                      {
-                        DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-                        List<ParametersCollection> parametersConfirmation = new List<ParametersCollection>() {
-                    new ParametersCollection { ParamterName = "@ForgotPasswordID", ParamterValue = Ref_id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                    new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Client.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                         DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+                         List<ParametersCollection> parametersConfirmation = new List<ParametersCollection>() {
+                         new ParametersCollection { ParamterName = "@ForgotPasswordID", ParamterValue = Ref_id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                         new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Client.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
 
                    };
-                        obj.Execute(CommandType.StoredProcedure, "sp_add_password_reset", parametersConfirmation);
+                         obj.Execute(CommandType.StoredProcedure, "sp_add_password_reset", parametersConfirmation);
 
 
-                    });
+                     });
                     email_sender_thread.IsBackground = true;
                     email_sender_thread.Start();
                     SaveRestLink.Start();
@@ -718,7 +747,7 @@ namespace BuildMyUnicorn.Business_Layer
             {
                 return "User does not exist";
             }
-        }    
+        }
 
         public string DeleteSurvey(Guid SurveyID)
         {
@@ -728,7 +757,7 @@ namespace BuildMyUnicorn.Business_Layer
             return result > 0 ? "OK" : "Error in Delete";
         }
 
-      
+
 
     }
 }

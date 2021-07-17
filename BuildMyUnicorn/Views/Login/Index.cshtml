@@ -103,7 +103,10 @@
                             <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Log In</button>
                         </div>
                     </div>
-
+                    <div class="alert alert-danger hide alert-rounded">
+                        <span id="responseMessage"></span>
+                        <button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
                     <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
                             Don't have an account? <a href="~/Plans" class="text-primary m-l-5"><b>Register</b></a>
@@ -137,6 +140,7 @@
                             <p>Go to login: <a href="/Login" class="text-info m-l-5"><b>Sign In</b></a></p>
                         </div>
                     </div>
+                   
                 </form>
             </div>
         </div>

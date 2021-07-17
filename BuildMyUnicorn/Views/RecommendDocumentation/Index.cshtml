@@ -1,0 +1,131 @@
+﻿@model Business_Model.Model.ModuleCourse
+@using System.Configuration;
+@{
+    List<Business_Model.Model.Supplier> SupplierList = ViewBag.RecommendDocumentSupplier as List<Business_Model.Model.Supplier>;
+
+}
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Recommended Documentation</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+
+
+                <li class="breadcrumb-item"><a href="javascript:void(0)"> Home</a></li>
+                <li class="breadcrumb-item">Legal & Regulatory  </li>
+                <li class="breadcrumb-item active">Recommended Documentation </li>
+            </ol>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-9 col-xlg-10 col-md-8">
+        @foreach (var item in ViewBag.RecommendDocument)
+        {
+
+            <div class="col-md-12 video">
+
+                <div class="card card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-8 ModuleVideoDescription">
+                            <h3 class="box-title m-b-0">@item.Title</h3>
+                            <div style="max-height: 180px; overflow-y:auto">
+                                @Html.Raw(item.Description)
+                            </div>
+                           
+                        </div>
+                        <div class="col-md-4 text-center ModuleVideo">
+                            <iframe width="100%" height="100%" src="@item.VideoUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        }
+
+    </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        @foreach (var sup in SupplierList)
+                        {
+
+
+                            <div class="col-md-6">
+                                <a href="~/SurveyProfessional/ProfessionalProfile?SupplierID=@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                <address>
+                                    @sup.CompanyName
+                                </address>
+                            </div>
+
+
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="row">
+    <div class="col-md-12">-->
+<!-- Card -->
+<!--<div class="card text-center">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">No Recommended Documentation</h4>
+                <p class="card-text">Recommended Documentation will be available  here.</p>
+
+
+            </div>
+            <div class="card-footer text-muted">
+
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+
+@section PageScript
+{
+
+    <script>
+        $(document).ready(function () {
+            $("li a, li").removeClass("active");
+            $("li ul").removeClass("in");
+        });
+
+        $('.video').each(function (index, value) {
+            /*if (($(this).find("div.ModuleVideoDescription").height() / 2) > 120) {*/
+            $(this).find('div.ModuleVideo').css("height", $(this).find("div.ModuleVideoDescription").height()/1.5);
+           // }
+            //else { $(this).find('div.ModuleVideo').css("height", 148); }
+        });
+
+
+
+    </script>
+}

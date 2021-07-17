@@ -8,7 +8,7 @@ $(function () {
 });
 $('#to-recover').on("click", function () {
     $("#loginform").slideUp();
-    $("#recoverform").fadeIn();
+    $("#frmResetPassword").fadeIn();
 });
 
 $("#loginform").submit(function (e) {
@@ -97,21 +97,22 @@ $("#frm_ResetPassword").submit(function (e) {
 $("#frm_PasswordEmail").submit(function (e) {
     e.preventDefault();
     $.ajax({
-        url: GetBaseURL() + "/Signup/SendPasswordResetLink",
+        url: GetBaseURL() + "Register/SendPasswordResetLink",
         method: "POST",
-        data: $('#frm_PasswordEmail').serialize(),
+        data: $(this).serialize(),
         success: function (response) {
             if (response == "OK") {
-                window.location.replace(GetBaseURL() + "/Signup/ResetPasswordEmailSuccess");
+                window.location.replace(GetBaseURL() + "Register/ResetPasswordEmailSuccess");
             }
             else {
-                $(".erorLabel").removeClass("invisible");
-                $(".errorMessage").text(response);
+                $(".jsResetPasswordMsg").removeClass("hide");
+                $("#responseMessage").text(response);
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            $(".erorLabel").removeClass("invisible");
-            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+            $(".jsResetPasswordMsg").removeClass("hide");
+            $("#responseMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+
         }
     });
 

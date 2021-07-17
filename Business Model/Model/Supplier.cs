@@ -23,6 +23,7 @@ namespace Business_Model.Model
         public string ImageID { get; set; }
         public string WorkLocation { get; set; }
         public string BusinessPlacement { get; set; }
+        public bool RecommendedDocument { get; set; }
         public string CompanyType { get; set; }
         public string QuestionTitle { get; set; }
         public string QuestionForm { get; set; }
@@ -72,7 +73,7 @@ namespace Business_Model.Model
     {
         public Guid SupplierPackageID { get; set; }
         public Guid SupplierID { get; set; }
-        public Guid Duration { get; set; }
+        public Frequency Duration { get; set; }
         public string  PackageTitle { get; set; }
         public decimal PackageAmount { get; set; }
         public string PackageAttribute { get; set; }

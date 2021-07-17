@@ -193,57 +193,37 @@
                                                                             //if (Array.Exists(arrayModules, o => o == Convert.ToString(@item.ID)) == true)
                                                                             //{
 
-                                                                                <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
-                                                                                    <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
-                                                                                    <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
-                                                                                    <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
-                                                                                        @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
+                                                                                <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
+                                                                                <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
+                                                                                <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
+                                                                                    @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                                    {
+                                                                                        if (Array.Exists(arrayModules, o => o == Convert.ToString(obj.SectionID)) == true)
                                                                                         {
-                                                                                            if (Array.Exists(arrayModules, o => o == Convert.ToString(obj.SectionID)) == true)
-                                                                                            {
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
-                                                                                                    <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
-                                                                                                </div>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
-                                                                                                    <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
-                                                                                                </div>
-
-                                                                                            }
+                                                                                            <div class="custom-control custom-checkbox">
+                                                                                                <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
+                                                                                                <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
+                                                                                            </div>
                                                                                         }
-
-
-                                                                                    </div>
-                                                                                </div>
-
-
-                                                                           // }
-                                                                            @*else
-                                                                            {
-
-                                                                                <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
-                                                                                    <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
-                                                                                    <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
-                                                                                    <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
-                                                                                        @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                                        else
                                                                                         {
                                                                                             <div class="custom-control custom-checkbox">
                                                                                                 <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
                                                                                                 <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
                                                                                             </div>
+
                                                                                         }
+                                                                                    }
 
-                                                                                    </div>
+
                                                                                 </div>
+                                                                            </div>
 
 
-                                                                            }*@
+
+
                                                                             x = x + 1;
                                                                         }
 
@@ -259,55 +239,55 @@
 
                                                                         if (x > halfCount)
                                                                         {
-                                                                           // if (Array.Exists(arrayModules, o => o == Convert.ToString(@item.ID)) == true)
-                                                                           // {
-                                                                                <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
-                                                                                    <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
-                                                                                    <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
-                                                                                    <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
-                                                                                        @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                            // if (Array.Exists(arrayModules, o => o == Convert.ToString(@item.ID)) == true)
+                                                                            // {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
+                                                                                <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
+                                                                                <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
+                                                                                <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
+                                                                                    @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                                    {
+                                                                                        if (Array.Exists(arrayModules, o => o == Convert.ToString(obj.SectionID)) == true)
                                                                                         {
-                                                                                            if (Array.Exists(arrayModules, o => o == Convert.ToString(obj.SectionID)) == true)
-                                                                                            {
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
-                                                                                                    <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
-                                                                                                </div>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
-                                                                                                    <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
-                                                                                                </div>
-
-                                                                                            }
+                                                                                            <div class="custom-control custom-checkbox">
+                                                                                                <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
+                                                                                                <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
+                                                                                            </div>
                                                                                         }
-
-
-                                                                                    </div>
-                                                                                </div>
-                                                                           // }
-                                                                            @*else
-                                                                            {
-                                                                                <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
-                                                                                    <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
-                                                                                    <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
-                                                                                    <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
-
-                                                                                        @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                                        else
                                                                                         {
                                                                                             <div class="custom-control custom-checkbox">
                                                                                                 <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
                                                                                                 <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
                                                                                             </div>
-                                                                                        }
 
-                                                                                    </div>
+                                                                                        }
+                                                                                    }
+
+
                                                                                 </div>
-                                                                            }*@
+                                                                            </div>
+                                                                            // }
+                                                                            @*else
+                                                                                {
+                                                                                    <div class="custom-control custom-checkbox">
+                                                                                        <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
+                                                                                        <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
+                                                                                        <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
+                                                                                        <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
+
+                                                                                            @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
+                                                                                            {
+                                                                                                <div class="custom-control custom-checkbox">
+                                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
+                                                                                                    <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
+                                                                                                </div>
+                                                                                            }
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }*@
 
                                                                         }
                                                                         x = x + 1;
@@ -321,6 +301,21 @@
 
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="RecommendedDocument" name="RecommendedDocument"  value="@(Model.RecommendedDocument == true  ? "true": "false")"  @(Model.RecommendedDocument == true  ? "checked : checked": "")" >
+                                                                        <label class="custom-control-label" for="RecommendedDocument">Recommended Documentation</label>
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
                                                         <div class="form-group">
                                                             <label>Work Location </label> <br />
                                                             <div class="row">
