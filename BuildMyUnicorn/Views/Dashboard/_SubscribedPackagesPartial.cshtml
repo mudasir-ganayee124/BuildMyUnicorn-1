@@ -1,0 +1,54 @@
+﻿
+@model  IEnumerable<Business_Model.Model.SubscribedPackages>
+
+<div class="row">
+    <div class="col-6">
+        @*<h3>@(Model.Count() > 0 ? Model.FirstOrDefault().DueDate.ToString("MMM yyyy") : "")</h3>*@
+        <h5 class="font-light m-t-0">&nbsp;</h5>
+    </div>
+    <div class="col-6 align-self-center display-6 text-right">
+
+    </div>
+</div>
+<div class="table-responsive" style="height:500px">
+    <table class="table table-hover no-wrap" >
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Supplier Name</th>              
+                <th>Package</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int Counter = 0;
+
+            }
+
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    Counter = Counter + 1;
+            <tr>
+                <td class="text-center">@Counter </td>
+                <td class="txt-oflo">@item.CompanyName</td>
+                <td>
+                    @item.PackageTitle
+                </td>
+                <td><span class="text-success">@item.PackageAmount</span></td>
+                <td class="txt-oflo">@item.OrderDateTime.ToString("dd MMM yyyy")</td>
+
+            </tr>
+
+                }
+            }
+            else
+            {
+                <tr> <td colspan="5" style="text-align:center"> <h5>No Package Subscribed</h5></td> </tr>
+            }
+        </tbody>
+    </table>
+</div>

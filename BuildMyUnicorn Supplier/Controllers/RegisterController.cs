@@ -40,6 +40,7 @@ namespace BuildMyUnicorn_Supplier.Controllers
         {
             return View();
         }
+       
 
         public ActionResult EmailVerification()
         {
@@ -114,16 +115,14 @@ namespace BuildMyUnicorn_Supplier.Controllers
             FormsAuthentication.SetAuthCookie(Model.SupplierID.ToString(), true);
             return new SupplierManager().UpdateSupplierPassword(Model);
         }
+        public string UpdateForgotPassword(Supplier Model)
+        {
+           // new SupplierManager().UpdateCustomerCustomerForgotPassword(Model);
 
-        //public string UpdateForgotPassword(Client Model)
-        //{
-        //    new SupplierManager().UpdateCustomerCustomerForgotPassword(Model);
-
-        //    return new SupplierManager().UpdateCustomerPassword(Model);
-        //}
+            return new SupplierManager().UpdateCustomerPassword(Model);
+        }
 
 
-       
 
         public string SendPasswordResetLink(String Email)
         {

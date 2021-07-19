@@ -21,7 +21,7 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
                 new ParametersCollection { ParamterName = "@SupplierID", ParamterValue = Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Duration", ParamterValue = Model.Duration, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Duration", ParamterValue = Model.Duration, ParamterType = DbType.Int64, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PackageTitle", ParamterValue = Model.PackageTitle, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PackageAmount", ParamterValue = Model.PackageAmount, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CurrencyID", ParamterValue = Model.CurrencyID, ParamterType =DbType.Guid, ParameterDirection = ParameterDirection.Input },
@@ -39,7 +39,7 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
                 new ParametersCollection { ParamterName = "@SupplierPackageID", ParamterValue = Model.SupplierPackageID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                new ParametersCollection { ParamterName = "@Duration", ParamterValue = Model.Duration, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@Duration", ParamterValue = Model.Duration, ParamterType = DbType.Int64, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PackageTitle", ParamterValue = Model.PackageTitle, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@PackageAmount", ParamterValue = Model.PackageAmount, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@CurrencyID", ParamterValue = Model.CurrencyID, ParamterType =DbType.Guid, ParameterDirection = ParameterDirection.Input },
@@ -69,6 +69,17 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             };
           return obj.GetSingle<Package>(CommandType.StoredProcedure, "sp_get_supplier_package_by_id", parameters);
            
+        }
+
+        public IEnumerable<SubscribedPackages> GetAllSubscribedPackages()
+        {
+            var query = $@"select tbl_order.*,tbl_supplier_package.*,tbl_client.FirstName, tbl_client.LastName, tbl_client.StartupName  from tbl_order 
+                        INNER JOIN tbl_supplier_package ON tbl_supplier_package.SupplierPackageID = tbl_order.PlanID
+                        INNER JOIN tbl_client ON tbl_client.ClientID = tbl_order.ClientID
+                        WHERE tbl_order.OrderType = 1 AND tbl_supplier_package.SupplierID = '{Guid.Parse(HttpContext.Current.User.Identity.Name)}' 
+                        ORDER BY tbl_supplier_package.CreatedDateTime DESC";
+
+            return SharedManager.GetList<SubscribedPackages>(query);
         }
 
         public string DeletePackage(Guid SupplierPackageID)

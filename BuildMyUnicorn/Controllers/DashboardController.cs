@@ -38,6 +38,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.ProgressSelling = new Master().GetModuleTotalProgress(Module.Selling);
             ViewBag.ProgressFinance = new Master().GetModuleTotalProgress(Module.Finance);
             ViewBag.ProgressMarketing = new Master().GetModuleTotalProgress(Module.Marketing);
+           
             Decimal TotalProgress = Math.Round(ViewBag.ProgressIdea + ViewBag.ProgressMarketResearch + ViewBag.ProgressBusiness + ViewBag.ProgressSelling + ViewBag.ProgressFinance)/5;
             ViewBag.ProgressAnalytic = new DashboardManager().GetClientProgressAnalytic(TotalProgress);
             return View();
@@ -52,6 +53,12 @@ namespace BuildMyUnicorn.Controllers
         {
             int CountryID = ViewBag.Client.CountryID;
             return PartialView("_CountryGrantPartial", new FinanceManager().GetCountGrantByMonth(Month, CountryID));
+        }
+
+        public ActionResult GetSubscribedPackages()
+        {
+         
+            return PartialView("_SubscribedPackagesPartial", new DashboardManager().GetAllSubscribedPackages());
         }
 
         //public ActionResult TodoList()

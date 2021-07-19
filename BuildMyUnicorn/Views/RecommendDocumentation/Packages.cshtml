@@ -25,7 +25,10 @@
 </div>
 
 <div class="row">
-    @if (ViewBag.Packages != null)
+    
+    <input type="hidden" id="OrderID" name="OrderID" />
+    <input type="hidden" id="SupplierID" name="SupplierID" value="@ViewBag.SupplierID" />
+    @if (ViewBag.Packages.Count != 0)
     {
         foreach (var item in ViewBag.Packages)
         {
@@ -100,7 +103,8 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                    <button type="button" id="button-submit" class="btn btn-success waves-effect waves-light">Confirm</button>
+                    <button type="button" id="button-wait" class="btn btn-primary  hide">Please wait...</button>
+                    <button type="button" id="button-submit" class="btn btn-success">Pay</button>
                 </div>
             </form>
         </div>

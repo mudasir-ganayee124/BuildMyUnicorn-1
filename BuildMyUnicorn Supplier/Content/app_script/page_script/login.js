@@ -67,14 +67,14 @@ $("#frm_Password").submit(function (e) {
 $("#frm_ResetPassword").submit(function (e) {
     e.preventDefault();
     $.ajax({
-        url: GetBaseURL() + "/Signup/UpdateForgotPassword",
+        url: GetBaseURL() + "Register/UpdateForgotPassword",
         method: "POST",
         data: $('#frm_ResetPassword').serialize(),
         success: function (response) {
             if (response == "OK") {
                 $(".successMessagelabel").removeClass("invisible");
                 $(".successMessage").text("Password Changed Successfully");
-                setTimeout(function () { window.location.replace(GetBaseURL() + "/Login") }, 2000);
+                setTimeout(function () { window.location.replace(GetBaseURL() + "Login") }, 2000);
            
                 
               
@@ -94,7 +94,7 @@ $("#frm_ResetPassword").submit(function (e) {
 
 });
 
-$("#frm_PasswordEmail").submit(function (e) {
+$("#frmResetPassword").submit(function (e) {
     e.preventDefault();
     $.ajax({
         url: GetBaseURL() + "Register/SendPasswordResetLink",

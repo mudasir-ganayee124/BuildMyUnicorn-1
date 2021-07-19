@@ -43,15 +43,8 @@ namespace BuildMyUnicorn.Business_Layer
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_client", parameters);
             if (result > 0)
             {
-
-
-
-                //List<Task> taskList = new List<Task>();
-                //taskList.Add(Task.Factory.StartNew(() => AddCustomerinGateway(Model)));
-
-
-                //return result;
-
+                var query = $@"select * from tbl_email_templates where EmailTemplateCode = '{TemplateType.NPC.ToString()}' and IsActive = 1";
+                var Template =  SharedManager.GetSingle<_EmailTemplates>(query);
                 List<ParametersCollection> Customerparameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@Email", ParamterValue = Model.Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input } };
                 Client Customer = obj.GetSingle<Client>(CommandType.StoredProcedure, "sp_get_client_by_email", Customerparameters);
                 Guid Ref_id = Guid.NewGuid();
@@ -59,15 +52,15 @@ namespace BuildMyUnicorn.Business_Layer
                 string ForgotPasswordURL = strUrl;
                 string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
                 ForgotPasswordURL = ForgotPasswordURL + "/Register/EmailVerification?refid=" + EncryptedID;
-                string ForgotEmailTemplate = EmailTemplates.Templates["FP"];
-                ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Customer.FirstName + " " + Customer.LastName);
+                string NewAccountTemplate = Template.EmailTemplateBody.ToString();
+                NewAccountTemplate = NewAccountTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Customer.FirstName + " " + Customer.LastName);
                 string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
 
                 //Finally Send Mail and save data Async
                 Thread email_sender_thread = new Thread(delegate ()
                 {
                     EmailSender emailobj = new EmailSender();
-                    emailobj.SendMail(SenderEmail, Model.Email, "Build my Unicorn Account", ForgotEmailTemplate);
+                    emailobj.SendMail(SenderEmail, Model.Email, Template.EmailTemplateSubject.ToString() , NewAccountTemplate);
                 });
 
                 Thread SaveRestLink = new Thread(delegate ()

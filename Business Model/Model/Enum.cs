@@ -165,7 +165,7 @@ namespace Business_Model.Model
 
     public enum TemplateType
     {
-       NPC,NSC,NACC,NAA, PFP,SFP,ACFP, ADFP, CPLI, CPAI
+       NPC,NSC,NACC,NAC, PFP,SFP,ACFP, ADFP, CPLI, CPAI
 
     }
 

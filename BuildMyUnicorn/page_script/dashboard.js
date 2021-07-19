@@ -4,6 +4,7 @@ $(document).ready(function () {
     $("li a, li").removeClass("active");
     $("li ul").removeClass("in");
     $("#Dashboardnav").addClass("active");
+    GetSubscribedPackages();
     GetCountryGrant(0)
 });
 $("#frm_UpdateProfile").submit(function (e) {
@@ -132,5 +133,22 @@ $.ajax({
                
         },
        
+    });
+}
+
+function GetSubscribedPackages() {
+
+    $.ajax({
+        url: GetBaseURL() + "Dashboard/GetSubscribedPackages",
+        type: "POST",
+        dataType: "html",
+        success: function (html) {
+            $("#_RenderSubscribedPackages").html(html);
+        },
+        error: function (html) {
+
+
+        },
+
     });
 }

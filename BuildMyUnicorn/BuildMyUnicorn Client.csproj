@@ -6393,6 +6393,8 @@
     <Content Include="Views\Interview\Edit.cshtml" />
     <Content Include="Views\RecommendDocumentation\Index.cshtml" />
     <Content Include="Views\RecommendDocumentation\Packages.cshtml" />
+    <Content Include="Views\Dashboard\_SubscribedPackagesPartial.cshtml" />
+    <Content Include="Views\RecommendDocumentation\Questions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

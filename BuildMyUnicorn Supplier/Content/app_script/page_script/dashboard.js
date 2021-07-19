@@ -1,4 +1,4 @@
-﻿
+﻿GetSubscribedPackages();
 $("#ImageUpload").on('change', function () {
 
     var form_Data = new FormData();
@@ -108,4 +108,21 @@ $('input[type="checkbox"]').click(function () {
 
     }
    
-   });
+});
+
+function GetSubscribedPackages() {
+
+    $.ajax({
+        url: GetBaseURL() + "Dashboard/GetSubscribedPackages",
+        type: "POST",
+        dataType: "html",
+        success: function (html) {
+            $("#_RenderSubscribedPackages").html(html);
+        },
+        error: function (html) {
+
+
+        },
+
+    });
+}

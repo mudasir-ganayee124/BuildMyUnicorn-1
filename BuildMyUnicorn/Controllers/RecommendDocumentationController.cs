@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.IO;
+using Newtonsoft.Json;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -22,9 +24,45 @@ namespace BuildMyUnicorn.Controllers
         }
         public ActionResult Packages(string id)
         {
-
-            ViewBag.Packages = new Master().GetAllSupplierPackages(Guid.Parse("2B32681D-8B18-4C76-B65F-2BA51DC8962C")) ;
+            ViewBag.SupplierID = id;
+            ViewBag.Packages = new Master().GetAllSupplierPackages(Guid.Parse(id)) ;
             return View();
+        }
+
+        public ActionResult Questions(string id)
+        {
+
+            ViewBag.question = new Master().GetQuestionForm(Guid.Parse(id));
+            if (ViewBag.question == null)
+            {
+                ViewBag.question = new SupplierQuestion();
+                ViewBag.question.QuestionForm = "[]";
+            }
+            return View();
+        }
+
+        public string AddQuestionData(string id)
+        {
+          
+            Stream req = Request.InputStream;
+            req.Seek(0, SeekOrigin.Begin);
+            string jsonData = new StreamReader(req).ReadToEnd();
+            dynamic dyn = JsonConvert.DeserializeObject(jsonData);
+            string JsonData = Convert.ToString(dyn.jsonData);
+            List<SurveyData> SurveyDataList = new List<SurveyData>();
+           
+            foreach (var item in dyn.formData)
+            {//displayValue
+
+                string key = Convert.ToString(item.title);
+                string value = Convert.ToString(item.value);
+                SurveyDataList.Add(new SurveyData() { KeyField = key, KeyValue = value });
+               
+            }
+
+            new ClientManager().AddSurveyData(SurveyDataList, Guid.Parse(id), JsonData);
+            return "OK";
+           
         }
 
         public async Task<JsonResult> AddPackageOrder(string id)
@@ -41,6 +79,7 @@ namespace BuildMyUnicorn.Controllers
                     OrderObj.OrderID = Guid.NewGuid();
                     OrderObj.ClientID = Model.ClientID;
                     OrderObj.OrderStatus = OrderStatus.Pending;
+                    OrderObj.Order_ID = Keygen.Random();
                     OrderObj.PlanID = Model.PlanID;
                     OrderObj.OrderType = OrderType.Package;
                     OrderObj.GatewayClientID = Guid.Parse(CustomerID);

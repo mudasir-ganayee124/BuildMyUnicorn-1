@@ -1,4 +1,5 @@
 ﻿$(document).on("click", ".jsSubscribe", function () {
+
     $.ajax({
         url: GetBaseURL() + "ThirdParty/AddPackageOrder",
         method: "POST",      // data: $('#frmRegister').serialize(),
@@ -85,15 +86,12 @@ function _fn_Invoice() {
         method: "POST",
         data: { OrderID: $("#OrderID").val()  },
         success: function (response) {
-            // if (response == "OK") {
-
-           // $('<form action="Register/SignupSuccess/" method="post"><input type="text"  name="email" value="' + $("#Email").val() + '"/></form>').appendTo('body').submit().remove();
-
-            // }
-            // else {
-            //    alert(response);
-            //  $(".erorLabel").removeClass("invisible");
-            //$(".errorMessage").text(response);}
+            $("#checkoutModel").modal("hide");
+           // alert("Package subscribed successfully");
+           // var ii = "2B32681D-8B18-4C76-B65F-2BA51DC8962C";
+           // window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + ii);
+           window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/"+$("#SupplierID").val());
+           
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             $(".erorLabel").removeClass("invisible");

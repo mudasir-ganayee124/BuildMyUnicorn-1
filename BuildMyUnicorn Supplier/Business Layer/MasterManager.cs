@@ -4,8 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-
-
+using System.Web;
 
 namespace BuildMyUnicorn_Supplier.Business_Layer
 {
@@ -31,5 +30,6 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             return SharedManager.GetSingle<_EmailTemplates>(query);
         }
 
+       
     }
 }

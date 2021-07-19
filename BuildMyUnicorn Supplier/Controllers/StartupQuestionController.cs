@@ -14,7 +14,11 @@ namespace BuildMyUnicorn_Supplier.Controllers
         public ActionResult Index()
         {
             ViewBag.question = new SupplierManager().GetSupplierQustionForm();
-            if (ViewBag.question == null) ViewBag.question = new SupplierQuestion();
+            if (ViewBag.question == null)
+            {
+                ViewBag.question = new SupplierQuestion();
+                ViewBag.question.QuestionForm = "[]";
+            } 
             return View();
         }
 

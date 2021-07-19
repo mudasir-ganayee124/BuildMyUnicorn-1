@@ -34,7 +34,11 @@ namespace BuildMyUnicorn_Supplier.Controllers
         {
             return new SupplierManager().UpdateSupplierProfile(Model);
         }
+        public ActionResult GetSubscribedPackages()
+        {
 
+            return PartialView("_SubscribedPackagesPartial", new PackageManager().GetAllSubscribedPackages());
+        }
         public string FileUpload(HttpPostedFileBase file)
         {
             if (file != null)

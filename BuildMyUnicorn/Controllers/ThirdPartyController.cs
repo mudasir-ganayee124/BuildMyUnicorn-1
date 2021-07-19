@@ -55,8 +55,8 @@ namespace BuildMyUnicorn.Controllers
         }
 
         public void SendPackageInvoice(Guid OrderID)
-        { 
-        
+        {
+            new ThirdPartyManager().SendPackageInvoivce(OrderID);
         }
     }
 }

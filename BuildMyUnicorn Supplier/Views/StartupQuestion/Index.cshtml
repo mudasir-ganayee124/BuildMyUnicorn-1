@@ -19,21 +19,21 @@
 }
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <div class="d-flex">
-            <i class="mdi mdi-arrow-left"></i>  <a href="~/Questionnaire"> Back to Survey</a>
-        </div>
+        @*<div class="d-flex">
+                <i class="mdi mdi-arrow-left"></i>  <a href="~/Questionnaire"> Back to Survey</a>
+            </div>*@
 
     </div>
 
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Market Research</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Survey</a></li>
-                <li class="breadcrumb-item active">New Survey </li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Startup Question</a></li>
+                @*<li class="breadcrumb-item active">New Survey </li>*@
             </ol>
 
-            <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="AddNewSurvey">Add Survey</button>
+            <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="AddStartupQuestion">Add</button>
 
         </div>
     </div>
@@ -42,7 +42,8 @@
 <div class="row">
     <div class="col-lg-12">
         <div id="surveyContainer">
-            <input type="text" id="SurveyTitle" name="SurveyTitle" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Survey Title--" />
+            <input type="hidden" id="QuestionForm" name="QuestionForm" value="@ViewBag.question.QuestionForm" />
+            <input type="text" id="Title" name="Title" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Title--" value="@ViewBag.question.QuestionTitle" />
             <div id="creatorElement"></div>
         </div>
     </div>
@@ -56,7 +57,7 @@
     <script type="text/javascript" src="./index.js"></script>
     <script src="~/Content/app_script/page_script/startup-question.js?version=@DateTime.Now"></script>
     @*<script src="@Url.ContentVersioned("~/page_script/survey-create.js")"></script>*@
-    <script>
+<script>
         // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
         var options = {
             showLogicTab: true
@@ -88,19 +89,19 @@
             //Creator will update the status from Saving to saved
             callback(saveNo, true);
         }
-        var defaultJSON = [];
+         var defaultJSON = @Html.Raw(ViewBag.question.QuestionForm);
         //creator.text = window
         //    .localStorage
         //    .getItem(localStorageName) || JSON.stringify(defaultJSON);
-        creator.text = JSON.stringify(defaultJSON);
-        if (!window.creator && creator !== undefined) {
-            window.creator = creator;
-        }
+    creator.text = JSON.stringify(defaultJSON);
+    if (!window.creator && creator !== undefined) {
+        window.creator = creator;
+    }
 
-                    //$(document).on("click", "#Create", function () {
+                        //$(document).on("click", "#Create", function () {
 
-                    //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
-                    //});
-    </script>
+                        //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
+                        //});
+</script>
 }
 

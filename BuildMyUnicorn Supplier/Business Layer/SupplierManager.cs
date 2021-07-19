@@ -30,7 +30,8 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             Guid user_AffiliateLinkID = Model.AffiliateLinkID;
             if (result > 0)
             {
-
+                var query = $@"select * from tbl_email_templates where EmailTemplateCode = '{TemplateType.NSC.ToString()}' and IsActive = 1";
+                var Template = SharedManager.GetSingle<_EmailTemplates>(query);
                 List<ParametersCollection> Customerparameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@Email", ParamterValue = Model.Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input } };
                 Supplier Supplier = obj.GetSingle<Supplier>(CommandType.StoredProcedure, "sp_get_supplier_by_email", Customerparameters);
                 Guid Ref_id = Guid.NewGuid();
@@ -38,14 +39,14 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
                 string ForgotPasswordURL = strUrl;
                 string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
                 ForgotPasswordURL = ForgotPasswordURL + "/Register/EmailVerification?refid=" + EncryptedID;
-                string ForgotEmailTemplate = EmailTemplates.Templates["FP"];
-                ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Supplier.FirstName + " " + Supplier.LastName);
+                string NewAccountTemplate = Template.EmailTemplateBody.ToString();
+                NewAccountTemplate = NewAccountTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Supplier.FirstName + " " + Supplier.LastName);
                 string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
                // Finally Send Mail and save data Async
                 Thread email_sender_thread = new Thread(delegate ()
                 {
                     EmailSender emailobj = new EmailSender();
-                    string d = emailobj.SendMail(SenderEmail, Model.Email, "Build my Unicorn Account", ForgotEmailTemplate);
+                    string d = emailobj.SendMail(SenderEmail, Model.Email, Template.EmailTemplateSubject.ToString(), NewAccountTemplate);
                 });
 
               
@@ -199,7 +200,19 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             if (result > 0) return "OK"; else return "Password update Failed, Please Try again";
 
         }
+        public string UpdateCustomerPassword(Supplier Model)
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+             new ParametersCollection { ParamterName = "@EntityID", ParamterValue = Model.SupplierID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Password", ParamterValue = Encryption.Encrypt(Model.Password), ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Type", ParamterValue = _EntityType.Supplier, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
 
+            };
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_update_password", parameters);
+            if (result > 0) return "OK"; else return "Password update Failed, Please Try again";
+
+        }
         public void UpdateEmailConfirmation(Guid ConfirmationID)
         {
 
@@ -285,9 +298,9 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             {
 
                 Guid ConfirmationID = Guid.Parse(Encryption.DecryptGuid(refid));
-                DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
-                List<ParametersCollection> parameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@id", ParamterValue = ConfirmationID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input } };
-                ForgotPassword link = obj.GetSingle<ForgotPassword>(CommandType.StoredProcedure, "sp_get_reset_password", parameters);
+                var query = $@"SELECT tbl_forgot_password.* FROM tbl_forgot_password WHERE ForgotPasswordID= '{ConfirmationID}'";
+                ForgotPassword link = SharedManager.GetSingle<ForgotPassword>(query);
+               
                 if (link != null)
                 {
                     if (link.LinkUsed == false)
@@ -372,8 +385,8 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
                 {
                     DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
                     List<ParametersCollection> parametersConfirmation = new List<ParametersCollection>() {
-                    new ParametersCollection { ParamterName = "@id", ParamterValue = Ref_id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
-                    new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Supplier.SupplierID, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                    new ParametersCollection { ParamterName = "@ForgotPasswordID", ParamterValue = Ref_id, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                    new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Supplier.SupplierID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
 
                 };
                     obj.Execute(CommandType.StoredProcedure, "sp_add_password_reset", parametersConfirmation);

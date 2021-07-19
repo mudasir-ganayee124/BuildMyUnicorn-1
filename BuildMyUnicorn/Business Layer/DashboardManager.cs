@@ -124,6 +124,15 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
+        public IEnumerable<SubscribedPackages> GetAllSubscribedPackages()
+        {
+            var query = $@"select *, tbl_supplier_package.CreatedDateTime AS SubscribedDate from tbl_order INNER JOIN tbl_supplier_package ON tbl_supplier_package.SupplierPackageID = tbl_order.PlanID
+                        INNER JOIN tbl_supplier ON tbl_supplier.SupplierID = tbl_supplier_package.SupplierID
+                        WHERE tbl_order.OrderType = 1 AND ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' 
+                        ORDER BY tbl_supplier_package.CreatedDateTime DESC";
+            return SharedManager.GetList<SubscribedPackages>(query);
+        }
+
 
     }
 }

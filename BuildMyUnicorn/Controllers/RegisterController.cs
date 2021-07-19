@@ -133,9 +133,6 @@ namespace BuildMyUnicorn.Controllers
             return new ClientManager().UpdateCustomerPassword(Model);
         }
 
-
-      
-
         public async  Task<JsonResult> AddCustomer(Client Model)
         {
            
@@ -152,7 +149,9 @@ namespace BuildMyUnicorn.Controllers
                     string PublicId = await new ClientManager().AddOrderinGateway(Model, CustomerID);
                
                     Order OrderObj = new Order();
-                    OrderObj.OrderID = Guid.NewGuid();
+                    OrderObj.OrderID = Guid.NewGuid();        
+                    OrderObj.Order_ID = Keygen.Random();
+                    OrderObj.OrderType = OrderType.Plan;                  
                     OrderObj.ClientID = Model.ClientID;
                     OrderObj.OrderStatus = OrderStatus.Pending;
                     OrderObj.PlanID = Model.PlanID;
