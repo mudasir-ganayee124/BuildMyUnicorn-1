@@ -22,6 +22,13 @@ namespace BuildMyUnicorn_Supplier.Controllers
             return View();
         }
 
+        public ActionResult Analytics(string id)
+        {
+            ViewBag.SurveyAnalyticsForm = new SupplierManager().GetSupplierQustionForm();
+            ViewBag.SurveyData = new SupplierManager().GetSurveyData(Guid.Parse(id));
+            return View();
+        }
+
         public string AddQuestion(Supplier Model)
         {
             if (Model.OrginalValue != Model.QuestionForm)

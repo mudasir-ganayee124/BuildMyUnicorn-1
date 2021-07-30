@@ -16,6 +16,7 @@ namespace Business_Model.Model
 
     public class SubscribedPackages
     {
+        public Guid OrderID { get; set; } 
         public OrderType OrderType { get; set; }
         public string PackageTitle { get; set; }
         public decimal PackageAmount { get; set; }

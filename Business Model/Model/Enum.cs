@@ -207,4 +207,8 @@ namespace Business_Model.Model
     {
         Plan, Package
     }
+    public enum SurveyTemplateType
+    {
+        Survey, Interview
+    }
 }

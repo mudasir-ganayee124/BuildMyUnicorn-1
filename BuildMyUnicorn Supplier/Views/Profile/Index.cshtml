@@ -194,23 +194,23 @@
                                                                             //{
 
                                                                             <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
+                                                                                <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
                                                                                 <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
-                                                                                <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
+                                                                                <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fas fa-angle-double-right" title="Get Code" data-toggle="tooltip"></i></a>
                                                                                 <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
                                                                                     @foreach (var obj in ModulesList.Where(o => o.ModuleID == item.ModuleID))
                                                                                     {
                                                                                         if (Array.Exists(arrayModules, o => o == Convert.ToString(obj.SectionID)) == true)
                                                                                         {
                                                                                             <div class="custom-control custom-checkbox">
-                                                                                                <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
+                                                                                                <input type="checkbox" class="custom-control-input ignore" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
                                                                                                 <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
                                                                                             </div>
                                                                                         }
                                                                                         else
                                                                                         {
                                                                                             <div class="custom-control custom-checkbox">
-                                                                                                <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
+                                                                                                <input type="checkbox" class="custom-control-input ignore" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
                                                                                                 <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
                                                                                             </div>
 
@@ -242,7 +242,7 @@
                                                                             // if (Array.Exists(arrayModules, o => o == Convert.ToString(@item.ID)) == true)
                                                                             // {
                                                                             <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
+                                                                                <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_BusinessPlacement" value="@item.ID">
                                                                                 <label class="custom-control-label" for="@item.ID">@item.DisplayAs</label>
                                                                                 <a class="get-code" data-toggle="collapse" href="#@{@fName}" aria-expanded="true"><i class="fa fa-code" title="Get Code" data-toggle="tooltip"></i></a>
                                                                                 <div class="collapse m-t-15" id="@{@fName}" aria-expanded="true">
@@ -251,14 +251,14 @@
                                                                                         if (Array.Exists(arrayModules, o => o == Convert.ToString(obj.SectionID)) == true)
                                                                                         {
                                                                                             <div class="custom-control custom-checkbox">
-                                                                                                <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
+                                                                                                <input type="checkbox" class="custom-control-input ignore" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID" checked>
                                                                                                 <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
                                                                                             </div>
                                                                                         }
                                                                                         else
                                                                                         {
                                                                                             <div class="custom-control custom-checkbox">
-                                                                                                <input type="checkbox" class="custom-control-input" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
+                                                                                                <input type="checkbox" class="custom-control-input ignore" id="@item.ModuleID@obj.ModuleSectionID" name="_BusinessPlacement" value="@obj.SectionID">
                                                                                                 <label class="custom-control-label" for="@item.ModuleID@obj.ModuleSectionID">@obj.SectionDisplayAs</label>
                                                                                             </div>
 
@@ -337,7 +337,7 @@
                                                                             if (Array.Exists(arrayWorkLocation, o => o == Convert.ToString(@item.ID)) == true)
                                                                             {
                                                                                 <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_WorkLocation" value="@item.ID" checked="checked">
+                                                                                    <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_WorkLocation" value="@item.ID" checked="checked">
                                                                                     <label class="custom-control-label" for="@item.ID">@item.Value</label>
                                                                                 </div>
 
@@ -345,7 +345,7 @@
                                                                             else
                                                                             {
                                                                                 <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_WorkLocation" value="@item.ID">
+                                                                                    <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_WorkLocation" value="@item.ID">
                                                                                     <label class="custom-control-label" for="@item.ID">@item.Value</label>
                                                                                 </div>
                                                                             }
@@ -367,14 +367,14 @@
                                                                             if (Array.Exists(arrayWorkLocation, o => o == Convert.ToString(@item.ID)) == true)
                                                                             {
                                                                                 <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_WorkLocation" value="@item.ID" checked="checked">
+                                                                                    <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_WorkLocation" value="@item.ID" checked="checked">
                                                                                     <label class="custom-control-label" for="@item.ID">@item.Value</label>
                                                                                 </div>
                                                                             }
                                                                             else
                                                                             {
                                                                                 <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_WorkLocation" value="@item.ID">
+                                                                                    <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_WorkLocation" value="@item.ID">
                                                                                     <label class="custom-control-label" for="@item.ID">@item.Value</label>
                                                                                 </div>
                                                                             }
@@ -416,7 +416,7 @@
                                                                             if (Array.Exists(arrayCompanyType, o => o == Convert.ToString(@item.ID)) == true)
                                                                             {
                                                                                 <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_CompanyType" value="@item.ID" checked="checked">
+                                                                                    <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_CompanyType" value="@item.ID" checked="checked">
                                                                                     <label class="custom-control-label" for="@item.ID">@item.Value</label>
                                                                                 </div>
 
@@ -424,7 +424,7 @@
                                                                             else
                                                                             {
                                                                                 <div class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="@item.ID" name="_CompanyType" value="@item.ID">
+                                                                                    <input type="checkbox" class="custom-control-input ignore" id="@item.ID" name="_CompanyType" value="@item.ID">
                                                                                     <label class="custom-control-label" for="@item.ID">@item.Value</label>
                                                                                 </div>
                                                                             }

@@ -8,6 +8,7 @@ using System.Linq;
 using Business_Model.Helper;
 using System.Web;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace BuildMyUnicorn.Business_Layer
@@ -58,6 +59,23 @@ namespace BuildMyUnicorn.Business_Layer
             email_sender_thread.Start();
             Transaction.Start();
             TransactionLog.Start();
+        }
+
+        public async Task<string> AddCustomerinGateway(Client Model)
+        {
+
+           
+            var queryGateway = $@"select * from tbl_gateway WHERE GatewayType = '{(int)GatewayType.Revolut}'";
+            Gateway gateway = SharedManager.GetSingle<Gateway>(queryGateway);           
+            CreateCustomerRes reqCustomer = new CreateCustomerRes();
+            Order OrderObj = new Order();
+            reqCustomer.BusinessName = Model.StartupName;
+            reqCustomer.FullName = Model.FirstName + " " + Model.LastName;
+            reqCustomer.Phone = Model.Phone;
+            reqCustomer.Email = Model.Email;
+            Result<CreateCustomerRes> Customers = await new RevolutManager().Post<CreateCustomerRes>("customers", gateway, reqCustomer);
+            return Customers.Value.id.ToString();
+
         }
     }
 }

@@ -1,13 +1,15 @@
-﻿$(document).on("click", ".jsSubscribe", function () {
+﻿
 
+$(document).on("click", ".jsSubscribe", function () {
+   
     $.ajax({
         url: GetBaseURL() + "ThirdParty/AddPackageOrder",
         method: "POST",      // data: $('#frmRegister').serialize(),
-        data: JSON.stringify({ PackageID: $(this).data("packageid") }),
+        data: JSON.stringify({ id: $(this).data("packageid") }),
         contentType: "application/json",
         //dataType: "json",
         success: function (response) {
-
+           
             if (response.status === "SUCCESS") {
                  $("#OrderID").val(response.data.OrderID);
                  RevolutCheckoutPayment(response.data.OrderPublicID);
@@ -21,6 +23,7 @@
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
+           
             $('.alert').show();
             $("#responseMessage").text("Status: " + textStatus + "Error: " + errorThrown);
 
@@ -87,10 +90,22 @@ function _fn_Invoice() {
         data: { OrderID: $("#OrderID").val()  },
         success: function (response) {
             $("#checkoutModel").modal("hide");
-           // alert("Package subscribed successfully");
+          //  alert("Package subscribed successfully");
            // var ii = "2B32681D-8B18-4C76-B65F-2BA51DC8962C";
            // window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + ii);
-           window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/"+$("#SupplierID").val());
+            confirm(function () {
+                window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + $("#SupplierID").val());
+               // console.log('confirmed!');
+            }, function () {
+                console.log('denied');
+            });
+            $('.ja_body').contents().filter((_, el) => el.nodeType === 3).remove();
+            $('.ja_body').prepend("Package subscribed successfully! \n Do you like to provide more Business details");
+            //var r = confirm("Package subscribed successfully! \n Do you like to provide more busness details");
+            //if (r == true) {
+            //    window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + $("#SupplierID").val());
+            //} 
+            
            
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

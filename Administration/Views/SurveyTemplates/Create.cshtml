@@ -1,0 +1,148 @@
+﻿
+@section PageStyle
+{
+
+    <script src="https://unpkg.com/survey-jquery@1.8.53/survey.jquery.min.js"></script>
+    <script src="https://unpkg.com/knockout@3.5.1/build/output/knockout-latest.js"></script>
+    <script src="https://unpkg.com/survey-knockout@1.8.53/survey.ko.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.10/ace.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.10/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Uncomment to enable Select2 <script src="https://unpkg.com/jquery"></script> <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> -->
+    <script src="https://unpkg.com/survey-creator@1.8.53/survey-creator.min.js"></script>
+    <link href="https://unpkg.com/survey-creator@1.8.53/survey-creator.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/assets/node_modules/icon-picker/fontawesome-browser.css" rel="stylesheet" />
+    <!-- Page plugins css -->
+    <link href="~/assets/node_modules/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Color picker plugins css -->
+    <link href="~/assets/node_modules/jquery-asColorPicker-master/dist/css/asColorPicker.css" rel="stylesheet">
+    <style>
+        .fa-browser-container {
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            height: 100vh;
+            padding: 1rem;
+            background: rgba(0,0,0,0.5);
+        }
+    </style>
+    <link rel="stylesheet" href="./index.css">
+    <style>
+        .svd_commercial_container {
+            display: none;
+        }
+    </style>
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <div class="d-flex">
+            <i class="mdi mdi-arrow-left"></i>  <a href="~/SurveyTemplates"> Back to Templates</a>
+        </div>
+
+    </div>
+
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Administration</a></li>
+                <li class="breadcrumb-item active">Templates</li>
+            </ol>
+
+            <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="AddNewTemplate">Add Template</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"><input type="text" id="Title" name="Title" style="height:50px; width:100%;margin-bottom:4px; border:0px" placeholder="--Title--" /></div>
+    <div class="col-md-4"> <select class="form-control custom-select" id="SurveyTemplateType" name="SurveyTemplateType" style="height:50px;"> <option value="0"> Survey </option> <option value="1"> Interview </option> </select> </div>
+    <div class="col-md-2"><input type="text" id="Icon" name="Icon" placeholder="Select icon" data-fa-browser style="height: 50px;width:100%; " /></div>
+    <div class="col-md-2"> <input type="text" id="BgColor" name="BgColor" class="colorpicker form-control" value="#7ab2fa" style="width:80%" /> </div>
+    
+        <div class="col-lg-12">
+            <div id="surveyContainer">
+
+                <div id="creatorElement"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @section PageScript
+{
+        <script type="text/javascript" src="./index.js"></script>
+        <script src="~/assets/node_modules/icon-picker/fontawesome-browser.js"></script>
+        <script src="../assets/node_modules/clockpicker/dist/jquery-clockpicker.min.js"></script>
+        <!-- Color Picker Plugin JavaScript -->
+        <script src="../assets/node_modules/jquery-asColor/dist/jquery-asColor.js"></script>
+        <script src="../assets/node_modules/jquery-asGradient/dist/jquery-asGradient.js"></script>
+        <script src="../assets/node_modules/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+        <!-- Date Picker Plugin JavaScript -->
+        <script>
+            $(".colorpicker").asColorPicker();
+            $(function () {
+
+                $.fabrowser();
+
+
+            });
+        </script>
+        <script src="~/Content/page_script/survey-templates.js?version=@DateTime.Now"></script>
+
+        <script>
+            // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
+            var options = {
+                showLogicTab: true
+            };
+            //create the SurveyJS Creator and render it in div with id equals to "creatorElement"
+            var creator = new SurveyCreator.SurveyCreator("creatorElement", options);
+            //Show toolbox in the right container. It is shown on the left by default
+            creator.showToolbox = "right";
+            //Show property grid in the right container, combined with toolbox
+            creator.showPropertyGrid = "right";
+            //Make toolbox active by default
+            creator.rightContainerActiveItem("toolbox");
+            //Automatically save survey definition on changing. Hide "Save" button
+            creator.isAutoSave = true;
+            //Show state button here
+            creator.showState = true;
+            var localStorageName = "SaveLoadSurveyCreatorExample";
+            //Setting this callback will make visible the "Save" button
+            creator.saveSurveyFunc = function (saveNo, callback) {
+                //save the survey JSON
+                console.log(creator.text);
+                //You can store in your database JSON as text: creator.text  or as JSON: creator.JSON
+                window
+                    .localStorage
+                    .setItem(localStorageName, creator.text);
+
+                //We assume that we can't get error on saving data in local storage
+                //Tells creator that changing (saveNo) saved successfully.
+                //Creator will update the status from Saving to saved
+                callback(saveNo, true);
+            }
+            var defaultJSON = [];
+            //creator.text = window
+            //    .localStorage
+            //    .getItem(localStorageName) || JSON.stringify(defaultJSON);
+            creator.text = JSON.stringify(defaultJSON);
+            if (!window.creator && creator !== undefined) {
+                window.creator = creator;
+            }
+
+                                                //$(document).on("click", "#Create", function () {
+
+                                                //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
+                                                //});
+        </script>
+    }
+

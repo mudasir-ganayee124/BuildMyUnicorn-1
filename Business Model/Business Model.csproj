@@ -133,6 +133,7 @@
     <Compile Include="Model\StartupAccelerator.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\Survey.cs" />
+    <Compile Include="Model\SurveyTemplates.cs" />
     <Compile Include="Model\ToDoTask.cs" />
     <Compile Include="Model\Widgets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

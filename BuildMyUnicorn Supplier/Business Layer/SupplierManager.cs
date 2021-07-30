@@ -112,6 +112,13 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
 
         }
 
+        public IEnumerable<SurveyData> GetSurveyData(Guid SurveyID)
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@SurveyID", ParamterValue = SurveyID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input } };
+            return obj.GetList<SurveyData>(CommandType.StoredProcedure, "sp_get_survey_data", parameters);
+        }
+
         public Supplier GetSingleSupplier(Guid SupplierID)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));

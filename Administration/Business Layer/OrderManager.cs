@@ -20,7 +20,14 @@ namespace Administration.Business_Layer
                             INNER JOIN tbl_client
                             ON tbl_client.ClientID = tbl_order.ClientID
                             INNER JOIN tbl_plan ON tbl_plan.PlanID = tbl_order.PlanID
-                            INNER JOIN tbl_currency ON tbl_currency.CurrencyID = tbl_plan.CurrencyID ORDER BY OrderDateTime desc";
+                            INNER JOIN tbl_currency ON tbl_currency.CurrencyID = tbl_plan.CurrencyID 
+							UNION ALL
+							select tbl_order.*, tbl_client.StartupName,tbl_supplier_package.PackageTitle As PlanName, tbl_supplier_package.PackageAmount AS Amount, 
+                            tbl_currency.Code from tbl_order
+                            INNER JOIN tbl_client
+                            ON tbl_client.ClientID = tbl_order.ClientID
+                            INNER JOIN tbl_supplier_package ON tbl_supplier_package.SupplierPackageID = tbl_order.PlanID
+                            INNER JOIN tbl_currency ON tbl_currency.CurrencyID = tbl_supplier_package.CurrencyID ORDER BY OrderDateTime desc";
            return  SharedManager.GetList<_Order>(query).ToList();
            
         }

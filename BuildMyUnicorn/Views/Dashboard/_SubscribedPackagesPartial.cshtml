@@ -19,6 +19,7 @@
                 <th>Package</th>
                 <th>Amount</th>
                 <th>Date</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,7 @@
                 </td>
                 <td><span class="text-success">@item.PackageAmount</span></td>
                 <td class="txt-oflo">@item.OrderDateTime.ToString("dd MMM yyyy")</td>
+                <td><i data-orderid="@item.OrderID" class="fas fa-download jsDownloadPackageInvoice" style="cursor:pointer" ></i></td>
 
             </tr>
 
@@ -49,6 +51,7 @@
             {
                 <tr> <td colspan="5" style="text-align:center"> <h5>No Package Subscribed</h5></td> </tr>
             }
+            
         </tbody>
     </table>
 </div>

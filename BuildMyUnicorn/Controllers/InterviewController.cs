@@ -49,8 +49,21 @@ namespace BuildMyUnicorn.Controllers
             return PartialView("_InterviewListPartial", new InterviewManager().GetAllInterview());
         }
 
-        public ActionResult New()
+        public ActionResult New(string id)
         {
+            Master obj = new Master();
+            if (!string.IsNullOrEmpty(id))
+            {
+                ViewBag.Template = obj.GetSingleSurveyTemplate(Guid.Parse(id));
+                ViewBag.Title = ViewBag.Template.Title;
+                ViewBag.Template = ViewBag.Template.Template;
+            }
+
+            else
+            {
+                ViewBag.Title = null;
+                ViewBag.Template = "[]";
+            }
             ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Interview);
             return View();
         }
@@ -63,6 +76,30 @@ namespace BuildMyUnicorn.Controllers
             else
                 return PartialView("_BadRequest");
         }
+
+        public ActionResult InterviewTemplates(string id)
+        {
+            Master obj = new Master();
+            if (string.IsNullOrEmpty(id))
+            {
+
+                ViewBag.SurveyTemplate = obj.GetAllSurveyTemplates();
+                return View();
+            }
+            else
+            {
+                ViewBag.Template = obj.GetSingleSurveyTemplate(Guid.Parse(id));
+                return View("InterviewTemplatesDetail");
+            }
+        }
+
+        public ActionResult GetInterviewTemplate(string id)
+        {
+            Master obj = new Master();
+            ViewBag.SurveyTemplate = obj.GetSingleSurveyTemplate(Guid.Parse(id));
+            return View("Form");
+        }
+
 
         public string Add(Interview Model)
         {

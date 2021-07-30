@@ -9,7 +9,33 @@
     <!-- Uncomment to enable Select2 <script src="https://unpkg.com/jquery"></script> <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> -->
     <script src="https://unpkg.com/survey-creator@1.8.53/survey-creator.min.js"></script>
     <link href="https://unpkg.com/survey-creator@1.8.53/survey-creator.min.css" type="text/css" rel="stylesheet" />
-
+    <link href="~/assets/node_modules/icon-picker/fontawesome-browser.css" rel="stylesheet" />
+    <!-- Page plugins css -->
+    <link href="~/assets/node_modules/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Color picker plugins css -->
+    <link href="~/assets/node_modules/jquery-asColorPicker-master/dist/css/asColorPicker.css" rel="stylesheet">
+    <style>
+        .fa-browser-container {
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            height: 100vh;
+            padding: 1rem;
+            background: rgba(0,0,0,0.5);
+        }
+    </style>
+    <link rel="stylesheet" href="./index.css">
+    <style>
+        .svd_commercial_container {
+            display: none;
+        }
+    </style>
     <link rel="stylesheet" href="./index.css">
     <style>
         .svd_commercial_container {
@@ -19,33 +45,36 @@
 }
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        @*<div class="d-flex">
-                <i class="mdi mdi-arrow-left"></i>  <a href="~/Questionnaire"> Back to Survey</a>
-            </div>*@
-
+        <div class="d-flex">
+            <i class="mdi mdi-arrow-left"></i>  <a href="~/SurveyTemplates"> Back to Templates</a>
+        </div>
     </div>
 
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Startup Question</a></li>
-                @*<li class="breadcrumb-item active">New Survey </li>*@
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Administration</a></li>
+                <li class="breadcrumb-item active">Templates</li>
             </ol>
             &nbsp;
-            <a href="~/StartupQuestion/Analytics/@ViewBag.question.SQFID" class="btn btn-info"> Analytics</a>
-            <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="AddStartupQuestion">Add</button>
+
+            <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="UpdateTemplate">Update</button>
 
         </div>
     </div>
 </div>
 
 <div class="row">
+    <div class="col-md-4"><input type="text" id="Title" name="Title" style="height:50px; width:100%;margin-bottom:4px; border:0px" placeholder="--Title--" value="@ViewBag.Template.Title" /></div>
+    <div class="col-md-4"> <select class="form-control custom-select" id="SurveyTemplateType" name="SurveyTemplateType" style="height:50px;"> <option value="0" @((int)ViewBag.Template.SurveyTemplateType == 0 ? "Selected" : "")> Survey </option> <option value="1" @((int)ViewBag.Template.SurveyTemplateType == 1 ? "Selected" : "")> Interview </option> </select> </div>
+    <div class="col-md-2"><input type="text" id="Icon" name="Icon" placeholder="Select icon" data-fa-browser style="height: 50px;width:100%; " value="@ViewBag.Template.Icon" /></div>
+    <div class="col-md-2"> <input type="text" id="BgColor" name="BgColor" class="colorpicker form-control" value="@ViewBag.Template.BgColor" style="width:80%" /> </div>
+    <input type="hidden" id="TemplateID" name="TemplateID" value="@ViewBag.Template.TemplateID" />
     <div class="col-lg-12">
         <div id="surveyContainer">
-           
-            <input type="hidden" id="QuestionForm" name="QuestionForm" value="@ViewBag.question.QuestionForm" />
-            <input type="text" id="Title" name="Title" style="width:100%;margin-bottom:4px; border:0px; height:50px" placeholder="--Title--" value="@ViewBag.question.QuestionTitle" />
+
+
             <div id="creatorElement"></div>
         </div>
     </div>
@@ -57,9 +86,25 @@
 @section PageScript
 {
     <script type="text/javascript" src="./index.js"></script>
-    <script src="~/Content/app_script/page_script/startup-question.js?version=@DateTime.Now"></script>
+    <script src="~/assets/node_modules/icon-picker/fontawesome-browser.js"></script>
+    <script src="~/assets/node_modules/clockpicker/dist/jquery-clockpicker.min.js"></script>
+    <!-- Color Picker Plugin JavaScript -->
+    <script src="~/assets/node_modules/jquery-asColor/dist/jquery-asColor.js"></script>
+    <script src="~/assets/node_modules/jquery-asGradient/dist/jquery-asGradient.js"></script>
+    <script src="~/assets/node_modules/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script>
+        $(".colorpicker").asColorPicker();
+        $(function () {
+
+            $.fabrowser();
+
+
+        });
+    </script>
+    <script src="~/Content/page_script/survey-templates.js?version=@DateTime.Now"></script>
     @*<script src="@Url.ContentVersioned("~/page_script/survey-create.js")"></script>*@
-<script>
+    <script>
         // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
         var options = {
             showLogicTab: true
@@ -91,7 +136,7 @@
             //Creator will update the status from Saving to saved
             callback(saveNo, true);
         }
-         var defaultJSON = @Html.Raw(ViewBag.question.QuestionForm);
+         var defaultJSON = @Html.Raw(ViewBag.Template.Template);
         //creator.text = window
         //    .localStorage
         //    .getItem(localStorageName) || JSON.stringify(defaultJSON);
@@ -100,10 +145,6 @@
         window.creator = creator;
     }
 
-                        //$(document).on("click", "#Create", function () {
-
-                        //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
-                        //});
-</script>
+    </script>
 }
 

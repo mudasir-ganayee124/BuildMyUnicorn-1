@@ -1,0 +1,60 @@
+﻿<style>
+    #widget {
+        width: 880px;
+        border: solid #edeeee;
+        border-width: 0;
+        border-radius: 4px 4px 0 0;
+        box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+    }
+
+    
+    
+
+        
+</style>
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor"><a href="~/Questionnaire/SurveyTemplates"><i class="mdi mdi-arrow-left"></i>Back to Templates</a></h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item">Market Research </li>
+                <li class="breadcrumb-item">Templates </li>
+            </ol>
+
+
+            
+
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body ">
+                <h1 class="text-center">@ViewBag.Template.Title</h1><br />
+                <div class="text-center"><a href="~/Questionnaire/Create/@ViewBag.Template.TemplateID" class="btn btn-success m-l-15 text-center">Get Started</a> </div> <br />
+                <div style="width:90%;margin:0px auto; height:650px" id="widget">
+                    <iframe name="MainiFrame" id="TemplateIframe" src="~/Questionnaire/GetSurveyTemplate/@ViewBag.Template.TemplateID" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+                <br />
+                <table style="width:100%; text-align:center">
+                    <tr>
+                        <td><h1> 10</h1></td>
+                        <td><h1> 3 min</h1></td>
+                    </tr>
+                    <tr>
+                        <td><h4>questions</h4></td>
+                        <td><h4>to complete</h4></td>
+                    </tr>
+                </table>
+                <div class="text-center"><a href="~/Questionnaire/Create/@ViewBag.Template.TemplateID" class="btn btn-success m-l-15 text-center">Try this template</a> </div>
+
+            </div>
+        </div>
+    </div>
+</div>

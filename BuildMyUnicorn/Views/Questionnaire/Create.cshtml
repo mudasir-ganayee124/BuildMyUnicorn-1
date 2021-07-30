@@ -31,7 +31,7 @@
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Survey</a></li>
                 <li class="breadcrumb-item active">New Survey </li>
             </ol>
-
+            <a href="~/Questionnaire/SurveyTemplates" type="button" class="btn btn-info d-none d-lg-block m-l-15 ">Choose Template</a>
             <button type="button" class="btn btn-info d-none d-lg-block m-l-15 " id="AddNewSurvey">Add Survey</button>
 
         </div>
@@ -40,7 +40,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div id="surveyContainer"><input type="text" id="SurveyTitle" name="SurveyTitle" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Survey Title--"/>
+        <div id="surveyContainer"><input type="text" id="SurveyTitle" name="SurveyTitle" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Survey Title--" value="@(ViewBag.Title != null?ViewBag.Title : "")"/>
             <div id="creatorElement"></div>
         </div>
     </div>
@@ -85,19 +85,21 @@
             //Creator will update the status from Saving to saved
             callback(saveNo, true);
         }
-        var defaultJSON = [];
+        /**/
+        var defaultJSON = @Html.Raw(ViewBag.Template);
+        /**/
         //creator.text = window
         //    .localStorage
         //    .getItem(localStorageName) || JSON.stringify(defaultJSON);
-        creator.text =  JSON.stringify(defaultJSON);
+        creator.text = JSON.stringify(defaultJSON);
         if (!window.creator && creator !== undefined) {
             window.creator = creator;
         }
 
-            //$(document).on("click", "#Create", function () {
+                //$(document).on("click", "#Create", function () {
 
-            //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
-            //});
+                //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));
+                //});
     </script>
 }
 

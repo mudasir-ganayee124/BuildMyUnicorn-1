@@ -37,8 +37,22 @@ namespace BuildMyUnicorn.Controllers
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
+            Master obj = new Master();
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                ViewBag.Template = obj.GetSingleSurveyTemplate(Guid.Parse(id));
+                ViewBag.Title = ViewBag.Template.Title;
+                ViewBag.Template = ViewBag.Template.Template;
+            }
+
+            else
+            {
+                ViewBag.Title = null;
+                ViewBag.Template = "[]";
+            }
             ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Survey);
             return View();
         }
@@ -62,6 +76,30 @@ namespace BuildMyUnicorn.Controllers
             return View("SurveyAnalytics");
         }
 
+        public ActionResult SurveyTemplates(string id)
+        {
+            Master obj = new Master();
+            if (string.IsNullOrEmpty(id))
+            {
+
+                ViewBag.SurveyTemplate = obj.GetAllSurveyTemplates();
+                return View();
+            }
+            else
+            {
+                ViewBag.Template = obj.GetSingleSurveyTemplate(Guid.Parse(id));
+                return View("SurveyTemplatesDetail");
+            }
+        }
+
+        public ActionResult GetSurveyTemplate(string id)
+        {
+            Master obj = new Master();
+            ViewBag.SurveyTemplate = obj.GetSingleSurveyTemplate(Guid.Parse(id));
+            return View("Form");
+        }
+
+
         //public JsonResult GetClientIdeaProgressData()
         //{
         //    string surveyID = "2022fc15-8e34-4216-9271-995e27cd2fc0";
@@ -73,14 +111,17 @@ namespace BuildMyUnicorn.Controllers
         {
             return new ClientManager().AddClientSurvey(Model);
         }
+
         public string EditSurveyStatus(string SurveyID)
         {
             return new ClientManager().UpdateSurveyStatus(Guid.Parse(SurveyID));
         }
+
         public string DeleteSurvey(string surveyID)
         {
             return new ClientManager().DeleteSurvey(Guid.Parse(surveyID));
         }
+
         public string CheckModuleCourse(int State, int SectionValue)
         {
             if (State == 0)

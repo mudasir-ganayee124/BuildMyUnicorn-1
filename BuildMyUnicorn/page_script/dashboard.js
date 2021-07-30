@@ -116,6 +116,13 @@ $(document).on("change",".jsGrantCountry", function() {
  GetCountryGrant($(this).val());
 });
 
+$(document).on("click", ".jsDownloadPackageInvoice", function () {
+   
+    window.location.replace(GetBaseURL() + "ThirdParty/GenerateInvoice/"+ $(this).attr("data-orderid"));
+    
+
+});
+
 function GetCountryGrant(Month)
 {
  

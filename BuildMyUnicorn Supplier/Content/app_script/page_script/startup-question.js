@@ -1,42 +1,40 @@
 ﻿
 $(document).ready(function () {
+
     $("li a, li").removeClass("active");
     $("li ul").removeClass("in");
     $("#StartupQuestionnav").addClass("active");
     $("#StartupQuestionnav ul").addClass("in");
+
     $("#AddStartupQuestion").click(function () {
         var Title = $("#Title").val();
-        var SurveyForm = creator.text; // localStorage.getItem("SaveLoadSurveyCreatorExample");
-        //if (Title == "") {
-        //    toastMessage("Required", "danger", "Interview title is required");
-        //    return false;
-        //}
-        //if (SurveyForm == "") {
-        //    toastMessage("Required", "danger", "Interview form is  required");
-        //    return false;
-        //}
+        if (Title == "") { $.fn.errorMsg("Please enter startup question title"); return false;}
+        var SurveyForm = creator.text;
         var Model = { "InterviewID": $("#InterviewID").val(), "QuestionTitle": Title, "QuestionForm": SurveyForm };
         $.ajax({
             url: GetBaseURL() + "StartupQuestion/AddQuestion",
             type: "POST",
             data: JSON.stringify(Model),
             contentType: "application/json",
-            dataType: "json",
             success: function (response) {
+
                 if (response == "OK") {
-                    swal("Question Form Updated Successfully");
+
+                    $.fn.successMsg("Question Form Updated Successfully");
+
                 }
                 else {
-                    swal(response);
+                    $.fn.errorMsg(response);
                 }
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastMessage("Interview Created", "success", "Interview form created successfully");
-                setTimeout(function () { window.location.replace(GetBaseURL() + "Interview"); }, 2000);
-                //  toastMessage("Failed", "danger", textStatus + " " + errorThrown);
+                $.fn.errorMsg("Failed", "danger", textStatus + " " + errorThrown);
+
             }
         });
     });
+
     //$("#AddNewSurvey").click(function () {
     //    var SurveyTitle = $("#SurveyTitle").val();
     //    var SurveyForm = creator.text; //localStorage.getItem("SaveLoadSurveyCreatorExample");
