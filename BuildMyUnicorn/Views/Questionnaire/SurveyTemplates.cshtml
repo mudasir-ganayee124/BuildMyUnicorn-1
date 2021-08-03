@@ -1,4 +1,4 @@
-﻿
+﻿@model  IEnumerable<Business_Model.Model.SurveyTemplates>
 
 @section PageStyle
 {
@@ -18,7 +18,7 @@
 
 
 
-          
+
 
         </div>
     </div>
@@ -28,78 +28,100 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @foreach (var item in ViewBag.SurveyTemplate)
+                    @if (Model.Count() > 0)
                     {
+                        foreach (var item in Model)
+                        {
 
-                        <div class="col-md-6 col-lg-6 col-xl-4">
-                            <a href="~/Questionnaire/SurveyTemplates/@item.TemplateID" class="" data-templateid="@item.TemplateID" data-title="@item.Title">
-                                <div class="card card-body">
-                                    <div class="card text-white" style="min-height:250px;background-color:@item.BgColor">
-                                        <div class="card-body ">
-                                            <div class="row weather">
-                                                <div class="col-12 text-right">
-                                                    <h1 class="m-b-"><i class="@item.Icon"></i></h1>
+                            <div class="col-md-6 col-lg-6 col-xl-4">
+                                <a href="~/Questionnaire/SurveyTemplates/@item.TemplateID" class="" data-templateid="@item.TemplateID" data-title="@item.Title">
+                                    <div class="card card-body">
+                                        <div class="card text-white" style="min-height:250px;background-color:@item.BgColor">
+                                            <div class="card-body ">
+                                                <div class="row weather">
+                                                    <div class="col-12 text-right">
+                                                        <h1 class="m-b-"><i class="@item.Icon"></i></h1>
 
-                                                </div>
-                                                <div class="col-12 text-center">
-                                                    <h3>&nbsp;</h3>
-                                                    <div style="font-size:26px;padding-top:6px">
-                                                        <h2> <b> @item.Title</b> </h2>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <h3>&nbsp;</h3>
+                                                        <div style="font-size:26px;padding-top:6px">
+                                                            <h2> <b> @item.Title</b> </h2>
+                                                        </div>
+
                                                     </div>
 
+
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
 
                         }
+                    }
+                    else
+                    {
+                        <div class="col-md-12">
+                            <!-- Card -->
+                            <div class="card text-center">
+                                <div class="card-header">
+
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">No Survey Template Found</h4>
+                                    <p class="card-text">Survey Template  will be available here.</p>
 
 
+                                </div>
+                                <div class="card-footer text-muted">
 
-                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
 
 
                 </div>
+
+
             </div>
         </div>
     </div>
-    <div class="modal jsDialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title text-center" id="Title"> </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <iframe name="MainiFrame" id="TemplateIframe" src="" width="100%" height="500" frameborder="5"></iframe> <br />
-
-                </div>
-                <div class="modal-footer text-center">
-                    <button type="button" class="btn btn-primary waves-effect text-center" data-dismiss="modal">Try this template</button>
-                </div>
+</div>
+<div class="modal jsDialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center" id="Title"> </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <!-- /.modal-content -->
+            <div class="modal-body">
+                <iframe name="MainiFrame" id="TemplateIframe" src="" width="100%" height="500" frameborder="5"></iframe> <br />
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary waves-effect text-center" data-dismiss="modal">Try this template</button>
+            </div>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
+    <!-- /.modal-dialog -->
+</div>
 
 
-    @section PageScript
+@section PageScript
 {
-        <script>
-            $(".jsDialogOpener").click(function () {
+    <script>
+        $(".jsDialogOpener").click(function () {
 
-                $("#Title").text($(this).data("title"));
-                var url = GetBaseURL() +  "/Questionnaire/SurveyTemplates/" + $(this).data("templateid");
-                $('#TemplateIframe').attr('src', url)
-                $(".jsDialog").modal("toggle");
+            $("#Title").text($(this).data("title"));
+            var url = GetBaseURL() + "/Questionnaire/SurveyTemplates/" + $(this).data("templateid");
+            $('#TemplateIframe').attr('src', url)
+            $(".jsDialog").modal("toggle");
 
-            });
-        </script>
-        
-    }
+        });
+    </script>
+
+}

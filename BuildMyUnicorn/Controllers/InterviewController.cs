@@ -82,9 +82,8 @@ namespace BuildMyUnicorn.Controllers
             Master obj = new Master();
             if (string.IsNullOrEmpty(id))
             {
-
-                ViewBag.SurveyTemplate = obj.GetAllSurveyTemplates();
-                return View();
+          
+                return View(obj.GetAllSurveyTemplates().Where(x => x.SurveyTemplateType == SurveyTemplateType.Interview));
             }
             else
             {
