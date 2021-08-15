@@ -3,6 +3,7 @@
 
 @section PageStyle
 {
+    <title>Build My Unicorn - Business Running</title>
     <link href="~/assets/node_modules/wizard/steps.css" rel="stylesheet">
     <link href="~/assets/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="~/Simple-Plain-Bar-Chart-Plugin-With-jQuery-barCharts/jquery.barCharts.css" rel="stylesheet" />
@@ -124,7 +125,7 @@
     <script src="~/assets/node_modules/switchery/dist/switchery.min.js"></script>
     <script src="~/assets/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="~/assetsss/js/jq.progress-bar.js"></script>
-   <script src="@Url.ContentVersioned("~/page_script/running-business.js")"></script>
+    <script src="@Url.ContentVersioned("~/page_script/running-business.js")"></script>
     <script>
 
         $("#myDialog3").myOwnDialog(
@@ -147,7 +148,8 @@
     @{
         if (Model == (int)EntityState.New)
         {
-            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script> }
+            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script>
+ }
     }
 }
 

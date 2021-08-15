@@ -541,6 +541,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.ContentList = new Master().GetOptionMasterList((int)OptionType.YourWebsite_Content);
             ViewBag.TrafficList = new Master().GetOptionMasterList((int)OptionType.YourWebsite_Traffic);
             ViewBag.FunctionNecessary = new Master().GetOptionMasterList((int)OptionType.YourWebsite_FunctionNecessary);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.Marketing, (int)ModuleSection.Marketing_OnlinePresence);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Marketing, (int)ModuleSection.Marketing_OnlinePresence);
         }
 
@@ -561,6 +562,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.AgeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Age);
             ViewBag.IncomeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Income);
             ViewBag.GenderList = new Master().GetOptionMasterList((int)OptionType.Gender);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.Marketing, (int)ModuleSection.Marketing_MarketingPlan);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Marketing, (int)ModuleSection.Marketing_MarketingPlan);
         }
 
@@ -574,7 +576,7 @@ namespace BuildMyUnicorn.Controllers
                                .Cast<PropertyDescriptor>()
                                .ToDictionary(p => p.Name, p => p.Description);
             ViewBag.BrandTouchPointList = new Master().GetOptionMasterList((int)OptionType.Brand_BrandTouchPoint);
-
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.Marketing, (int)ModuleSection.Marketing_Brand);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Marketing, (int)ModuleSection.Marketing_Brand);
         }
     }

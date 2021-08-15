@@ -61,6 +61,13 @@ namespace BuildMyUnicorn.Controllers
             return PartialView("_SubscribedPackagesPartial", new DashboardManager().GetAllSubscribedPackages());
         }
 
+        public ActionResult ToDo()
+        {
+            ToDoTaskManager obj = new ToDoTaskManager();
+            return PartialView("_ToDoPartial", obj.GetTodoList());
+
+        }
+
         //public ActionResult TodoList()
         //{
         //    ViewBag.AssignedTo = new SelectList(_todoManager.GetTeamMembers(), "Key", "Value");
@@ -1412,6 +1419,7 @@ namespace BuildMyUnicorn.Controllers
 
         public void GetDashboardWidget()
         {
+           
             ViewBag.TeamCount = new DashboardManager().GetClientTeamCount();
             ViewBag.MarketingPlanCount = new DashboardManager().GetClientMarketingPlanCount();
             ViewBag.EligibleGrantCount = new DashboardManager().GetClientEligibleGrantCount(ViewBag.Client.CountryID);

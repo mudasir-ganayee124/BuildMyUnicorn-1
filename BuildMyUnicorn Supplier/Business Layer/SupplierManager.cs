@@ -119,6 +119,12 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
             return obj.GetList<SurveyData>(CommandType.StoredProcedure, "sp_get_survey_data", parameters);
         }
 
+        public QuestionData GetQuestionData(Guid OrderID)
+        {
+            var query = $@"select * from tbl_supplier_question_data where OrderID  = '{OrderID}'";
+            return SharedManager.GetSingle<QuestionData>(query);
+        }
+
         public Supplier GetSingleSupplier(Guid SupplierID)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));

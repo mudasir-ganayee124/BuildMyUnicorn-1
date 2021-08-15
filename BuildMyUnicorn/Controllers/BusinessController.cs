@@ -836,6 +836,7 @@ namespace BuildMyUnicorn.Controllers
                                             .ToDictionary(p => p.Name, p => p.Description);
 
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Businessoverview);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Businessoverview);
             ViewBag.RoleInCompany = new Master().GetOptionMasterList((int)OptionType.RoleInCompany);
             ViewBag.ModuleVideo = new Master().GetSingleModuleVideo((int)ModuleName.BusinessOverview);
             ViewBag.CompanyLegalStructure = new Master().GetOptionMasterList((int)OptionType.CompanyLegalStructure);
@@ -852,6 +853,7 @@ namespace BuildMyUnicorn.Controllers
                                             .Cast<PropertyDescriptor>()
                                             .ToDictionary(p => p.Name, p => p.Description);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_ProductorService);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_ProductorService);
             ViewBag.DevelopmentFarList = new Master().GetOptionMasterList((int)OptionType.ProductService_MVPDevelopmentFar);
             ViewBag.ProductServiceSelling = new Master().GetOptionMasterList((int)OptionType.ProductServiceSelling);
             ViewBag.ModuleVideo = new Master().GetSingleModuleVideo((int)ModuleName.ProductService);
@@ -868,6 +870,7 @@ namespace BuildMyUnicorn.Controllers
                                    .Cast<PropertyDescriptor>()
                                    .ToDictionary(p => p.Name, p => p.Description);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Competitors);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Competitors);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
         }
 
@@ -880,6 +883,7 @@ namespace BuildMyUnicorn.Controllers
                                     .Cast<PropertyDescriptor>()
                                     .ToDictionary(p => p.Name, p => p.Description);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_BusinessOperation);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_BusinessOperation);
             ViewBag.DeliveryMethod = new Master().GetOptionMasterList((int)OptionType.Operation_DeliveryMethod);
             ViewBag.ThirdPartiesInvloved = new Master().GetOptionMasterList((int)OptionType.Operation_ThirdPartiesInvolved);
             ViewBag.PaymentMethod = new Master().GetOptionMasterList((int)OptionType.Operation_PaymentMethod);

@@ -25,7 +25,17 @@ namespace Business_Model.Model
         public int SurveyUnitID { get; set; } 
         public string KeyField { get; set; }
         public string KeyValue { get; set; }
+        public string JsonData { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+    }
 
+    public class QuestionData
+    {
+        public Guid QuestionDataID { get; set; }
+        public Guid OrderID { get; set; }
+        public Guid SupplierID { get; set; }
+        public Guid ClientID { get; set; }
+        public Guid SQFID { get; set; }
         public string JsonData { get; set; }
         public DateTime CreatedDateTime { get; set; }
     }

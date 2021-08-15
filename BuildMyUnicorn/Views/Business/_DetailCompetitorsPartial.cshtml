@@ -1,4 +1,5 @@
 ﻿@model Business_Model.Model.Competitor
+@using System.Configuration;
 @{
 
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
@@ -67,31 +68,31 @@
                                         <tbody class="jsContainerCompetitorAnalysis">
 
 
-                                           
+
                                             @foreach (var item in Model.CompetitorAnalysis)
                                             {
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class='form-control  progress-required jsName' name="Name" value="@item.Name" readonly />
-                                                    <input type="hidden" class="jsCompetitorAnalysisID" name="CompetitorAnalysisID" />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class='form-control  progress-required jsLocation' name="Location" value="@item.Location" readonly />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class='form-control  progress-required jsWebsite' name="Website" value="@item.Website" readonly />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class='form-control  progress-required jsOffering' name="Offering" value="@item.Offering" readonly />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class='form-control  progress-required jsPricing' name="Pricing" value="@item.Pricing" readonly />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class='form-control  progress-required jsDifferentiator' name="Differentiator" value="@item.Differentiator" readonly />
-                                                </td>
-                                                <td></td>
-                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsName' name="Name" value="@item.Name" readonly />
+                                                        <input type="hidden" class="jsCompetitorAnalysisID" name="CompetitorAnalysisID" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsLocation' name="Location" value="@item.Location" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsWebsite' name="Website" value="@item.Website" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsOffering' name="Offering" value="@item.Offering" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsPricing' name="Pricing" value="@item.Pricing" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class='form-control  progress-required jsDifferentiator' name="Differentiator" value="@item.Differentiator" readonly />
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
                                             }
 
 
@@ -239,6 +240,33 @@
                 </a>
 
 
+
+            </div>
+        </div>
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

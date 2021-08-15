@@ -186,12 +186,29 @@ namespace BuildMyUnicorn.Business_Layer
             //    new ParametersCollection { ParamterName = "@SurveyForm", ParamterValue = Model.SurveyForm, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
             //    new ParametersCollection { ParamterName = "@CreatedBy", ParamterValue = Convert.ToInt16(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input }
             //};
+           
+       
             ModelList.ForEach(x => x.SurveyDataID = new Guid());
             ModelList.ForEach(x => x.SurveyID = SurveyID);
             ModelList.ForEach(x => x.JsonData = JsonData);
             ModelList.ForEach(x => x.CreatedDateTime = DateTime.Now);
             DataTable dtSurveyData = Extensions.ListToDataTable(ModelList);
             obj.ExecuteBulkInsert("sp_add_survey_data", dtSurveyData, "UT_Survey_Data", "@DataTable");
+        }
+
+        public void AddQuestionData(QuestionData Model)
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+                new ParametersCollection { ParamterName = "@QuestionDataID", ParamterValue = Model.QuestionDataID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@OrderID", ParamterValue = Model.OrderID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@ClientID", ParamterValue = Model.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@SQFID", ParamterValue = Model.SQFID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                new ParametersCollection { ParamterName = "@JsonData", ParamterValue = Model.JsonData, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input }
+
+            };
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_question_data", parameters);
+            
         }
 
         public async Task<string> AddCustomerinGateway(Client Model)

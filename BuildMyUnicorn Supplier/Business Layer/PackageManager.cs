@@ -73,7 +73,7 @@ namespace BuildMyUnicorn_Supplier.Business_Layer
 
         public IEnumerable<SubscribedPackages> GetAllSubscribedPackages()
         {
-            var query = $@"select tbl_order.*,tbl_supplier_package.*,tbl_client.FirstName, tbl_client.LastName, tbl_client.StartupName  from tbl_order 
+            var query = $@"select tbl_order.*,tbl_supplier_package.*,tbl_client.FirstName, tbl_client.LastName, tbl_client.Email, tbl_client.StartupName  from tbl_order 
                         INNER JOIN tbl_supplier_package ON tbl_supplier_package.SupplierPackageID = tbl_order.PlanID
                         INNER JOIN tbl_client ON tbl_client.ClientID = tbl_order.ClientID
                         WHERE tbl_order.OrderType = 1 AND tbl_supplier_package.SupplierID = '{Guid.Parse(HttpContext.Current.User.Identity.Name)}' 

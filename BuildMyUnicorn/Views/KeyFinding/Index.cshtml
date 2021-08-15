@@ -4,6 +4,7 @@
 
 @section PageStyle
 {
+    <title>Build My Unicorn - Key Finding</title>
     <link href="~/assets/node_modules/wizard/steps.css" rel="stylesheet">
     <link href="~/assets/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="~/assets/node_modules/draggable-resizable-modal/css/modalbox.css" rel="stylesheet" />
@@ -28,7 +29,7 @@
         }
 
         div.steps li a {
-          //  color: #fff !important;
+            // color: #fff !important;
         }
 
 
@@ -63,7 +64,6 @@
                 font-size: 40px;
                 color: red;
             }
-     
     </style>
 
 }
@@ -132,7 +132,7 @@
                 height: "300",
                 bg_color: 'white',
                 title: '@(ViewBag.Video != null ?  ViewBag.Video.Title : "")',
-                body_margin:  '@(ViewBag.Video != null ?  ViewBag.Video.Duration : "")', 
+                body_margin:  '@(ViewBag.Video != null ?  ViewBag.Video.Duration : "")',
                 body_overflow_x: "hidden",
                 body_overflow_y: "scroll",
                 movable: true,
@@ -162,7 +162,7 @@
             });
             var vspinTrue = $(".vertical-spin").TouchSpin({
                 verticalbuttons: true,
-                
+
             });
             if (vspinTrue) {
                 $('.vertical-spin').prev('.bootstrap-touchspin-prefix').remove();
@@ -255,6 +255,7 @@
     @{
         if (Model == (int)EntityState.New)
         {
-            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script> }
+            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script>
+ }
     }
 }

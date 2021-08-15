@@ -211,4 +211,14 @@ namespace Business_Model.Model
     {
         Survey, Interview
     }
+
+    public enum Priority
+    { 
+        High, Medium, Low
+    }
+    public enum Status
+    {
+        Active, InActive, Hold, Complete, Incomplete
+    }
+    
 }

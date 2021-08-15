@@ -3,6 +3,7 @@
 
 @section PageStyle
 {
+    <title>Build My Unicorn - Marketing Brand</title>
     <link href="~/assets/node_modules/wizard/steps.css" rel="stylesheet">
     <link href="~/assets/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
@@ -144,7 +145,7 @@
     <script type="text/javascript" src="~/assets/node_modules/pptx/js/divs2slides.js"></script>
     <script src="~/assetsss/js/jq.progress-bar.js"></script>
     <script src="@Url.ContentVersioned("~/page_script/marketing-brand.js")"></script>
-   
+
 
     <script>
         $(document).ready(function() {
@@ -196,6 +197,7 @@
     @{
         if (Model == (int)EntityState.New)
         {
-            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("close"); }, 1000);</script> }
+            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("close"); }, 1000);</script>
+ }
     }
 }

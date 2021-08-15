@@ -32,6 +32,7 @@ namespace BuildMyUnicorn.Controllers
                 }
 
             }
+            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Interview);
             if (id != null)
             {
                 ViewBag.obj = new InterviewManager().GetInterview(Guid.Parse(id));
@@ -64,7 +65,7 @@ namespace BuildMyUnicorn.Controllers
                 ViewBag.Title = null;
                 ViewBag.Template = "[]";
             }
-            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Interview);
+           
             return View();
         }
 

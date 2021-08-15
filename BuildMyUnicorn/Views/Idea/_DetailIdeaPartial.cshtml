@@ -1,4 +1,5 @@
 ﻿@model Business_Model.Model.Idea
+@using System.Configuration;
 @{
 
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
@@ -57,7 +58,7 @@
                             {
                                 if (Array.Exists(arrayStartupType, x => x == Convert.ToString(@item.ID)) == true)
                                 {<div class="custom-checkbox">
-                                        
+
                                         <label for="square-radio-disabled">@item.Value</label>
                                     </div>
                                 }
@@ -239,7 +240,7 @@
                     }
                     @if (!string.IsNullOrEmpty(Model.Company.CompanyName) && Model.Company.CompanySetup != Guid.Empty)
                     {
-                     
+
                         <div class="form-group">
                             <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().QuestionText : "" )  </label>
                             <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.CompanyName</textarea>
@@ -261,7 +262,7 @@
                     }
                     @if (!string.IsNullOrEmpty(Model.Company.DomainName) && Model.Company.HaveGotDomain != Guid.Empty)
                     {
-                  
+
                         <div class="form-group">
                             <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText : "" )  </label>
                             <textarea class="form-control form-control-line detailtextarea" readonly>@Model.Company.DomainName</textarea>
@@ -481,12 +482,12 @@
     </div>
     <div class="col-lg-3 col-xlg-2 col-md-4">
         <!-- <div class="d-flex justify-content-end align-items-center">
-             <ol class="breadcrumb">
-                 <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
-                 <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
-                 <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
-             </ol>
-         </div>-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
+            </ol>
+        </div>-->
 
         <div class="stickyside">
             <div class="list-group" id="top-menu">
@@ -554,5 +555,36 @@
 
             </div>
         </div>
+
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+
+
 </div>

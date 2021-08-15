@@ -1,14 +1,17 @@
-﻿using Business_Model;
+﻿using ALMS_DAL;
+using Business_Model;
 using Business_Model.Helper;
 using Business_Model.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web;
 
 namespace BuildMyUnicorn.Business_Layer
 {
-    public class ToDoTaskManager
+    public  class ToDoTaskManager
     {
         private readonly string SaveQuery = "INSERT into tbl_todo_task ({0}) VALUES ({1})";
 
@@ -16,7 +19,7 @@ namespace BuildMyUnicorn.Business_Layer
 
         private readonly string DeleteQuery = "DELETE tbl_todo_task WHERE ToDOTaskID = @ToDOTaskID ";
 
-        private readonly string ItemQuery = "SELECT *FROM tbl_todo_task ";
+        private readonly string ItemQuery = "SELECT *FROM tbl_todo_task where isDeleted = 0";
 
         private readonly string ClientTeamQuery = "SELECT ClientID As [Key], FirstName +' ' + LastName As Value  FROM tbl_client ";
 
@@ -40,6 +43,27 @@ namespace BuildMyUnicorn.Business_Layer
             return todo;
         }
 
+        public string AddTodo(ToDoTask Model)
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+             new ParametersCollection { ParamterName = "@ToDoTaskID", ParamterValue = Model.ToDoTaskID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Subject", ParamterValue = Model.Subject, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@StartDate", ParamterValue = Model.StartDate, ParamterType = DbType.DateTime, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@EndDate", ParamterValue = Model.EndDate, ParamterType = DbType.DateTime, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Reminder", ParamterValue = Model.Reminder, ParamterType = DbType.DateTime, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Priority", ParamterValue = Model.Priority, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Status", ParamterValue = Model.Status, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Description", ParamterValue = Model.Description, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@AssignedTo", ParamterValue = Model.AssignedTo, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@AssignedBy", ParamterValue =  Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+            };
+           var result =  obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_todo", parameters);
+            if (result > 0) return "OK"; else return "Todo  failed";
+
+        }
+
         //public List<ToDoTask> GetTodoList()
         //{
         //    var clientId = Guid.Parse(HttpContext.Current.User.Identity.Name);
@@ -50,6 +74,13 @@ namespace BuildMyUnicorn.Business_Layer
         //            x.AssignedMappings = assignedMappingManager.GetAssignedMapping(x.ToDoTaskID);
         //        }).ToList();
         //}
+
+        public ToDoTask GetSingleToDo(Guid ToDoTaskID)
+        {
+           
+            var query = $@"select * from tbl_todo_task WHERE ToDoTaskID = '{ToDoTaskID}' ";
+            return SharedManager.GetSingle<ToDoTask>(query);
+        }
 
         public List<ToDoDTO> GetAssignedToDoList()
         {

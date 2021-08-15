@@ -3,6 +3,7 @@
 
 @section PageStyle
 {
+    <title>Build My Unicorn - Business Overview</title>
     <link href="~/assets/node_modules/wizard/steps.css" rel="stylesheet">
     <link href="~/assets/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="~/Simple-Plain-Bar-Chart-Plugin-With-jQuery-barCharts/jquery.barCharts.css" rel="stylesheet" />
@@ -77,7 +78,7 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">Business Overview</h4>
-    
+
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
@@ -157,7 +158,8 @@
     @{
         if (Model == (int)EntityState.New)
         {
-            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script> }
+            <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script>
+ }
     }
     <script>
         // This is for the sticky sidebar

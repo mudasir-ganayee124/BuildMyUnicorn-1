@@ -339,6 +339,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.TitleChosePricingStrategy = TypeDescriptor.GetProperties(typeof(Business_Model.Model.ChosePricingStrategy))
                                      .Cast<PropertyDescriptor>()
                                      .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
         }
 
@@ -354,7 +355,7 @@ namespace BuildMyUnicorn.Controllers
                                    .Cast<PropertyDescriptor>()
                                    .ToDictionary(p => p.Name, p => p.Description);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Selling, (int)ModuleSection.Selling_Customers);
-
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.Selling, (int)ModuleSection.Selling_Customers);
             ViewBag.AgeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Age);
             ViewBag.IncomeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Income);
             ViewBag.GenderList = new Master().GetOptionMasterList((int)OptionType.Gender);

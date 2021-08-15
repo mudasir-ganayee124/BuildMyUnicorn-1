@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTransferObjects\ToDoDTO.cs" />
+    <Compile Include="Helper\AllowCrossSiteAttribute .cs" />
     <Compile Include="Helper\Attributes.cs" />
     <Compile Include="Helper\CustomAuthorize.cs" />
     <Compile Include="Helper\EmailSender.cs" />

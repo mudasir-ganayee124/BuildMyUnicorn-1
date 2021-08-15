@@ -1,13 +1,157 @@
 ﻿@model Business_Model.Model.ToDoTask
-@{
-    ViewBag.Title = "Add Todo";
+@section PageStyle
+{
+    <link href="~/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/node_modules/switchery/dist/switchery.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
 }
-@Html.Partial("_EditToDoPartial", Model)
+
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Dashboard</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        @*<div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+
+            </div>*@
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+
+
+        <form id="frmTodo" method="post" class="validation-wizard wizard-circle">
+            <input type="hidden" id="ToDoTaskID" name="ToDoTaskID" value="@Model.ToDoTaskID" />
+            <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">Subject</label>
+                            <textarea class='form-control ideatextarea progress-required' id="Subject" name="Subject" oninput="auto_grow_idea_textarea(this)" placeholder="">@Model.Subject</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">Start Date</label>
+                            @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">End Date</label>
+                            @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">Assigned To</label>
+
+
+                            <select @*multiple*@ data-style="form-control btn-info" class="selectpicker  col-12" id="AssignedTo" name="AssignedTo">
+                                <option selected="">Select...</option>
+                                @foreach (var item in ViewBag.AssignedTo)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">Reminder</label>
+
+                            @Html.TextBoxFor(m => m.Reminder, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">Priority</label>
+                            <select class="custom-select col-12" id="Priority" name="Priority">
+                                <option selected="">Select...</option>
+                                @foreach (var item in ViewBag.Priority)
+                                {
+                                    <option value="@item.Value" @(item.Text == Model.Priority.ToString() ? "selected" : "")>@item.Text</option>
+                                }
+
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">Status</label>
+                            <select class="custom-select col-12" id="Status" name="Status">
+                                <option selected="">Select...</option>
+                                @foreach (var item in ViewBag.Status)
+                                {
+                                    <option value="@item.Value" @(item.Text == Model.Status.ToString() ? "selected" : "")>@item.Text</option>
+                                }
+
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="wint1">% Complete</label>
+                            <input class="form-control" type="number" value="" id="Complete" name="Complete">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="wint1">Description</label>
+                            <textarea class='form-control ignore' id="Description" name="Description" rows="5" placeholder="">@Model.Description</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-none ">Cancel</button>
+                        @if (Model.EntityState.ToString() == "Old")
+                        {
+                            <button type="submit" class="btn btn-success m-l-15">Update</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-success m-l-15">Add</button>
+                        }
+
+                    </div>
+                </div>
+            </section>
+
+        </form>
+    </div>
+</div>
+
+
+
+
 
 @section PageScript
 {
-    <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
-    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
-    <script src="@Url.ContentVersioned("~/Content/app_script/page_script/todo.js")"></script>
+    <script src="~/assets/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="~/assets/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="~/assets/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js" type="text/javascript"></script>
+    <script src="~/assets/node_modules/dff/dff.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/assets/node_modules/multiselect/js/jquery.multi-select.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/to-do.js")"></script>
+
 
 }

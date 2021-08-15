@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Configuration;
 @model Business_Model.Model.OnlineResearch
 @{
 
@@ -252,36 +252,36 @@
                                     <div class="form-group">
                                         <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFeedback").FirstOrDefault().QuestionText : "" )  </label> <br />
 
-                                        @Html.DropDownListFor(n => n.FocussedResearch.CustomerFeedback, new SelectList(ViewBag.CustomerFeedback, "ID", "Value", @Model.FocussedResearch.CustomerFeedback), "- Please select -", new { @class = "custom-select col-12  progress-required" , @disabled = "disabled" })
+                                        @Html.DropDownListFor(n => n.FocussedResearch.CustomerFeedback, new SelectList(ViewBag.CustomerFeedback, "ID", "Value", @Model.FocussedResearch.CustomerFeedback), "- Please select -", new { @class = "custom-select col-12  progress-required", @disabled = "disabled" })
 
 
                                     </div>
                                 </div>
                             }
-                                @if (Model.FocussedResearch.FeedbackRate != Guid.Empty)
-                                {
-                                    _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackRate").FirstOrDefault().QuestionText : "" )  </label> <br />
-                                            @Html.DropDownListFor(n => n.FocussedResearch.FeedbackRate, new SelectList(ViewBag.FeedbackRate, "ID", "Value", @Model.FocussedResearch.FeedbackRate), "- Please select -", new { @class = "custom-select col-12  progress-required" ,@disabled="disabled"})
+                            @if (Model.FocussedResearch.FeedbackRate != Guid.Empty)
+                            {
+                                _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackRate").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        @Html.DropDownListFor(n => n.FocussedResearch.FeedbackRate, new SelectList(ViewBag.FeedbackRate, "ID", "Value", @Model.FocussedResearch.FeedbackRate), "- Please select -", new { @class = "custom-select col-12  progress-required", @disabled = "disabled" })
 
 
-                                        </div>
                                     </div>
-                                }
-                                @if (!string.IsNullOrEmpty(Model.FocussedResearch.FeedbackKeyfinding))
-                                {
-                                    _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackKeyfinding").FirstOrDefault().QuestionText : "" )  </label> <br />
-                                            <textarea class="form-control form-control-line detailtextarea" readonly> @(Model.FocussedResearch.FeedbackKeyfinding)</textarea>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.FocussedResearch.FeedbackKeyfinding))
+                            {
+                                _ProgressFocussedResearch = _ProgressFocussedResearch + _ProgressFocussedResearchUnit;
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedbackKeyfinding").FirstOrDefault().QuestionText : "" )  </label> <br />
+                                        <textarea class="form-control form-control-line detailtextarea" readonly> @(Model.FocussedResearch.FeedbackKeyfinding)</textarea>
 
-                                        </div>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
+                        </div>
                     </section>
 
                 </form>
@@ -325,6 +325,60 @@
                 </a>
 
 
+
+            </div>
+        </div>
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

@@ -34,10 +34,17 @@ namespace BuildMyUnicorn_Supplier.Controllers
         {
             return new SupplierManager().UpdateSupplierProfile(Model);
         }
+
+        public ActionResult Feedback(string id)
+        {
+            ViewBag.SurveyAnalyticsForm = new SupplierManager().GetSupplierQustionForm();
+            //ViewBag.SurveyData = new SupplierManager().GetQuestionData(Guid.Parse(id));
+            return View(new SupplierManager().GetQuestionData(Guid.Parse(id)));
+        }
         public ActionResult GetSubscribedPackages()
         {
-
-            return PartialView("_SubscribedPackagesPartial", new PackageManager().GetAllSubscribedPackages());
+            var list = new PackageManager().GetAllSubscribedPackages();
+            return PartialView("_SubscribedPackagesPartial", list);
         }
         public string FileUpload(HttpPostedFileBase file)
         {

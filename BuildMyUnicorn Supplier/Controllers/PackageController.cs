@@ -26,6 +26,13 @@ namespace BuildMyUnicorn_Supplier.Controllers
 
         public ActionResult Add()
         {
+            var enumData = from Frequency e in Enum.GetValues(typeof(Frequency))
+                           select new
+                           {
+                               ID = (int)e,
+                               Name = e.ToString()
+                           };
+            ViewBag.FrequencyList = new SelectList(enumData, "ID", "Name");
             ViewBag.Currency = new SupplierManager().GetCurrencyList();
             return View();
         }
@@ -33,7 +40,13 @@ namespace BuildMyUnicorn_Supplier.Controllers
 
         public ActionResult Edit(Guid SupplierPackageID)
         {
-
+            var enumData = from Frequency e in Enum.GetValues(typeof(Frequency))
+                           select new
+                           {
+                               ID = (int)e,
+                               Name = e.ToString()
+                           };
+            ViewBag.FrequencyList = new SelectList(enumData, "ID", "Name");
             ViewBag.Currency = new SupplierManager().GetCurrencyList();
             Package Model = new PackageManager().GetSinglePackage(SupplierPackageID);
             return View(Model);

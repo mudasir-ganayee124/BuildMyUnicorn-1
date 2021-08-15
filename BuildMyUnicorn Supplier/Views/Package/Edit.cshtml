@@ -38,12 +38,9 @@
                                 <input type="text" class="form-control jspackage" id="PackageAmount" name="PackageAmount" value="@Model.PackageAmount" />
                             </div>
                             <div class="form-group">
-                                <select class="custom-select col-12 jspackage" id="Duration" name="Duration">
-                                    <option value="">- Please select -</option>
-                                    <option value="0">Yearly</option>
-                                    <option value="1">Monthly</option>
-                                    <option value="2">One Time</option>
-                                </select>
+                                <label for="wint1">Duration</label>
+                                @Html.DropDownList("Duration", ViewBag.FrequencyList as SelectList, new { @class = "custom-select col-12 jspackage" })
+
                             </div>
                             <div class="form-group">
                                 <label for="wint1">Currency</label>
@@ -162,9 +159,13 @@
                  $(".jsAttribute").html("");
                  $(".jsTitle").text($("#PackageTitle").val());
                  if($( "#CurrencyID" ).val() != "")
-                 {   symbol ="$"; $( "#CurrencyID option:selected" ).text();}
+                 {
+                     symbol = $("#CurrencyID option:selected").text().split("-").pop();
+                 }
                   if($( "#Duration" ).val() != "")
-                 {  duration =  $( "#Duration option:selected" ).text();}
+                  {
+                      duration = $("#Duration option:selected").text();
+                  }
                  $(".jsDuration").html(duration);
                  $(".jsAmount").html("<span class='price-sign'>"+symbol+"</span>" + $("#PackageAmount").val());
                  $(".packageAttribute").each(function() {

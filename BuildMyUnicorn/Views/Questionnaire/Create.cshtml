@@ -12,14 +12,34 @@
 
     <link rel="stylesheet" href="./index.css">
     <style>
-        .svd_commercial_container {display:none;}
+        .svd_commercial_container {
+            display: none;
+        }
+    </style>
+    <style>
+        :root {
+            --primary-color: #999;
+            --secondary-color: #999;
+            --primary-text-color: #999;
+            --secondary-text-color: #a7a7a7;
+            --inverted-text-color: #ffffff;
+            --primary-hover-color: #18a689;
+            --selection-border-color: #1ab394;
+            --primary-icon-color: #3d4d5d;
+            --primary-bg-color: #999;
+            --secondary-bg-color: #999;
+            --primary-border-color: #e7eaec;
+            --secondary-border-color: #ddd;
+            --error-color: #ed5565;
+        }
         
+     
     </style>
 }
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <div class="d-flex">
-            <i class="mdi mdi-arrow-left"></i>  <a  href="~/Questionnaire"> Back to Survey</a>
+            <i class="mdi mdi-arrow-left"></i>  <a href="~/Questionnaire"> Back to Survey</a>
         </div>
 
     </div>
@@ -40,7 +60,8 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div id="surveyContainer"><input type="text" id="SurveyTitle" name="SurveyTitle" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Survey Title--" value="@(ViewBag.Title != null?ViewBag.Title : "")"/>
+        <div id="surveyContainer">
+            <input type="text" id="SurveyTitle" name="SurveyTitle" style="width:100%; margin-bottom:4px; border:0px" placeholder="--Survey Title--" value="@(ViewBag.Title != null?ViewBag.Title : "")" />
             <div id="creatorElement"></div>
         </div>
     </div>
@@ -54,6 +75,10 @@
     <script type="text/javascript" src="./index.js"></script>
     <script src="@Url.ContentVersioned("~/page_script/survey-create.js")"></script>
     <script>
+
+        document.body.style.setProperty('--primary-color', "#999");
+        document.body.style.setProperty('--primary-bg-color', "#999");
+       
         // Show Designer, Test Survey, JSON Editor and additionally Logic tabs
         var options = {
             showLogicTab: true
@@ -95,7 +120,14 @@
         if (!window.creator && creator !== undefined) {
             window.creator = creator;
         }
+        document.body.style.setProperty('--primary-color', "#999");
+        document.body.style.setProperty('--primary-bg-color', "#999");
 
+        $(document).ready(function () {
+
+            document.getElementsByTagName("body")[0].setAttribute("yahoo", "democlass");
+
+        });
                 //$(document).on("click", "#Create", function () {
 
                 //    alert(localStorage.getItem("SaveLoadSurveyCreatorExample"));

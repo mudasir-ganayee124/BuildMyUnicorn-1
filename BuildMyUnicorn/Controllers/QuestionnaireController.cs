@@ -34,6 +34,7 @@ namespace BuildMyUnicorn.Controllers
                 }
 
             }
+            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Survey);
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace BuildMyUnicorn.Controllers
                 ViewBag.Title = null;
                 ViewBag.Template = "[]";
             }
-            ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Survey);
+           
             return View();
         }
 

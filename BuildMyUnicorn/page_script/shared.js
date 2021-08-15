@@ -10,7 +10,7 @@
 
 $(document).ready(function () {
     $('#scroll-sidebar').perfectScrollbar();
-    $("textarea").each(function () {
+    $("textarea:not(.ignore)").each(function () {
         this.style.height = "5px";
         this.style.height = (this.scrollHeight) + "px";
     });

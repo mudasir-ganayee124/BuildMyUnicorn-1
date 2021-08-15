@@ -2,7 +2,9 @@
 $('#frm_Password').parsley();
 $('#frm_PasswordEmail').parsley();
 $('#frm_ResetPassword').parsley();
+
 $("#loginform").submit(function (e) {
+   
     e.preventDefault();
     $(".erorLabel").addClass("invisible");
 
@@ -11,15 +13,16 @@ $("#loginform").submit(function (e) {
         method: "POST",
         data: $('#loginform').serialize(),
         success: function (response) {
-     
+         
             if (response == "OK") {
                 window.location.replace(GetBaseURL() + "Dashboard");
-             
+
             }
             else {
-               
-                $(".erorLabel").removeClass("invisible");
-                $(".errorMessage").text(response);}
+
+                $('.alert').show();
+                $("#responseMessage").text(response);
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             $(".erorLabel").removeClass("invisible");
@@ -30,7 +33,6 @@ $("#loginform").submit(function (e) {
 
 
 });
-
 
 $("#frm_Password").submit(function (e) {
     e.preventDefault();
@@ -107,8 +109,8 @@ $(".jsfrmForgotPassword").submit(function (e) {
             
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            $(".erorLabel").removeClass("invisible");
-            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+            $(".jsResetPasswordMsg").removeClass("hide");
+            $("#responseMessage").text("Status: " + textStatus + "Error: " + errorThrown);
         }
     });
 

@@ -3,6 +3,7 @@
 
 @section PageStyle
 {
+    <title>Build My Unicorn - My Idea</title>
     <link href="~/assets/node_modules/wizard/steps.css" rel="stylesheet">
 
     <style>
@@ -34,7 +35,6 @@
             overflow: auto;
             width: auto;
             min-width: 300px;
-
         }
 
         .modal-body { /* Restrict Modal width to 90% */
@@ -73,7 +73,7 @@
 <div class="row page-titles" data-entitystate="@Model">
     <div class="col-md-5 align-self-center">
         <h4 class="text-themecolor">My Idea </h4>
-       
+
     </div>
 
     <div class="col-md-7 align-self-center text-right">
@@ -91,7 +91,7 @@
             }
             else
             {
-               
+
                 <input type="hidden" id="jsonModuleVideo" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Video))' />
                 <div id="DialogModuleVideo">
                     <iframe id="ModuleVideo" width="100%" height="100%" src="@(ViewBag.Video != null ?  ViewBag.Video.VideoUrl : "")" auto frameborder="0" allowfullscreen></iframe>
@@ -116,6 +116,6 @@
     <!-- This Page JS -->
     <script src="~/assets/node_modules/wizard/jquery.steps.min.js"></script>
     <script src="~/assets/node_modules/wizard/jquery.validate.min.js"></script>
-   <script src="@Url.ContentVersioned("~/page_script/idea.js")"></script>
+    <script src="@Url.ContentVersioned("~/page_script/idea.js")"></script>
 
- }
+}

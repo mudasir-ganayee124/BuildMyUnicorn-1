@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Configuration;
 @using System.ComponentModel;
 @model Business_Model.Model.KeyFinding
 
@@ -55,7 +55,7 @@
                                     {
                                         if (item.ID == Model.MarketResearchResults.InterviewKeyFindingConfident)
                                         {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
-                                }
+                                    }
 
 
 
@@ -87,7 +87,7 @@
                                     {
                                         if (item.ID == Model.MarketResearchResults.ObservationKeyFindingConfident)
                                         {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
-                                }
+                                    }
 
 
                                 </div>
@@ -119,7 +119,7 @@
                                     {
                                         if (item.ID == Model.MarketResearchResults.SurveyKeyFindingConfident)
                                         {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
-                                }
+                                    }
 
                                 </div>
 
@@ -142,7 +142,7 @@
                         @if (Model.MarketResearchResults.OnlineResearchKeyFindingConfident != Guid.Empty)
                         {
                             _ProgressMarketResearchResult = _ProgressMarketResearchResult + _ProgressMarketResearchResultUnit;
-                          
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OnlineResearchKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
@@ -151,7 +151,7 @@
                                     {
                                         if (item.ID == Model.MarketResearchResults.OnlineResearchKeyFindingConfident)
                                         {<textarea class='form-control form-control-line ideatextarea'> @item.Value </textarea>}
-                                }
+                                    }
 
                                 </div>
 
@@ -168,12 +168,12 @@
     </div>
     <div class="col-lg-3 col-xlg-2 col-md-4">
         <!-- <div class="d-flex justify-content-end align-items-center">
-             <ol class="breadcrumb">
-                 <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
-                 <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
-                 <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
-             </ol>
-         </div>-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><span class="round" title="Total Questions">0</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">10</span></li>
+                <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">0</span></li>
+            </ol>
+        </div>-->
 
         <div class="stickyside">
             <div class="list-group" id="top-menu">
@@ -201,6 +201,61 @@
                     </div>
                 </a>
 
+
+            </div>
+        </div>
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

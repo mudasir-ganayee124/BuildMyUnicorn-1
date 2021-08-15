@@ -94,7 +94,8 @@ function _fn_Invoice() {
            // var ii = "2B32681D-8B18-4C76-B65F-2BA51DC8962C";
            // window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + ii);
             confirm(function () {
-                window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + $("#SupplierID").val());
+                $('<form action="' + GetBaseURL() + 'RecommendDocumentation/Questions/"><input type="text" name="SupplierID" value="' + $("#SupplierID").val() + '" /><input type="text" name="OrderID" value="' + $("#OrderID").val() +'" /></form>').appendTo('body').submit();
+              //  window.location.replace(GetBaseURL() + "RecommendDocumentation/Questions/" + $("#SupplierID").val());
                // console.log('confirmed!');
             }, function () {
                 console.log('denied');

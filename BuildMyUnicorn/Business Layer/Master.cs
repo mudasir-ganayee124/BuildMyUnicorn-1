@@ -55,6 +55,21 @@ namespace BuildMyUnicorn.Business_Layer
             return obj.GetList<LanguageModule>(CommandType.StoredProcedure, "sp_get_default_language_by_module", parameters);
 
         }
+
+        public IEnumerable<RecommendDocument> GetAllRecommendDocument()
+        {
+            var query = $@"select * from tbl_recommend_document where IsDeleted = 0";
+            return SharedManager.GetList<RecommendDocument>(query);
+        }
+
+        public IEnumerable<Package> GetAllSupplierPackages(Guid SupplierID)
+        {
+            var query = $@"select * from tbl_supplier_package
+                        INNER JOIN tbl_currency ON tbl_supplier_package.CurrencyID = tbl_currency.CurrencyID
+                        WHERE tbl_supplier_package.IsDeleted = 0 AND tbl_supplier_package.SupplierID = '{SupplierID}'";
+            return SharedManager.GetList<Package>(query);
+        }
+
         public IEnumerable<Plan> GetAllPlan()
         {
             var query = $@"select tbl_plan.* FROM tbl_plan where IsActive = 1 and IsDeleted = 0";
@@ -66,6 +81,26 @@ namespace BuildMyUnicorn.Business_Layer
             }
             return planlist;
 
+        }
+
+        public IEnumerable<SurveyTemplates> GetAllSurveyTemplates()
+        {
+            var query = $@"SELECT * FROM tbl_survey_templates WHERE IsDeleted = 0";
+            return SharedManager.GetList<SurveyTemplates>(query);
+        }
+
+        public SurveyTemplates GetSingleSurveyTemplate(Guid TemplateID)
+        {
+            var query = $@"SELECT * FROM tbl_survey_templates WHERE TemplateID = '{TemplateID}'";
+            return SharedManager.GetSingle<SurveyTemplates>(query);
+        }
+
+        public SupplierQuestion GetQuestionForm(Guid SupplierID)
+        {
+            var query = $@"SELECT tbl_supplier_question_form.* FROM tbl_supplier_question_form    
+                        INNER  JOIN tbl_supplier on tbl_supplier.SQFID = tbl_supplier_question_form.SQFID    
+                        WHERE tbl_supplier.SupplierID = '{SupplierID}'";
+            return SharedManager.GetSingle<SupplierQuestion>(query);
         }
         public IEnumerable<MasterCommon> GetOptionMasterList(int Type)
         {
@@ -107,10 +142,10 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-        public Template GetTemplate(int Type)
+        public _EmailTemplates GetEmailTemplate(string EmailTemplateCode)
         {
-            var query = $@"SELECT tbl_template.*FROM tbl_template WHERE TemplateType = {Type} AND IsActive = 1 AND IsDeleted = 0";
-            return SharedManager.GetSingle<Template>(query);
+            var query = $@"select * from tbl_email_templates where EmailTemplateCode = '{EmailTemplateCode}' and IsActive = 1";
+            return SharedManager.GetSingle<_EmailTemplates>(query);
         }
 
         public int ExistModuleCourse(int ModuleID, int ModuleSectionID)
@@ -163,6 +198,14 @@ namespace BuildMyUnicorn.Business_Layer
             new ParametersCollection { ParamterName = "@ModuleSectionID", ParamterValue = ModuleSectionID, ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input }
             };
             return obj.GetList<Supplier>(CommandType.StoredProcedure, "sp_get_module_section_business_supplier", parameters);
+
+        }
+
+        public IEnumerable<Supplier> GetRecommendedDocumentSupplierList()
+        {
+            //AND IsActive = 1 and IsDeleted = 0
+            var query = $@"SELECT * FROM tbl_supplier WHERE RecommendedDocument = 1";
+            return SharedManager.GetList<Supplier>(query);
 
         }
 

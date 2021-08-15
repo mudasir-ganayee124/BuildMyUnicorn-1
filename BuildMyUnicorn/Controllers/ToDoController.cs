@@ -21,6 +21,8 @@ namespace BuildMyUnicorn.Controllers
 
         public ActionResult Index()
         {
+            ToDoTaskManager obj=   new ToDoTaskManager();
+            ViewBag.AssignedTo = obj.GetTeamMembers();
             return View();
         }
 
@@ -31,36 +33,93 @@ namespace BuildMyUnicorn.Controllers
         }
 
 
-        public ActionResult Add()
+        public ActionResult Add(string id)
         {
-            FillTeamMemberDropDown();
-            return View();
+            var StatusEnumData = from Status e in Enum.GetValues(typeof(Status))
+                                 select new
+                                 {
+                                     ID = (int)e,
+                                     Name = e.ToString()
+                                 };
+            var PriorityEnumData = from Priority e in Enum.GetValues(typeof(Priority))
+                                   select new
+                                   {
+                                       ID = (int)e,
+                                       Name = e.ToString()
+                                   };
+            ViewBag.Status = new SelectList(StatusEnumData, "ID", "Name");
+
+            ViewBag.Priority = new SelectList(PriorityEnumData, "ID", "Name");
+            ToDoTaskManager obj = new ToDoTaskManager();
+            ViewBag.AssignedTo = obj.GetTeamMembers();
+            ToDoTask Model = new ToDoTask();
+            Model.EntityState = EntityState.New;
+            if (id != null)
+            {
+                Model.EntityState = EntityState.Old;
+                Model = obj.GetSingleToDo(Guid.Parse(id));
+            }
+           
+            return View(Model);
         }
 
 
         [HttpPost]
-        public JsonResult Add(ToDoTask todo)
+        public string Add(ToDoTask Model)
         {
-            ResponseModel response = new ResponseModel();
-            if (ModelState.IsValid)
-            {
-                response = _todoManager.SaveToDo(todo);
+           
+            if(Model.EntityState == EntityState.New)
+                Model.ToDoTaskID = Guid.NewGuid();
+            ToDoTaskManager obj = new ToDoTaskManager();
+            ViewBag.AssignedTo = obj.GetTeamMembers();
+            return obj.AddTodo(Model);
+            //ResponseModel response = new ResponseModel();
+            //if (ModelState.IsValid)
+            //{
+            //    response = _todoManager.SaveToDo(todo);
 
-                if (!response.HasError)
-                {
-                    response.Message = "To-Do created successfully ";
-                    return Json(response);
-                }
+            //    if (!response.HasError)
+            //    {
+            //        response.Message = "To-Do created successfully ";
+            //        return Json(response);
+            //    }
 
-            }
-            else
-            {
-                response.Error = "Model Validation Error";
-            }
-            Response.StatusCode = 400;
-            return Json(response);
+            //}
+            //else
+            //{
+            //    response.Error = "Model Validation Error";
+            //}
+            //Response.StatusCode = 400;
+            //return Json(response);
         }
 
+        [HttpPost]
+        public string Update(ToDoTask Model)
+        {
+          
+            Model.EntityState = EntityState.Old;
+            ToDoTaskManager obj = new ToDoTaskManager();
+            ViewBag.AssignedTo = obj.GetTeamMembers();
+            return obj.AddTodo(Model);
+            //ResponseModel response = new ResponseModel();
+            //if (ModelState.IsValid)
+            //{
+            //    response = _todoManager.SaveToDo(todo);
+
+            //    if (!response.HasError)
+            //    {
+            //        response.Message = "To-Do created successfully ";
+            //        return Json(response);
+            //    }
+
+            //}
+            //else
+            //{
+            //    response.Error = "Model Validation Error";
+            //}
+            //Response.StatusCode = 400;
+            //return Json(response);
+        }
 
         public ActionResult Edit(Guid id)
         {

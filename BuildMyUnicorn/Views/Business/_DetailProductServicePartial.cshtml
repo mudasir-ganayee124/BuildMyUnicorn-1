@@ -1,10 +1,10 @@
-﻿
+﻿@using System.Configuration;
 @using System.ComponentModel;
 @model Business_Model.Model.ProductService
 @{ int Questions = 12; int Answered = 0; }
 @{
     decimal _ProgressAboutProduct = 0.0m; decimal _ProgressMVP = 0.0m;
-    decimal _ProgressAboutProductUnit =  11.11m; decimal _ProgressMVPUnit = 33.33m;
+    decimal _ProgressAboutProductUnit = 11.11m; decimal _ProgressMVPUnit = 33.33m;
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
 }
 <div class="row" id="validation">
@@ -144,7 +144,7 @@
 
                         @if (!string.IsNullOrEmpty(Model.AboutProduct.PSIPAddress) && Model.AboutProduct.PSHaveIPAddress != Guid.Empty)
                         {
-                         
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -175,7 +175,7 @@
 
                         @if (!string.IsNullOrEmpty(Model.AboutProduct.PSTradeMark) && Model.AboutProduct.PSHaveTradeMark != Guid.Empty)
                         {
-                          
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -204,7 +204,7 @@
                         }
                         @if (Model.AboutProduct.PSHaveTechnologyRoadMap != Guid.Empty)
                         {
-                          
+
                             <div class='jsTechnologyRoadMapContainer'>
 
                                 @for (int i = 0; i < ViewBag.VersionList.Count; i++)
@@ -229,19 +229,19 @@
                             _ProgressMVP = _ProgressMVP + _ProgressMVPUnit;
 
 
-                        <div class="form-group">
-                            <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MVPDevelopmentFarID").FirstOrDefault().QuestionText : "" )  </label>
+                            <div class="form-group">
+                                <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MVPDevelopmentFarID").FirstOrDefault().QuestionText : "" )  </label>
 
-                            @{ var arrayFinanceOperationalResponsible = String.IsNullOrEmpty(@Model.MVP.MVPDevelopmentFarID) == false ? @Model.MVP.MVPDevelopmentFarID.Split(',').ToArray() : new string[0];
+                                @{ var arrayFinanceOperationalResponsible = String.IsNullOrEmpty(@Model.MVP.MVPDevelopmentFarID) == false ? @Model.MVP.MVPDevelopmentFarID.Split(',').ToArray() : new string[0];
+                                }
+                                @foreach (var item in ViewBag.DevelopmentFarList)
+                                {
+                                    if (Array.Exists(arrayFinanceOperationalResponsible, x => x == Convert.ToString(item.ID)) == true)
+                                    {<p><i class="mdi mdi-chevron-double-right"></i> @item.Value </p>}
                             }
-                            @foreach (var item in ViewBag.DevelopmentFarList)
-                            {
-                                if(Array.Exists(arrayFinanceOperationalResponsible, x => x == Convert.ToString(item.ID)) == true)
-                                 { <p><i class="mdi mdi-chevron-double-right"></i> @item.Value </p> }
-                            }
-                           
 
-                        </div>
+
+                            </div>
 
 
                         }
@@ -333,6 +333,33 @@
                 </a>
 
 
+
+            </div>
+        </div>
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

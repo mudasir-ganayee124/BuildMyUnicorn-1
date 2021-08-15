@@ -10,8 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-    <title>Build My Unicorn - Dashboard</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">  
     <link href="~/assets/node_modules/icheck/skins/all.css" rel="stylesheet">
     <link href="~/assets/node_modules/ion-rangeslider/css/ion.rangeSlider.css" rel="stylesheet">
     <link href="~/assets/node_modules/ion-rangeslider/css/ion.rangeSlider.skinModern.css" rel="stylesheet">
@@ -27,6 +26,7 @@
     <link href="~/assets/node_modules/draggable-resizable-modal/css/modalbox.css" rel="stylesheet" />
     <link href="~/assets/node_modules/jalert/jAlert.css" rel="stylesheet" />
     @RenderSection("PageStyle", required: false)
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -997,9 +997,22 @@
             color: #333;
         }
     </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZE6PHRSF0V"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+ gtag('config', 'G-ZE6PHRSF0V');</script>
+ 
+
+ 
 </head>
 
 <body class="skin-default-dark fixed-layout">
+ 
+    <!-- End Google Tag Manager (noscript) -->
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -1254,63 +1267,63 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="#">Company Setup </a></li>
                                 <li><a href="~/RecommendDocumentation">Recommended Documentation</a></li>
-                                <li><a href="#">Privacy and Data Policies </a></li>
-                                <li><a href="#">GDPR</a></li>
+                                @*<li><a href="#">Privacy and Data Policies </a></li>
+                                <li><a href="#">GDPR</a></li>*@
 
                             </ul>
                         </li>
 
 
-                        <li id="LoanCalculator">
+                        @*<li id="LoanCalculator">
                             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-calculator"></i><span class="hide-menu">loan Calcuator </span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="#">Loan Setup </a></li>
-                               
-
-                        @*<li id="LoanCalculator">
-                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-calculator"></i><span class="hide-menu">loan Applications</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="#">Business Plan</a></li>
->>>>>>> Stashed changes
+                                <li><a href="#">Loan Setup </a></li>*@
 
 
-                                </ul>
-                            </li>*@
-
-                        @*<li id="Recruitmentnav">
-                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user-plus"></i><span class="hide-menu">Recruitment </span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="#">Recruitment Plan </a></li>
-                                    <li><a href="#">Find an intern </a></li>
-                                    <li><a href="#">Post a Job  </a></li>
+                                @*<li id="LoanCalculator">
+                                                                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-calculator"></i><span class="hide-menu">loan Applications</span></a>
+                                                                    <ul aria-expanded="false" class="collapse">
+                                                                        <li><a href="#">Business Plan</a></li>
+                                    >>>>>>> Stashed changes
 
 
-                                </ul>
-                            </li>*@
+                                                                    </ul>
+                                                                </li>*@
 
-                        @*<li id="Technicalnav">
-                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-location-pin"></i><span class="hide-menu">Technical</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="map-google.html">On-line Presence</a></li>
-                                    <li><a href="map-vector.html">Technical Strategy</a></li>
-                                    <li><a href="map-vector.html">Technical Scope</a></li>
-                                    <li><a href="map-vector.html">Cloud Platform</a></li>
-                                    <li><a href="map-vector.html">Technical Due Diligience</a></li>
-
-                                </ul>
-                            </li>
+                                @*<li id="Recruitmentnav">
+                                        <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user-plus"></i><span class="hide-menu">Recruitment </span></a>
+                                        <ul aria-expanded="false" class="collapse">
+                                            <li><a href="#">Recruitment Plan </a></li>
+                                            <li><a href="#">Find an intern </a></li>
+                                            <li><a href="#">Post a Job  </a></li>
 
 
-                            <li id="Financenav">
-                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icons-Money-Bag"></i><span class="hide-menu">Raiseing Finance</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="map-google.html">Checklist</a></li>
-                                    <li><a href="map-vector.html">Apply for Funding</a></li>
+                                        </ul>
+                                    </li>*@
 
-                                </ul>
-                            </li>*@
+                                @*<li id="Technicalnav">
+                                        <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-location-pin"></i><span class="hide-menu">Technical</span></a>
+                                        <ul aria-expanded="false" class="collapse">
+                                            <li><a href="map-google.html">On-line Presence</a></li>
+                                            <li><a href="map-vector.html">Technical Strategy</a></li>
+                                            <li><a href="map-vector.html">Technical Scope</a></li>
+                                            <li><a href="map-vector.html">Cloud Platform</a></li>
+                                            <li><a href="map-vector.html">Technical Due Diligience</a></li>
 
-                    </ul>
+                                        </ul>
+                                    </li>
+
+
+                                    <li id="Financenav">
+                                        <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icons-Money-Bag"></i><span class="hide-menu">Raiseing Finance</span></a>
+                                        <ul aria-expanded="false" class="collapse">
+                                            <li><a href="map-google.html">Checklist</a></li>
+                                            <li><a href="map-vector.html">Apply for Funding</a></li>
+
+                                        </ul>
+                                    </li>*@
+
+                            @*</ul>*@
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -1496,7 +1509,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
@@ -1657,7 +1670,7 @@
 
         });
 
-                //
+                    //
 
     </script>
     @RenderSection("PageScript", required: false)

@@ -411,6 +411,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.TitleObservation = TypeDescriptor.GetProperties(typeof(Business_Model.Model.OurObservation))
                                       .Cast<PropertyDescriptor>()
                                       .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Observation);
 
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Observation);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
@@ -421,6 +422,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.TitleMarketResearchResults = TypeDescriptor.GetProperties(typeof(Business_Model.Model.MarketResearchResults))
                                      .Cast<PropertyDescriptor>()
                                      .ToDictionary(p => p.Name, p => p.Description);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_KeyFindings);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_KeyFindings);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
             ViewBag.InterviewKeyFinding = new Master().GetOptionMasterList((int)OptionType.MarketReserach_InterviewKeyFindingConfident);
@@ -437,6 +439,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.ModuleVideo = new Master().GetSingleModuleVideo((int)ModuleName.IdeaOutofMyHead);
             ViewBag.CustomerFeedback = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_OnlineResearch);
+            ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_OnlineResearch);
         }
 
 

@@ -3,8 +3,6 @@
     Layout = null;
 }
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +17,11 @@
 <body>
     <h2 style="text-align:center">Package subscribed successfully, <br /> Please feel free to answer the following question</h2>
     <input type="hidden" id="SQFID" value="@ViewBag.question.SQFID" />
+    <input type="hidden" id="OrderID" value="@ViewBag.OrderID" />
     <input type="hidden" id="QuestionForm" value="@ViewBag.question.QuestionForm" />
     <div id="surveyElement" style="display:inline-block;width:100%;"></div>
     <div id="surveyResult"></div>
+    <div style="text-align:center; display:none" id="backDiv"><button  onclick="history.back();" class="btn btn-primary d-none d-lg-block m-l-15"  style="padding: 15px 20px; background: #1ab797; color:#fff; text-decoration:none; cursor:pointer">Back to Packages</button></div>
     <script type="text/javascript" src="./index.js"></script>
     <script>
 
@@ -46,13 +46,13 @@
         survey.render("surveyElement");
 
         survey.onComplete.add(function (sender, options) {
-
+            $("#backDiv").css("display","block");
             //  alert(JSON.stringify(sender.data));
             var formData = modifySurveyResults(sender);
             // alert(formData);
 
             return fetch(GetBaseURL() + "RecommendDocumentation/AddQuestionData/" + $("#SQFID").val() + "", {
-                body: JSON.stringify({ formData: formData, jsonData: sender.data }),
+                body: JSON.stringify({ formData: formData, jsonData: sender.data, OrderID: $("#OrderID").val() }),
                 headers: {
                     'content-type': 'application/json'
                 },

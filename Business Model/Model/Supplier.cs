@@ -37,17 +37,7 @@ namespace Business_Model.Model
 
   
 
-    public class QuestionData
-    {
-        public Guid QuestionDataID { get; set; }
-        public Guid SupplierID { get; set; }
-        public Guid ClientID { get; set; }
-        public Guid SQFID { get; set; }
-        public int QuestionUnitID { get; set; }
-        public string KeyField { get; set; }
-        public string KeyValue { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-    }
+    
 
     public class _QuestionData
     {

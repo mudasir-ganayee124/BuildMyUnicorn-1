@@ -15,9 +15,10 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th>Supplier Name</th>              
+                <th>Supplier Name</th>
                 <th>Package</th>
                 <th>Amount</th>
+                <th>Duration</th>
                 <th>Date</th>
                 <th></th>
             </tr>
@@ -40,8 +41,10 @@
                     @item.PackageTitle
                 </td>
                 <td><span class="text-success">@item.PackageAmount</span></td>
+                <td class="txt-oflo">@item.Duration</td>
                 <td class="txt-oflo">@item.OrderDateTime.ToString("dd MMM yyyy")</td>
-                <td><i data-orderid="@item.OrderID" class="fas fa-download jsDownloadPackageInvoice" style="cursor:pointer" ></i></td>
+
+                <td><i data-orderid="@item.OrderID" class="fas fa-download jsDownloadPackageInvoice" style="cursor:pointer"></i></td>
 
             </tr>
 

@@ -1,5 +1,4 @@
-﻿
-
+﻿@using System.Configuration;
 @using System.ComponentModel;
 @model Business_Model.Model.PricingProductService
 @{
@@ -32,7 +31,7 @@
                     <input type="hidden" id="ProductServicePricingID" name="ProductServicePricingID" value="@Model.ProductServicePricingID" />
                     <!-- Step 1 -->
                     <h4 class="text-center"> Pricing Product or Service</h4>
-                    
+
 
                     <section>
                         @if (!string.IsNullOrEmpty(Model.ChosePricingStrategy.PricingStrategy))
@@ -231,7 +230,7 @@
 
 
                         }
-                        </section>
+                    </section>
 
 
                 </form>
@@ -267,6 +266,33 @@
                 </a>
 
 
+
+            </div>
+        </div>
+        <br />
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                <div class="card card-body">
+                    <div class="row align-items-center">
+                        <p>Supplier List</p>
+                        <div class="col-md-12">
+                            @foreach (var sup in ViewBag.BusinessSupplier)
+                            {
+
+
+                                <div class="col-md-6">
+                                    <a href="~/RecommendDocumentation/Packages/@sup.SupplierID"><img src="@ConfigurationManager.AppSettings["SupplierBaseUrl"]/Content/Images/@(sup.ImageID == null ? "profile-dummy.png" : sup.ImageID)" width="50" alt="user" class="img-fluid"></a>
+
+                                    <address>
+                                        @sup.CompanyName
+                                    </address>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

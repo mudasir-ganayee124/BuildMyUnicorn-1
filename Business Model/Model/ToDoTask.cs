@@ -23,9 +23,18 @@ namespace Business_Model.Model
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
 
-        public Guid? AssignedBy { get; set; }
+        public Guid AssignedBy { get; set; }
+
+        public Guid AssignedTo { get; set; }
 
         public DateTime? AssignedOn { get; set; }
+
+        public DateTime? Reminder { get; set; }
+
+        public Priority Priority { get; set; }
+        public Status Status { get; set; }
+
+        public EntityState EntityState { get; set; }
 
         [IgnoreInsert]
         public List<AssignedMapping> AssignedMappings { get; set; }
