@@ -43,7 +43,7 @@ namespace BuildMyUnicorn.Business_Layer
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_client", parameters);
             if (result > 0)
             {
-                var query = $@"select * from tbl_email_templates where EmailTemplateCode = '{TemplateType.NPC.ToString()}' and IsActive = 1";
+                var query = $@"select * from tbl_email_templates where EmailTemplateCode = 'NPC' and IsActive = 1";
                 var Template =  SharedManager.GetSingle<_EmailTemplates>(query);
                 List<ParametersCollection> Customerparameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@Email", ParamterValue = Model.Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input } };
                 Client Customer = obj.GetSingle<Client>(CommandType.StoredProcedure, "sp_get_client_by_email", Customerparameters);

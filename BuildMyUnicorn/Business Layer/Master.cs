@@ -72,7 +72,8 @@ namespace BuildMyUnicorn.Business_Layer
 
         public IEnumerable<Plan> GetAllPlan()
         {
-            var query = $@"select tbl_plan.* FROM tbl_plan where IsActive = 1 and IsDeleted = 0";
+            var query = $@"select tbl_plan.*, tbl_currency.Symbol FROM tbl_plan INNER JOIN tbl_currency ON tbl_currency.CurrencyID = tbl_plan.CurrencyID
+                          where tbl_plan.IsActive = 1 and tbl_plan.IsDeleted = 0";
             var planlist = SharedManager.GetList<Plan>(query).ToList();
             foreach (var item in planlist)
             {

@@ -58,9 +58,8 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -191,6 +190,7 @@
     <Compile Include="Controllers\RecurringOrdersController.cs" />
     <Compile Include="Controllers\SellingController.cs" />
     <Compile Include="Controllers\StartupController.cs" />
+    <Compile Include="Controllers\SurveyTemplatesController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\WorkLocationController.cs" />
@@ -1593,6 +1593,8 @@
     <Content Include="assets\node_modules\icheck\skins\square\yellow.css" />
     <Content Include="assets\node_modules\icheck\skins\square\yellow.png" />
     <Content Include="assets\node_modules\icheck\skins\square\_all.css" />
+    <Content Include="assets\node_modules\icon-picker\fontawesome-browser.css" />
+    <Content Include="assets\node_modules\icon-picker\fontawesome-browser.js" />
     <Content Include="assets\node_modules\image-picker\image-picker.css" />
     <Content Include="assets\node_modules\image-picker\image-picker.js" />
     <Content Include="assets\node_modules\image-picker\image-picker.min.js" />
@@ -4071,6 +4073,7 @@
     <Content Include="Content\page_script\charge.js" />
     <Content Include="Content\page_script\company-legal-structure.js" />
     <Content Include="Content\page_script\company-type.js" />
+    <Content Include="Content\page_script\email-templates.js" />
     <Content Include="Content\page_script\feedback.js" />
     <Content Include="Content\page_script\gateway.js" />
     <Content Include="Content\page_script\global.js" />
@@ -4093,8 +4096,10 @@
     <Content Include="Content\page_script\order.js" />
     <Content Include="Content\page_script\plans.js" />
     <Content Include="Content\page_script\product-service-produce.js" />
+    <Content Include="Content\page_script\recommend-document.js" />
     <Content Include="Content\page_script\selling.js" />
     <Content Include="Content\page_script\startup.js" />
+    <Content Include="Content\page_script\survey-templates.js" />
     <Content Include="Content\page_script\technology.js" />
     <Content Include="Content\page_script\transaction.js" />
     <Content Include="Content\page_script\work-location.js" />
@@ -6216,6 +6221,10 @@
     <Content Include="Views\Plan\RecurringPlan.cshtml" />
     <Content Include="Views\ManageEmailTemplates\Index.cshtml" />
     <Content Include="Views\EmailTemplates\Index.cshtml" />
+    <Content Include="Views\RecommendDocument\Index.cshtml" />
+    <Content Include="Views\SurveyTemplates\Index.cshtml" />
+    <Content Include="Views\SurveyTemplates\Create.cshtml" />
+    <Content Include="Views\SurveyTemplates\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

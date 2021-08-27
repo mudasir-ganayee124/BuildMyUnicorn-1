@@ -19,6 +19,7 @@ namespace Business_Model.Model
         public string Code { get; set; }
         public string Symbol { get; set; }
         public string PlanSubHeading { get; set; }
+        public string Method { get; set; }
         public int DisplayOrder { get; set; }
         public EntityState EntityState { get; set; }
         public Guid PlanRecurringID { get; set; }

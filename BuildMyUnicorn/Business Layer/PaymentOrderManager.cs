@@ -48,43 +48,52 @@ namespace BuildMyUnicorn.Business_Layer
         }
         public void SendClientPaymentInvoice(Guid ClientID)
         {
-            string queryEmailTemplate = $@"select * from tbl_email_templates where EmailTemplateCode = 'CI'";
-            string queryOrder = $@"select * from tbl_order where ClientID = '{ClientID}'";
-            string queryClient = $@"select * from tbl_client where ClientID ='{ClientID}' ";
-            _EmailTemplates InvoiceTemplate = SharedManager.GetSingle<_EmailTemplates>(queryEmailTemplate);
-            string Invoice = InvoiceTemplate.EmailTemplateBody.ToString();
-            Client client = SharedManager.GetSingle<Client>(queryClient);
-            Order Order = SharedManager.GetSingle<Order>(queryOrder);
-            string queryPlan = $@"select * from tbl_plan where PlanID = '{Order.PlanID}'";
-            Plan Plan = SharedManager.GetSingle<Plan>(queryPlan);
-            Invoice = Invoice.Replace("@Date", Order.OrderDateTime.ToString()).Replace("@OrderID", Order.OrderID.ToString()).Replace("@Amount", Plan.Amount.ToString()).Replace("@Phone", client.Phone).Replace("@Email",  client.Email).Replace("@Name", client.FirstName + " " + client.LastName).Replace("@PlanName", Plan.PlanName);
-            string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
-            Thread Transaction = new Thread(delegate () {
-                Transaction Model = new Transaction();
-                Model.PaymentMode = PaymentMode.CreditCard;
-                Model.Amount = Plan.Amount;
-                Model.OrderID = Order.OrderID;
-                new PaymentOrderManager().AddTransaction( Model);
-            });
-
-            Thread TransactionLog = new Thread(delegate () {
-                TransactionLog log = new TransactionLog();
-                log.MerchantTransactionStatus = "Completed";
-                log.OrderID = Order.OrderID;
-                log.TransactionStatus = TransactionStatus.Success;
-                new PaymentOrderManager().AddTransactionLog(log);
-            });
-
-            //Finally Send Mail and save data Async
-            Thread email_sender_thread = new Thread(delegate ()
+            try
             {
-                EmailSender emailobj = new EmailSender();
-                emailobj.SendMail(SenderEmail, client.Email.ToString(), InvoiceTemplate.EmailTemplateSubject.ToString(), Invoice.ToString());
-            });
-            email_sender_thread.IsBackground = true;
-            email_sender_thread.Start();
-            Transaction.Start();
-            TransactionLog.Start();
+                string queryEmailTemplate = $@"select * from tbl_email_templates where EmailTemplateCode = 'CPLI'";
+                string queryOrder = $@"select * from tbl_order where ClientID = '{ClientID}'";
+                string queryClient = $@"select * from tbl_client where ClientID ='{ClientID}' ";
+                _EmailTemplates InvoiceTemplate = SharedManager.GetSingle<_EmailTemplates>(queryEmailTemplate);
+                string Invoice = InvoiceTemplate.EmailTemplateBody.ToString();
+                Client client = SharedManager.GetSingle<Client>(queryClient);
+                Order Order = SharedManager.GetSingle<Order>(queryOrder);
+                string queryPlan = $@"select * from tbl_plan where PlanID = '{Order.PlanID}'";
+                Plan Plan = SharedManager.GetSingle<Plan>(queryPlan);
+                Invoice = Invoice.Replace("@Date", Order.OrderDateTime.ToString()).Replace("@OrderID", Order.OrderID.ToString()).Replace("@Amount", Plan.Amount.ToString()).Replace("@Phone", client.Phone).Replace("@Email", client.Email).Replace("@Name", client.FirstName + " " + client.LastName).Replace("@PlanName", Plan.PlanName);
+                string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
+                Thread Transaction = new Thread(delegate ()
+                {
+                    Transaction Model = new Transaction();
+                    Model.PaymentMode = PaymentMode.CreditCard;
+                    Model.Amount = Plan.Amount;
+                    Model.OrderID = Order.OrderID;
+                    new PaymentOrderManager().AddTransaction(Model);
+                });
+
+                Thread TransactionLog = new Thread(delegate ()
+                {
+                    TransactionLog log = new TransactionLog();
+                    log.MerchantTransactionStatus = "Completed";
+                    log.OrderID = Order.OrderID;
+                    log.TransactionStatus = TransactionStatus.Success;
+                    new PaymentOrderManager().AddTransactionLog(log);
+                });
+
+                //Finally Send Mail and save data Async
+                Thread email_sender_thread = new Thread(delegate ()
+                {
+                    EmailSender emailobj = new EmailSender();
+                    emailobj.SendMail(SenderEmail, client.Email.ToString(), InvoiceTemplate.EmailTemplateSubject.ToString(), Invoice.ToString());
+                });
+                email_sender_thread.IsBackground = true;
+                email_sender_thread.Start();
+                Transaction.Start();
+                TransactionLog.Start();
+            }
+            catch
+            { 
+            
+            }
         }
     }
 }

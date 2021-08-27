@@ -1,7 +1,11 @@
 ﻿
+$("#CardName").on("keyup", function () {
+    $("#CardName").css("border", "1px solid #272c36");
+});
 $(function () {
     $(".preloader").fadeOut();
     $('[data-toggle="tooltip"]').tooltip()
+    $('form').areYouSure({ 'message': 'Changes you made may not be saved.' });
     $.ajax({
         url: GetBaseURL() + "Register/GetCountryList",
         type: 'GET',
@@ -72,16 +76,37 @@ $('#Agreement').click(function () {
         $("#Agreement").removeAttr('checked', 'checked')
     }
 });
+/*RevolutCheckoutPayment("7001775e-99c2-4b87-883e-b50564c7d4fb");*/
 
 function RevolutCheckoutPayment(OrderPublicID)
 {
       
-   RevolutCheckout(OrderPublicID).then(function (instance) {
+    RevolutCheckout(OrderPublicID).then(function (instance) {
 
             var card = instance.createCardField({
                 target: document.getElementById("card-field"),
                 hidePostcodeField: true,
                 savePaymentMethodFor: 'merchant',
+                name: $("#CardName").val(),
+                email: $("#Email").val(),
+                phone: $("#Phone").val(),
+                locale: "en",
+                billingAddress: {
+                    countryCode: "",
+                    region: "",
+                    city: "",
+                    streetLine1: "",
+                    streetLine2: "",
+                    postcode: ""
+                },
+                shippingAddress: {
+                    countryCode: "",
+                    region: "",
+                    city: "",
+                    streetLine1: "",
+                    streetLine2: "",
+                    postcode: ""
+                },
                 styles: {
                     default: {
                         color: "#fff",
@@ -114,8 +139,12 @@ function RevolutCheckoutPayment(OrderPublicID)
 
             document.getElementById("button-submit")
                 .addEventListener("click", function () {
+                    if ($("#CardName").val() == "") {
+                        $("#CardName").css("border", "1px solid #de112e");
+                        return false;
+                    }
                     $("#button-submit").addClass("hide");
-                    $("#button-wait").removeClass("hide");
+                    $("#button-wait").removeClass("hide");                   
                     card.submit();
                 });
         });

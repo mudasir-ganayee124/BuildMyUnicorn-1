@@ -54,7 +54,13 @@ namespace Administration.Business_Layer
             var query = $@"SELECT tbl_grants.Name, tbl_grant_survival_budget.ModifiedDateTime, tbl_countries.CountryName,tbl_client.FirstName, tbl_client.LastName, tbl_client.StartupName,tbl_loan_calculator.AmountToBorrow, tbl_loan_calculator.YearsToRepay,tbl_loan_calculator.InterestRate  from tbl_grant_survival_budget INNER JOIN tbl_grants ON tbl_grants.GrantID = tbl_grant_survival_budget.GrantID INNER JOIN tbl_client ON tbl_client.ClientID = tbl_grant_survival_budget.ClientID LEFT JOIN tbl_countries ON tbl_grants.CountryID = tbl_countries.CountryID INNER JOIN tbl_loan_calculator ON tbl_loan_calculator.GrantID = tbl_grant_survival_budget.GrantID WHERE tbl_grant_survival_budget.GrantStatus = 2";
             return SharedManager.GetList<GrantLog>(query);
         }
+        public IEnumerable<SurveyTemplates> GetAllSurveyTemplates()
+        {
+            var query = $@"select * from tbl_survey_templates where IsDeleted = 0  and IsActive = 1";
+            return SharedManager.GetList<SurveyTemplates>(query);
+        }
 
+        
         public IEnumerable<_EmailTemplates> GetAllEmailTemplates()
         {
             var query = $@"select * from tbl_email_templates";
@@ -65,6 +71,11 @@ namespace Administration.Business_Layer
         {
             var query = $@"select * from tbl_email_templates where EmailTemplateID = '{EmailTemplateID}'";
             return SharedManager.GetSingle<_EmailTemplates>(query);
+        }
+        public SurveyTemplates GetSingleSurveyTemplate(Guid TemplateID)
+        {
+            var query = $@"select * from tbl_survey_templates where TemplateID =  '{TemplateID}'";
+            return SharedManager.GetSingle<SurveyTemplates>(query);
         }
         public IEnumerable<ModuleCourse> GetModuleCourseList()
         {
@@ -200,6 +211,25 @@ namespace Administration.Business_Layer
 
 
         }
+
+        public string AddSurveyTemplate(SurveyTemplates Model)
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() {
+             new ParametersCollection { ParamterName = "@TemplateID", ParamterValue = Model.TemplateID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Template", ParamterValue = Model.Template, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Icon", ParamterValue = Model.Icon, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Title", ParamterValue = Model.Title, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@BgColor", ParamterValue = Model.BgColor, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@SurveyTemplateType", ParamterValue = Model.SurveyTemplateType, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@CreatedBy", ParamterValue = Guid.Parse(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input }
+            };
+            int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_survey_template", parameters);
+            return result > 0 ? "OK" : "Template already exists";
+
+
+        }
         public string AddModuleVideo(ModuleVideo Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
@@ -310,6 +340,13 @@ namespace Administration.Business_Layer
             return result > 0 ? "OK" : "Can not Delete ";
 
 
+        }
+
+        public string DeleteSurveyTemplate(Guid TemplateID)
+        {
+            var query = $@"delete from tbl_survey_templates where TemplateID = '{TemplateID}'";
+            int result = SharedManager.ExecuteScalar<int>(query);
+            return result == 0 ? "OK" : "Can not Delete ";
         }
         public string DeleteGrant(Guid GrantID)
         {
