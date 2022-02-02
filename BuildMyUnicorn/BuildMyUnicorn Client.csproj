@@ -16,9 +16,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BuildMyUnicorn</RootNamespace>
     <AssemblyName>BuildMyUnicorn</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -28,6 +28,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>3.2</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,15 +94,40 @@
     <Reference Include="itextsharp">
       <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Word">
+      <HintPath>..\..\..\..\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Cors.4.2.0\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Compression.Base, Version=19.1450.0.63, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.XlsIO.AspNet.Mvc5.19.1.0.63\lib\net45\Syncfusion.Compression.Base.dll</HintPath>
@@ -123,10 +149,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -134,8 +162,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
@@ -145,9 +172,7 @@
     <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -189,6 +214,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -229,6 +255,7 @@
     <Compile Include="Business Layer\AppendixManager.cs" />
     <Compile Include="Business Layer\AssignedMappingManager.cs" />
     <Compile Include="Business Layer\BusinessManager.cs" />
+    <Compile Include="Business Layer\ChatManager.cs" />
     <Compile Include="Business Layer\ClientManager.cs" />
     <Compile Include="Business Layer\CountryManager.cs" />
     <Compile Include="Business Layer\DashboardManager.cs" />
@@ -246,9 +273,11 @@
     <Compile Include="Business Layer\SharedManager.cs" />
     <Compile Include="Business Layer\ThirdPartyManager.cs" />
     <Compile Include="Business Layer\ToDoTaskManager.cs" />
+    <Compile Include="ChatHubClient.cs" />
     <Compile Include="Controllers\AppendixController.cs" />
     <Compile Include="Controllers\BusinessController.cs" />
     <Compile Include="Controllers\BusinessPlanFileController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
@@ -267,6 +296,7 @@
     <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\RecommendDocumentationController.cs" />
     <Compile Include="Controllers\SellingController.cs" />
+    <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Controllers\SurveyProfessionalController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
@@ -280,7 +310,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Utils\CashBusting.cs" />
+    <Compile Include="Utils\SessionManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\icons\crypto-icons\cryptocoins-colors.css" />
@@ -4228,6 +4260,7 @@
     <Content Include="dist\css\pages\dashboard2.css" />
     <Content Include="dist\css\pages\dashboard3.css" />
     <Content Include="dist\css\pages\dashboard4.css" />
+    <Content Include="dist\css\pages\detail-chat.css" />
     <Content Include="dist\css\pages\easy-pie-chart.css" />
     <Content Include="dist\css\pages\error-pages.css" />
     <Content Include="dist\css\pages\file-upload.css" />
@@ -4318,6 +4351,7 @@
     <Content Include="page_script\login.js" />
     <Content Include="page_script\marketing-brand.js" />
     <Content Include="page_script\marketing.js" />
+    <Content Include="page_script\mychat.js" />
     <Content Include="page_script\observation.js" />
     <Content Include="page_script\online-presence.js" />
     <Content Include="page_script\online-research.js" />
@@ -4326,14 +4360,18 @@
     <Content Include="page_script\psb.js" />
     <Content Include="page_script\questionnaire.js" />
     <Content Include="page_script\recommend-document.js" />
+    <Content Include="page_script\register_old.js" />
     <Content Include="page_script\running-business.js" />
     <Content Include="page_script\shared.js" />
     <Content Include="page_script\register.js" />
+    <Content Include="page_script\startup.js" />
     <Content Include="page_script\survey-create.js" />
     <Content Include="page_script\survey.js" />
     <Content Include="page_script\team.js" />
     <Content Include="page_script\to-do.js" />
     <Content Include="page_script\todo.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4346,7 +4384,6 @@
     <Folder Include="Content\file_upload\" />
     <Folder Include="Views\Appendix\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\BusinessPlanFile\" />
     <Folder Include="Views\Global\" />
     <Folder Include="Views\PitchDeck\" />
     <Folder Include="Views\Web\" />
@@ -6333,7 +6370,7 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Register\EmailVerification.cshtml" />
     <Content Include="Views\Register\ForgotPassword.cshtml" />
-    <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Register\Index_old.cshtml" />
     <Content Include="Views\Register\PasswordSetup.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
     <Content Include="Views\Register\ResetPasswordEmailSuccess.cshtml" />
@@ -6466,6 +6503,16 @@
     <Content Include="Views\Interview\InterviewTemplatesDetail.cshtml" />
     <Content Include="Views\Interview\Form.cshtml" />
     <Content Include="Views\Dashboard\_ToDoPartial.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Dialog\_ChangePasswordContributor.cshtml" />
+    <Content Include="Views\Startup\Index.cshtml" />
+    <Content Include="Views\BusinessPlanFile\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\_ChatPartial.cshtml" />
+    <Content Include="Views\Dialog\_Chat.cshtml" />
+    <Content Include="Views\Chat\_ChatDialogPartial.cshtml" />
+    <Content Include="Views\Dialog\_ChatDialog.cshtml" />
+    <Content Include="Views\Chat\_UnreadChatPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -6507,7 +6554,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50342</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/BuildMyUnicorn Client</IISUrl>
+          <IISUrl>http://localhost:50342/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

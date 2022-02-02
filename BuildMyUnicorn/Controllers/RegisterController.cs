@@ -21,21 +21,21 @@ namespace BuildMyUnicorn.Controllers
             {
                 if (Request.QueryString["refid"] == null)
                 {
-                    if (!string.IsNullOrEmpty(id))
-                    {
+                    //if (!string.IsNullOrEmpty(id))
+                    //{
 
-                        Session.Add("PlanID", id);
-                    }
-                    var PlanID = Session["PlanID"].ToString();
-                    ViewBag.Plan = new PaymentOrderManager().GetSinglePlan(Guid.Parse(PlanID));
-                    ViewBag.PlanID = PlanID;
+                    //    Session.Add("PlanID", id);
+                    //}
+                    //var PlanID = Session["PlanID"].ToString();
+                    //ViewBag.Plan = new PaymentOrderManager().GetSinglePlan(Guid.Parse(PlanID));
+                    //ViewBag.PlanID = PlanID;
 
                 }
                 else
                 {
                     Guid AffiliateLinkID = Guid.Parse(Encryption.DecryptGuid(Request.QueryString["refid"]));
                     ViewBag.AffiliateLinkID = AffiliateLinkID;
-                    return View("AffilateView");
+                    ////return View("AffilateView");
                 }
                 return View();
             }
@@ -134,34 +134,37 @@ namespace BuildMyUnicorn.Controllers
             return new ClientManager().UpdateCustomerPassword(Model);
         }
 
-        public async  Task<JsonResult> AddCustomer(Client Model)
+        //public async  Task<JsonResult> AddCustomer(Client Model)
+        public JsonResult  AddCustomer(Client Model)
         {
            
             var Client = new ClientManager().GetSingleClientByEmail(Model.Email);
             if (Client == null)
             {
-          
+                
                 Model.ClientID = Guid.NewGuid();
                 string returnValue = new ClientManager().AddNewClient(Model);
                 if (returnValue == "OK")
                 {
 
-                    string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
-                    string PublicId = await new ClientManager().AddOrderinGateway(Model, CustomerID);
-               
-                    Order OrderObj = new Order();
-                    OrderObj.OrderID = Guid.NewGuid();        
-                    OrderObj.Order_ID = Keygen.Random();
-                    OrderObj.OrderType = OrderType.Plan;                  
-                    OrderObj.ClientID = Model.ClientID;
-                    OrderObj.OrderStatus = OrderStatus.Pending;
-                    OrderObj.PlanID = Model.PlanID;
-                    OrderObj.GatewayClientID = Guid.Parse(CustomerID);
-                    OrderObj.GatewayOrderID = Guid.Parse(PublicId);
-                    OrderObj.OrderPublicID = Guid.Parse(PublicId);
-                    new ClientManager().AddNewOrder(OrderObj);
-                    Order order = new ClientManager().GetClientOrder(Model.ClientID);
-                    return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);
+                    //string CustomerID = await new ClientManager().AddCustomerinGateway(Model);
+                    //string PublicId = await new ClientManager().AddOrderinGateway(Model, CustomerID);
+
+                    //Order OrderObj = new Order();
+                    //OrderObj.OrderID = Guid.NewGuid();        
+                    //OrderObj.Order_ID = Keygen.Random();
+                    //OrderObj.OrderType = OrderType.Plan;                  
+                    //OrderObj.ClientID = Model.ClientID;
+                    //OrderObj.OrderStatus = OrderStatus.Pending;
+                    //OrderObj.PlanID = Model.PlanID;
+                    //OrderObj.GatewayClientID = Guid.Parse(CustomerID);
+                    //OrderObj.GatewayOrderID = Guid.Parse(PublicId);
+                    //OrderObj.OrderPublicID = Guid.Parse(PublicId);
+                    //new ClientManager().AddNewOrder(OrderObj);
+                    //Order order = new ClientManager().GetClientOrder(Model.ClientID);
+                    //return Json(new { status = "SUCCESS", data = order }, JsonRequestBehavior.AllowGet);
+                    return Json(new { status = "SUCCESS", data = "" }, JsonRequestBehavior.AllowGet);
+
                 }
                 else
                     return Json(new { status = "FAILED", msg = "Check the log" }, JsonRequestBehavior.AllowGet);

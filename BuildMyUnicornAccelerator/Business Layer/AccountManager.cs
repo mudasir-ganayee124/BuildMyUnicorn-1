@@ -341,15 +341,15 @@ namespace BuildMyUnicornAccelerator.Business_Layer
                     string ForgotPasswordURL = strUrl;
                     string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
                     ForgotPasswordURL = ForgotPasswordURL + "/Account/ResetPassword?refid=" + EncryptedID;
-                    var template = new Master().GetTemplate((int)TemplateType.PlatformForgotPassword);
-                    string ForgotEmailTemplate = template.Body.ToString();//ForgotPasswordTemplate.Template["FP"];
+                    var template = new Master().GetEmailTemplate(TemplateType.PFP.ToString());
+                    string ForgotEmailTemplate = template.EmailTemplateBody.ToString();//ForgotPasswordTemplate.Template["FP"];
                     ForgotEmailTemplate = ForgotEmailTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", acceleratorObj.ContactName);
                     string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
                     //Finally Send Mail and save data Async
                     Thread email_sender_thread = new Thread(delegate ()
                     {
                         EmailSender emailobj = new EmailSender();
-                        emailobj.SendMail(SenderEmail, Email, template.Subject.ToString(), ForgotEmailTemplate);
+                        emailobj.SendMail(SenderEmail, Email, template.EmailTemplateSubject.ToString(), ForgotEmailTemplate);
                     });
 
                     Thread SaveRestLink = new Thread(delegate ()

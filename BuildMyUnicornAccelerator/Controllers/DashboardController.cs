@@ -15,7 +15,9 @@ namespace BuildMyUnicornAccelerator.Controllers
 
         public ActionResult Index()
         {
-           var Clientlist = new ClientManager().GetStartupAcceleratorClient();
+           // ChatHubAcc.SendChatMessage("20F49C82-5C74-4DE2-A03C-9A73BB3FA1BD", null,"welcome", null);
+
+            var Clientlist = new ClientManager().GetStartupAcceleratorClient();
            foreach (var item in Clientlist)
             {
                 item.ProgressAnalytic = new Master().GetClientProgressAnalytic(item.ClientID);

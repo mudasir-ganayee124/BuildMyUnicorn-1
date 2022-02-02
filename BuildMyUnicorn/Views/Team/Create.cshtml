@@ -11,6 +11,7 @@
 {
 
     <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+
     <style>
         .dz-error-mark {
             background: #b10429;
@@ -45,6 +46,7 @@
             height: 210px;
         }
     </style>
+    <link href="~/dist/css/pages/stylish-tooltip.css" rel="stylesheet">
 }
 
 <div class="row page-titles">
@@ -61,6 +63,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-12">
 
@@ -71,6 +74,7 @@
                 <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
                 <input type="hidden" id="TeamClientID" name="TeamClientID" value="@Model.TeamClientID" />
                 <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
+                <input type="hidden" id="Password" name="Password" value="@Model.Password" />
 
                 <div class="card-body">
 
@@ -106,10 +110,15 @@
                         </div>
 
                     </div>
+
                     <div class="row">
+
                         <div class="col-md-6">
+                            <label>Type</label>
+                            <a class="mytooltip" href="javascript:void(0)"> <i class="fas fa-lightbulb"></i><span class="tooltip-content5"><span class="tooltip-text3"><span class="tooltip-inner2" style="font-size:10px; text-align:left;margin-left:30px"> <b> Team Member </b> <br /> Team Members are those who have access to the company profile but cannot make any additions or changes to the account or its users. <br /> <b>Contributer </b><br /> Contributors have the ability to create, edit and delete profile and team information.</span></span></span></a>
                             <div class="form-group">
-                                <label>Type</label>
+
+
 
                                 <select class="custom-select col-12" id="MemberType" name="MemberType">
                                     @*<option>- Please select -</option>*@

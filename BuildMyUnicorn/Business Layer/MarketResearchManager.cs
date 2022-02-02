@@ -41,7 +41,7 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
-        public string AddObservation(OurObservation Model)
+        public OurObservation AddObservation(OurObservation Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
@@ -56,11 +56,22 @@ namespace BuildMyUnicorn.Business_Layer
             };
 
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_marketresearch_observation", parameters);
-            if (result > 0) return "OK"; else return "Error in adding observation";
+            if (result > 0)
+            {
+                Model.ResponseType = ResponseType.Ok.ToString();
+                Model.EntityState = EntityState.Old; /*ResponseType.Ok.ToString();*/
+            }
+            else
+            {
+                Model.ResponseType = ResponseType.Error.ToString();
+                //Model.EntityState = EntityState.Old;  /*ResponseType.Ok.ToString();*/
+            }
+                return Model;
+
 
         }
 
-        public string AddKeyFinding(KeyFinding Model)
+        public KeyFinding AddKeyFinding(KeyFinding Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
@@ -78,11 +89,22 @@ namespace BuildMyUnicorn.Business_Layer
             };
 
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_marketresearch_keyfinding", parameters);
-            if (result > 0) return "OK"; else return "Error in adding keyfinding";
+            if (result > 0)
+            {
+                Model.ResponseType = ResponseType.Ok.ToString();
+                Model.EntityState = EntityState.Old; 
+            }
+            else
+            {
+                Model.ResponseType = ResponseType.Error.ToString();
+               
+            }
+            return Model;
+
 
         }
 
-        public string AddOnlineResearch(OnlineResearch Model, List<MarketKeyPlayer> MarketKeyPlayerList)
+        public OnlineResearch AddOnlineResearch(OnlineResearch Model, List<MarketKeyPlayer> MarketKeyPlayerList)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
           //  Guid OnlineResearchID = Guid.NewGuid();
@@ -114,7 +136,18 @@ namespace BuildMyUnicorn.Business_Layer
                 DataTable dtMarketKeyPlayer = Extensions.ListToDataTable(MarketKeyPlayerList);
                 obj.ExecuteBulkInsert("sp_add_marketkeyplayer_data", dtMarketKeyPlayer, "UT_MarketKey_Player_Data", "@DataTable");
             }
-            if (result > 0) return "OK"; else return "Client Online research exists";
+            if (result > 0)
+            {
+                Model.ResponseType = ResponseType.Ok.ToString();
+                Model.EntityState = EntityState.Old;
+            }
+            else
+            {
+                Model.ResponseType = ResponseType.Error.ToString();
+
+            }
+            return Model;
+
         }
 
         //public string UpdateOnlineResearch(OnlineResearch Model, List<MarketKeyPlayer> MarketKeyPlayerList)

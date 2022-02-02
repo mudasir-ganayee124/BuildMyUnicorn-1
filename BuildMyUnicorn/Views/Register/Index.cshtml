@@ -172,13 +172,13 @@
                         <tr>
                             <td>
                                 <h3 class="box-title">Register</h3>
-                                <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
+                                @*<h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>*@
                             </td>
                             <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; display:none ">STEP 1 OF 2 </span></td>
                         </tr>
                     </table>
 
-                    <h6>No risk. Cancel any time.</h6>
+                    @*<h6>No risk. Cancel any time.</h6>*@
                     <div class="form-group m-t-20">
                         <div class="col-xs-12">
                             <input class="form-control" type="text" name="StartupName" placeholder="Startup Name" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter startup name" />
@@ -227,13 +227,16 @@
                     </div>
                     <div class="alert alert-danger hide alert-rounded">
                         <span id="responseMessage"></span>
-                        <button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>
+                    
+
+                        @*<button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>*@
                     </div>
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Register</button>
 
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Continue  &nbsp;&nbsp; <i class="fa fa-arrow-right pull-right"></i></button>
+                            @*<button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Continue  &nbsp;&nbsp; <i class="fa fa-arrow-right pull-right"></i></button>*@
                         </div>
                     </div>
                     <div class="form-group m-b-0">
@@ -268,7 +271,7 @@
                             <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; "> </span></td>
                         </tr>
                     </table>
-                    <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
+                    @*<h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>*@
                     <h6>No risk. Cancel any time.</h6>
                     <div class="row">
 

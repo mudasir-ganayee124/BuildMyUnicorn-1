@@ -13,6 +13,8 @@
 }
 <div class="row">
     <input type="hidden" id="IdeaID" value="@Model.IdeaID" />
+    <input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.MyIdea)" />
+    <input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.MyIdea_Ideaoutofhead)" />
 
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card">
@@ -507,6 +509,10 @@
                         </a>
                     }
                 }
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
                 <a href="#1" class="list-group-item">
                     Your Idea
                     <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressTheIdea))% <i class="fa fa-level-up text-success"></i></div>

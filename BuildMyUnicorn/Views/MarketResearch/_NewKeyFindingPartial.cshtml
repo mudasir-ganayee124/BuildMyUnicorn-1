@@ -4,6 +4,8 @@
 @{
 
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    var QuestionList = ViewBag.ModuleQustionVideo as IEnumerable<Business_Model.Model.QuestionVideo>;
+
 }
 
 
@@ -21,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="frmKeyFinding" method="post" class="validation-wizard wizard-circle">
+                <form id="frmKeyFinding" method="post" class="validation-wizard wizard-circle patch">
 
                     <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
@@ -35,7 +37,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InterviewKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InterviewKeyFinding").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            string VideoUrl = QuestionList.Where(x => x.PropertyName == "InterviewKeyFinding").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="InterviewKeyFinding" name="InterviewKeyFinding">@Model.MarketResearchResults.InterviewKeyFinding</textarea>
 
                                 </div>
@@ -46,7 +59,18 @@
                             <div class="col-md-12">
 
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InterviewKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InterviewKeyFindingConfident").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "InterviewKeyFindingConfident").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     @Html.DropDownList("InterviewKeyFindingConfident", new SelectList(ViewBag.InterviewKeyFinding, "ID", "Value", @Model.MarketResearchResults.InterviewKeyFindingConfident), "- Please select -", new { @class = "custom-select col-12" })
 
 
@@ -58,7 +82,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObservationKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObservationKeyFinding").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ObservationKeyFinding").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="ObservationKeyFinding" name="ObservationKeyFinding">@Model.MarketResearchResults.ObservationKeyFinding</textarea>
 
                                 </div>
@@ -68,7 +103,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObservationKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ObservationKeyFindingConfident").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ObservationKeyFindingConfident").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
 
                                     @Html.DropDownList("ObservationKeyFindingConfident", new SelectList(ViewBag.ObservationKeyFinding, "ID", "Value", @Model.MarketResearchResults.ObservationKeyFindingConfident), "- Please select -", new { @class = "custom-select col-12" })
                                 </div>
@@ -80,7 +126,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SurveyKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SurveyKeyFinding").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SurveyKeyFinding").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+
+                                    </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="SurveyKeyFinding" name="SurveyKeyFinding">@Model.MarketResearchResults.SurveyKeyFinding</textarea>
 
                                 </div>
@@ -90,7 +148,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SurveyKeyFindingConfident").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SurveyKeyFindingConfident").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SurveyKeyFindingConfident").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     @Html.DropDownList("SurveyKeyFindingConfident", new SelectList(ViewBag.SurveyKeyFinding, "ID", "Value", @Model.MarketResearchResults.SurveyKeyFindingConfident), "- Please select -", new { @class = "custom-select col-12" })
 
                                 </div>
@@ -99,7 +168,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OnlineResearchKeyFinding").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "OnlineResearchKeyFinding").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "OnlineResearchKeyFinding").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea class='form-control form-control-line ideatextarea' id="OnlineResearchKeyFinding" name="OnlineResearchKeyFinding">@Model.MarketResearchResults.OnlineResearchKeyFinding</textarea>
 
                                 </div>

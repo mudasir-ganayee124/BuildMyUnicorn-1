@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "ModuleQuestions";
+}
+
+
+
+
+
+<input type="hidden" id="ModuleID" name="ModuleID" value="@ViewBag.ModuleID" />
+<input type="hidden" id="ModuleSectionID" name="ModuleSectionID" value="@ViewBag.ModuleSectionID" />
+
+<div id="_partialView"></div>
+
+
+
+@section PageScript
+{
+
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        $.ajax({
+            url:  "/ManageQuestionVideo/GetModuleQuestion",
+        method: "GET",
+        data: {  ModuleID: $("#ModuleID").val(),  ModuleSectionID: $("#ModuleSectionID").val() },
+        dataType: 'html',
+        success: function (response) {
+          
+            $("#_partialView").html(response);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+    });
+    </script>
+
+}

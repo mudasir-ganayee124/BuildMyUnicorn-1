@@ -12,6 +12,12 @@ namespace Business_Model.Model
        // public int CreatedBy { get; set; }
         public Guid CreatedBy { get; set; }
         public Guid ModifiedBy { get; set; }
+
+        public DateTime? CurrentLogin { get; set; }
+        public DateTime? CurrentLoginUTC { get; set; }
+        public DateTime? LastLogin { get; set; }
+
+        public DateTime? LastLoginUTC { get; set; }
         public DateTime CreateDateTime { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public DateTime ModifiedDateTime { get; set; }

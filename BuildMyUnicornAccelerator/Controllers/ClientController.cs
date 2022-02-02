@@ -34,7 +34,9 @@ namespace BuildMyUnicornAccelerator.Controllers
 
         public ActionResult Get(string id, string ClientID)
         {
+
             ViewBag.ClientID = ClientID;
+            ViewBag.Client = new ClientManager().GetClient(Guid.Parse(ClientID));
             switch (int.Parse(id))
             {
                 case (int)Module.MyIdea:

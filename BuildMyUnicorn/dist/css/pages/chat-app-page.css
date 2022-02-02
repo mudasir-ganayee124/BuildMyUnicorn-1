@@ -70,6 +70,10 @@ chat application Page
   .chat-main-box .chat-right-aside {
     width: calc(100% - 250px);
     float: left; }
+    .chat-main-box .chat-right-aside-mini {
+        width: calc(100% - 100px);
+        float: left;
+    }
     .chat-main-box .chat-right-aside .chat-rbox {
       height: auto;
       position: relative; }

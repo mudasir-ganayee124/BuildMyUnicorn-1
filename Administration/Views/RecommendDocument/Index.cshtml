@@ -1,0 +1,195 @@
+﻿
+@section PageStyle
+{
+    <link href="~/assets/node_modules/kendoui/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/kendoui/styles/kendo.flat.mobile.min.css" rel="stylesheet" />
+    <link href="~/assets/node_modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    c
+
+
+}
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Recommend Document </h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Masters </li>
+                <li class="breadcrumb-item active">Recommend Document </li>
+            </ol>
+
+            <button type="button" data-toggle="modal" data-target="#NewModel" class="btn btn-info d-none d-lg-block m-l-15 JsUpdateIdea"> Add New </button>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs profile-tab" role="tablist">
+        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#RecommendDocument" role="tab" aria-selected="true">Recommend Document</a> </li>
+        <li class="nav-item"> <a class="nav-link jsGrantLog" data-toggle="tab" href="#RecommendDocumentFile" role="tab" aria-selected="false">Recommend Document File</a> </li>
+
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="RecommendDocument" role="tabpanel">
+            <div class="card-body">
+
+
+                <div id="GridRecommendDocument"></div>
+            </div>
+        </div>
+        <!--second tab-->
+        <div class="tab-pane" id="RecommendDocumentFile" role="tabpanel">
+            <div class="card-body">
+
+                <div id="GridRecommendDocumentFile">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div id="NewModel" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="NewForm" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New  Documentation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Title:</label>
+                                <input type="text" class="form-control" name="Title" data-parsley-required="true" data-parsley-required-message="Please Enter Title" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Video Url:</label>
+                                <input type="text" class="form-control" name="VideoUrl" data-parsley-required="true" data-parsley-required-message="Please Enter Video Url" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Description:</label>
+                                <textarea class=" form-control" rows="18" id="Description" name="Description" placeholder="Enter text ..."></textarea>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger waves-effect waves-light">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="UpdateModel" class="modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="UpdateForm" method="post">
+                <input type="hidden" id="RecommendDocumentID" name="RecommendDocumentID" />
+                <div class="modal-header">
+                    <h4 class="modal-title">Update  Documentation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Title:</label>
+                                <input type="text" class="form-control" id="Title" name="Title" data-parsley-required="true" data-parsley-required-message="Please Enter Title" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Video Url:</label>
+                                <input type="text" class="form-control" id="VideoUrl" name="VideoUrl" data-parsley-required="true" data-parsley-required-message="Please Enter Video Url" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Description:</label>
+                                <textarea class="textarea_editor form-control" rows="18" id="EditDescription" name="Description" placeholder="Enter text ..."></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger waves-effect waves-light">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section PageScript
+{
+    <script src="~/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
+    <script src="~/assets/node_modules/kendoui/js/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <script src="~/assets/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/assets/node_modules/html5-editor/wysihtml5-0.3.0.js"></script>
+    <script src="~/assets/node_modules/html5-editor/bootstrap-wysihtml5.js"></script>
+    <script src="~/Content/page_script/recommend-document.js?version=@DateTime.Now"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#EditDescription').wysihtml5({
+                "font-styles": true, //Font styling, e.g. h1, h2, etc.
+                "emphasis": true, //Italics, bold, etc.
+                "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers.
+                "html": true, //Button which allows you to edit the generated HTML.
+                "link": true, //Button to insert a link.
+                "image": true, //Button to insert an image.
+                "color": true //Button to change color of font
+            });
+            $('#Description').wysihtml5({
+                "font-styles": true, //Font styling, e.g. h1, h2, etc.
+                "emphasis": true, //Italics, bold, etc.
+                "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers.
+                "html": true, //Button which allows you to edit the generated HTML.
+                "link": true, //Button to insert a link.
+                "image": true, //Button to insert an image.
+                "color": true //Button to change color of font
+            });
+
+
+        });
+    </script>
+}

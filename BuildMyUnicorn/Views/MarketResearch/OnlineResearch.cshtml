@@ -65,6 +65,59 @@
             }
     </style>
 
+    <style>
+        chat-main-box .chat-left-aside {
+            position: relative;
+            width: 100% !important;
+            float: none !important;
+            z-index: 9;
+            top: 0px;
+            border-right: 1px solid #4F5467;
+        }
+
+        .chat-main-box .chat-left-aside .chat-left-inner .style-none li a {
+            padding: 10px;
+        }
+
+        .chat-main-box .chat-left-aside {
+            width: 60px !important;
+        }
+
+        .chat-list li .chat-content h5 {
+            font-size: 12px !important;
+        }
+
+        .chat-main-box .chat-right-aside-mini {
+            width: calc(100% - 60px) !important;
+            float: left;
+        }
+
+        .chat-main-box .chat-right-aside .chat-list li .chat-time {
+            display: block;
+            text-align: left;
+            font-size: 8px !important;
+            display: none;
+        }
+
+        .chat-card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 0.25rem !important;
+        }
+
+        .chat-list li .chat-content .box {
+            font-size: 10px;
+        }
+
+        .chat-list li .chat-img img {
+            width: 25px !important;
+            border-radius: 100%;
+        }
+
+        .chat-main-box .chat-right-aside .chat-rbox {
+            min-height: 200px;
+        }
+    </style>
 }
 
 
@@ -143,7 +196,7 @@
 
 
     </script>
-    <script>
+    @*<script>
 
         $(function () {
             // Switchery
@@ -251,11 +304,11 @@
                 //templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
             });
         });
-    </script>
+    </script>*@
     @{
         if (Model == (int)EntityState.New)
         {
             <script>setTimeout(function () { $("#myDialog3").myOwnDialog("open"); }, 1000);</script>
- }
+        }
     }
 }

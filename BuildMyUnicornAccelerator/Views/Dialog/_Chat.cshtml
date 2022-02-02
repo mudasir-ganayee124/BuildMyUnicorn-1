@@ -1,0 +1,23 @@
+﻿
+<div id="ChatModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-modal="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Chat</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" style="padding: 0.1rem;">
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+            </div>
+            @*<div class="modal-footer">
+                    <button type="submit" class="btn btn-info waves-effect text-left jsAddAvtar">Change</button>
+                    <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -1,7 +1,9 @@
-﻿    @model Business_Model.Model.Idea
+﻿@using Business_Model.Model;
+@model Business_Model.Model.Idea
 @{
 
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    var QuestionList = ViewBag.ModuleQustionVideo as IEnumerable<Business_Model.Model.QuestionVideo>;
 }
 
 <div class="row" id="validation">
@@ -19,7 +21,7 @@
                     </div>
                 </div>
 
-                <form id="IdeaForm" method="post" class="validation-wizard wizard-circle">
+                <form id="IdeaForm" method="post" class="validation-wizard wizard-circle patch">
                     <input type="hidden" id="jsIdea" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                     <input type="hidden" id="EntityState" name="EntityState" value="@Model.EntityState" />
                     <input type="hidden" id="ActionType" value="@ViewBag.ActionType" />
@@ -32,7 +34,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaExplain").FirstOrDefault().QuestionText : "" ) </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaExplain").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            string VideoUrl = QuestionList.Where(x => x.PropertyName == "IdeaExplain").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaExplain != null ? "progress-percent" : "")' id="IdeaExplain" name="IdeaExplain" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "IdeaExplain").FirstOrDefault().PlaceHolderText : "" )">@Model.IdeaExplain</textarea>
                                 </div>
                             </div>
@@ -47,7 +59,17 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     @{ var arrayStartupType = String.IsNullOrEmpty(@Model.IdeaBreakDown.StartupType) == false ? @Model.IdeaBreakDown.StartupType.Split(',').ToArray() : new string[0]; }
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupType").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupType").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "StartupType").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <input type="hidden" id="_StartupType" name="_StartupType" class='progress-required @( arrayStartupType.Length > 0 ? "progress-percent" : "")' value="" />
                                     @foreach (var item in ViewBag.MasterStartup)
                                     {
@@ -65,7 +87,18 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     @{ var arrayStartupTechnology = String.IsNullOrEmpty(@Model.IdeaBreakDown.StartupTechnology) == false ? @Model.IdeaBreakDown.StartupTechnology.Split(',').ToArray() : new string[0]; }
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "StartupType").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <input type="hidden" id="_StartupTechnology" name="_StartupTechnology" class='progress-required @( arrayStartupTechnology.Length > 0 ? "progress-percent" : "")' value="" />
                                     @foreach (var item in ViewBag.MasterTechnology)
                                     {
@@ -82,31 +115,82 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolve").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolve").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProblemSolve").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.ProblemSolve != null ? "progress-percent" : "")' id="ProblemSolve" name="ProblemSolve" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolve").FirstOrDefault().PlaceHolderText:"" )">@Model.IdeaBreakDown.ProblemSolve</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.ProblemSolver != null ? "progress-percent" : "")' id="ProblemSolver" name="ProblemSolver" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProblemSolver").FirstOrDefault().PlaceHolderText:"" )">@Model.IdeaBreakDown.ProblemSolver</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedBackReceived").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedBackReceived").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "FeedBackReceived").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.FeedBackReceived != null ? "progress-percent" : "")' id="FeedBackReceived" name="FeedBackReceived" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "FeedBackReceived").FirstOrDefault().PlaceHolderText :"" )">@Model.IdeaBreakDown.FeedBackReceived</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedBackFrom").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "FeedBackFrom").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "FeedBackFrom").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.FeedBackFrom != null ? "progress-percent" : "")' id="FeedBackFrom" name="FeedBackFrom" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "FeedBackFrom").FirstOrDefault().PlaceHolderText : "")">@Model.IdeaBreakDown.FeedBackFrom</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductDemand").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductDemand").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProductDemand").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     @{ var ProductDemandClass = Model.IdeaBreakDown.ProductDemand != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("ProductDemand", new SelectList(ViewBag.ProductDemandList, "ID", "Value", @Model.IdeaBreakDown.ProductDemand), "- Please select -", new { @class = "custom-select col-12 " + @ProductDemandClass + " progress-required" })
 
@@ -114,13 +198,34 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Niche").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Niche").FirstOrDefault().QuestionText : "" )
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "Niche").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.Niche != null ? "progress-percent" :"")' id="Niche" name="Niche" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "Niche").FirstOrDefault().PlaceHolderText : "" )">@Model.IdeaBreakDown.Niche</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InMarketAlready").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "InMarketAlready").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "InMarketAlready").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     @{ var InMarketAlreadyClass = Model.IdeaBreakDown.InMarketAlready != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("InMarketAlready", new SelectList(ViewBag.InMarketAlreadyList, "ID", "Value", @Model.IdeaBreakDown.InMarketAlready), "- Please select -", new { @class = "custom-select col-12 " + @InMarketAlreadyClass + " progress-required" })
 
@@ -128,13 +233,33 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SpaceExist").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SpaceExist").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SpaceExist").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.IdeaBreakDown.SpaceExist != null ? "progress-percent" :"")' id="SpaceExist" name="SpaceExist" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "SpaceExist").FirstOrDefault().PlaceHolderText :"" )">@Model.IdeaBreakDown.SpaceExist</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Scalable").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Scalable").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "Scalable").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     @{ var ScalableClass = Model.IdeaBreakDown.Scalable != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("Scalable", new SelectList(ViewBag.ScalableList, "ID", "Value", @Model.IdeaBreakDown.Scalable), "- Please select -", new { @class = "custom-select col-12 " + @ScalableClass + " progress-required" })
 
@@ -149,33 +274,85 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Entrepreneur").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Entrepreneur").FirstOrDefault().QuestionText : "" )
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "Entrepreneur").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.Entrepreneur != null ? "progress-percent" :"")' id="Entrepreneur" name="Entrepreneur" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "Entrepreneur").FirstOrDefault().PlaceHolderText : "")">@Model.AboutYou.Entrepreneur</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().QuestionText : "")
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.YearsDoing != null ? "progress-percent" :"")' id="YearsDoing" name="YearsDoing" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "YearsDoing").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutYou.YearsDoing</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "Experience").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.Experience != null ? "progress-percent" :"")' id="Experience" name="Experience" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0 ?  LanguageList.Where(x => x.PropertyName == "Experience").FirstOrDefault().PlaceHolderText : "" )">@Model.AboutYou.Experience</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "StartupTechnology").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.AboutYou.Priorities != null ? "progress-percent" :"")' id="Priorities" name="Priorities" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "Priorities").FirstOrDefault().PlaceHolderText : "")">@Model.AboutYou.Priorities</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EndGoal").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "EndGoal").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "EndGoal").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     @{ var EndGoalClass = Model.AboutYou.EndGoal != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("EndGoal", new SelectList(ViewBag.EndGoalList, "ID", "Value", @Model.AboutYou.EndGoal), "- Please select -", new { @class = "custom-select col-12 " + @EndGoalClass + " progress-required" })
 
@@ -190,8 +367,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanySetup").FirstOrDefault().QuestionText : "" )  </label>
-                           
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanySetup").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "CompanySetup").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
+
                                     @Html.DropDownList("CompanySetup", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.CompanySetup), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "CompanyName" })
 
 
@@ -200,39 +387,91 @@
                             </div>
                             <div class='col-md-12 CompanyName  @(string.IsNullOrEmpty(@Model.Company.CompanyName) ? "hide" :"")'>
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().QuestionText : "" )
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <input type="text" class='form-control  progress-required' id="CompanyName" name="CompanyName" value="@Model.Company.CompanyName" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "CompanyName").FirstOrDefault().PlaceHolderText :"" )" />
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HaveGotDomain").FirstOrDefault().QuestionText : "")  </label>
-                   
-                                   @Html.DropDownList("HaveGotDomain", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.HaveGotDomain), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "DomainName" })
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "HaveGotDomain").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "HaveGotDomain").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
+
+                                    @Html.DropDownList("HaveGotDomain", new SelectList(ViewBag.CompanySetupList, "ID", "Value", @Model.Company.HaveGotDomain), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "DomainName" })
 
 
                                 </div>
                             </div>
                             <div class='col-md-12 DomainName @(string.IsNullOrEmpty(@Model.Company.DomainName) ? "hide" :"")'>
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().QuestionText : "" )
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <input type="text" class='form-control' id="DomainName" name="DomainName" value="@Model.Company.DomainName" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "DomainName").FirstOrDefault().PlaceHolderText :"" )">
-                                 
+
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Cofounder").FirstOrDefault().QuestionText : "")  </label> <br />
-                   
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Cofounder").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "Cofounder").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label> <br />
+
                                     @Html.DropDownList("Cofounder", new SelectList(ViewBag.CofounderList, "ID", "Value", @Model.Company.Cofounder), "- Please select -", new { @class = "custom-select col-12" })
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SupportTechnically").FirstOrDefault().QuestionText : "" )  </label>
-                          
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SupportTechnically").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SupportTechnically").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
+
                                     @Html.DropDownList("SupportTechnically", new SelectList(ViewBag.SupportTechnicallyList, "ID", "Value", @Model.Company.SupportTechnically), "- Please select -", new { @class = "custom-select col-12" })
 
 
@@ -241,8 +480,19 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BuildFrom").FirstOrDefault().QuestionText : "")  </label>
-                             
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BuildFrom").FirstOrDefault().QuestionText : "")
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "BuildFrom").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
+
                                     @Html.DropDownList("BuildFrom", new SelectList(ViewBag.BuildFromList, "ID", "Value", @Model.Company.BuildFrom), "- Please select -", new { @class = "custom-select col-12" })
 
 
@@ -250,19 +500,52 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().QuestionText : "" )
+
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.Company.BrandThought != null ? "progress-percent" :"")' id="BrandThought" name="BrandThought" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "BrandThought").FirstOrDefault().PlaceHolderText : "")">@Model.Company.BrandThought</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.Company.CompanyMission != null ? "progress-percent" :"")' id="CompanyMission" name="CompanyMission" oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CompanyMission").FirstOrDefault().PlaceHolderText : "")">@Model.Company.CompanyMission</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea class='form-control ideatextarea progress-required @( Model.Company.CompanyLookFeel != null ? "progress-percent" :"")' id="CompanyLookFeel" name="CompanyLookFeel" oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CompanyLookFeel").FirstOrDefault().PlaceHolderText :"" )">@Model.Company.CompanyLookFeel</textarea>
                                 </div>
                             </div>
@@ -276,7 +559,18 @@
                             <div class="col-md-12">
                                 @{ var arraySellType = String.IsNullOrEmpty(@Model.IdeaSelling.SellType) == false ? @Model.IdeaSelling.SellType.Split(',').ToArray() : new string[0]; }
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellType").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellType").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SellType").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <input type="hidden" id="_SellType" name="_SellType" class='' />
                                     @foreach (var item in ViewBag.MasterSelling)
                                     {
@@ -294,7 +588,18 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea id="ProductBuy" name="ProductBuy" class='form-control ideatextarea' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProductBuy").FirstOrDefault().PlaceHolderText : "")">@Model.IdeaSelling.ProductBuy</textarea>
                                 </div>
 
@@ -305,7 +610,18 @@
                                 <div class="form-group">
                                     @{ var arrayProductCharge = String.IsNullOrEmpty(@Model.IdeaSelling.ProductCharge) == false ? @Model.IdeaSelling.ProductCharge.Split(',').ToArray() : new string[0]; }
 
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductCharge").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProductCharge").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProductCharge").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <input type="hidden" id="_ProductCharge" name="_ProductCharge" class='progress-required @( arrayProductCharge.Length > 0 ? "progress-percent" : "")' value="" />
                                     @foreach (var item in ViewBag.MasterCharge)
                                     {
@@ -325,7 +641,18 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ChargeGoing").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ChargeGoing").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ChargeGoing").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea id="ChargeGoing" name="ChargeGoing" class='form-control ideatextarea progress-required @( Model.IdeaSelling.ChargeGoing != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ChargeGoing").FirstOrDefault().PlaceHolderText : "" )">@Model.IdeaSelling.ChargeGoing</textarea>
                                 </div>
 
@@ -333,7 +660,18 @@
                             <div class="col-md-12">
 
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellTo").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SellTo").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SellTo").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     @{ var SellToClass = Model.IdeaSelling.SellTo != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("SellTo", new SelectList(ViewBag.SellToList, "ID", "Value", @Model.IdeaSelling.SellTo), "- Please select -", new { @class = "custom-select col-12 " + @SellToClass + " progress-required" })
 
@@ -342,13 +680,34 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea id="CustomerFindPlan" name="CustomerFindPlan" class='form-control ideatextarea progress-required @( Model.IdeaSelling.CustomerFindPlan != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "CustomerFindPlan").FirstOrDefault().PlaceHolderText : "" )">@Model.IdeaSelling.CustomerFindPlan</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SaleStaffPlan").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "SaleStaffPlan").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "SaleStaffPlan").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+                                    </label>
                                     @{ var SaleStaffPlanClass = Model.IdeaSelling.SaleStaffPlan != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("SaleStaffPlan", new SelectList(ViewBag.SaleStaffPlanList, "ID", "Value", @Model.IdeaSelling.SaleStaffPlan), "- Please select -", new { @class = "custom-select " + SaleStaffPlanClass + " col-12 progress-required" })
 
@@ -364,7 +723,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessCost").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "BusinessCost").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "BusinessCost").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     @{ var BusinessCostClass = Model.Money.BusinessCost != null ? "progress-percent" : ""; }
                                     @Html.DropDownList("BusinessCost", new SelectList(ViewBag.BusinessCostLList, "ID", "Value", @Model.Money.BusinessCost), "- Please select -", new { @class = "custom-select col-12 " + @BusinessCostClass + " progress-required" })
 
@@ -373,7 +743,18 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "Affort").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea id="Affort" name="Affort" class='form-control ideatextarea progress-required @( Model.Money.Affort != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ?  LanguageList.Where(x => x.PropertyName == "Affort").FirstOrDefault().PlaceHolderText  : "")">@Model.Money.Affort</textarea>
                                 </div>
                             </div>
@@ -381,7 +762,18 @@
                                 <div class="form-group">
                                     @{ var arrayMoneyRaisePlan = String.IsNullOrEmpty(@Model.Money.MoneyRaisePlan) == false ? @Model.Money.MoneyRaisePlan.Split(',').ToArray() : new string[0]; }
 
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MoneyRaisePlan").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "MoneyRaisePlan").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "MoneyRaisePlan").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <input type="hidden" id="_MoneyRaisePlan" name="_MoneyRaisePlan" class='progress-required @( arrayMoneyRaisePlan.Length > 0 ? "progress-percent" : "")' value="" />
                                     @foreach (var item in ViewBag.MasterMoneyRasie)
                                     {
@@ -397,13 +789,36 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().QuestionText : "")  </label>
+                                    <label for="wint1">
+                                        @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().QuestionText : "")
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+                                    </label>
                                     <textarea id="ProfitableMake" name="ProfitableMake" class='form-control ideatextarea progress-required @( Model.Money.ProfitableMake != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@(LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProfitableMake").FirstOrDefault().PlaceHolderText : "" )">@Model.Money.ProfitableMake</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="wint1">@(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().QuestionText : "" )  </label>
+                                    <label for="wint1">
+                                        @(LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().QuestionText : "" )
+                                        @{
+                                            VideoUrl = QuestionList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().VideoUrl;
+                                            if (!string.IsNullOrEmpty(VideoUrl))
+                                            {
+                                                <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                            }
+                                        }
+
+
+                                    </label>
                                     <textarea id="ProfitableThinkTime" name="ProfitableThinkTime" class='form-control ideatextarea progress-required @( Model.Money.ProfitableThinkTime != null ? "progress-percent" :"")' oninput="auto_grow_idea_textarea(this)" placeholder="@( LanguageList.Count() > 0  ? LanguageList.Where(x => x.PropertyName == "ProfitableThinkTime").FirstOrDefault().PlaceHolderText : "" )">@Model.Money.ProfitableThinkTime</textarea>
                                 </div>
                             </div>

@@ -177,67 +177,7 @@ $("#frmKeyFinding").steps({
         else location.replace(location.href.substring(0, location.href.lastIndexOf('/')));
     },
     onFinished: function (event, currentIndex) {
-        var Model = {
-            "KeyFindingID": $.trim($("#KeyFindingID").val()),
-            "ClientID": $.trim($("#ClientID").val()),
-            "EntityState": $.trim($("#EntityState").val()),
-            "MarketResearchResults": {
-                "InterviewKeyFinding": $.trim($("#InterviewKeyFinding").val()), "InterviewKeyFindingConfident": $.trim($("#InterviewKeyFindingConfident").val()),
-                "ObservationKeyFinding": $.trim($("#ObservationKeyFinding").val()), "ObservationKeyFindingConfident": $.trim($("#ObservationKeyFindingConfident").val()),
-                "SurveyKeyFinding": $.trim($("#SurveyKeyFinding").val()), "SurveyKeyFindingConfident": $.trim($("#SurveyKeyFindingConfident").val()),
-                "OnlineResearchKeyFinding": $.trim($("#OnlineResearchKeyFinding").val()), "OnlineResearchKeyFindingConfident": $.trim($("#OnlineResearchKeyFindingConfident").val())
 
-            }
-        };
-        
-
-
-        console.log(Model);
-        $.ajax({
-            url: GetBaseURL() + "MarketResearch/AddKeyfinding",
-            type: "POST",
-            data: JSON.stringify({ Model: Model }),
-            contentType: "application/json",
-            dataType: "json",
-
-            error: function (response) {
-                //if (ActionType == "UPDATE")
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Submitted Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-
-                //else
-
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Updated Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-                setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/KeyFinding"); }, 1000);
-            },
-            success: function (response) {
-                alert(response);
-            }
-        });
-
-
-
-
-
-
-
-        console.log($.parseJSON($("form").serialize()));
-        console.log($.parseJSON($('form').serializeArray()));
-        // var data = {};
-        // $("form").serializeArray().map(function (x) { data[x.name] = x.value; })
-        //console.log(data);
-        Swal.fire("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
     }
 }), $("#frmKeyFinding").validate({
     ignore: "input[type=hidden]",
@@ -268,3 +208,41 @@ $(document).on("change", ".jsOptionChange", function () {
     else
         $("." + element).addClass("hide");
 });
+
+function SaveFormData(actionType) {
+    var Model = {
+        "KeyFindingID": $.trim($("#KeyFindingID").val()),
+        "ClientID": $.trim($("#ClientID").val()),
+        "EntityState": $.trim($("#EntityState").val()),
+        "MarketResearchResults": {
+            "InterviewKeyFinding": $.trim($("#InterviewKeyFinding").val()), "InterviewKeyFindingConfident": $.trim($("#InterviewKeyFindingConfident").val()),
+            "ObservationKeyFinding": $.trim($("#ObservationKeyFinding").val()), "ObservationKeyFindingConfident": $.trim($("#ObservationKeyFindingConfident").val()),
+            "SurveyKeyFinding": $.trim($("#SurveyKeyFinding").val()), "SurveyKeyFindingConfident": $.trim($("#SurveyKeyFindingConfident").val()),
+            "OnlineResearchKeyFinding": $.trim($("#OnlineResearchKeyFinding").val()), "OnlineResearchKeyFindingConfident": $.trim($("#OnlineResearchKeyFindingConfident").val())
+
+        }
+    };
+
+    var option = {
+        action: "AddKeyfinding",
+        controller: "MarketResearch",
+        dataType: "json",
+        data: JSON.stringify(Model)
+    };
+    $.fn.ajaxCall(option).done(function (response) {
+        PATCH = false;
+        if (response.ResponseType === "Ok") {
+            if (actionType != "PATCH")
+                setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/KeyFinding"); }, 1000);
+            else {
+
+                $("#KeyFindingID").val(response.KeyFindingID);
+                $("#EntityState").val(response.EntityState);
+            }
+        }
+        else
+            $.fn.successMsg(response);
+    });
+
+   
+}

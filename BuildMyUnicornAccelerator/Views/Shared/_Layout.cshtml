@@ -22,6 +22,8 @@
     <link href="~/dist/css/pages/form-icheck.css" rel="stylesheet">
     <link href="~/assets/node_modules/switchery/dist/switchery.min.css" rel="stylesheet" />
     <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="~/dist/css/pages/chat-app-page.css" rel="stylesheet" />
+    <link href="~/dist/css/pages/detail-chat.css" rel="stylesheet" />
     @RenderSection("PageStyle", required: false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,6 +32,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
+
         ul.parsley-errors-list {
             list-style: none;
             padding: 0px;
@@ -39,9 +42,12 @@
             color: #e46a76 !important;
             text-align: left !important;
         }
- 
+
         body.skin-default span.dark-text {
             color: #333;
+        }
+        .display-none {
+            display: none !important;
         }
     </style>
 
@@ -109,7 +115,27 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
-
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark jsNotification display-none" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ti-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end mailbox animated bounceInDown jsNotificationlist" data-bs-popper="none" style="left: -400%;">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    <li class="jsUnreadChatContainer">
+                                        @{
+                                            Html.RenderAction("GetUnReadChat", "Chat");
+                                        }
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center link" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="nav-item dropdown mega-dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -143,6 +169,7 @@
                 <!-- User Profile-->
                 <div class="user-profile">
                     <div class="user-pro-body">
+                        <input type="hidden" class="jsStartupAcceleratorID" value="@ViewBag.Accelerator.StartupAcceleratorID" />
                         <div><img src="@ConfigurationManager.AppSettings["AcceleratorBaseUrl"]/Content/Images/@(ViewBag.Accelerator.ImageID == null ? "profile-dummy.png" :  ViewBag.Client.ImageID)" alt="user-img" class="img-circle"></div>
                         <h6 class="text-center">@(ViewBag.Accelerator.CompanyName)</h6>
                         <div class="dropdown">
@@ -163,6 +190,7 @@
                     <ul id="sidebarnav">
                         <li id="Dashboardnav"> <a class="waves-effect waves-dark" href="~/Dashboard" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Dashboard</span></a></li>
 
+                        <li id="Chatnave"> <a class="waves-effect waves-dark" href="~/Chat" aria-expanded="false"><i class="far fa-comment"></i><span class="hide-menu">Chat</span></a></li>
 
 
                     </ul>
@@ -232,6 +260,7 @@
         <!-- ============================================================== -->
     </div>
     @Html.Partial("~/Views/Dialog/_ChangePassword.cshtml")
+    @Html.Partial("~/Views/Dialog/_ChatDialog.cshtml")
 
     <!-- ============================================================== -->
     <!-- End Wrapper -->
@@ -239,7 +268,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="~/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/assets/node_modules/popper/popper.min.js"></script>
     <script src="~/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -264,11 +293,24 @@
     <script src="~/dist/js/custom.js"></script>
 
 
+
     <script src="~/assets/node_modules/jquery-confirm/jquery-confirm.js"></script>
     <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
     <script src="~/assets/node_modules/parsely/parsley.js"></script>
     <script src="~/assets/node_modules/switchery/dist/switchery.min.js"></script>
+    <script src="~/Scripts/shared.js"></script>
+    <script src="/Scripts/jquery.signalR-2.4.3.js"></script>
+    @*<script src="https://platform.buildmyunicorn.com/signalr/hubs"></script>*@
+    <script src="http://localhost:50342/signalr/hubs"></script>
+    <script src="~/dist/js/pages/chat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.1/moment.min.js"></script>
 
+    <script>
+        var IschatPage = false;
+    </script>
+
+
+   
     <script>
         (function ($) {
             var wa_time_out, wa_time_in; $(document).ready(function () {
@@ -308,10 +350,10 @@
                 success: function (data) {
                     console.log(data);  //Keyword, Category, Definition
                     $(".HelpKeywordContainer").empty();
-                    $(".HelpKeywordContainer").html("<h5><b>"+data.length+" Result(s) of "+Keyword+" found</b></h5>");
+                    $(".HelpKeywordContainer").html("<h5><b>" + data.length + " Result(s) of " + Keyword + " found</b></h5>");
                     if (data.length > 0) {
                         $.each(data, function (key, value) {
-                            var Definition = ' <div class="wa__popup_content_item"> <a class="wa__stt wa__stt_online" href="void:javascript(0)"> <div class="wa__popup_avatar"> <div class="wa__cs_img_wrap" style="background: url(https://w-a.live/app/pic/m_1-4a59e954d80f071ff6f558a0eb71b2e0.jpg) center center no-repeat; background-size: cover;"></div> </div> <div class="wa__popup_txt"> <div class="wa__member_duty"> <p style="margin-bottom:6px"> Keyword: <b style="color:#000">'+ value.Keyword +' </b> &nbsp;&nbsp;&nbsp; Category: <b style="color:#000">'+ value.Category +' </b> </p>' + value.Definition + ' </div> <div class="wa__member_status"> <font color="green"></font> </div> </div> </a> </div>';
+                            var Definition = ' <div class="wa__popup_content_item"> <a class="wa__stt wa__stt_online" href="void:javascript(0)"> <div class="wa__popup_avatar"> <div class="wa__cs_img_wrap" style="background: url(https://w-a.live/app/pic/m_1-4a59e954d80f071ff6f558a0eb71b2e0.jpg) center center no-repeat; background-size: cover;"></div> </div> <div class="wa__popup_txt"> <div class="wa__member_duty"> <p style="margin-bottom:6px"> Keyword: <b style="color:#000">' + value.Keyword + ' </b> &nbsp;&nbsp;&nbsp; Category: <b style="color:#000">' + value.Category + ' </b> </p>' + value.Definition + ' </div> <div class="wa__member_status"> <font color="green"></font> </div> </div> </a> </div>';
                             $(".HelpKeywordContainer").append(Definition);
                         });
                     }
@@ -324,7 +366,7 @@
                 }
             });
 
-         });
+        });
 
         $(".jsSendMessage").click(function () {
             $(".jsSendMessageContainer").addClass("hide");
@@ -363,72 +405,72 @@
     </script>
 
     <script>
-       $(document).ready(function () {
-    if (localStorage.getItem("AcceThemeMode") === null) localStorage.setItem('AcceThemeMode', 'darkMode');
-    changeTheme(localStorage.getItem('AcceThemeMode'));
+        $(document).ready(function () {
+            if (localStorage.getItem("AcceThemeMode") === null) localStorage.setItem('AcceThemeMode', 'darkMode');
+            changeTheme(localStorage.getItem('AcceThemeMode'));
 
-    var changeCheckbox = document.querySelector('.jsThemeswitch');
+            var changeCheckbox = document.querySelector('.jsThemeswitch');
 
-    changeCheckbox.onchange = function () {
+            changeCheckbox.onchange = function () {
 
-        if (changeCheckbox.checked === false)
-            changeTheme('darkMode');
-            else
-            changeTheme('lightMode');
-       };
+                if (changeCheckbox.checked === false)
+                    changeTheme('darkMode');
+                else
+                    changeTheme('lightMode');
+            };
 
         });
     </script>
     <script>
         var switchery = new Switchery($('.jsThemeswitch')[0],
-    {
-        color: '#64bd63',
-        secondaryColor: '#dfdfdf',
-        jackColor: '#fff',
-        jackSecondaryColor: '#64bd63'
+            {
+                color: '#64bd63',
+                secondaryColor: '#dfdfdf',
+                jackColor: '#fff',
+                jackSecondaryColor: '#64bd63'
 
-    });
-
-
-function changeTheme(target) {
-    var element = $('#jsThemeswitch');
-    $("#jsThemeLink").remove();
-    var cssLink = document.createElement('link');
-    cssLink.rel = 'stylesheet';
-    cssLink.id = "jsThemeLink";
-    cssLink.type = 'text/css';
-
-    var isIEBrowser = navigator.userAgent.indexOf("MSIE") > -1 || navigator.userAgent.indexOf("rv:") > -1;
-    switch (target) {
-        case "darkMode":
-
-            cssLink.href = GetBaseURL() + 'dist/theme-mode/style-dark.min.css';
-            $("body").removeClass("skin-default").addClass("skin-default-dark");
-            localStorage.setItem('AcceThemeMode', 'darkMode');
-            setSwitchery(switchery, false);
-           break;
-
-        case "lightMode":
-
-            cssLink.href = GetBaseURL() + 'dist/theme-mode/style-light.min.css';
-            $("body").removeClass("skin-default-dark").addClass("skin-default");
-            localStorage.setItem('AcceThemeMode', 'lightMode');
-
-            setSwitchery(switchery, true);
-            break;
+            });
 
 
-        default:
-    }
-    $("head").append(cssLink);
-}
+        function changeTheme(target) {
+            var element = $('#jsThemeswitch');
+            $("#jsThemeLink").remove();
+            var cssLink = document.createElement('link');
+            cssLink.rel = 'stylesheet';
+            cssLink.id = "jsThemeLink";
+            cssLink.type = 'text/css';
 
-function setSwitchery(switchElement, checkedBool) {
-    if ((checkedBool && !switchElement.isChecked()) || (!checkedBool && switchElement.isChecked())) {
-        switchElement.setPosition(true);
-        switchElement.handleOnchange(true);
-    }
-}
+            var isIEBrowser = navigator.userAgent.indexOf("MSIE") > -1 || navigator.userAgent.indexOf("rv:") > -1;
+            switch (target) {
+                case "darkMode":
+
+                    cssLink.href = GetBaseURL() + 'dist/theme-mode/style-dark.min.css';
+                    $("body").removeClass("skin-default").addClass("skin-default-dark");
+                    localStorage.setItem('AcceThemeMode', 'darkMode');
+                    setSwitchery(switchery, false);
+                    break;
+
+                case "lightMode":
+
+                    cssLink.href = GetBaseURL() + 'dist/theme-mode/style-light.min.css';
+                    $("body").removeClass("skin-default-dark").addClass("skin-default");
+                    localStorage.setItem('AcceThemeMode', 'lightMode');
+
+                    setSwitchery(switchery, true);
+                    break;
+
+
+                default:
+            }
+            $("head").append(cssLink);
+        }
+
+        function setSwitchery(switchElement, checkedBool) {
+            if ((checkedBool && !switchElement.isChecked()) || (!checkedBool && switchElement.isChecked())) {
+                switchElement.setPosition(true);
+                switchElement.handleOnchange(true);
+            }
+        }
 
 
     </script>
@@ -436,38 +478,39 @@ function setSwitchery(switchElement, checkedBool) {
         $('#frmPasswordChange').parsley();
 
 
-$("#frmPasswordChange").submit(function (event) {
-    event.preventDefault();
-    $.ajax({
-        url: GetBaseURL() + "Login/ChangePassword",
-        method: "POST",
-        data: $('#frmPasswordChange').serialize(),
-        success: function (response) {
+        $("#frmPasswordChange").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: GetBaseURL() + "Login/ChangePassword",
+                method: "POST",
+                data: $('#frmPasswordChange').serialize(),
+                success: function (response) {
 
-            if (response === "OK") {
-               swal("Success!", "Password changed succesfully", "success");
-                $("#frmPasswordChange")[0].reset();
-                $("#changePasswordModal").modal('hide');
-            }
-            else {
-                swal("error!",response, "error");
-            }
+                    if (response === "OK") {
+                        swal("Success!", "Password changed succesfully", "success");
+                        $("#frmPasswordChange")[0].reset();
+                        $("#changePasswordModal").modal('hide');
+                    }
+                    else {
+                        swal("error!", response, "error");
+                    }
 
 
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            $(".erorLabel").removeClass("invisible");
-            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
-        }
-    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $(".erorLabel").removeClass("invisible");
+                    $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+                }
+            });
 
-});
+        });
 
     </script>
 
+
     @RenderSection("PageScript", required: false)
-
-
+    <script src="~/Scripts/mychat.js"></script>
+   
 </body>
 
 </html>

@@ -17,6 +17,10 @@ namespace Business_Model.Model
         public EntityState EntityState { get; set; }
         public MemberType MemberType { get; set; }
         public string StartupName { get; set; }
+
+        public string StartupLogo { get; set; }
+        public string StartupAddress { get; set; }
+        public string Domain { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -30,9 +34,13 @@ namespace Business_Model.Model
         public int CountryID { get; set; }
         public bool IsProfileUpdated { get; set; }
         public bool IsCountryGrant { get; set; }
+
+        public bool RememberMe { get; set; }
         public Guid ConfirmationID { get; set; }
         public Guid AffiliateLinkID { get; set; }
         public DateTime LastLoginDateTime { get; set; }
+
+        public bool IsPasswordChanged { get; set; }
     }
     public class ClientTeam : Client
     {

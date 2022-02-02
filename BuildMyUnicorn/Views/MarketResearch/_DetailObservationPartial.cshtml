@@ -7,6 +7,9 @@
     decimal _ProgressObservationUnit = 25.00m;
 }
 
+
+<input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.MarketResearch)" />
+<input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.MarketResearch_Observation)" />
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
@@ -136,6 +139,11 @@
                         </a>
                     }
                 }
+
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
                 <a href="#22" class="list-group-item">
                     Observation
 
@@ -175,7 +183,7 @@
 
             </div>
         </div>
-        
+
     </div>
 
 </div>

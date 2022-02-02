@@ -341,6 +341,8 @@ namespace BuildMyUnicorn.Controllers
                                      .ToDictionary(p => p.Name, p => p.Description);
             ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.Selling, (int)ModuleSection.Selling_Pricing);
+
         }
 
         public void GetCustomerDataDependency()
@@ -359,6 +361,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.AgeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Age);
             ViewBag.IncomeList = new Master().GetOptionMasterList((int)OptionType.BuyerPersona_Income);
             ViewBag.GenderList = new Master().GetOptionMasterList((int)OptionType.Gender);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.Selling, (int)ModuleSection.Selling_Customers);
+
         }
 
 

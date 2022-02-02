@@ -3,11 +3,12 @@
 @model Business_Model.Model.Investor
 @{
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
-    decimal _ProgressFriendsFamily = 0.0m; decimal _ProgressAngelInvestor = 0.0m; decimal _ProgressVC= 0.0m;
+    decimal _ProgressFriendsFamily = 0.0m; decimal _ProgressAngelInvestor = 0.0m; decimal _ProgressVC = 0.0m;
     decimal _ProgressFriendsFamilyUnit = 9.09m; decimal _ProgressAngelInvestorUnit = 3.33m; decimal _ProgressVCUnit = 4.00m;
-   
-}
 
+}
+<input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.Finance)" />
+<input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.Finance_FindingInvestors)" />
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
@@ -713,64 +714,70 @@
 
                             }
                         </div>
-                        </section>
-                    </form>
-                </div>
+                    </section>
+                </form>
             </div>
         </div>
-
-        <div class="col-lg-3 col-xlg-2 col-md-4">
-            <!--<ol class="breadcrumb">
-                <li class="breadcrumb-item"><span class="round" title="Total Questions">65</span></li>
-                <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">@Model.Answered </span></li>
-                <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(65 - Model.Answered)</span></li>
-            </ol>-->
-            <div class="stickyside">
-                <div class="list-group" id="top-menu">
-                    @if (ViewBag.RateInfo != null)
-                    {
-                        if (ViewBag.RateInfo.Rating != 0.0m)
-                        {
-                            <a href="#1" class="list-group-item" style="text-align:center">
-                                <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
-                            </a>
-                        }
-                        if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
-                        {
-                            <a href="#1" class="list-group-item">
-                                <span class="badge badge-info badge-info">NOTE</span> <br />
-                                @ViewBag.RateInfo.Note
-                            </a>
-                        }
-                    }
-                    <a href="#22" class="list-group-item">
-                        FriendsFamily
-
-                        <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressFriendsFamily))% <i class="fa fa-level-up text-success"></i></div>
-                        <div class="progress" style="height:auto">
-                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressFriendsFamily))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressFriendsFamily))% Complete</span></div>
-                        </div>
-                    </a>
-                    <a href="#1" class="list-group-item">
-                        Angel Investor
-                        <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressAngelInvestor))% <i class="fa fa-level-up text-success"></i></div>
-                        <div class="progress" style="height:auto">
-                            <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressAngelInvestor))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressAngelInvestor))% Complete</span></div>
-                        </div>
-                    </a>
-
-                    <a href="#22" class="list-group-item">
-                        VC
-
-                        <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressVC))% <i class="fa fa-level-up text-success"></i></div>
-                        <div class="progress" style="height:auto">
-                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressVC))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressVC))% Complete</span></div>
-                        </div>
-                    </a>
-
-
-                </div>
-            </div>
-        </div>
-
     </div>
+
+    <div class="col-lg-3 col-xlg-2 col-md-4">
+        <!--<ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="round" title="Total Questions">65</span></li>
+            <li class="breadcrumb-item active"><span class="round bg-success" title="Answered">@Model.Answered </span></li>
+            <li class="breadcrumb-item active"><span class="round bg-danger" title="Un-answered">@(65 - Model.Answered)</span></li>
+        </ol>-->
+        <div class="stickyside">
+            <div class="list-group" id="top-menu">
+                @if (ViewBag.RateInfo != null)
+                {
+                    if (ViewBag.RateInfo.Rating != 0.0m)
+                    {
+                        <a href="#1" class="list-group-item" style="text-align:center">
+                            <div data-label="@(Math.Round(ViewBag.RateInfo.Rating))%" class="css-bar css-bar-@(Math.Round(ViewBag.RateInfo.Rating)) css-bar-lg css-bar-success" style="cursor:pointer"></div>
+                        </a>
+                    }
+                    if (!string.IsNullOrEmpty(ViewBag.RateInfo.Note))
+                    {
+                        <a href="#1" class="list-group-item">
+                            <span class="badge badge-info badge-info">NOTE</span> <br />
+                            @ViewBag.RateInfo.Note
+                        </a>
+                    }
+                }
+
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
+
+                <a href="#22" class="list-group-item">
+                    FriendsFamily
+
+                    <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressFriendsFamily))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressFriendsFamily))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressFriendsFamily))% Complete</span></div>
+                    </div>
+                </a>
+                <a href="#1" class="list-group-item">
+                    Angel Investor
+                    <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressAngelInvestor))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-primary" id="IdeaProgress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressAngelInvestor))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressAngelInvestor))% Complete</span></div>
+                    </div>
+                </a>
+
+                <a href="#22" class="list-group-item">
+                    VC
+
+                    <div class="pull-left" style="text-align:right">@(Math.Round(_ProgressVC))% <i class="fa fa-level-up text-success"></i></div>
+                    <div class="progress" style="height:auto">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@(Math.Round(_ProgressVC))%; height: 6px;"> <span class="sr-only">@(Math.Round(_ProgressVC))% Complete</span></div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

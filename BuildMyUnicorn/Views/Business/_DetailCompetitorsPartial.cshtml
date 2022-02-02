@@ -8,6 +8,8 @@
 }
 
 
+<input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.TheBusiness)" />
+<input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.TheBusiness_Competitors)" />
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
@@ -223,6 +225,12 @@
                         </a>
                     }
                 }
+
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
+
                 <a href="#1" class="list-group-item">
                     Competitor analysis
                     <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressCompetitiorAnalysis))% <i class="fa fa-level-up text-success"></i></div>

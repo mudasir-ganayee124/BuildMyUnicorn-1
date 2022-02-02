@@ -37,14 +37,14 @@ $("#frmRegister").submit(function (e) {
         success: function (response)
         {     
             if (response.status === "SUCCESS") {
-                console.log(response.data);
-                $("#frmRegister").slideUp();
-                $("#frmPayment").fadeIn();
-                $("#PublicID").val(response.data.OrderPublicID);
-                $("#ClientID").val(response.data.ClientID);
-                $("#OrderID").val(response.data.OrderID);
-                RevolutCheckoutPayment(response.data.OrderPublicID);
-               // $('<form action="Register/SignupSuccess/" method="post"><input type="text"  name="email" value="' + $("#Email").val() +'"/></form>').appendTo('body').submit().remove();
+                //console.log(response.data);
+                //$("#frmRegister").slideUp();
+                //$("#frmPayment").fadeIn();
+                //$("#PublicID").val(response.data.OrderPublicID);
+                //$("#ClientID").val(response.data.ClientID);
+                //$("#OrderID").val(response.data.OrderID);
+                //RevolutCheckoutPayment(response.data.OrderPublicID);
+                $('<form action="Register/SignupSuccess/" method="post"><input type="text"  name="email" value="' + $("#Email").val() +'"/></form>').appendTo('body').submit().remove();
                
          
             }

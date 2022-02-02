@@ -1,0 +1,418 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <title>Build My Unicorn - Register</title>
+
+    <!-- page css -->
+    <link href="~/dist/css/pages/login-register-lock.css" rel="stylesheet">
+    <script src="https://merchant.revolut.com/embed.js"></script>
+    <!-- Custom CSS -->
+    <link href="~/dist/css/style.min.css" rel="stylesheet">
+    <link href="https://parsleyjs.org/src/parsley.css" />
+    <link href="~/assets/node_modules/waitMe/waitMe.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZE6PHRSF0V"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZE6PHRSF0V');</script>
+    <style>
+        input.parsley-success,
+        select.parsley-success,
+        textarea.parsley-success {
+            color: #468847;
+            background-color: #DFF0D8;
+            border: 1px solid #D6E9C6;
+        }
+
+        input.parsley-error,
+        select.parsley-error,
+        textarea.parsley-error {
+            color: #B94A48;
+            background-color: #F2DEDE;
+            border: 1px solid #EED3D7;
+        }
+
+        .parsley-errors-list {
+            margin: 2px 0 3px;
+            padding: 0;
+            list-style-type: none;
+            font-size: 0.9em;
+            line-height: 0.9em;
+            opacity: 0;
+            color: #B94A48;
+            transition: all .3s ease-in;
+            -o-transition: all .3s ease-in;
+            -moz-transition: all .3s ease-in;
+            -webkit-transition: all .3s ease-in;
+        }
+
+            .parsley-errors-list.filled {
+                opacity: 1;
+            }
+    </style>
+    <style>
+        .login-sidebar .login-box {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    </style>
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 20px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #303641;
+            border-radius: 10px;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #303641;
+            }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <style>
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 6px;
+        }
+    </style>
+    <style>
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            color: #fff;
+            border-color: #8758ff;
+            background: linear-gradient( -120deg, #8758ff 0%, rgb(97,78,249) 100%);
+        }
+        .btn-primary {
+            border-color: #8758ff;
+            background: linear-gradient( -120deg, #8758ff 0%, rgb(97,78,249) 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Build My Unicorn</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+
+
+    <section id="wrapper" class="login-register login-sidebar ajax-wrapper" style="background-image:url(../assets/images/background/login-register.jpg);">
+        <div class="login-box card">
+            <div class="card-body">
+                <input type="hidden" id="ClientID" name="ClientID" value="" />
+                <input type="hidden" id="OrderID" name="OrderID" value="" />
+
+                <form class="form-horizontal form-material" id="frmRegister" method="post">
+                    <input type="hidden" name="AffiliateLinkID" value="@ViewBag.AffiliateLinkID" />
+                    <input type="hidden" name="PlanID" value="@ViewBag.PlanID" />
+
+                    <div class="text-center">
+                        <a class="navbar-brand" href="javascript:void(0)">
+                            <!-- Logo icon --><b>
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <!-- Light Logo icon -->
+                                <img src="https://platform.buildmyunicorn.com/Content/images/logo-lite.png" alt="homepage" class="light-logo">
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text --><span>
+
+                                <!--End Logo icon -->
+                                <!-- Logo text --><span style="font-size: 22px; color:#fff">
+                                    <span>BUILDMY</span><span style="font-weight: 700;">UNICORN</span>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <h3 class="box-title">Register</h3>
+                                <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
+                            </td>
+                            <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; display:none ">STEP 1 OF 2 </span></td>
+                        </tr>
+                    </table>
+
+                    <h6>No risk. Cancel any time.</h6>
+                    <div class="form-group m-t-20">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="text" name="StartupName" placeholder="Startup Name" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter startup name" />
+                        </div>
+                    </div>
+                    <div class="form-group m-t-20">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="text" name="FirstName" placeholder="Your First Name" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter firstname" />
+                            <span id="listFieldError"></span>
+                        </div>
+                    </div>
+                    <div class="form-group m-t-20">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="text" name="LastName" placeholder="Your Last  Name" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter lastname" />
+                            <span id="listFieldError"></span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="text" id="Email" name="Email"  placeholder="Email" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter email" />
+                        </div>
+                    </div>
+                    <div class="form-group m-t-20">
+                        <div class="col-xs-12">
+                            <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Phone" parsley-regexp="^\(?(?:\+?61|0)4\)?(?:[ -]?[0-9]){2}\)?(?:[ -]?[0-9]){5}[0-9]$" data-parsley-required="true" data-parsley-required-message="Please enter phone number">
+                            <span id="listFieldError"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <select class="form-control custom-select" id="CountryID" name="CountryID" data-parsley-required="true" data-parsley-required-message="Please enter country"></select>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Agreement" checked>
+                                <label class="custom-control-label" for="Agreement">
+                                    I Agree to  <a href="javascript:void(0)">Marketing</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger hide alert-rounded">
+                        <span id="responseMessage"></span>
+                        <button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
+
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-xs-12">
+
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Continue  &nbsp;&nbsp; <i class="fa fa-arrow-right pull-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-0">
+                        <div class="col-sm-12 text-center">
+                            <p>Already have an account? <a href="~/Login" class="text-info m-l-5"><b>Sign In</b></a></p>
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-horizontal jsfrmForgotPassword hide" id="frmPayment" method="post">
+                    <div class="text-center">
+                        <a class="navbar-brand" href="javascript:void(0)">
+                            <!-- Logo icon --><b>
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <!-- Light Logo icon -->
+                                <img src="https://platform.buildmyunicorn.com/Content/images/logo-lite.png" alt="homepage" class="light-logo">
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text --><span>
+
+                                <!--End Logo icon -->
+                                <!-- Logo text --><span style="font-size: 22px; color:#fff">
+                                    <span>BUILDMY</span><span style="font-weight: 700;">UNICORN</span>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <br />
+                    <table width="100%">
+                        <tr>
+                            <td><h3 class="box-title">Payment</h3> </td>
+                            <td style="text-align:right"> <span style="font-size:12px; color:#fb9678; "> </span></td>
+                        </tr>
+                    </table>
+                    <h5 class="box-title">  @ViewBag.Plan.Symbol @( Math.Round(ViewBag.Plan.Amount)), @ViewBag.Plan.PlanName</h5>
+                    <h6>No risk. Cancel any time.</h6>
+                    <div class="row">
+
+                        <aside class="col-sm-12">
+
+
+                            <article class="card">
+                                <div class="card-body p-12">
+
+                                    <ul class="nav bg-light nav-pills rounded nav-fill mb-12" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+                                                <i class="fa fa-credit-card"></i> Credit Card
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                                <a class="nav-link" data-toggle="pill" href="nav-tab-paypal">
+                                                    @*<i class="fab fa-paypal"></i>  Paypal*@
+                                                </a>
+                                            </li>
+                                        @*<li class="nav-item">
+                                                <a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
+                                                    <i class="fa fa-university"></i>  Bank Transfer
+                                                </a>
+                                            </li>*@
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <br />
+                                        <div class="tab-pane fade show active" id="nav-tab-card">
+                                            <input type="hidden" id="PublicID" value="" />
+                                            <input class="form-control" type="text" id="CardName" name="CardName" placeholder="Name on Card" autocomplete="off" data-parsley-required="true" data-parsley-required-message="Please enter name on card" />
+                                                
+                                            <div id="card-field" style="height:20px; margin-top:14px"></div> <br />
+                                            <button class="subscribe btn btn-primary btn-block" type="button" id="button-submit"> Confirm  </button>
+                                            <button class="subscribe btn btn-primary btn-block hide" type="button" id="button-wait"> Please wait  </button>
+                                            <div class="alert alert-danger hide alert-rounded">
+                                                <span id="responsePaymentMessage"></span>
+                                                <button type="button" class="close" onclick="$('.alert').hide()"> <span aria-hidden="true">&times;</span> </button>
+                                            </div>
+
+                                            @*<button id="pay-button">Pay</button>*@
+
+
+                                            @*<form role="form">
+                                                    <div class="form-group">
+                                                        <label for="username">Full name (on the card)</label>
+                                                        <input type="text" class="form-control" name="username" placeholder="" required="">
+                                                    </div> <!-- form-group.// -->
+
+                                                    <div class="form-group">
+                                                        <label for="cardNumber">Card number</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text text-muted">
+                                                                    <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>
+                                                                    <i class="fab fa-cc-mastercard"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group">
+                                                                <label><span class="hidden-xs">Expiration</span> </label>
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" placeholder="MM" name="">
+                                                                    <input type="number" class="form-control" placeholder="YY" name="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                                                <input type="number" class="form-control" required="">
+                                                            </div> <!-- form-group.// -->
+                                                        </div>
+                                                    </div>
+                                                    <button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+                                                </form>*@
+                                        </div> <!-- tab-pane.// -->
+                                        <div class="tab-pane fade" id="nav-tab-paypal">
+                                            <p>Paypal is easiest way to pay online</p>
+                                            <p>
+                                                <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal </button>
+                                            </p>
+                                            <p>
+                                                <strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-tab-bank">
+                                            <p>Bank accaunt details</p>
+                                            <dl class="param">
+                                                <dt>BANK: </dt>
+                                                <dd> THE WORLD BANK</dd>
+                                            </dl>
+                                            <dl class="param">
+                                                <dt>Accaunt number: </dt>
+                                                <dd> 12345678912345</dd>
+                                            </dl>
+                                            <dl class="param">
+                                                <dt>IBAN: </dt>
+                                                <dd> 123456789</dd>
+                                            </dl>
+                                            <p>
+                                                <strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua.
+                                            </p>
+                                        </div> <!-- tab-pane.// -->
+                                    </div> <!-- tab-content .// -->
+
+                                </div> <!-- card-body.// -->
+                            </article> <!-- card.// -->
+
+
+                        </aside>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="~/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/assets/node_modules/popper/popper.min.js"></script>
+    <script src="~/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/assets/node_modules/waitMe/waitMe.js"></script>
+    <script src="~/Content/app_script/parsley.js"></script>
+    <script src="~/page_script/global.js"></script>
+    <script src="~/assets/node_modules/jquery.AreYouSure-master/jquery.are-you-sure.js"></script>
+    <script src="~/assets/node_modules/jquery.AreYouSure-master/ays-beforeunload-shim.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/register.js")"></script>
+    <script src="~/dist/js/pages/validation.js"></script>
+</body>
+
+</html>

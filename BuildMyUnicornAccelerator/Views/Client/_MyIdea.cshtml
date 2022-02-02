@@ -87,9 +87,9 @@
             <div class="card">
                 <div class="card-body">
                     <form id="frmRateInfo" class="form-horizontal form-material" method="post">
-                        <input type="hidden" name="ModuleID" value="1" />
-                        <input type="hidden" name="SectionID" value="1" />
-                        <input type="hidden" name="ClientID" value="@ViewBag.ClientID" />
+                        <input type="hidden" id="JsModuleID" name="ModuleID" value="1" />
+                        <input type="hidden" id="JsModuleSectionID" name="SectionID" value="1" />
+                        <input type="hidden" id="JsClientID" name="ClientID" value="@ViewBag.ClientID" />
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Rate</label>
@@ -118,6 +118,12 @@
 
             </div>
         </div>
+        <input type="hidden" id="ChatReceiverID" value="@ViewBag.Client.ClientID" />
+        <input type="hidden" id="ReceiverName" value="@ViewBag.Client.StartupName" />
+        @{
+            Html.RenderAction("Chat", "Chat");
+        }
+        <br />
     </div>
 </div>
 @section PageScript

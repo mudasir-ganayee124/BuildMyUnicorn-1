@@ -841,6 +841,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.ModuleVideo = new Master().GetSingleModuleVideo((int)ModuleName.BusinessOverview);
             ViewBag.CompanyLegalStructure = new Master().GetOptionMasterList((int)OptionType.CompanyLegalStructure);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Businessoverview);
+
         }
 
         public void GetProductServiceDataDependency()
@@ -860,6 +862,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.ProductServiceProduce = new Master().GetOptionMasterList((int)OptionType.ProductServiceProduce);
             ViewBag.MVPReason = new Master().GetOptionMasterList((int)OptionType.MVPReason);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_ProductorService);
+
         }
         public void GetBusinessCompetitorsDataDependency()
         {
@@ -872,6 +876,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Competitors);
             ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Competitors);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Competitors);
+
         }
 
         public void GetBusinessOperationDataDependency()
@@ -889,9 +895,11 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.PaymentMethod = new Master().GetOptionMasterList((int)OptionType.Operation_PaymentMethod);
             ViewBag.StaffWork = new Master().GetOptionMasterList((int)OptionType.Operation_StaffWork);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_BusinessOperation);
+
         }
 
- 
+
 
 
     }

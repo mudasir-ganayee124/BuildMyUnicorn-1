@@ -1,0 +1,8 @@
+body{ font-family:'Times New Roman'; font-size:1em; }
+ul, ol{ margin-top: 0; margin-bottom: 0; }
+.Default_Paragraph_Font{font-family:Times New Roman;font-size:10pt;text-transform:none;font-weight:normal;font-style:normal;font-variant:normal;text-decoration: none;}
+.Normal{text-align:left;page-break-inside:auto;page-break-after:auto;page-break-before:avoid;line-height:115%;margin-top:0pt;margin-bottom:8pt;font-family:Calibri;font-size:11pt;text-transform:none;font-weight:normal;font-style:normal;font-variant:normal;text-decoration: none;}
+h1{text-align:left;page-break-inside:avoid;page-break-after:avoid;page-break-before:avoid;line-height:115%;margin-top:0pt;margin-bottom:0pt;color:#2E74B5;font-family:Calibri Light;font-size:16pt;text-transform:none;font-weight:normal;font-style:normal;font-variant:normal;text-decoration: none;}
+.Heading_1{text-align:left;page-break-inside:avoid;page-break-after:avoid;page-break-before:avoid;line-height:115%;margin-top:0pt;margin-bottom:0pt;color:#2E74B5;font-family:Calibri Light;font-size:16pt;text-transform:none;font-weight:normal;font-style:normal;font-variant:normal;text-decoration: none;}
+.Normal_Table{}
+.Table_Grid{}

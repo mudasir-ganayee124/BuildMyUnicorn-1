@@ -55,7 +55,8 @@ $(document).ready(() => {
        
        columns: [{
            template: '<button class="btn btn-info" title="Edit Plan" onclick=Edit("#: PlanID #")><i class="icon-pencil"></i></button>\
-                    <button class= "btn btn-success" title="Recurring" onclick=PlanRecurring("#: PlanRecurringID #") > <i class="icon-lock"></i></button>',
+                    <button class= "btn btn-success" title="Recurring" onclick=PlanRecurring("#: PlanRecurringID #") > <i class="icon-lock"></i></button>\
+                    <button class= "btn btn-danger" title="Delete Plan" onclick=Delete("#: PlanID #") > <i class="fa fa-trash"></i></button>',
                       
             width: 50
         },
@@ -119,6 +120,7 @@ $("#NewForm").submit(function (e) {
         "Amount": $.trim($(this).find('input[name="Amount"]').val()),
         "Duration": $.trim($(this).find('select[name="Duration"]').val()),
         "PlanHeading": $.trim($(this).find('input[name="PlanHeading"]').val()),
+        "Method": $.trim($(this).find('select[name="Method"]').val()),
         "PlanSubHeading": $.trim($(this).find('input[name="PlanSubHeading"]').val()),
         "Url": $.trim($(this).find('input[name="Url"]').val()),
         "DisplayOrder": $.trim($(this).find('input[name="DisplayOrder"]').val()),
@@ -168,6 +170,7 @@ $("#UpdateForm").submit(function (e) {
         "PlanName": $.trim($(this).find('input[name="PlanName"]').val()),
         "CurrencyID": $.trim($(this).find('select[name="CurrencyID"]').val()),
         "Duration": $.trim($(this).find('select[name="Duration"]').val()),
+        "Method": $.trim($(this).find('select[name="Method"]').val()),
         "Amount": $.trim($(this).find('input[name="Amount"]').val()),
         "PlanHeading": $.trim($(this).find('input[name="PlanHeading"]').val()),
         "PlanSubHeading": $.trim($(this).find('input[name="PlanSubHeading"]').val()),
@@ -246,6 +249,7 @@ function Edit(Value) {
                 form.find('input[name="PlanName"]').val(obj.PlanName),
                 form.find('input[name="Amount"]').val(obj.Amount),
                 form.find('select[name="CurrencyID"]').val(obj.CurrencyID).trigger("change"),
+                    form.find('select[name="Method"]').val(obj.Method).trigger("change"),
                 form.find('select[name="Duration"]').val(obj.Duration).trigger("change"),
                 form.find('input[name="PlanHeading"]').val(obj.PlanHeading),
                 form.find('input[name="PlanSubHeading"]').val(obj.PlanSubHeading),
@@ -294,4 +298,46 @@ function PlanRecurring(Value)
             $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
         }
     });
+}
+
+function Delete(Value) {
+
+    $.confirm({
+        title: 'Confirmation?',
+        content: 'Delete  Request Will Automatically  \'cancel\' in 6 seconds if you don\'t respond.',
+        autoClose: 'cancelAction|8000',
+        escapeKey: true,
+        backgroundDismiss: false,
+        typeAnimated: true,
+        buttons: {
+            deleteUser: {
+                text: 'Delete',
+                btnClass: 'btn-red',
+                action: function () {
+                    var option = {
+                        action: "Delete",
+                        controller: "Plan",
+                        dataType: "text",
+                        data: { ID: Value }
+                    };
+                    $.fn.ajaxCall(option).done(function (response) {
+
+                        if (response === "OK") {
+                            $.fn.successMsg("Plan deleted successfully");
+                            $('#Grid').data('kendoGrid').dataSource.read();
+                        }
+                        else
+                            $.fn.successMsg(response);
+                    });
+                }
+            },
+            cancelAction: function () {
+                $.alert('Delete Request is Canceled');
+            }
+        }
+    });
+
+
+
+
 }

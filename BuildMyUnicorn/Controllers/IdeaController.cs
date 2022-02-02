@@ -247,6 +247,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.MasterCharge = new Master().GetOptionMasterList((int)OptionType.Charge);
             ViewBag.MasterMoneyRasie = new Master().GetOptionMasterList((int)OptionType.MoneyRaise);
             ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.MyIdea, (int)ModuleSection.MyIdea_Ideaoutofhead);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.MyIdea, (int)ModuleSection.MyIdea_Ideaoutofhead);
         }
 
         //public JsonResult DownloadPDF()

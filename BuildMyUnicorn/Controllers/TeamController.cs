@@ -15,7 +15,7 @@ namespace BuildMyUnicorn.Controllers
         // GET: Team
         public ActionResult Index()
         {
-            
+
             IEnumerable<ClientTeam> TeamList = new ClientManager().GetClientTeam();
             int State = TeamList.Count() == 0 ? (int)EntityState.New : (int)EntityState.Old;
             if (State == (int)EntityState.New)
@@ -35,26 +35,30 @@ namespace BuildMyUnicorn.Controllers
                     });
                 }
             }
-             ViewBag.Role = new Master().GetOptionMasterList((int)OptionType.RoleInCompany);
+            ViewBag.Role = new Master().GetOptionMasterList((int)OptionType.RoleInCompany);
             ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.TheBusiness, (int)ModuleSection.TheBusiness_Team);
             return View(TeamList);
         }
 
         public string AddClientTeam(ClientTeam Model)
         {
+            bool EmailSend = false;
             if (Model.EntityState == EntityState.New)
             {
                 Model.ClientID = Guid.NewGuid();
                 Model.TeamClientID = new ClientManager().GetMainClientID(Guid.Parse(User.Identity.Name));
             }
 
-            if (Model.MemberType == MemberType.Contributor && Model.EntityState == EntityState.New)
+            if (Model.MemberType == MemberType.Contributor)
             {
-              
-                Random rnd = new Random();
-                Model.Password = UniqueKey.GetUniqueKey();
+                if (string.IsNullOrEmpty(Model.Password))
+                {
+                    Random rnd = new Random();
+                    Model.Password = UniqueKey.GetUniqueKey();
+                    EmailSend = true;
+                }
             }
-            return new ClientManager().AddTeamMemeber(Model);
+            return new ClientManager().AddTeamMemeber(Model, EmailSend);
         }
 
         public string AddTeamInfo(string TeamInfo)
@@ -80,7 +84,7 @@ namespace BuildMyUnicorn.Controllers
 
         {
             ViewBag.Role = new Master().GetOptionMasterList((int)OptionType.RoleInCompany);
-            ViewBag.CountryList =  new CountryManager().GetCountryList();
+            ViewBag.CountryList = new CountryManager().GetCountryList();
             Client Model = new Client();
             Model.EntityState = EntityState.New;
             return View(Model);
@@ -92,9 +96,13 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.CountryList = new CountryManager().GetCountryList();
             Client Model = new ClientManager().GetClient(Guid.Parse(id));
             Model.EntityState = EntityState.Old;
-            return View("Create",Model);
+            return View("Create", Model);
         }
 
+        public string DeleteTeamMember(Guid ClientID)
+        {
+            return new ClientManager().DeleteTeamMember(ClientID);
+        }
 
         public string FileUpload(HttpPostedFileBase file)
         {
@@ -114,9 +122,9 @@ namespace BuildMyUnicorn.Controllers
             {
                 return "!OK";
             }
-            
+
         }
 
-       
+
     }
 }

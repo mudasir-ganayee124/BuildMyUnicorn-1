@@ -50,7 +50,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Observation);
             return View(State);
 
-          
+
         }
 
         // GET: MarketResearch
@@ -87,7 +87,7 @@ namespace BuildMyUnicorn.Controllers
 
             ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_KeyFindings);
             return View(State);
-           
+
         }
 
         public ActionResult OnlineResearch(string id)
@@ -124,7 +124,7 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.Video = new Master().GetSectionModuleVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_OnlineResearch);
             return View(State);
 
-           
+
         }
 
 
@@ -162,7 +162,7 @@ namespace BuildMyUnicorn.Controllers
 
             if ((int)ModuleSection.MarketResearch_KeyFindings == Type)
             {
-                 KeyFinding obj = new KeyFinding();
+                KeyFinding obj = new KeyFinding();
                 _KeyFinding Model = new MarketResearchManager().GetKeyFinding();
                 var GetModelDependency = Task.Factory.StartNew(() =>
                 {
@@ -211,7 +211,7 @@ namespace BuildMyUnicorn.Controllers
                     GetMarketResearchDataDependency();
 
                 });
-                         
+
                 BigPictureResearch _BigPictureResearch = new BigPictureResearch();
                 FocussedResearch _FocussedResearch = new FocussedResearch();
                 ViewBag.MarketKeyPlayer = new List<MarketKeyPlayer>();
@@ -238,7 +238,7 @@ namespace BuildMyUnicorn.Controllers
                     obj.FocussedResearch = _FocussedResearch;
                     obj.EntityState = EntityState.Old;
                     ViewBag.MarketKeyPlayer = new MarketResearchManager().GetMarketKeyPlayer(Model.OnlineResearchID).ToList();
-                  
+
                 }
                 else
                 {
@@ -247,7 +247,7 @@ namespace BuildMyUnicorn.Controllers
                     obj.FocussedResearch = new FocussedResearch();
                 }
 
-                Task.WaitAll(new Task[] {GetModelDependency });
+                Task.WaitAll(new Task[] { GetModelDependency });
                 return PartialView("_NewOnlineResearchPartial", obj);
             }
             return PartialView("_NewObservationPartial");
@@ -328,7 +328,7 @@ namespace BuildMyUnicorn.Controllers
 
                 return PartialView("_DetailKeyFindingPartial", obj);
             }
-           if ((int)ModuleSection.MarketResearch_OnlineResearch == Type)
+            if ((int)ModuleSection.MarketResearch_OnlineResearch == Type)
             {
                 OnlineResearch obj = new OnlineResearch();
                 _OnlineResearch Model = new MarketResearchManager().GetOnlineResearch();
@@ -377,33 +377,37 @@ namespace BuildMyUnicorn.Controllers
                 Task.WaitAll(new Task[] { GetModelDependency });
                 return PartialView("_DetailOnlineResearchPartial", obj);
             }
-         
+
             return PartialView("_DetailObservationPartial");
 
 
         }
 
-        public string AddObservation(OurObservation Model)
+        public JsonResult AddObservation(OurObservation Model)
         {
 
             if (Model.EntityState == EntityState.New)
-               Model.ObervationID = Guid.NewGuid();
-             return new MarketResearchManager().AddObservation(Model);
+                Model.ObervationID = Guid.NewGuid();
+            return Json(new MarketResearchManager().AddObservation(Model), JsonRequestBehavior.AllowGet);
+
+
         }
 
-        public string AddKeyfinding(KeyFinding Model)
+        public JsonResult AddKeyfinding(KeyFinding Model)
         {
 
             if (Model.EntityState == EntityState.New)
                 Model.KeyFindingID = Guid.NewGuid();
-            return new MarketResearchManager().AddKeyFinding(Model);
+            return Json(new MarketResearchManager().AddKeyFinding(Model), JsonRequestBehavior.AllowGet);
+
         }
 
-        public string AddOnlineResearch(OnlineResearch OnlineResearch, List<MarketKeyPlayer> MarketKeyPlayer)
+        public JsonResult AddOnlineResearch(OnlineResearch OnlineResearch, List<MarketKeyPlayer> MarketKeyPlayer)
         {
             if (OnlineResearch.EntityState == EntityState.New)
                 OnlineResearch.OnlineResearchID = Guid.NewGuid();
-            return new MarketResearchManager().AddOnlineResearch(OnlineResearch, MarketKeyPlayer);
+            return Json(new MarketResearchManager().AddOnlineResearch(OnlineResearch, MarketKeyPlayer), JsonRequestBehavior.AllowGet);
+
         }
 
         public void GetObservationDataDependency()
@@ -415,6 +419,8 @@ namespace BuildMyUnicorn.Controllers
 
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Observation);
             ViewBag.Choice = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_Observation);
+
         }
 
         public void GetKeyfindingDataDependency()
@@ -429,6 +435,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.ObservationKeyFinding = new Master().GetOptionMasterList((int)OptionType.MarketReserach_ObservationKeyFindingConfident);
             ViewBag.OnlineResearchKeyFinding = new Master().GetOptionMasterList((int)OptionType.MarketReserach_OnlineResearchKeyFindingConfident);
             ViewBag.SurveyKeyFinding = new Master().GetOptionMasterList((int)OptionType.MarketReserach_SurveyKeyFindingConfident);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_KeyFindings);
+
         }
 
         public void GetMarketResearchDataDependency()
@@ -440,6 +448,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.CustomerFeedback = new Master().GetOptionMasterList((int)OptionType.GeneralTwoOption);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_OnlineResearch);
             ViewBag.BusinessSupplier = new Master().GetBusinessSupplierList((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_OnlineResearch);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.MarketResearch, (int)ModuleSection.MarketResearch_OnlineResearch);
+
         }
 
 

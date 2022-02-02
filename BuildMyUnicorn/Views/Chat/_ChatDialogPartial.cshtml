@@ -1,0 +1,172 @@
+﻿
+@using System.Configuration;
+@section PageStyle
+{
+    <style>
+        .chat-main-box .chat-right-aside {
+            width: calc(100% - 100px) !important;
+            float: left;
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-0">
+            <!-- .chat-row -->
+            <div class="chat-main-box">
+                <!-- .chat-left-panel -->
+                <div class="chat-left-aside">
+                    <div class="open-panel"><i class="ti-angle-right"></i></div>
+                    <div class="chat-left-inner" style="height: 0px;">
+
+
+                        <div class="form-material">
+                            <input class="form-control p-2" type="text" placeholder="Search" style="height:10px">
+                        </div>
+                        <ul class="chatonline style-none ps ps--theme_default" data-ps-id="1c086c7e-9ca1-2cf1-546b-878f8215f271">
+                            @{ int count = 1;}
+                            @foreach (var item in ViewBag.CustomerTeamList)
+                            {
+                                if (item.ClientID != ViewBag.Client.ClientID)
+                                {
+                                    if (count == 1)
+                                    {
+
+                                        <li title="@item.FirstName @item.LastName">
+                                            <input type="hidden" id="SenderName" value="@ViewBag.Client.FirstName @ViewBag.Client.LastName" />
+                                            <input type="hidden" id="ReceiverName" value="@item.FirstName @item.LastName" />
+                                            <input type="hidden" id="ChatSenderID" value="@ViewBag.Client.ClientID" />
+                                            <input type="hidden" id="ChatReceiverID" value="@item.ClientID" />
+                                            <input type="hidden" id="MessageText" />
+                                            <input type="hidden" id="TopicID" />
+                                            <a href="javascript:void(0)" class="active jsActiveClient @item.ClientID" data-startupname="@item.FirstName @item.LastName" data-clientid="@item.ClientID">
+                                                <img src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(item.ImageID == null ? "profile-dummy.png" : item.ImageID)" alt="user-img" class="img-circle"> @*<span>@item.FirstName @item.LastName <small class="text-warning">Away</small>*@@*</span>*@
+                                            </a>
+
+                                        </li>
+                                        count = count + 1;
+                                    }
+                                    else
+                                    {
+                                        <li title="@item.FirstName @item.LastName">
+
+                                            <a href="javascript:void(0)" class="jsActiveClient @item.ClientID" data-startupname="@item.FirstName @item.LastName" data-clientid="@item.ClientID">
+                                                <img src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(item.ImageID == null ? "profile-dummy.png" : item.ImageID)" alt="user-img" class="img-circle"> @*<span>@item.FirstName @item.LastName <small class="text-warning">Away</small></span>*@
+                                            </a>
+
+                                        </li>
+                                    }
+                                }
+                            }
+                            @if (ViewBag.CustomerAccelerator != null)
+                            {
+                                <li>
+
+                                    <a href="javascript:void(0)" class="jsActiveClient @ViewBag.CustomerAccelerator.StartupAcceleratorID" data-startupname="@ViewBag.CustomerAccelerator.CompanyName" data-clientid="@ViewBag.CustomerAccelerator.StartupAcceleratorID">
+                                        <img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>@ViewBag.CustomerAccelerator.CompanyName <small class="text-warning">Away</small></span>
+                                    </a>
+
+                                </li>
+                            }
+
+                            <li class="p-20">
+                            </li>
+                            <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div>
+                            <div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+                        </ul>
+                    </div>
+                </div>
+                <!-- .chat-left-panel -->
+                <!-- .chat-right-panel -->
+                <div class="chat-right-aside chat-right-aside-mini">
+                    <div class="chat-main-header">
+                        <div class="p-2 b-b">
+                            <h6 class="box-title">Chat Message</h6>
+                        </div>
+                    </div>
+                    <div class="chat-rbox ps ps--theme_default jschatscroll" data-ps-id="14dfe0d7-0a4a-31ef-9ebc-9a18ee08253b">
+                        <ul class="chat-list p-3 jsChatContentContainer" style="height: 0px; ">
+                           
+                        </ul>
+                        <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+                    </div>
+                    <div class="card-body border-top chat-card-body">
+                        <div class="row">
+                            <div class="col-10">
+                                <textarea placeholder="Type your message here" class="form-control border-0 ignore ignorepatch jsChatMessage" rows="3"></textarea>
+                            </div>
+                            <div class="col-2 text-end text-left">
+                                <i class="fas fa-paper-plane jsSendChat"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .chat-right-panel -->
+            </div>
+            <!-- /.chat-row -->
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Right sidebar -->
+<!-- ============================================================== -->
+<!-- .right-sidebar -->
+<div class="right-sidebar ps ps--theme_default" data-ps-id="02256ec1-c334-2824-f52d-bb0b83629b78">
+    <div class="slimscrollright">
+        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+        <div class="r-panel-body">
+            <ul id="themecolors" class="m-t-20">
+                <li><b>With Light sidebar</b></li>
+                <li><a href="javascript:void(0)" data-skin="skin-default" class="default-theme working">1</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-green" class="green-theme">2</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-red" class="red-theme">3</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-blue" class="blue-theme">4</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-purple" class="purple-theme">5</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-megna" class="megna-theme">6</a></li>
+                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                <li><a href="javascript:void(0)" data-skin="skin-default-dark" class="default-dark-theme ">7</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-green-dark" class="green-dark-theme">8</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-red-dark" class="red-dark-theme">9</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-blue-dark" class="blue-dark-theme">10</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-purple-dark" class="purple-dark-theme">11</a></li>
+                <li><a href="javascript:void(0)" data-skin="skin-megna-dark" class="megna-dark-theme ">12</a></li>
+            </ul>
+            <ul class="m-t-20 chatonline">
+                <li><b>Chat option</b></li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+</div>
+<!-- ============================================================== -->
+<!-- End Right sidebar -->
+<!-- ============================================================== -->

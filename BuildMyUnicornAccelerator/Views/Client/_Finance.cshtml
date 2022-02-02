@@ -109,6 +109,12 @@
 
             </div>
         </div>
+        <input type="hidden" id="ChatReceiverID" value="@ViewBag.Client.ClientID" />
+        <input type="hidden" id="ReceiverName" value="@ViewBag.Client.StartupName" />
+        @{
+            Html.RenderAction("Chat", "Chat");
+        }
+        <br />
     </div>
 </div>
 @section PageScript

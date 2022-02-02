@@ -62,5 +62,11 @@ namespace Administration.Controllers
         {
             return new PlanManager().UpdateRecurringPlan(Model);
         }
+
+        public string Delete(Guid ID)
+        {
+
+            return new PlanManager().DeletePlan(ID);
+        }
     }
 }

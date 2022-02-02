@@ -34,6 +34,7 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@FirstName", ParamterValue = Model.FirstName, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@LastName", ParamterValue = Model.LastName, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Email", ParamterValue = Model.Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                //new ParametersCollection { ParamterName = "@AffiliateLinkID", ParamterValue =  Model.AffiliateLinkID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@MemberType", ParamterValue =  MemberType.Contributor, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Password", ParamterValue = Encryption.Encrypt(Keygen.Random()), ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
                 new ParametersCollection { ParamterName = "@Phone", ParamterValue = Model.Phone, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -44,7 +45,7 @@ namespace BuildMyUnicorn.Business_Layer
             if (result > 0)
             {
                 var query = $@"select * from tbl_email_templates where EmailTemplateCode = 'NPC' and IsActive = 1";
-                var Template =  SharedManager.GetSingle<_EmailTemplates>(query);
+                var Template = SharedManager.GetSingle<_EmailTemplates>(query);
                 List<ParametersCollection> Customerparameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@Email", ParamterValue = Model.Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input } };
                 Client Customer = obj.GetSingle<Client>(CommandType.StoredProcedure, "sp_get_client_by_email", Customerparameters);
                 Guid Ref_id = Guid.NewGuid();
@@ -53,14 +54,14 @@ namespace BuildMyUnicorn.Business_Layer
                 string EncryptedID = Encryption.EncryptGuid(Ref_id.ToString());
                 ForgotPasswordURL = ForgotPasswordURL + "/Register/EmailVerification?refid=" + EncryptedID;
                 string NewAccountTemplate = Template.EmailTemplateBody.ToString();
-                NewAccountTemplate = NewAccountTemplate.Replace("@URL", ForgotPasswordURL).Replace("@NAME", Customer.FirstName + " " + Customer.LastName);
+                NewAccountTemplate = NewAccountTemplate.Replace("@URL", ForgotPasswordURL).Replace("@Name", Customer.FirstName + " " + Customer.LastName);
                 string SenderEmail = ConfigurationManager.AppSettings["SmtpServerUsername"];
 
                 //Finally Send Mail and save data Async
                 Thread email_sender_thread = new Thread(delegate ()
                 {
                     EmailSender emailobj = new EmailSender();
-                    emailobj.SendMail(SenderEmail, Model.Email, Template.EmailTemplateSubject.ToString() , NewAccountTemplate);
+                    emailobj.SendMail(SenderEmail, Model.Email, Template.EmailTemplateSubject.ToString(), NewAccountTemplate);
                 });
 
                 Thread SaveRestLink = new Thread(delegate ()
@@ -74,10 +75,10 @@ namespace BuildMyUnicorn.Business_Layer
 
 
                 });
-                int NetworkType = 1;
+                int NetworkType = 1; // Direct
                 if (user_AffiliateLinkID != Guid.Empty)
                 {
-                    NetworkType = 2;
+                    NetworkType = 2;  // Affilate
                 }
                 Thread UpdateNetwork = new Thread(delegate ()
                 {
@@ -106,7 +107,7 @@ namespace BuildMyUnicorn.Business_Layer
             }
         }
 
-        public string AddTeamMemeber(ClientTeam Model)
+        public string AddTeamMemeber(ClientTeam Model, bool EmailSend)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
@@ -127,7 +128,7 @@ namespace BuildMyUnicorn.Business_Layer
 
             };
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_client_team", parameters);
-            if (Model.MemberType == MemberType.Contributor && Model.EntityState == EntityState.New)
+            if (EmailSend /*&& Model.EntityState == EntityState.New*/)
             {
                 string strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, VirtualPathUtility.ToAbsolute("~/"));
                 string ContributorTemplate = EmailTemplates.Templates["CT"];
@@ -186,8 +187,8 @@ namespace BuildMyUnicorn.Business_Layer
             //    new ParametersCollection { ParamterName = "@SurveyForm", ParamterValue = Model.SurveyForm, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
             //    new ParametersCollection { ParamterName = "@CreatedBy", ParamterValue = Convert.ToInt16(HttpContext.Current.User.Identity.Name), ParamterType = DbType.Int32, ParameterDirection = ParameterDirection.Input }
             //};
-           
-       
+
+
             ModelList.ForEach(x => x.SurveyDataID = new Guid());
             ModelList.ForEach(x => x.SurveyID = SurveyID);
             ModelList.ForEach(x => x.JsonData = JsonData);
@@ -208,7 +209,7 @@ namespace BuildMyUnicorn.Business_Layer
 
             };
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_question_data", parameters);
-            
+
         }
 
         public async Task<string> AddCustomerinGateway(Client Model)
@@ -316,6 +317,13 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
+        public string UpdateStartup(Client Model)
+        {
+            var query = $@"UPDATE tbl_client set StartupName =  '{Model.StartupName}', StartupAddress = '{Model.StartupAddress}' , StartupLogo = '{Model.StartupLogo}', Domain = '{Model.Domain}'  Where ClientID = '{Model.ClientID}'";
+            int result = SharedManager.ExecuteScalar<int>(query);
+            return result == 0 ? "OK" : "Failed to update startup";
+        }
+
         public Client GetSingleClient(Guid ClientID)
         {
             var query = $@"SELECT tbl_client.* FROM tbl_client WHERE ClientID = '{ClientID}'";
@@ -347,6 +355,13 @@ namespace BuildMyUnicorn.Business_Layer
             return obj.GetSingle<Client>(CommandType.StoredProcedure, "sp_get_client_by_id", parameters);
         }
 
+        public Client GetMainClientStartup()
+        {
+            var query = $@"SELECT tbl_client.* FROM tbl_client WHERE ClientID = '{new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}'";
+            return SharedManager.GetSingle<Client>(query);
+        }
+
+
         public Guid GetMainClientID(Guid ClientID)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
@@ -364,7 +379,7 @@ namespace BuildMyUnicorn.Business_Layer
         public IEnumerable<ClientTeam> GetClientTeam()
         {
             Guid ClientID = new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name));
-            var query = $@"SELECT dbo.tbl_client.ClientID, dbo.tbl_client.TeamClientID, dbo.tbl_client.FirstName, dbo.tbl_client.LastName, dbo.tbl_client.MemberType, dbo.tbl_client.RoleInCompany, dbo.tbl_client.Email, dbo.tbl_client.LinkedProfile, dbo.tbl_client.ImageID, dbo.tbl_client.ShortBio, dbo.tbl_client.Phone, dbo.tbl_client.CountryID, dbo.tbl_client.CreatedBy, dbo.tbl_client.ModifiedBy, dbo.tbl_client.CreatedDateTime, dbo.tbl_client.ModifiedDateTime, dbo.tbl_client.IsActive, tbl_countries.CountryName, (SELECT TeamInfo FROM tbl_client WHERE ClientID = '{ new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}') AS TeamInfo FROM dbo.tbl_client LEFT JOIN tbl_countries ON tbl_client.CountryID = tbl_countries.CountryID WHERE TeamClientID = '{ClientID}' OR ClientID = '{ClientID}' ";
+            var query = $@"SELECT dbo.tbl_client.ClientID, dbo.tbl_client.TeamClientID, dbo.tbl_client.FirstName, dbo.tbl_client.LastName, dbo.tbl_client.MemberType, dbo.tbl_client.RoleInCompany, dbo.tbl_client.Email, dbo.tbl_client.LinkedProfile, dbo.tbl_client.ImageID, dbo.tbl_client.ShortBio, dbo.tbl_client.Phone, dbo.tbl_client.CountryID, dbo.tbl_client.CreatedBy, dbo.tbl_client.ModifiedBy, dbo.tbl_client.CreatedDateTime, dbo.tbl_client.ModifiedDateTime, dbo.tbl_client.IsActive, tbl_countries.CountryName, (SELECT TeamInfo FROM tbl_client WHERE ClientID = '{ new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}') AS TeamInfo FROM dbo.tbl_client LEFT JOIN tbl_countries ON tbl_client.CountryID = tbl_countries.CountryID WHERE (TeamClientID = '{ClientID}' OR ClientID = '{ClientID}') and tbl_client.IsDeleted = 0";
             return SharedManager.GetList<ClientTeam>(query);
 
         }
@@ -381,6 +396,16 @@ namespace BuildMyUnicorn.Business_Layer
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@SurveyID", ParamterValue = SurveyID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input } };
             return obj.GetSingle<Survey>(CommandType.StoredProcedure, "sp_get_client_survey", parameters);
+        }
+
+        public StartupAccelerator GetCustomerStartupAccelerator()
+        {
+            var query = $@"DECLARE @AffiliateLinkID UNIQUEIDENTIFIER  
+                           DECLARE @StartupAcceleratorID UNIQUEIDENTIFIER
+                           SELECT @AffiliateLinkID = AffiliateLinkID from tbl_account_network where EntityID = '{Guid.Parse(HttpContext.Current.User.Identity.Name)}'
+                           SELECT @StartupAcceleratorID = StartupAcceleratorID From tbl_startup_accelerator where LinkID = @AffiliateLinkID  
+                           SELECT  * from tbl_startup_accelerator WHERE StartupAcceleratorID = @StartupAcceleratorID";
+            return SharedManager.GetSingle<StartupAccelerator>(query);
         }
 
         public IEnumerable<SurveyData> GetSurveyData(Guid SurveyID)
@@ -427,6 +452,13 @@ namespace BuildMyUnicorn.Business_Layer
 
         }
 
+
+        public string DeleteTeamMember(Guid ClientID)
+        {
+            var query  = $@"UPDATE tbl_client SET IsDeleted = 1  Where ClientID = '{ClientID}'";
+            int result = SharedManager.ExecuteScalar<int>(query);
+            return result == 0 ? "OK" : "Team Member Failed to delete ";
+        }
 
         //public string UpdateClientTeam(ClientTeam Model)
         //{
@@ -510,12 +542,16 @@ namespace BuildMyUnicorn.Business_Layer
 
                         if (Encryption.Encrypt(Model.Password) == Customer.Password)
                         {
-
-                            FormsAuthentication.SetAuthCookie(Customer.ClientID.ToString(), true);
-                            //HttpContext.Current.Session["HeartBeat"] = true;
-                            //  HttpContext.Current.Response.SetCookie(new HttpCookie("HeartBeat", "true"));
-
+                            List<ParametersCollection> parameters_update = new List<ParametersCollection>();
+                            parameters_update.Add(new ParametersCollection { ParamterName = "@EntityID", ParamterValue = Customer.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input });
+                            obj.Execute(CommandType.StoredProcedure, "sp_update_last_login", parameters_update);
+                            FormsAuthentication.SetAuthCookie(Customer.ClientID.ToString(), Customer.RememberMe);
+                           // HttpContext.Current.Response.SetCookie(new HttpCookie("HeartBeat", "true"));
+                           // HttpContext.Current.Session["userid"] = Customer.ClientID.ToString();
                             return "OK";
+                          
+                            //HttpContext.Current.Session["HeartBeat"] = true;
+                                           
 
                         }
                         else
@@ -554,7 +590,7 @@ namespace BuildMyUnicorn.Business_Layer
                     List<ParametersCollection> parameterPassword = new List<ParametersCollection>() {
                          new ParametersCollection { ParamterName = "@EntityID", ParamterValue = Model.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
                          new ParametersCollection { ParamterName = "@Password", ParamterValue = Encryption.Encrypt(Model.NewPassword), ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
-                         new ParametersCollection { ParamterName = "@Type", ParamterValue = 1, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+                         new ParametersCollection { ParamterName = "@Type", ParamterValue = 2, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
 
                      };
                     int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_update_password", parameterPassword);
@@ -564,6 +600,32 @@ namespace BuildMyUnicorn.Business_Layer
                 {
                     return "Incorect Current Password";
                 }
+            }
+            else
+            {
+                return "Password update Failed, Please Try again";
+            }
+        }
+
+        public string ChangeContributorPassword(ChangePassword Model)
+        {
+            DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
+            List<ParametersCollection> parameters = new List<ParametersCollection>() { new ParametersCollection { ParamterName = "@Email", ParamterValue = Model.Email, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input } };
+            Client Customer = obj.GetSingle<Client>(CommandType.StoredProcedure, "sp_get_client_by_email", parameters);
+            if (Customer != null && Model.ClientID == Customer.ClientID)
+            {
+               
+
+                    List<ParametersCollection> parameterPassword = new List<ParametersCollection>() {
+                         new ParametersCollection { ParamterName = "@EntityID", ParamterValue = Model.ClientID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
+                         new ParametersCollection { ParamterName = "@Password", ParamterValue = Encryption.Encrypt(Model.NewPassword), ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
+                         new ParametersCollection { ParamterName = "@Type", ParamterValue = 2, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
+
+                     };
+                    int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_update_password", parameterPassword);
+                    if (result > 0) return "OK"; else return "Password update Failed, Please Try again";
+                
+                
             }
             else
             {

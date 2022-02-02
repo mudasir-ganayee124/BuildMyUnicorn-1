@@ -217,14 +217,15 @@
             <div class="card">
                 <div class="card-body">
                     <form id="frmRateInfo" class="form-horizontal form-material" method="post">
-                        <input type="hidden" name="ModuleID" value="3" />
+                        <input type="hidden" id="JsModuleID" name="ModuleID" value="3" />
+
                         @*<input type="hidden" name="SectionID" value="1" />*@
                         <input type="hidden" name="ClientID" value="@ViewBag.ClientID" />
                         <div class="col-md-12">
                             <label>Section</label> <br /><br />
                             <div class="form-group">
 
-                                <select class="custom-select " id="SectionID" name="SectionID">
+                                <select class="custom-select " id="JsModuleSectionID" name="SectionID">
                                     <option value="3">Business Overview</option>
                                     <option value="4">Product Service </option>
                                     <option value="8">Business Operation</option>
@@ -260,6 +261,12 @@
 
             </div>
         </div>
+        <input type="hidden" id="ChatReceiverID" value="@ViewBag.Client.ClientID" />
+        <input type="hidden" id="ReceiverName" value="@ViewBag.Client.StartupName" />
+        @{
+            Html.RenderAction("Chat", "Chat");
+        }
+        <br />
     </div>
 </div>
 @section PageScript
@@ -288,10 +295,11 @@ $("#frmRateInfo").submit(function(e){
 
 
 });
-    $("select#SectionID").change(function() {
+   $("select#JsModuleSectionID").change(function() {
       $("input[name=Rating]").val("");
        $("textarea[name=Note]").val("");
        GetRateInfo();
+       GetModuleSectionChatMessage();
     });
 
         GetRateInfo();

@@ -9,6 +9,61 @@ $(document).ready(function () {
 
 });
 
+
+$(document).on("click", ".jsDeleteTeamMember", function () {
+
+   
+    var element = $(this);
+    var ClientID = $(this).data("clientid");
+    $.confirm({
+        title: 'Confirmation?',
+        content: 'Delete  Request Will Automatically  \'cancel\' in 6 seconds if you don\'t respond.',
+        autoClose: 'cancelAction|8000',
+        escapeKey: true,
+        backgroundDismiss: false,
+        typeAnimated: true,
+        buttons: {
+            deleteUser: {
+                text: 'Delete',
+                btnClass: 'btn-red',
+                action: function () {
+
+                    $.ajax({
+                        url: GetBaseURL() + "Team/DeleteTeamMember",
+                        method: "POST",
+                        data: { ClientID: ClientID },
+                        success: function (response) {
+
+
+                            if (response == "OK") {
+                                $.toast({
+                                    heading: 'Success',
+                                    text: 'Team Member deleted successfully',
+                                    position: 'top-right',
+                                    loaderBg: '#ff6849',
+                                    icon: 'success',
+                                    hideAfter: 3500,
+                                    stack: 6
+                                });
+                                element.closest("div.clientContainer").addClass("hide");
+                             
+
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $(".erorLabel").removeClass("invisible");
+                            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+                        }
+                    });
+                }
+            },
+            cancelAction: function () {
+                $.alert('Delete Request is Canceled');
+            }
+        }
+    });
+});
+
 $("#ImageUpload").on('change', function () {
 
 var form_Data = new FormData();
@@ -65,7 +120,7 @@ if (files.length > 0) {
 
     });
 
-    $("#EditImageUpload").on('change', function () {
+ $("#EditImageUpload").on('change', function () {
 
 
         var form_Data = new FormData();

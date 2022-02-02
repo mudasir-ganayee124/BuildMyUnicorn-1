@@ -8,12 +8,11 @@ using System.Drawing;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using System.Collections;
-
-
+using BuildMyUnicorn.Utils;
 
 namespace BuildMyUnicorn.Controllers
 {
-
+   // [SessionTimeout]
     public class DashboardController : WebController
     {
         //private readonly ToDoTaskManager _todoManager;
@@ -26,7 +25,8 @@ namespace BuildMyUnicorn.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            
+         
+           // ChatHubClient.SendChatMessage(User.Identity.Name.ToString(), null, "welcome", User.Identity.Name.ToString());
             // HttpContext.Current.Session["HeartBeat"] = true;
             GetDashboardWidget();
             //int CountryID = ViewBag.Client.CountryID;

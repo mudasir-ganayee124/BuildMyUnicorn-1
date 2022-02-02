@@ -41,6 +41,13 @@ namespace BuildMyUnicorn.Controllers
         }
 
 
+        public string ChangeContributorPassword(ChangePassword Model)
+        {
+
+            return new ClientManager().ChangeContributorPassword(Model);
+
+        }
+
         public ActionResult Logout()
         {
 

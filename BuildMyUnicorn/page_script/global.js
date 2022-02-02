@@ -1,4 +1,8 @@
 ﻿// *Plugin for Getting List*
+var PATCH = false;
+var IschatPage = false;
+
+
 (function ($) {
 
     $.fn.getList = function () {
@@ -59,9 +63,11 @@ $.fn.extend({
             dataType: settings.dataType,
             data: settings.data,
             success: function (response) {
+          
                 settings.response = response;
             },
             error: function (jqXHR, exception) {
+             
                  var msg = '';
                  if (jqXHR.status === 0) {
                      msg = 'Not Connected, Verify Network/Internet.';
@@ -226,7 +232,8 @@ var CommonFunctions = new function () {
            
 
 $(document).ajaxSend(function (event, jqxhr, settings) {
-    run_ajax_loader();
+    if (PATCH == false)
+        run_ajax_loader();
 
 });
 
@@ -260,6 +267,7 @@ $(document).ajaxStop(function () {
        
        
     });
+
 
 
 function isNullAndUndef(variable) {

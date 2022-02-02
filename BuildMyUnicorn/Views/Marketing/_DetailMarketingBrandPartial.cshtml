@@ -8,7 +8,8 @@
     var arrayBrandTouchPoint = String.IsNullOrEmpty(Model.BrandTouchPoints.BrandTouchPointID) == false ? Model.BrandTouchPoints.BrandTouchPointID.Split(',').ToArray() : new string[0];
 }
 
-
+<input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.Marketing)" />
+<input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.Marketing_Brand)" />
 <div class="row">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card">
@@ -249,6 +250,12 @@
                         </a>
                     }
                 }
+
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
+
                 <a href="#1" class="list-group-item">
                     Branding Strategy
                     <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressBrandStrategy))% <i class="fa fa-level-up text-success"></i></div>

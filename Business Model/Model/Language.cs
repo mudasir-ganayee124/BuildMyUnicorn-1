@@ -34,4 +34,20 @@ namespace Business_Model.Model
 
     }
 
+    public class QuestionVideo : Common
+    {
+        public Guid QuestionVideoID { get; set; }
+        public int ModuleID { get; set; }
+        public int ModuleSectionID { get; set; }
+        public int DisplayOrder { get; set; }
+        public string PropertyName { get; set; }
+        public string TableName { get; set; }
+        public string VideoUrl { get; set; }
+        public string Name { get; set; }
+        public string ModuleName { get; set; }
+        public string SectionName { get; set; }
+
+
+    }
+
 }

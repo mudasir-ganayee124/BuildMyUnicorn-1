@@ -19,6 +19,7 @@ namespace Business_Model.Model
         public Company Company { get; set; }
         public IdeaSelling IdeaSelling { get; set; }
         public Money Money { get; set; }
+        public string ResponseType { get; set; }
 
 
     }

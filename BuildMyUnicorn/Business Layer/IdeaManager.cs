@@ -6,12 +6,13 @@ using System.Web;
 using Business_Model.Model;
 using System.Data;
 using System.Configuration;
+using Business_Model.Helper;
 
 namespace BuildMyUnicorn.Business_Layer
 {
     public class IdeaManager
     {
-        public string AddIdea(Idea Model)
+        public Idea AddIdea(Idea Model)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
             List<ParametersCollection> parameters = new List<ParametersCollection>() {
@@ -60,7 +61,18 @@ namespace BuildMyUnicorn.Business_Layer
                 new ParametersCollection { ParamterName = "@EntityState", ParamterValue = Model.EntityState, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
             };
             int result = obj.ExecuteWithReturnValue(CommandType.StoredProcedure, "sp_add_idea", parameters);
-            if (result > 0) return ResponseType.Ok.ToString() ; else return ResponseType.Exist.ToString();
+            if (result > 0)
+            {
+                Model.ResponseType = ResponseType.Ok.ToString();
+                Model.EntityState = EntityState.Old;
+            }
+            else
+            {
+                Model.ResponseType = ResponseType.Error.ToString();
+
+            }
+            return Model;
+            
         }
 
         public _Idea GetIdea()

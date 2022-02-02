@@ -6,13 +6,14 @@ using ALMS_DAL;
 using Business_Model.Model;
 using System.Linq;
 using Business_Model.Helper;
+using System.Web;
 
 namespace BuildMyUnicornAccelerator.Business_Layer
 {
     public class Master
     {
-    
 
+        
         public IEnumerable<LanguageModule> GetDefaultModuleLanguage(int ModuleID, int SectionID)
         {
             DataLayer obj = new DataLayer(ConfigurationManager.ConnectionStrings["ConnectionBuildMyUnicorn"].ConnectionString, Convert.ToInt32(ConfigurationManager.AppSettings["CommandTimeOut"]));
@@ -52,6 +53,56 @@ namespace BuildMyUnicornAccelerator.Business_Layer
 
         }
 
+        public IEnumerable<ChatMessage> GetChatMessages(Chat Model)
+        {
+            var query = $@"SELECT * from tbl_chat INNER JOIN tbl_chat_message ON tbl_chat.ChatID = tbl_chat_message.ChatID 
+                        WHERE (tbl_chat.ChatSenderID =   '{Model.ChatSenderID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatReceiverID}') OR
+				        (tbl_chat.ChatSenderID =  '{Model.ChatReceiverID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatSenderID}')
+                        order by tbl_chat_message.MessageDateTime ASC";
+            return SharedManager.GetList<ChatMessage>(query);
+        }
+
+        public IEnumerable<ChatMessage> GetUnreadChat(Chat Model)
+        {
+            //var query = $@"SELECT  distinct Module, ModuleSection from tbl_chat INNER JOIN tbl_chat_message ON tbl_chat.ChatID = tbl_chat_message.ChatID 
+            //            WHERE ((tbl_chat.ChatSenderID =   '{Model.ChatSenderID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatReceiverID}') OR
+            //(tbl_chat.ChatSenderID =  '{Model.ChatReceiverID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatSenderID}')) AND ( Module IS NOT NULL  AND ModuleSection IS NOT NULL AND  IsRead = 1)";
+
+            var query = $@"SELECT  distinct Module, ModuleSection from tbl_chat INNER JOIN tbl_chat_message ON tbl_chat.ChatID = tbl_chat_message.ChatID 
+                        WHERE tbl_chat.ChatReceiverID =  '{Guid.Parse(HttpContext.Current.User.Identity.Name)}' AND Module IS NOT NULL  AND ModuleSection IS NOT NULL AND  IsRead = 0";
+            //Guid.Parse(HttpContext.Current.User.Identity.Name)
+            return SharedManager.GetList<ChatMessage>(query);
+        }
+
+        public int GetUnreadChatCount()
+        {
+
+
+            var query = $@"SELECT  count(*) from tbl_chat INNER JOIN tbl_chat_message ON tbl_chat.ChatID = tbl_chat_message.ChatID 
+                        WHERE tbl_chat.ChatReceiverID =  '{Guid.Parse(HttpContext.Current.User.Identity.Name)}' AND Module IS NOT NULL  AND ModuleSection IS NOT NULL AND  IsRead = 0";
+            //Guid.Parse(HttpContext.Current.User.Identity.Name)
+            return SharedManager.ExecuteScalar<int>(query);
+        }
+
+
+        public IEnumerable<ChatMessage> GetModuleSectionChatMessages(ChatMessage Model)
+        {
+            var query = $@"SELECT * from tbl_chat INNER JOIN tbl_chat_message ON tbl_chat.ChatID = tbl_chat_message.ChatID 
+                        WHERE ((tbl_chat.ChatSenderID =   '{Model.ChatSenderID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatReceiverID}') OR
+				        (tbl_chat.ChatSenderID =  '{Model.ChatReceiverID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatSenderID}')) AND tbl_chat_message.Module ='{(int)Model.Module}' AND tbl_chat_message.ModuleSection = '{(int)Model.ModuleSection}' 
+                        order by tbl_chat_message.MessageDateTime ASC";
+            return SharedManager.GetList<ChatMessage>(query);
+        }
+
+        public IEnumerable<ChatMessage> GetRefreshChatMessages(ChatMessage Model)
+        {
+            var query = $@"SELECT * from tbl_chat INNER JOIN tbl_chat_message ON tbl_chat.ChatID = tbl_chat_message.ChatID 
+                        WHERE 
+				        tbl_chat.ChatSenderID =  '{Model.ChatReceiverID}' AND tbl_chat.ChatReceiverID =  '{Model.ChatSenderID}' AND
+                        tbl_chat_message.MessageDateTime > CAST( '{Model.lastMessageDateTime}' as datetime)
+                        order by tbl_chat_message.MessageDateTime ASC";
+            return SharedManager.GetList<ChatMessage>(query);
+        }
         public Template GetTemplate(int Type)
         {
             var query = $@"SELECT tbl_template.*FROM tbl_template WHERE TemplateType = {Type} AND IsActive = 1 AND IsDeleted = 0";
@@ -62,7 +113,13 @@ namespace BuildMyUnicornAccelerator.Business_Layer
         {
             var query = $@"SELECT * FROM tbl_progress_analytic WHERE DisplayOrder IN ( SELECT MAX(DisplayOrder) FROM tbl_progress_analytic WHERE ClientID = '{ClientID}' group by CAST(ProgressDate AS DATE) ) AND ClientID = '{ClientID}' ORDER BY DisplayOrder";
             return SharedManager.GetList<ProgressAnalytic>(query).ToList();
-           
+
+        }
+
+        public _EmailTemplates GetEmailTemplate(string EmailTemplateCode)
+        {
+            var query = $@"select * from tbl_email_templates where EmailTemplateCode = '{EmailTemplateCode}' and IsActive = 1";
+            return SharedManager.GetSingle<_EmailTemplates>(query);
         }
         //public ModuleCourse GetSingleModuleCourse(int ModuleID, int ModuleSectionID)
         //{
@@ -143,6 +200,17 @@ namespace BuildMyUnicornAccelerator.Business_Layer
 
         }
 
+        public void UpdateChatMessageRead(ChatMessage Model)
+        {
+            var query = $@"UPDATE tbl_chat_message set IsRead = 1 WHERE ChatMessageID = '{Model.ChatMessageID}'";
+            SharedManager.ExecuteScalar<int>(query);
+        }
+
+        public void UpdateModuleChatMessageRead(ChatMessage Model)
+        {
+            var query = $@"UPDATE tbl_chat_message set IsRead = 1 WHERE Module = '{(int)Model.Module}'  AND ModuleSection = '{(int)Model.ModuleSection}' AND  ChatID = (SELECT ChatID FROM tbl_chat WHERE tbl_chat.ChatSenderID = '{Model.ChatReceiverID}' AND tbl_chat.ChatReceiverID = '{Model.ChatSenderID}')";
+            SharedManager.ExecuteScalar<int>(query);
+        }
         public decimal TotalProgressIdea(Guid ClientID)
         {
             decimal ProgressValue = 0.0m;
@@ -200,7 +268,7 @@ namespace BuildMyUnicornAccelerator.Business_Layer
             return Math.Round(ProgressValue);
         }
 
-        public decimal TotalProgressMarketResearch(Guid ClientID )
+        public decimal TotalProgressMarketResearch(Guid ClientID)
         {
             decimal ProgressValue = 0.0m;
             int ModuleTotalQuestions = 26;
@@ -770,5 +838,5 @@ namespace BuildMyUnicornAccelerator.Business_Layer
             return Math.Round(ProgressValue);
         }
 
-     }
+    }
 }

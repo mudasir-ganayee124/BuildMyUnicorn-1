@@ -709,6 +709,8 @@ namespace BuildMyUnicorn.Controllers
             ViewBag.TitleAngelInvestor = TypeDescriptor.GetProperties(typeof(Business_Model.Model.AngelInvestor)).Cast<PropertyDescriptor>().ToDictionary(p => p.Name, p => p.Description);
             ViewBag.TitleVC = TypeDescriptor.GetProperties(typeof(Business_Model.Model.VC)).Cast<PropertyDescriptor>().ToDictionary(p => p.Name, p => p.Description);
             ViewBag.Language = new Master().GetDefaultModuleLanguage((int)Module.Finance, (int)ModuleSection.Finance_FindingInvestors);
+            ViewBag.ModuleQustionVideo = new Master().GetModuleQuestionVideo((int)Module.Finance, (int)ModuleSection.Finance_FindingInvestors);
+
         }
 
         public Investor GetInvestorModelData(_Investor Model)

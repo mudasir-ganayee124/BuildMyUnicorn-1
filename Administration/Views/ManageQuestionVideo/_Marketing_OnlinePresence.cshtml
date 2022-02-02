@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Business_Model.Model.QuestionVideo>
+<div class="content">
+    <h3>Marketing - Online Presence</h3>
+    <section id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body current" aria-hidden="false">
+
+        @foreach (var item in Model.OrderBy(x => x.DisplayOrder))
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstName1">@ViewBag.Title[item.PropertyName]</label>
+                        <input type="text" class="form-control jsVideoUrl" data-questionvideoid="@item.QuestionVideoID" value="@item.VideoUrl" placeholder="url">
+                    </div>
+                </div>
+
+            </div>
+        }
+
+
+    </section>
+
+</div>
+<script>
+    $(document).on("blur", ".jsVideoUrl", function () {
+        var QuestionVideoID = $(this).data("questionvideoid");
+        var VideoUrl = $(this).val();
+        $.ajax({
+            url: "/ManageQuestionVideo/UpdateQuestionVideo",
+            method: "POST",
+            data: { QuestionVideoID: QuestionVideoID, VideoUrl: VideoUrl },
+            success: function (response) {
+                //  $("#partialView").html(response);
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $(".erorLabel").removeClass("invisible");
+                $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+            }
+        });
+    });
+
+
+</script>
+
+

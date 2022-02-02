@@ -155,6 +155,12 @@ namespace BuildMyUnicorn.Business_Layer
             return SharedManager.ExecuteScalar<int>(query);
         }
 
+        public IEnumerable<QuestionVideo> GetModuleQuestionVideo(int ModuleID, int SectionID)
+        {
+            var query = $@"select * from tbl_question_video where ModuleID = '{ModuleID}' AND SectionID = '{SectionID}' ";
+            return SharedManager.GetList<QuestionVideo>(query);
+        }
+
         public ModuleCourse GetSingleModuleCourse(int ModuleID, int ModuleSectionID)
         {
 

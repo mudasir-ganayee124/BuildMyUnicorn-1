@@ -73,67 +73,8 @@ $("#frmOurObservation").steps({
         else location.replace(location.href.substring(0, location.href.lastIndexOf('/')));
     },
     onFinished: function (event, currentIndex) {
+        SaveFormData();
 
-          var Patterns =   $("#Patterns").val();
-          if ($("#AnyPatterns").val() !== "7f5d70c1-5e5b-4411-a05c-224976e6feff") 
-              Patterns = ""; 
-
-    var Model = {"ObervationID":$.trim($("#ObervationID").val()),
-              "ClientID":$.trim($("#ClientID").val()),
-              "EntityState":$.trim($("#EntityState").val()),
-              "Observation":$.trim($("#Observation").val()),
-              "Collection":$.trim($("#Collection").val()),
-              "AnyPatterns":$.trim($("#AnyPatterns").val()),
-              "Patterns":Patterns,
-              "KeyMoments":$.trim($("#KeyMoments").val()),}
-
-
-        console.log(Model);
-       $.ajax({
-            url: GetBaseURL() + "MarketResearch/AddObservation",
-            type: "POST",
-            data: JSON.stringify({ Model: Model }),
-            contentType: "application/json",
-            dataType: "json",
-
-            error: function (response) {
-                //if (ActionType == "UPDATE")
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Submitted Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-
-                //else
-
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Updated Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-                setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/Observation"); }, 1000);
-            },
-            success: function (response) {
-                alert(response);
-            }
-        });
-
-
-
-
-
-
-
-        console.log($.parseJSON($("form").serialize()));
-        console.log($.parseJSON($('form').serializeArray()));
-        // var data = {};
-        // $("form").serializeArray().map(function (x) { data[x.name] = x.value; })
-        //console.log(data);
-        Swal.fire("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
     }
 }), $("#frmOurObservation").validate({
     ignore: "input[type=hidden]",
@@ -165,3 +106,65 @@ $(document).on("change", ".jsOptionChange", function () {
    else
       $("."+element).addClass("hide");
  });
+
+function SaveFormData(actionType) {
+    var Patterns = $("#Patterns").val();
+    if ($("#AnyPatterns").val() !== "7f5d70c1-5e5b-4411-a05c-224976e6feff")
+        Patterns = "";
+
+    var Model = {
+        "ObervationID": $.trim($("#ObervationID").val()),
+        "ClientID": $.trim($("#ClientID").val()),
+        "EntityState": $.trim($("#EntityState").val()),
+        "Observation": $.trim($("#Observation").val()),
+        "Collection": $.trim($("#Collection").val()),
+        "AnyPatterns": $.trim($("#AnyPatterns").val()),
+        "Patterns": Patterns,
+        "KeyMoments": $.trim($("#KeyMoments").val()),
+    }
+    var option = {
+        action: "AddObservation",
+        controller: "MarketResearch",
+        dataType: "json",
+        data: JSON.stringify(Model)
+    };
+    $.fn.ajaxCall(option).done(function (response) {
+        PATCH = false;
+        if (response.ResponseType === "Ok") {
+            if (actionType != "PATCH")
+                setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/Observation"); });
+            else {
+
+                $("#ObervationID").val(response.ObervationID);
+                $("#EntityState").val(response.EntityState);
+            }
+        }
+        else
+            $.fn.successMsg(response);
+    });
+
+
+ /*   console.log(Model);*/
+    //$.ajax({
+    //    url: GetBaseURL() + "MarketResearch/AddObservation",
+    //    type: "POST",
+    //    data: JSON.stringify({ Model: Model }),
+    //    contentType: "application/json",
+    //    dataType: "json",
+
+    //    error: function (response) {
+     
+    //        PATCH = false;
+    //        if (actionType != "PATCH")
+    //        setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/Observation"); }, 1000);
+    //    },
+    //    success: function (response) {
+    //        PATCH = false;
+    //        alert(response);
+    //    }
+    //});
+
+    //console.log($.parseJSON($("form").serialize()));
+    //console.log($.parseJSON($('form').serializeArray()));
+    //Swal.fire("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+}

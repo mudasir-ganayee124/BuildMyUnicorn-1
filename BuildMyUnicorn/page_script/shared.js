@@ -28,33 +28,43 @@ $(document).ready(function () {
         else
             changeTheme('lightMode');
     };
+   
+    //    $.jTimeout(
+    //        {
+    //            'flashTitle': true, //whether or not to flash the tab/title bar when about to timeout, or after timing out
+    //            'flashTitleSpeed': 500, //how quickly to switch between the original title, and the warning text
+    //            'flashingTitleText': 'Session Timeout Alert', //what to show in the tab/title bar when about to timeout, or after timing out
+    //            'originalTitle': document.title, //store the original title of this page
 
-    $.jTimeout(
-        {
-            'flashTitle': true, //whether or not to flash the tab/title bar when about to timeout, or after timing out
-            'flashTitleSpeed': 500, //how quickly to switch between the original title, and the warning text
-            'flashingTitleText': 'Session Timeout Alert', //what to show in the tab/title bar when about to timeout, or after timing out
-            'originalTitle': document.title, //store the original title of this page
+    //            'tabID': false, //each tab needs a unique ID so you can tell which one last updated the timer - false makes it autogenerate one
+    //            'timeoutAfter': 3000, //pass this from server side to be fully-dynamic. For PHP: ini_get('session.gc_maxlifetime'); - 1440 is generally the default timeout
+    //            'heartbeat': 1, //how many seconds in between checking and updating the timer - warning: this will effect the speed of the countdown prior
 
-            'tabID': false, //each tab needs a unique ID so you can tell which one last updated the timer - false makes it autogenerate one
-            'timeoutAfter': 600, //pass this from server side to be fully-dynamic. For PHP: ini_get('session.gc_maxlifetime'); - 1440 is generally the default timeout
-            'heartbeat': 1, //how many seconds in between checking and updating the timer - warning: this will effect the speed of the countdown prior
+    //            'extendOnMouseMove': true, //Whether or not to extend the session when the mouse is moved
+    //            'mouseDebounce': 30, //How many seconds between extending the session when the mouse is moved (instead of extending a billion times within 5 seconds)
+    //            'onMouseMove': false, //Override the standard $.get() request that uses the extendUrl with your own function.
 
-            'extendOnMouseMove': false, //Whether or not to extend the session when the mouse is moved
-            'mouseDebounce': 30, //How many seconds between extending the session when the mouse is moved (instead of extending a billion times within 5 seconds)
-            'onMouseMove': false, //Override the standard $.get() request that uses the extendUrl with your own function.
+    //            'extendUrl': GetBaseURL() + 'Login/HeartBeat', //URL to request in order to extend the session.
+    //            'logoutUrl': GetBaseURL() + 'Login/Logout', //URL to request in order to force a logout after the timeout. This way you can end a session early based on a shorter timeout OR if the front-end timeout doesn't sync with the backend one perfectly, you don't look like an idiot.
+    //            'loginUrl': GetBaseURL() + "Login", //URL to send a customer when they want to log back in
 
-            'extendUrl': GetBaseURL() + 'Login/HeartBeat', //URL to request in order to extend the session.
-            'logoutUrl': GetBaseURL() + 'Login/Logout', //URL to request in order to force a logout after the timeout. This way you can end a session early based on a shorter timeout OR if the front-end timeout doesn't sync with the backend one perfectly, you don't look like an idiot.
-            'loginUrl': GetBaseURL() + "Login", //URL to send a customer when they want to log back in
+    //            'secondsPrior': 20
 
-            'secondsPrior': 20,
-        }
-    );
+
+    //        }
+    //    );
 });
+
+
 
 $(document).on("click", "div#DialogModuleVideo div.close", function () {
     $('iframe').attr('src', $('iframe').attr('src'));
+});
+
+$(document).on("click", ".jsQuestionVideo", function () {
+    $(".titlebar_title").text("");
+    $("#ModuleVideo").attr('src', $(this).data('videourl'));
+    $("#DialogModuleVideo").myOwnDialog("open");
 });
 
 $(document).ready(function () {
@@ -77,6 +87,8 @@ $(document).ready(function () {
     });
 
 
+
+
 });
 
 $(document).on("click", "div#myDialog3 .close", function () {
@@ -87,6 +99,7 @@ $(document).on("click", "div#myDialog3 .close", function () {
 });
 
 $('#frmPasswordChange').parsley();
+$('#frmPasswordChangeContributor').parsley();
 //$(".parsley-required").css("color","red !important")
 
 $("#frmPasswordChange").submit(function (event) {
@@ -115,6 +128,34 @@ $("#frmPasswordChange").submit(function (event) {
     });
 
 });
+
+$("#frmPasswordChangeContributor").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        url: GetBaseURL() + "Login/ChangeContributorPassword",
+        method: "POST",
+        data: $('#frmPasswordChangeContributor').serialize(),
+        success: function (response) {
+
+            if (response === "OK") {
+                CommonFunctions.SuccessMessage("Success", "Password Changed Successfully");
+                $("#frmPasswordChangeContributor")[0].reset();
+                $("#changePasswordContributorModal").modal('hide');
+            }
+            else {
+                CommonFunctions.ErrorMessage("Failed", response);
+            }
+
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".erorLabel").removeClass("invisible");
+            $(".errorMessage").text("Status: " + textStatus + "Error: " + errorThrown);
+        }
+    });
+
+});
+
 
 
 
@@ -182,5 +223,71 @@ if (typeof $("#jsonModuleVideo").val() !== "undefined") {
             touchOutsideForClose: false
         });
     setTimeout(function () { $("#DialogModuleVideo").myOwnDialog("open"); }, 1000);
+
+}
+
+$(document).off('change.patch').on("change.patch", "form.patch textarea, form.patch input, form.patch checkbox, form.patch select", function () {
+    PATCH = true;
+    SaveFormData("PATCH")
+});
+
+$(document).on("click", ".jsNotification", function () {
+    debugger;
+    if ($("div.jsNotificationlist").hasClass("show")) {
+      
+        $("div.jsNotificationlist").removeClass("show")
+    }
+    else {
+        $("div.jsNotificationlist").addClass("show")
+        GetUnReadChat();
+    }
+
+});
+
+$('body').click(function () {
+
+    if ($("div.jsNotificationlist").hasClass("show")) {
+
+        $("div.jsNotificationlist").removeClass("show")
+    }
+    //jsUnreadChatContainer
+
+});
+
+
+function GetUnReadChat() {
+    $.ajax({
+        url: GetBaseURL() + "Chat/GetUnReadChat",
+        dataType: "html",
+        success: function (chatlst)
+        {
+            $(".jsUnreadChatContainer").html(chatlst);
+            $("div.jsNotificationlist").addClass("show");
+        },
+        error: function (chatlst) {
+        }
+
+    });
+
+}
+
+function GetUnReadChatCount() {
+    $.ajax({
+        url: GetBaseURL() + "Chat/GetUnreadChatCount",
+        success: function (count) {
+         
+            if (count > 0) {
+             
+                $("a.jsNotification").removeClass("display-none");
+            }
+            else {
+              
+                $("a.jsNotification").addClass("display-none");
+            }
+        },
+        error: function (response) {
+        }
+
+    });
 
 }

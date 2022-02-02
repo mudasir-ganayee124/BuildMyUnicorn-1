@@ -45,6 +45,14 @@
 <!-- ============================================================== -->
 <!-- Info box -->
 <!-- ============================================================== -->
+
+@*<div class="container">
+    @ViewBag.ConnectedUsers;
+    <input type="text" id="message" />
+    <input type="button" id="sendmessage" value="Send" />
+    <input type="hidden" id="displayname" />
+    <ul id="discussion"></ul>
+</div>*@
 <div class="card-group">
     <div class="card">
         <div class="card-body">
@@ -469,10 +477,22 @@
                 }
             });
     </script>
-    @if (!@ViewBag.Client.IsProfileUpdated)
+
+    @if (ViewBag.Client.TeamClientID == Guid.Empty)
+    {
+        if (!ViewBag.Client.IsProfileUpdated)
+        {
+            <script>
+                $('#dialogClientUpdate').modal('show');
+            </script>
+        }
+    }
+    else if (!ViewBag.Client.IsPasswordChanged)
     {
         <script>
-            $('#dialogClientUpdate').modal('show');
+            $('#changePasswordContributorModal').modal('show');
         </script>
     }
+
+
 }

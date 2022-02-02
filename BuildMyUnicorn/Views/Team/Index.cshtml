@@ -4,7 +4,9 @@
 @using System.Configuration;
 @section PageStyle
 {
+    <link href="~/assets/node_modules/jquery-confirm/jquery-confirm.css" rel="stylesheet" />
     <link href="~/assets/node_modules/draggable-resizable-modal/css/modalbox.css" rel="stylesheet" />
+
     <style>
         .dz-error-mark {
             background: #b10429;
@@ -85,7 +87,7 @@
         foreach (var item in Model)
         {
 
-            <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="col-md-6 col-lg-6 col-xl-4 clientContainer ">
                 <div class="card card-body">
                     <div class="row align-items-center">
                         <div class="col-md-4 col-lg-3 text-center">
@@ -116,9 +118,10 @@
                             </address>
                         </div>
                         <div class="col-md-12 text-right" style="font-size:19px">
+                            <i class="fa fa-trash jsDeleteTeamMember" style="" data-clientid=" @item.ClientID"></i>
                             <a href="@item.LinkedProfile" title="linkedin"><i class="fab fa-linkedin"></i></a>
 
-                            <a href="~/Team/Edit/@item.ClientID" title="update profile"><i class="icons-Pencil"></i></a>
+                            <a href="~/Team/Edit/@item.ClientID" target="_blank" title="update profile"><i class="icons-Pencil"></i></a>
                         </div>
                     </div>
                 </div>
@@ -167,7 +170,7 @@
 {
     <script src="~/assets/node_modules/draggable-resizable-modal/js/modalbox.js"></script>
     <script src="@Url.ContentVersioned("~/page_script/team.js")"></script>
-   
+
     <script>
         var showMessage = "Temporayfor someytime";
         $("#myDialog3").myOwnDialog(

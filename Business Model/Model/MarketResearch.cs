@@ -28,7 +28,8 @@ namespace Business_Model.Model
         [Description("Key characteristics in their Behaviour?")]
         public string KeyMoments { get; set; }
         public decimal Completed { get; set; }
-    }
+        public string ResponseType { get; set; }
+    } 
 
     public class KeyFinding
     {
@@ -36,6 +37,7 @@ namespace Business_Model.Model
         public Guid ClientID { get; set; }
         public EntityState EntityState { get; set; }
         public MarketResearchResults MarketResearchResults { get; set; }
+        public string ResponseType { get; set; }
 
     }
 
@@ -93,6 +95,7 @@ namespace Business_Model.Model
         public EntityState EntityState { get; set; }
         public BigPictureResearch BigPictureResearch { get; set; }
         public FocussedResearch FocussedResearch { get; set; }
+        public string ResponseType { get; set; }
     }
 
     public class BigPictureResearch

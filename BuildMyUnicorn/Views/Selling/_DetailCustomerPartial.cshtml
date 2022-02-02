@@ -3,10 +3,14 @@
 @model Business_Model.Model.Customer
 @{
     decimal _ProgressCustomer = 0.0m; decimal _ProgressBuyerPersona = 0.0m; decimal _ProgressPurchaseCycle = 0.0m;
-    decimal _ProgressCustomerUnit = 25.0m;  decimal _ProgressPurchaseCycleUnit = 20.0m;
+    decimal _ProgressCustomerUnit = 25.0m; decimal _ProgressPurchaseCycleUnit = 20.0m;
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
 
 }
+
+<input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.Selling)" />
+<input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.Selling_Customers)" />
+
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
@@ -192,6 +196,12 @@
                         </a>
                     }
                 }
+
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
+
                 <a href="#1" class="list-group-item">
                     Customer
                     <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressCustomer))% <i class="fa fa-level-up text-success"></i></div>

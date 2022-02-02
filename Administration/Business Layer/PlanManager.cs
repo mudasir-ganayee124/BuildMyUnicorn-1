@@ -43,6 +43,7 @@ namespace Administration.Business_Layer
              new ParametersCollection { ParamterName = "@PlanName", ParamterValue = Model.PlanName, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@CurrencyID", ParamterValue = Model.CurrencyID, ParamterType = DbType.Guid, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Amount", ParamterValue = Model.Amount, ParamterType = DbType.Decimal, ParameterDirection = ParameterDirection.Input },
+             new ParametersCollection { ParamterName = "@Method", ParamterValue = Model.Method, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@DisplayOrder", ParamterValue = Model.DisplayOrder, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@Duration", ParamterValue = Model.Duration, ParamterType = DbType.Int16, ParameterDirection = ParameterDirection.Input },
              new ParametersCollection { ParamterName = "@PlanHeading", ParamterValue = Model.PlanHeading, ParamterType = DbType.String, ParameterDirection = ParameterDirection.Input },
@@ -87,5 +88,13 @@ namespace Administration.Business_Layer
             var result  = SharedManager.ExecuteScalar<int>(query);
             return result == 0 ? "OK" : "Recurring Update failed";
         }
+
+        public string DeletePlan(Guid PlanID)
+        {
+            var query = $@"Update tbl_plan set IsDeleted = 1 where PlanID = '{PlanID}'";
+            var result = SharedManager.ExecuteScalar<int>(query);
+            return result == 0 ? "OK" : "Plan is taken by the client";
+        }
+        
     }
 }

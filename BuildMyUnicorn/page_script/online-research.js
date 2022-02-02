@@ -121,99 +121,8 @@ $("#frm_KeyFinding").steps({
         else location.replace(location.href.substring(0, location.href.lastIndexOf('/')));
     },
     onFinished: function (event, currentIndex) {
-
-        var IdeaProgressed = [];
-        var FeedbackReceived = [];
-        var KeyPlayerList = [];
-
-
-        $.each($("input[name='_IdeaProgressed']:checked"), function () {
-            IdeaProgressed.push($(this).val());
-        });
-        $.each($("input[name='_FeedbackReceived']:checked"), function () {
-            FeedbackReceived.push($(this).val());
-        });
-
-        $.each($(".jsKeyMarketPlayer"), function () {
-            var CompnayName = $.trim($(this).find(".jsCompanyName").val());
-            var Website = $.trim($(this).find(".jsWebsite").val());
-           
-          
-                KeyPlayerList.push({ "Company": $(this).find(".jsCompanyName").val(), "Website": $(this).find(".jsWebsite").val() });
-         
-        });
-      
-        var OnlineResearch = {
-                              "OnlineResearchID":$.trim($("#OnlineResearchID").val()),
-                              "ClientID":$.trim($("#ClientID").val()),
-                              "EntityState":$.trim($("#EntityState").val()),
-                              "ProgressValue":"0.0",
-                              "BigPictureResearch":{"ResearchCarriedOutBit1":$.trim($("#ResearchCarriedOutBit1").val()),
-                                                   "ResearchCarriedOutBit2":$.trim($("#ResearchCarriedOutBit2").val()),
-                                                   "ResearchCarriedOutBit3":$.trim($("#ResearchCarriedOutBit3").val()),
-                                                   "IndustryTrends":$.trim($("#IndustryTrends").val()),
-                                                   "CaptureInitially":$.trim($("#CaptureInitially").val()),
-                                                   "MarketSize": $.trim($("#MarketSize").val().substring(1)),
-                                                   "CaptureShare":$.trim($("#CaptureShare").val()),
-                                                   "MarketShare": $.trim($("#MarketShare").val().replace('$', '')),
-                                                   "MarketShareCaptureDuration": $.trim($("#MarketShareCaptureDuration").val().replace('years', '')),
-                                                   "MarketKeyPlayerID":$.trim($("#MarketKeyPlayerID").val())},
-                            "FocussedResearch":   {"IdeaProgressed":IdeaProgressed.join(","),
-                                                   "CustomerFeedback": $.trim($("#FocussedResearch_CustomerFeedback").val()),
-                                                   "FeedbackReceived":FeedbackReceived.join(","),
-                                                   "FeedbackRate": $.trim($("#FocussedResearch_FeedbackRate").val()),
-                                                   "FeedbackKeyfinding": $.trim($("#FeedbackKeyfinding").val())}
-                                                    };
-
-    
-
+        SaveFormData();
        
-       
-            $.ajax({
-            url: GetBaseURL() + "MarketResearch/AddOnlineResearch",
-            type: "POST",
-            data: JSON.stringify({OnlineResearch:OnlineResearch, MarketKeyPlayer : KeyPlayerList}),
-            contentType: "application/json",
-            dataType: "json",
-
-            error: function (response) {
-                //if (ActionType == "UPDATE")
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Submitted Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-
-                //else
-
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Updated Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-                setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/OnlineResearch"); }, 1000);
-            },
-            success: function (response) {
-                alert(response);
-            }
-        });
-
-
-
-
-
-
-
-        console.log($.parseJSON($("form").serialize()));
-        console.log($.parseJSON($('form').serializeArray()));
-        // var data = {};
-        // $("form").serializeArray().map(function (x) { data[x.name] = x.value; })
-        //console.log(data);
-        Swal.fire("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
     }
 }), $("#frm_KeyFinding").validate({
     ignore: "input[type=hidden]",
@@ -246,3 +155,78 @@ $(document).on("click", ".jsAddKeyPlayer", function() {
 $(document).on("click", ".jsRemoveKeyPlayer", function() {
     $(this).closest('div.row').remove();
 });
+
+function SaveFormData(actionType) {
+    var IdeaProgressed = [];
+    var FeedbackReceived = [];
+    var KeyPlayerList = [];
+
+
+    $.each($("input[name='_IdeaProgressed']:checked"), function () {
+        IdeaProgressed.push($(this).val());
+    });
+    $.each($("input[name='_FeedbackReceived']:checked"), function () {
+        FeedbackReceived.push($(this).val());
+    });
+
+    $.each($(".jsKeyMarketPlayer"), function () {
+        var CompnayName = $.trim($(this).find(".jsCompanyName").val());
+        var Website = $.trim($(this).find(".jsWebsite").val());
+
+
+        KeyPlayerList.push({ "Company": $(this).find(".jsCompanyName").val(), "Website": $(this).find(".jsWebsite").val() });
+
+    });
+
+    var OnlineResearch = {
+        "OnlineResearchID": $.trim($("#OnlineResearchID").val()),
+        "ClientID": $.trim($("#ClientID").val()),
+        "EntityState": $.trim($("#EntityState").val()),
+        "ProgressValue": "0.0",
+        "BigPictureResearch": {
+            "ResearchCarriedOutBit1": $.trim($("#ResearchCarriedOutBit1").val()),
+            "ResearchCarriedOutBit2": $.trim($("#ResearchCarriedOutBit2").val()),
+            "ResearchCarriedOutBit3": $.trim($("#ResearchCarriedOutBit3").val()),
+            "IndustryTrends": $.trim($("#IndustryTrends").val()),
+            "CaptureInitially": $.trim($("#CaptureInitially").val()),
+            "MarketSize": $.trim($("#MarketSize").val().substring(1)),
+            "CaptureShare": $.trim($("#CaptureShare").val()),
+            "MarketShare": $.trim($("#MarketShare").val().replace('$', '')),
+            "MarketShareCaptureDuration": $.trim($("#MarketShareCaptureDuration").val().replace('years', '')),
+            "MarketKeyPlayerID": $.trim($("#MarketKeyPlayerID").val())
+        },
+        "FocussedResearch": {
+            "IdeaProgressed": IdeaProgressed.join(","),
+            "CustomerFeedback": $.trim($("#FocussedResearch_CustomerFeedback").val()),
+            "FeedbackReceived": FeedbackReceived.join(","),
+            "FeedbackRate": $.trim($("#FocussedResearch_FeedbackRate").val()),
+            "FeedbackKeyfinding": $.trim($("#FeedbackKeyfinding").val())
+        }
+    };
+
+    var option = {
+        action: "AddOnlineResearch",
+        controller: "MarketResearch",
+        dataType: "json",
+        data: JSON.stringify({ OnlineResearch: OnlineResearch, MarketKeyPlayer: KeyPlayerList }),
+    };
+    $.fn.ajaxCall(option).done(function (response) {
+        PATCH = false;
+        if (response.ResponseType === "Ok") {
+            if (actionType != "PATCH")
+                setTimeout(function () { window.location.replace(GetBaseURL() + "MarketResearch/OnlineResearch"); });
+            else {
+
+                $("#OnlineResearchID").val(response.OnlineResearchID);
+                $("#EntityState").val(response.EntityState);
+            }
+        }
+        else
+            $.fn.successMsg(response);
+    });
+
+
+
+
+    
+}

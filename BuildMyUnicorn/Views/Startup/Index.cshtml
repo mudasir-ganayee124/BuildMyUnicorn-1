@@ -1,0 +1,146 @@
+﻿@using Business_Model.Model;
+@using System.Configuration;
+@model Business_Model.Model.Client
+
+@section PageStyle
+{
+    <link href="~/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+}
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        @*<h4 class="text-themecolor"><a href="~/Dashboard"><i class="mdi mdi-arrow-left"></i>Back to Dashboard</a></h4>*@
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Startup</li>
+              
+            </ol>
+
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+
+                @*<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profile Settings</a> </li>*@
+                @*<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#settings" role="tab">Profile Settings</a> </li>*@
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+
+                <div class="tab-pane active" id="settings" role="tabpanel">
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <form id="frmUpdateStartup" class="form-material m-t-40" method="post">
+                                    <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                                    <input type="hidden" id="StartupLogo" name="StartupLogo" value="@Model.StartupLogo" />
+
+
+                                    <div class="card-body">
+
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Startup Name</label>
+                                                    <input type="text" id="StartupName" name="StartupName" class="form-control form-control-line" value="@Model.StartupName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Domain</label>
+                                                    <input type="text" id="Domain" name="Domain" class="form-control form-control-line" value="@Model.Domain">
+                                                </div>
+                                            </div>
+                                           
+                                          
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <input type="text" id="StartupAddress" name="StartupAddress" class="form-control form-control-line" value="@Model.StartupAddress">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row">
+
+
+
+
+                                            <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    <label for="wint1">Startup logo</label>
+                                                    <div class="fileupload">
+
+                                                        <div class="btn btn-default btn-file" style="position: relative; text-align:right">
+                                                            <input type="button" class="btn btn-primary pull-right" style="display:inline !important" value="Choose File" />
+                                                            <input type="file" id="jsStartupLogo" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;margin: 0;opacity: 0;">
+
+                                                        </div>
+
+                                                        <div class="dropzone" id="imagepreview" style="padding:5px;">
+                                                            <div id="my_img" class="dz-preview dz-file-preview dz-error" style="position:relative;text-align:center">
+                                                                <img id="ImgStartupLogo" src="@ConfigurationManager.AppSettings["ClientBaseUrl"]/Content/Images/@(Model.StartupLogo == null ? "profile-dummy.png" : Model.StartupLogo)" class="img-responsive img-thumbnail" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        
+                                        <div class="form-group text-right">
+                                            <button type="submit" class="btn btn-info">Update</button>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+@section PageScript
+{
+    <script src="~/assets/node_modules/toast-master/js/jquery.toast.js"></script>
+    <script src="@Url.ContentVersioned("~/page_script/startup.js")"></script>
+}
+

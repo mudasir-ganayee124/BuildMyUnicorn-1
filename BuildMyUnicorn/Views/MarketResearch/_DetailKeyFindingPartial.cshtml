@@ -6,7 +6,8 @@
     decimal _ProgressMarketResearchResult = 0.0m; decimal _ProgressMarketResearchResultUnit = 12.50m;
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
 }
-
+<input type="hidden" id="JsModuleID" value="@((int)Business_Model.Model.Module.MarketResearch)" />
+<input type="hidden" id="JsModuleSectionID" value="@((int)Business_Model.Model.ModuleSection.MarketResearch_KeyFindings)" />
 <div class="row" id="validation">
     <div class="col-lg-9 col-xlg-10 col-md-8">
         <div class="card wizard-content">
@@ -193,6 +194,12 @@
                         </a>
                     }
                 }
+
+                @{
+                    Html.RenderAction("Chat", "Chat");
+                }
+                <br />
+
                 <a href="#1" class="list-group-item">
                     Market Research Results
                     <div class="pull-right" style="text-align:right">@(Math.Round(_ProgressMarketResearchResult))% <i class="fa fa-level-up text-success"></i></div>

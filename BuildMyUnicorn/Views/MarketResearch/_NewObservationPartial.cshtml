@@ -4,6 +4,8 @@
 @model Business_Model.Model.OurObservation
 @{
     var LanguageList = ViewBag.Language as IEnumerable<Business_Model.Model.LanguageModule>;
+    var QuestionList = ViewBag.ModuleQustionVideo as IEnumerable<Business_Model.Model.QuestionVideo>;
+
 }
 
     <div class="row" id="validation">
@@ -20,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <form id="frmOurObservation" method="post" class="validation-wizard wizard-circle">
+                    <form id="frmOurObservation" method="post" class="validation-wizard wizard-circle patch">
 
                         <input type="hidden" id="jsonModel" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))' />
                         <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
@@ -35,7 +37,17 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Observation").FirstOrDefault().QuestionText : "" )  </label>
+                                        <label for="wint1">
+                                            @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Observation").FirstOrDefault().QuestionText : "" )
+                                            @{
+                                                string VideoUrl = QuestionList.Where(x => x.PropertyName == "Observation").FirstOrDefault().VideoUrl;
+                                                if (!string.IsNullOrEmpty(VideoUrl))
+                                                {
+                                                    <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                                }
+                                            }
+                                        </label>
                                         <textarea class='form-control form-control-line ideatextarea' id="Observation" name="Observation" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Observation").FirstOrDefault().PlaceHolderText : "" )">@Model.Observation</textarea>
 
                                     </div>
@@ -46,14 +58,34 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AnyPatterns").FirstOrDefault().QuestionText : "" )  </label>
+                                        <label for="wint1">
+                                            @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "AnyPatterns").FirstOrDefault().QuestionText : "" )
+                                            @{
+                                                VideoUrl = QuestionList.Where(x => x.PropertyName == "AnyPatterns").FirstOrDefault().VideoUrl;
+                                                if (!string.IsNullOrEmpty(VideoUrl))
+                                                {
+                                                    <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                                }
+                                            }
+                                        </label>
                                         @Html.DropDownList("AnyPatterns", new SelectList(ViewBag.Choice, "ID", "Value", Model.AnyPatterns), "- Please select -", new { @class = "custom-select col-12 jsOptionChange", @data_optionchange = "Patterns" })
 
 
 
                                     </div>
                                     <div class='form-group Patterns @(string.IsNullOrEmpty(@Model.Patterns) ? "hide" :"")'>
-                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().QuestionText : "" )  </label>
+                                        <label for="wint1">
+                                            @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().QuestionText : "" )
+                                            @{
+                                                VideoUrl = QuestionList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().VideoUrl;
+                                                if (!string.IsNullOrEmpty(VideoUrl))
+                                                {
+                                                    <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                                }
+                                            }
+                                        </label>
 
                                         <textarea class='form-control ideatextarea' id="Patterns" name="Patterns" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Patterns").FirstOrDefault().PlaceHolderText : "" )">@Model.Patterns</textarea>
 
@@ -67,7 +99,17 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().QuestionText : "" )  </label>
+                                        <label for="wint1">
+                                            @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().QuestionText : "" )
+                                            @{
+                                                VideoUrl = QuestionList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().VideoUrl;
+                                                if (!string.IsNullOrEmpty(VideoUrl))
+                                                {
+                                                    <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                                }
+                                            }
+                                        </label>
                                         <textarea class='form-control form-control-line ideatextarea' id="KeyMoments" name="KeyMoments" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "KeyMoments").FirstOrDefault().PlaceHolderText : "" )">@Model.KeyMoments</textarea>
 
                                     </div>
@@ -78,7 +120,18 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <label for="wint1">@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Collection").FirstOrDefault().QuestionText : "" )  </label>
+                                        <label for="wint1">
+                                            @( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Collection").FirstOrDefault().QuestionText : "" )
+
+                                            @{
+                                                VideoUrl = QuestionList.Where(x => x.PropertyName == "Collection").FirstOrDefault().VideoUrl;
+                                                if (!string.IsNullOrEmpty(VideoUrl))
+                                                {
+                                                    <i class="fas fa-video jsQuestionVideo" data-videourl="@VideoUrl" style="font-size: 14px; color: #c4302b; cursor:pointer"></i>
+
+                                                }
+                                            }
+                                        </label>
                                         <textarea class='form-control form-control-line ideatextarea' id="Collection" name="Collection" placeholder="@( LanguageList.Count() > 0 ? LanguageList.Where(x => x.PropertyName == "Collection").FirstOrDefault().PlaceHolderText : "" )">@Model.Collection</textarea>
 
                                     </div>

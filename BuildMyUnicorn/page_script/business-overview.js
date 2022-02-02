@@ -87,78 +87,8 @@ $("#frm_business").steps({
      },
     onFinished: function (event, currentIndex) {
 
-       // Temporary 
-          var LandlordCostStatus =   $("#LandlordCostStatus").val();
-          if ($("#CompanyDetails_BusinessRequirePremises").val() !== "7f5d70c1-5e5b-4411-a05c-224976e6feff") 
-              LandlordCostStatus = "";
-
-        var BusinessModel = {
-            "BusinessOverID": $.trim($("#BusinessOverID").val()),
-            "ClientID": $.trim($("#ClientID").val()),
-            "EntityState": $.trim($("#EntityState").val()),
-            "Founder": {
-                "IdeaComeup": $.trim($("#IdeaComeup").val()), "BusinessRun": $.trim($("#BusinessRun").val()),
-                "PreviousWorkExperience": $.trim($("#PreviousWorkExperience").val()), "Qualification": $.trim($("#Qualification").val()),
-                "HobbiesInterest": $.trim($("#HobbiesInterest").val()), "WhyYou": $.trim($("#WhyYou").val())
-            }, "CompanyDetails": {
-                "CompanyRegisterdName": $.trim($("#CompanyRegisterdName").val()), "Founded": $.trim($("#Founded").val()),
-                "CompanyLegalStructureID": $.trim($("#CompanyDetails_CompanyLegalStructureID").val()), "LandlordCostStatus": LandlordCostStatus,
-                "CompanyNumber": $.trim($("#CompanyNumber").val()), "BusinessAddress": $.trim($("#BusinessAddress").val()),
-                "BusinessPhone": $.trim($("#BusinessPhone").val()), "VatNumber": $.trim($("#VatNumber").val()),
-                "NumberofFounder": $.trim($("#NumberofFounder").val()),"BusinessRequirePremises": $.trim($("#CompanyDetails_BusinessRequirePremises").val()),
-                "CompanyFounderID": "00000000-0000-0000-0000-000000000000"
-            }
-        };
-        console.log(BusinessModel);
-     //   console.log(CompanyFounderID);
-
-       var url = GetBaseURL() + "Business/AddBusinessOverview";
-       $.ajax({
-            url: url,
-            type: "POST",
-           data: JSON.stringify({ BusinessModel: BusinessModel }),
-            contentType: "application/json",
-            dataType: "json",
-
-            error: function (response) {
-                //if (ActionType == "UPDATE")
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Submitted Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-
-                //else
-
-                //    swal({
-                //        title: "Success!",
-                //        text: "Idea Updated Successfuly!",
-                //        icon: "success",
-                //        button: "Close!",
-                //    });
-
-                setTimeout(function () { window.location.replace(GetBaseURL() + "Business/BusinessOverview"); }, 1000);
-            },
-            success: function (response) {
-                alert(response);
-            }
-        });
-
-
-
-
-
-
-
-        console.log($.parseJSON($("form").serialize()));
-        console.log($.parseJSON($('form').serializeArray()));
-        // var data = {};
-        // $("form").serializeArray().map(function (x) { data[x.name] = x.value; })
-        //console.log(data);
-        Swal.fire("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
-    }
+        SaveFormData();
+      }
 }), $("#frm_business").validate({
     ignore: "input[type=hidden]",
     errorClass: "text-danger",
@@ -208,3 +138,51 @@ $(document).on("change", ".jsOptionChange", function () {
    else
       $("."+element).addClass("hide");
  });
+
+
+function SaveFormData(actionType) {
+
+    var LandlordCostStatus = $("#LandlordCostStatus").val();
+    if ($("#CompanyDetails_BusinessRequirePremises").val() !== "7f5d70c1-5e5b-4411-a05c-224976e6feff")
+        LandlordCostStatus = "";
+
+    var BusinessModel = {
+        "BusinessOverID": $.trim($("#BusinessOverID").val()),
+        "ClientID": $.trim($("#ClientID").val()),
+        "EntityState": $.trim($("#EntityState").val()),
+        "Founder": {
+            "IdeaComeup": $.trim($("#IdeaComeup").val()), "BusinessRun": $.trim($("#BusinessRun").val()),
+            "PreviousWorkExperience": $.trim($("#PreviousWorkExperience").val()), "Qualification": $.trim($("#Qualification").val()),
+            "HobbiesInterest": $.trim($("#HobbiesInterest").val()), "WhyYou": $.trim($("#WhyYou").val())
+        }, "CompanyDetails": {
+            "CompanyRegisterdName": $.trim($("#CompanyRegisterdName").val()), "Founded": $.trim($("#Founded").val()),
+            "CompanyLegalStructureID": $.trim($("#CompanyDetails_CompanyLegalStructureID").val()), "LandlordCostStatus": LandlordCostStatus,
+            "CompanyNumber": $.trim($("#CompanyNumber").val()), "BusinessAddress": $.trim($("#BusinessAddress").val()),
+            "BusinessPhone": $.trim($("#BusinessPhone").val()), "VatNumber": $.trim($("#VatNumber").val()),
+            "NumberofFounder": $.trim($("#NumberofFounder").val()), "BusinessRequirePremises": $.trim($("#CompanyDetails_BusinessRequirePremises").val()),
+            "CompanyFounderID": "00000000-0000-0000-0000-000000000000"
+        }
+    };
+    console.log(BusinessModel);
+
+    var option = {
+        action: "AddBusinessOverview",
+        controller: "Business",
+        dataType: "json",
+        data: JSON.stringify({ BusinessModel: BusinessModel }),
+    };
+    $.fn.ajaxCall(option).done(function (response) {
+        PATCH = false;
+        if (response.ResponseType === "Ok") {
+            if (actionType != "PATCH")
+                setTimeout(function () { window.location.replace(GetBaseURL() + "Business/BusinessOverview"); }, 1000);
+            else {
+
+                $("#BusinessOverID").val(response.BusinessOverID);
+                $("#EntityState").val(response.EntityState);
+            }
+        }
+        else
+            $.fn.successMsg(response);
+    });
+}

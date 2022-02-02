@@ -4,7 +4,7 @@
     <link href="/assets/node_modules/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
     <link href="/assets/node_modules/kendoui/styles/kendo.flat.mobile.min.css" rel="stylesheet" />
 
-
+    <link href="~/assets/node_modules/html5-editor/bootstrap-wysihtml5.css" rel="stylesheet" />
 }
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
@@ -24,63 +24,68 @@
 </div>
 <div class="row" id="validation">
     <div class="col-12">
-        <div class="card wizard-content">
-            <div class="card-body">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="wint1">Select Email Template </label>
-                        @Html.DropDownList("rr", new SelectList(@ViewBag.emailtemplates, "EmailTemplateID", "EmailTemplateCode"), "--select--", new { @class = "form-control", id = "ddlEmp" })
-                    </div>
-                </div>
+        <form id="frmEmailTemplate" name="frmEmailTemplate">
+            <input type="hidden" id="EditEmailTemplateID" name="EditEmailTemplateID" />
 
-                <div id="divtemplatedetail" style="display:nonee;">
+            <div class="card wizard-content">
 
+                <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="field-2" class="control-label">Subject</label>
-                            <input type="text" class="form-control" id="EmailTemplateSubject" name="EmailTemplateSubject" placeholder="Enter Subject" data-parsley-required="true" data-parsley-required-message="Please Enter Subject!">
+                            <label for="wint1">Select Email Template </label>
+                            @Html.DropDownList("rr", new SelectList(@ViewBag.emailtemplates, "EmailTemplateID", "EmailTemplateCode"), "--select--", new { @class = "form-control", id = "EmailTemplateID" })
                         </div>
                     </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="field-2" class="control-label">Body</label>
-                            <textarea type="text" class="form-control" id="EmailTemplateBody" name="EmailTemplateBody"> </textarea>
-                        </div>
-                    </div>
+                    <div id="divtemplatedetail" style="display:nonee;">
 
-                    <div class="col-md-12">
-                        <div class="form-group no-margin">
-                            <div class="checkbox checkbox-custom">
-                                <input id="EmailTemplateActive" name="EmailTemplateActive" type="checkbox">
-                                <label for="EmailTemplateActive">Template Active</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Subject</label>
+                                <input type="text" class="form-control" id="EmailTemplateSubject" name="EmailTemplateSubject" placeholder="Enter Subject" data-parsley-required="true" data-parsley-required-message="Please Enter Subject!">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="field-2" class="control-label">Last Updated By</label>
-                            <input type="text" class="form-control" id="EmailTemplateUpdatedBy" name="EmailTemplateUpdatedBy" readonly="readonly">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Body</label>
+                                <textarea type="text" class="form-control" id="EmailTemplateBody" name="EmailTemplateBody" rows="15"> </textarea>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="field-2" class="control-label">Last Update Date</label>
-                            <input type="text" class="form-control" id="EmailTemplateUpdatedDate" name="EmailTemplateUpdatedDate" readonly="readonly">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin">
+                                <div class="checkbox checkbox-custom">
+                                    <input id="EmailTemplateActive" name="EmailTemplateActive" type="checkbox">
+                                    <label for="EmailTemplateActive">Template Active</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-info waves-effect waves-light" id="btnAdd">Update Template</button>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Last Updated By</label>
+                                <input type="text" class="form-control" id="EmailTemplateUpdatedBy" name="EmailTemplateUpdatedBy" readonly="readonly">
+                            </div>
                         </div>
-                    </div>
 
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Last Update Date</label>
+                                <input type="text" class="form-control" id="EmailTemplateUpdatedDate" name="EmailTemplateUpdatedDate" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-info waves-effect waves-light" id="btnAdd">Update Template</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -90,5 +95,8 @@
 {
     <script src="/assets/node_modules/kendoui/js/kendo.all.min.js"></script>
     <script src="/assets/node_modules/kendoui/js/jszip.min.js"></script>
+    <script src="~/assets/node_modules/html5-editor/wysihtml5-0.3.0.js"></script>
+    <script src="~/assets/node_modules/html5-editor/bootstrap-wysihtml5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="~/Content/page_script/email-templates.js?version=@DateTime.Now"></script>
 }

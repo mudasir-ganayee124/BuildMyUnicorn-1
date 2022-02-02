@@ -1,0 +1,111 @@
+﻿@using Business_Model.Model;
+@model IEnumerable<ChatMessage>
+
+<div class="message-center">
+    @if (Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <!-- Message -->
+            if ((int)item.Module == (int)Business_Model.Model.Module.MyIdea && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.MyIdea_Ideaoutofhead)
+            {
+                <a href="~/idea">
+                    <div class="btn btn-danger btn-circle text-white"><i class="mdi mdi-lightbulb-on"></i></div>
+                    <div class="mail-contnet">
+                        <h5>My Idea</h5> <span class="mail-desc">Get the idea out of my head</span> @*<span class="time">9:30 AM</span>*@
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.MarketResearch && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.MarketResearch_OnlineResearch)
+            {
+                <!-- Message -->
+                <a href="~/MarketResearch/OnlineResearch">
+                    <div class="btn btn-success btn-circle text-white"><i class="mdi mdi-comment-question-outline"></i></div>
+                    <div class="mail-contnet">
+                        <h5>Market Research</h5> <span class="mail-desc">Online Research</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.MarketResearch && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.MarketResearch_KeyFindings)
+            {
+                <!-- Message -->
+                <a href="~/MarketResearch/KeyFinding">
+                    <div class="btn btn-success btn-circle text-white"><i class="mdi mdi-comment-question-outline"></i></div>
+                    <div class="mail-contnet">
+                        <h5>Market Research</h5> <span class="mail-desc">Key Findings</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.MarketResearch && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.MarketResearch_Observation)
+            {
+                <!-- Message -->
+                <a href="~/MarketResearch/Observation">
+                    <div class="btn btn-success btn-circle text-white"><i class="mdi mdi-comment-question-outline"></i></div>
+                    <div class="mail-contnet">
+                        <h5>Market Research</h5> <span class="mail-desc">Observation</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.TheBusiness && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.TheBusiness_Businessoverview)
+            {
+                <!-- Message -->
+                <a href="~/Business/BusinessOverview">
+                    <div class="btn btn-info btn-circle text-white"><i class="fas fa-chart-line"></i></div>
+                    <div class="mail-contnet">
+                        <h5>The Business</h5><span class="mail-desc">Business overview</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.TheBusiness && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.TheBusiness_ProductorService)
+            {
+                <!-- Message -->
+                <a href="~/Business/ProductService">
+                    <div class="btn btn-info btn-circle text-white"><i class="fas fa-chart-line"></i></div>
+                    <div class="mail-contnet">
+                        <h5>The Business</h5><span class="mail-desc">Product and Service</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.TheBusiness && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.TheBusiness_BusinessOperation)
+            {
+                <!-- Message -->
+                <a href="~/Business/BusinessOperation">
+                    <div class="btn btn-info btn-circle text-white"><i class="fas fa-chart-line"></i></div>
+                    <div class="mail-contnet">
+                        <h5>The Business</h5><span class="mail-desc">Business Operations</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.TheBusiness && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.TheBusiness_Competitors)
+            {
+                <!-- Message -->
+                <a href="~/Business/CompetitorAnalysis">
+                    <div class="btn btn-info btn-circle text-white"><i class="fas fa-chart-line"></i></div>
+                    <div class="mail-contnet">
+                        <h5>The Business</h5><span class="mail-desc">Competitor Analysis</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.Selling && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.Selling_Customers)
+            {
+                <!-- Message -->
+                <a href="~/Selling/Customer">
+                    <div class="btn btn-primary btn-circle"><i class="fas fa-people-carry"></i></div>
+                    <div class="mail-contnet">
+                        <h5>Selling</h5> <span class="mail-desc">Your Customers</span>
+                    </div>
+                </a>
+            }
+            if ((int)item.Module == (int)Business_Model.Model.Module.Selling && (int)item.ModuleSection == (int)Business_Model.Model.ModuleSection.MyIdea_Ideaoutofhead)
+            {
+                <!-- Message -->
+                <a href="~/Selling/ProductServicePricing">
+                    <div class="btn btn-primary btn-circle"><i class="fas fa-people-carry"></i></div>
+                    <div class="mail-contnet">
+                        <h5>Selling</h5> <span class="mail-desc">Pricing your product or service</span>
+                    </div>
+                </a>
+            }
+        }
+    }
+</div>

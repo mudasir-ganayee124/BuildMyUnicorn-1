@@ -94,6 +94,8 @@ namespace BuildMyUnicorn.Business_Layer
             return SharedManager.ExecuteScalar<int>(query);
 
         }
+
+        
         public int GetClientMarketingPlanCount()
         {
             var query = $@"SELECT Count(MarketingPlanID) FROM  dbo.tbl_marketing_marketingplan  WHERE ClientID = '{ new ClientManager().GetMainClientID(Guid.Parse(HttpContext.Current.User.Identity.Name))}' AND tbl_marketing_marketingplan.IsDeleted = 0 ";

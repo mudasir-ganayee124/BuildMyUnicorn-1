@@ -102,6 +102,7 @@
     <Compile Include="Model\AssignedMapping.cs" />
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\Chat.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Common.cs" />
     <Compile Include="Model\ContentFile.cs" />
